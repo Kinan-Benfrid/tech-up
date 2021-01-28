@@ -7,7 +7,7 @@ public class testgit {
 		System.out.println("hey"); 
 		//test
 		
-		System.out.println("hiii"); 
+		System.out.println("hii"); 
 	}
 
 }
