@@ -1,4 +1,6 @@
 .idea
 *.iml
+*.project
+*.class
 tech-up/backend-service/target
 tech-up/client/target
