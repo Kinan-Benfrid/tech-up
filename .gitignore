@@ -1,2 +1,4 @@
 .idea
 *.iml
+tech-up/backend-service/target
+tech-up/client/target
