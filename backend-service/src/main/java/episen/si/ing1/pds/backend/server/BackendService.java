@@ -1,8 +1,11 @@
 package episen.si.ing1.pds.backend.server;
 
-public class BackendService {
-    public static void main(String[] args) {
-        System.out.println("BackendService is running");
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+public class BackendService {
+    private static final Logger serverLogger = LoggerFactory.getLogger(BackendService.class.getName());
+    public static void main(String[] args) {
+        serverLogger.info("BackendService is running");
     }
 }
