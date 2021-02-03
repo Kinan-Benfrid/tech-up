@@ -7,5 +7,6 @@ public class BackendService {
     private static final Logger serverLogger = LoggerFactory.getLogger(BackendService.class.getName());
     public static void main(String[] args) {
         serverLogger.info("BackendService is running");
+        System.out.println("New BRANCH");
     }
 }
