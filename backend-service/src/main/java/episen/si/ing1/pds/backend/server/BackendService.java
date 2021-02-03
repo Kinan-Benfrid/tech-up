@@ -8,5 +8,6 @@ public class BackendService {
     public static void main(String[] args) {
         serverLogger.info("BackendService is running");
         System.out.println("New BRANCH");
+        System.out.println("Test sur la new branche");
     }
 }
