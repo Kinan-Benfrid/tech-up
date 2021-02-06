@@ -8,5 +8,6 @@ public class BackendService {
     public static void main(String[] args) {
         serverLogger.info("BackendService is running");
         System.out.println("mvn install with cmd");
+        System.out.println("");
     }
 }
