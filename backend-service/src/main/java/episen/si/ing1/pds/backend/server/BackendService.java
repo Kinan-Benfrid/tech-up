@@ -21,6 +21,7 @@ public class BackendService {
             inTestMode = true;
         }
         serverLogger.info("BackendService is running (testMode={}).",inTestMode);
+
     }
 }
 
