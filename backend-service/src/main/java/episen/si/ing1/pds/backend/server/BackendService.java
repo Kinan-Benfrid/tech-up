@@ -9,10 +9,10 @@ import java.text.ParseException;
 public class BackendService {
     private static final Logger serverLogger = LoggerFactory.getLogger(BackendService.class.getName());
     public static void main(String[] args) throws Exception {
-        final Options options = new Options();
-        final Option testMode = Option.builder().longOpt("testMode").build();
+        final Options options = new Options(); // create options
+        final Option testMode = Option.builder().longOpt("testMode").build(); // use longOpt to write --testMode in cmd
         final Option maxConnection = Option.builder().longOpt("maxConnection").hasArg().argName("maxConnection").build();
-        options.addOption(testMode);
+        options.addOption(testMode);  // add the "testMode" option to your options
         options.addOption(maxConnection);
 
         final CommandLineParser parser = new DefaultParser();
