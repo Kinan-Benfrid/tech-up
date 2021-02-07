@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 public class Client {
     private static final Logger clientLogger = LoggerFactory.getLogger(Client.class.getName());
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws Exception {
         final Options options = new Options();
         final Option testMode = Option.builder().longOpt("testMode").build();
         options.addOption(testMode);
@@ -17,7 +17,7 @@ public class Client {
         if (commandLine.hasOption("testMode")) {
             inTestMode = true;
         }
-        clientLogger.info("Client is running(testMode={}).",inTestMode);
+        clientLogger.info("Client is running (testMode={}).",inTestMode);
     }
 
 }
