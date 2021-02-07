@@ -17,7 +17,7 @@ public class BackendService {
         final CommandLine commandLine = parser.parse(options, args);
 
         boolean inTestMode = false;
-        if (commandLine.hasOption("testMode !")) {
+        if (commandLine.hasOption("testMode")) {
             inTestMode = true;
         }
         serverLogger.info("BackendService is running (testMode={}).",inTestMode);
