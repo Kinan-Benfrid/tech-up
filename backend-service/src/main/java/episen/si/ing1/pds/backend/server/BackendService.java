@@ -11,16 +11,21 @@ public class BackendService {
     public static void main(String[] args) throws Exception {
         final Options options = new Options();
         final Option testMode = Option.builder().longOpt("testMode").build();
+        final Option maxConnection = Option.builder().longOpt("maxConnection").hasArg().argName("maxConnection").build();
         options.addOption(testMode);
+        options.addOption(maxConnection);
 
         final CommandLineParser parser = new DefaultParser();
         final CommandLine commandLine = parser.parse(options, args);
-
+        int maxConnectionV = 5;
         boolean inTestMode = false;
         if (commandLine.hasOption("testMode")) {
             inTestMode = true;
         }
-        serverLogger.info("BackendService is running (testMode={}).",inTestMode);
+        if (commandLine.hasOption("maxConnection")){
+            maxConnectionV = Integer.parseInt(commandLine.getOptionValue("maxConnection"));
+        }
+        serverLogger.info("BackendService is running (testMode={}), (maxConnection={}). ",inTestMode,maxConnectionV);
 
     }
 }
