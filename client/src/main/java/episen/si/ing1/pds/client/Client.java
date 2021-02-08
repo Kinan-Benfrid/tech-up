@@ -8,7 +8,11 @@ public class Client {
     public static void main(String[] args) throws Exception {
         final Options options = new Options();
         final Option testMode = Option.builder().longOpt("testMode").build();
+        final Option maxConnection = Option.builder().longOpt("maxConnection").hasArg().argName("maxConnection").build();
+        int maxConnectionV = 5;
+
         options.addOption(testMode);
+        options.addOption(maxConnection);
 
         final CommandLineParser parser = new DefaultParser();
         final CommandLine commandLine = parser.parse(options, args);
@@ -17,7 +21,10 @@ public class Client {
         if (commandLine.hasOption("testMode")) {
             inTestMode = true;
         }
-        clientLogger.info("Client is running (testMode={}).",inTestMode);
+        if (commandLine.hasOption("maxConnection")){
+            maxConnectionV = Integer.parseInt(commandLine.getOptionValue("maxConnection"));
+        }
+        clientLogger.info("Client is running (testMode={}), (maxConnection={}).",inTestMode,maxConnectionV);
     }
 
 }
