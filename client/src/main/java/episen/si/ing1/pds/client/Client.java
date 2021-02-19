@@ -25,6 +25,7 @@ public class Client {
             maxConnectionV = Integer.parseInt(commandLine.getOptionValue("maxConnection"));
         }
         clientLogger.info("Client is running (testMode={}), (maxConnection={}).",inTestMode,maxConnectionV);
+
     }
 
 }
