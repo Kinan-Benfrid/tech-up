@@ -11,32 +11,32 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 public class JDBCConnectionPool {
-    private ArrayList<Connection> phyicalConnections = new ArrayList<>();
-    private static final int nbConnection = 100;
+    private final ArrayList<Connection> physicalConnections = new ArrayList<>();
+    private static final int nbConnection = 20;
 
     public void init() throws ClassNotFoundException, SQLException {
         for (int i =0; i<nbConnection; i++){
-            Connection connect = null;
+            Connection connect;
             Properties properties = new Properties();
-            try {
+             try {
                 properties.load(JDBCConnectionPool.class.getClassLoader().getResourceAsStream("Connection.properties")); //load connection.properties file to retreive DataBase parameters
-            } catch (IOException e) {
-                e.printStackTrace();
+             } catch (IOException e) {
+               // e.printStackTrace();
             }
             Class.forName(properties.getProperty("DRIVER_NAME"));
             connect= DriverManager.getConnection(properties.getProperty("DATABASE_URL"), properties.getProperty("user"),properties.getProperty("password"));
-            phyicalConnections.add(connect);
+            physicalConnections .add(connect);
         }
     }
 
-    public Connection getConnection(){
-        Connection connect = phyicalConnections.get(phyicalConnections.size()-1);
-        phyicalConnections.remove(phyicalConnections.get(phyicalConnections.size()-1));
+    public Connection getConnection(){ // to retrieve the client connection
+        Connection connect = physicalConnections .get(physicalConnections .size()-1);
+        physicalConnections .remove(physicalConnections .get(physicalConnections .size()-1));
         return connect;
     }
 
-    public void closeConnection(){
-        for (Connection connect : phyicalConnections){
+    public void closeConnection(){ // to close the client connexion after his requests
+        for (Connection connect : physicalConnections ){
             try {
                 connect.close();
             } catch (SQLException throwables) {
@@ -46,7 +46,7 @@ public class JDBCConnectionPool {
     }
 
     public boolean addConnection(Connection connection){
-        return phyicalConnections.add(connection);
+        return physicalConnections .add(connection);
     }
 
     public static void main(String[] args) {
