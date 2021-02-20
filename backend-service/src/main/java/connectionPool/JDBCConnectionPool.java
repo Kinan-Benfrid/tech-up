@@ -73,4 +73,8 @@ public class JDBCConnectionPool extends Connection {
 
     public void addConnection(Connection c) {
     }
+
+    public static void main(String[] args) {
+
+    }
 }
