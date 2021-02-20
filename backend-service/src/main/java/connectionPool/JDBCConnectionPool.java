@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class JDBCConnectionPool {
     private ArrayList<Connection> phyicalConnections = new ArrayList<>();
-    private static final int nbConnection = 20;
+    private static final int nbConnection = 100;
 
     public void init() throws ClassNotFoundException, SQLException {
         for (int i =0; i<nbConnection; i++){

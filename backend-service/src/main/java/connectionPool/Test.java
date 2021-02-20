@@ -17,10 +17,12 @@ public class Test {
         DataSource ds = new DataSource();
         t.c= ds.receiveConnection();
         Statement st = t.c.createStatement();
-        ResultSet rs = st.executeQuery("select * from event");
+        ResultSet rs = st.executeQuery("select * from Etudiant");
         while (rs.next()){
-            String titre = rs.getString(3);
-            System.out.println(titre);
+            String firstname = rs.getString(2);
+            String lastname = rs.getString(3);
+            System.out.println(firstname);
+            System.out.println(lastname);
         }
 
     }
