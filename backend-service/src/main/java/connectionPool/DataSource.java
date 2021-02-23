@@ -5,13 +5,13 @@ import java.sql.SQLException;
 public class DataSource {
     private static JDBCConnectionPool conn;
 
-    public static Connection getConnection() throws SQLException {
+    public static java.sql.Connection getConnection() throws SQLException {
         conn.createConnection();
         return conn.getConnection();
     }
 
     public static void addConnection(Connection c) {
-        conn.addConnection(c);
+        conn.addConnection((java.sql.Connection) c);
     }
 
     public static void closeConnection() throws SQLException {
