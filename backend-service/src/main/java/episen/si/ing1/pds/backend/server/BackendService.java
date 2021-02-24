@@ -1,5 +1,6 @@
 package episen.si.ing1.pds.backend.server;
 
+import connectionPool.Test;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ public class BackendService {
         if (commandLine.hasOption("maxConnection")){
             maxConnectionV = Integer.parseInt(commandLine.getOptionValue("maxConnection"));
         }
+
         serverLogger.info("BackendService is running (testMode={}), (maxConnection={}). ",inTestMode,maxConnectionV);
 
     }

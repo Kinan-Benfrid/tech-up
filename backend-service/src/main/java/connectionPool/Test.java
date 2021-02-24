@@ -11,6 +11,7 @@ import java.sql.Statement;
 public class Test {
     private Connection c;
 
+
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         Test t = new Test();
         JDBCConnectionPool j = new JDBCConnectionPool();
@@ -24,6 +25,5 @@ public class Test {
             System.out.println(firstname);
             System.out.println(lastname);
         }
-
     }
 }

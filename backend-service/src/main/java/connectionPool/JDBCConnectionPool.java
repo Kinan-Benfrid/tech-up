@@ -29,7 +29,8 @@ public class JDBCConnectionPool {
         }
     }
 
-    public Connection getConnection(){
+
+    protected Connection getConnection(){
         Connection connect = phyicalConnections.get(phyicalConnections.size()-1);
         phyicalConnections.remove(phyicalConnections.get(phyicalConnections.size()-1));
         return connect;
@@ -49,8 +50,11 @@ public class JDBCConnectionPool {
         return phyicalConnections.add(connection);
     }
 
-    public static void main(String[] args) {
 
+
+    // return number of remaining connections
+    public int getSizeArrayConnection(){
+        return phyicalConnections.size();
     }
 
 

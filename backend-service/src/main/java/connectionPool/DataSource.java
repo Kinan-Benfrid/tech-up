@@ -26,4 +26,8 @@ public class DataSource {
             jdbcConnectionPool.closeConnection();
         }
     }
+
+    public static int getNbConnection(){
+        return jdbcConnectionPool.getSizeArrayConnection();
+    }
 }
