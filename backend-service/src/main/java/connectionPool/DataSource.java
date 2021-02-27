@@ -1,20 +1,29 @@
 package connectionPool;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DataSource {
-    private static JDBCConnectionPool conn;
+    private static JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
 
-    public static java.sql.Connection getConnection() throws SQLException {
-        conn.createConnection();
-        return conn.getConnection();
+    public DataSource() throws SQLException, ClassNotFoundException {
+        jdbcConnectionPool.init();
     }
 
-    public static void addConnection(Connection c) {
-        conn.addConnection((java.sql.Connection) c);
+    public static Connection receiveConnection() {
+        synchronized (jdbcConnectionPool) {
+            return jdbcConnectionPool.getConnection();
+        }
+    }
+    public static boolean putConnection(Connection connection) {
+        synchronized (jdbcConnectionPool) {
+            return jdbcConnectionPool.addConnection(connection);
+        }
     }
 
-    public static void closeConnection() throws SQLException {
-        conn.closeAll();
+    public static void closePool() {
+        synchronized (jdbcConnectionPool) {
+            jdbcConnectionPool.closeConnection();
+        }
     }
 }
