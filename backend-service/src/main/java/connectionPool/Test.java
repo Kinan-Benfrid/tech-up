@@ -9,21 +9,34 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Test {
-    private Connection c;
+    private static Connection connect;
+
+    public Test() {
+        JDBCConnectionPool j = new JDBCConnectionPool();
+
+        DataSource ds = null;
+        try {
+            ds = new DataSource();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        connect = DataSource.receiveConnection();
+    }
+    public void Delete() throws SQLException{
+        Statement st = connect.createStatement();
+        int n = st.executeUpdate("Insert into Etudiant(firstname, lastname) values ('Titi', 'Toto')");
+                System.out.println( n + " added lign");
+    }
+
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         Test t = new Test();
-        JDBCConnectionPool j = new JDBCConnectionPool();
-        DataSource ds = new DataSource();
-        t.c= ds.receiveConnection();
-        Statement st = t.c.createStatement();
-        ResultSet rs = st.executeQuery("select * from Etudiant");
-        while (rs.next()){
-            String firstname = rs.getString(2);
-            String lastname = rs.getString(3);
-            System.out.println(firstname);
-            System.out.println(lastname);
-        }
+        t.Delete();
+
+
 
     }
 }
