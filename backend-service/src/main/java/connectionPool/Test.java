@@ -14,9 +14,9 @@ public class Test {
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         Test t = new Test();
-        JDBCConnectionPool j = new JDBCConnectionPool();
-        DataSource ds = new DataSource();
+        DataSource ds = new DataSource(5);
         t.c= ds.receiveConnection();
+        System.out.println(DataSource.getNbConnection());
         Statement st = t.c.createStatement();
         ResultSet rs = st.executeQuery("select * from Etudiant");
         while (rs.next()){

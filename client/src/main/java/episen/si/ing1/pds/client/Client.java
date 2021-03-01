@@ -2,6 +2,8 @@ package episen.si.ing1.pds.client;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import connectionPool.DataSource;
+
 
 public class Client {
     private static final Logger clientLogger = LoggerFactory.getLogger(Client.class.getName()); // we don't use classic logger
@@ -24,7 +26,12 @@ public class Client {
         if (commandLine.hasOption("maxConnection")){
             maxConnectionV = Integer.parseInt(commandLine.getOptionValue("maxConnection"));
         }
+
+        DataSource ds = new DataSource(maxConnectionV);
+
+
         clientLogger.info("Client is running (testMode={}), (maxConnection={}).",inTestMode,maxConnectionV);
+
 
     }
 

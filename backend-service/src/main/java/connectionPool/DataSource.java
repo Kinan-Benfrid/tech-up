@@ -4,27 +4,22 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DataSource {
-    private static JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
+    private static JDBCConnectionPool jdbcConnectionPool;
 
-    public DataSource() throws SQLException, ClassNotFoundException {
-        jdbcConnectionPool.init();
+    public DataSource(int nbConnection) throws SQLException, ClassNotFoundException {
+        jdbcConnectionPool = JDBCConnectionPool.getInstance();
     }
 
     public static Connection receiveConnection() {
-        synchronized (jdbcConnectionPool) {
-            return jdbcConnectionPool.getConnection();
-        }
-    }
-    public static boolean putConnection(Connection connection) {
-        synchronized (jdbcConnectionPool) {
-            return jdbcConnectionPool.addConnection(connection);
-        }
+        return jdbcConnectionPool.getConnection();
     }
 
+    /*public static boolean putConnection(Connection connection) {
+        return jdbcConnectionPool.addConnection(connection);
+    }*/
+
     public static void closePool() {
-        synchronized (jdbcConnectionPool) {
-            jdbcConnectionPool.closeConnection();
-        }
+        jdbcConnectionPool.closeConnection();
     }
 
     public static int getNbConnection(){

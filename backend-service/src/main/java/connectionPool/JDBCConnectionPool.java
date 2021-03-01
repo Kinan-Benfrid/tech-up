@@ -1,8 +1,6 @@
 package connectionPool;
 
-import javax.sql.ConnectionEvent;
-import javax.sql.ConnectionPoolDataSource;
-import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,10 +9,22 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 public class JDBCConnectionPool {
-    private ArrayList<Connection> phyicalConnections = new ArrayList<>();
-    private static final int nbConnection = 100;
+    private ArrayList<Connection> physicalConnections = new ArrayList<>();
+    private int nbConnection;
+    private static JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool(10);
 
-    public void init() throws ClassNotFoundException, SQLException {
+    private JDBCConnectionPool(int nbConnection) {
+        this.nbConnection = nbConnection;
+        try {
+            init(nbConnection);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void init(int nbConnection) throws SQLException, ClassNotFoundException {
         for (int i =0; i<nbConnection; i++){
             Connection connect = null;
             Properties properties = new Properties();
@@ -25,36 +35,41 @@ public class JDBCConnectionPool {
             }
             Class.forName(properties.getProperty("DRIVER_NAME"));
             connect= DriverManager.getConnection(properties.getProperty("DATABASE_URL"), properties.getProperty("user"),properties.getProperty("password"));
-            phyicalConnections.add(connect);
+            physicalConnections.add(connect);
         }
     }
 
-
     protected Connection getConnection(){
-        Connection connect = phyicalConnections.get(phyicalConnections.size()-1);
-        phyicalConnections.remove(phyicalConnections.get(phyicalConnections.size()-1));
-        return connect;
+        Connection connect = physicalConnections.get(physicalConnections.size()-1);
+        synchronized (connect){
+            return connect;
+        }
     }
 
     public void closeConnection(){
-        for (Connection connect : phyicalConnections){
+        for (Connection connect : physicalConnections){
             try {
                 connect.close();
+                connect.notifyAll();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         }
     }
 
-    public boolean addConnection(Connection connection){
-        return phyicalConnections.add(connection);
+    public static JDBCConnectionPool getInstance(){
+        return  jdbcConnectionPool;
     }
+
+    /*public boolean addConnection(Connection connection){
+        return phyicalConnections.add(connection);
+    }*/
 
 
 
     // return number of remaining connections
     public int getSizeArrayConnection(){
-        return phyicalConnections.size();
+        return physicalConnections.size();
     }
 
 
