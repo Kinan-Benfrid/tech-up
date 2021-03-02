@@ -1,16 +1,17 @@
-package episen.si.ing1.pds.client.model;
+package episen.si.ing1.pds.backend.server.Crud;
 
-import connectionPool.DataSource;
+import episen.si.ing1.pds.backend.server.pool.DataSource;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Model {
+public class Crud {
     private Connection c;
 
-    public Model(DataSource ds){
+    public Crud(DataSource ds){
         this.c = ds.receiveConnection();
     }
 
@@ -73,12 +74,14 @@ public class Model {
 
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        DataSource ds = new DataSource();
-        Model m = new Model(ds);
-        m.delete("kinan","Benfrid");
-        m.delete("mehdi","koumad");
-        m.update("?","?","anas","zakaria");
-        System.out.println(m.select());
+        DataSource ds = new DataSource(5);
+        DataSource ds2 = new DataSource(8);
+        System.out.println();
+        Crud crud = new Crud(ds);
+        Connection c = ds.receiveConnection();
+        ds.closePool();
+
+
 
 
 

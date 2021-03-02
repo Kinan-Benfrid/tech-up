@@ -1,9 +1,15 @@
-package connectionPool;
+package episen.si.ing1.pds.backend.server.pool;
+
+import episen.si.ing1.pds.backend.server.pool.JDBCConnectionPool;
 
 import java.sql.Connection;
 
 public class DataSource {
-    private JDBCConnectionPool jdbcConnectionPool = JDBCConnectionPool.getInstance();
+    private JDBCConnectionPool jdbcConnectionPool ;
+
+    public DataSource(int nbConnection){
+        jdbcConnectionPool = JDBCConnectionPool.getInstance(nbConnection);
+    }
 
     public Connection receiveConnection() {
         return jdbcConnectionPool.getConnection();
@@ -22,6 +28,6 @@ public class DataSource {
     }
 
     public JDBCConnectionPool getJdbcConnectionPool (){
-        return  jdbcConnectionPool;
+        return jdbcConnectionPool;
     }
 }
