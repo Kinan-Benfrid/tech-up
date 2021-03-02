@@ -27,11 +27,11 @@ class CrudSelect {
                 {
 
                     String name = rs.getString("Firstname");
-                    //String surname = rs.getString("Lastname");
-                    //int idUser = rs.getInt("id");
-                   // System.out.println(idUser );
+                    String surname = rs.getString("Lastname");
+                    int idUser = rs.getInt("id");
+                   System.out.println(idUser );
                     System.out.println(name );
-                    //System.out.println(surname);
+                    System.out.println(surname);
 
                 }
                 c.close();
