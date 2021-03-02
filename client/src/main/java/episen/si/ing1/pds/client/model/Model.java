@@ -60,15 +60,24 @@ public class Model {
         }
     }
 
-    public void update(){
-
+    public void update(String firstName, String lastName, String newFirstName, String newLastName){
+        int nbLinesUpdated = 0;
+        try {
+            Statement statement = c.createStatement();
+            nbLinesUpdated = statement.executeUpdate("UPDATE Etudiant SET firstname= '"+newFirstName+"', lastname = '"+newLastName+"' WHERE firstname = '"+firstName+"' and lastname = '"+lastName+"'");
+            System.out.println("Result of the request : " + nbLinesUpdated + " line(s) updated");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
+
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         DataSource ds = new DataSource();
         Model m = new Model(ds);
         m.delete("kinan","Benfrid");
         m.delete("mehdi","koumad");
+        m.update("?","?","anas","zakaria");
         System.out.println(m.select());
 
 

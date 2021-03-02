@@ -1,10 +1,14 @@
 package episen.si.ing1.pds.client.controller;
 
-import java.sql.Connection;
+import connectionPool.DataSource;
+import episen.si.ing1.pds.client.model.Model;
+
 
 public class Controller {
-    // faire les methiodes qui utilisent celle du model donc avec des connection en parametre
-    public void control(Connection c){
+    private Model model;
+
+
+    public void control(DataSource ds){
 
     }
 

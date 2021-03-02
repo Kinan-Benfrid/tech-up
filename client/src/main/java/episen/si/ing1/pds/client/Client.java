@@ -1,8 +1,11 @@
 package episen.si.ing1.pds.client;
+import episen.si.ing1.pds.client.controller.Controller;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import connectionPool.DataSource;
+
+import javax.naming.ldap.Control;
 
 
 public class Client {
@@ -28,6 +31,9 @@ public class Client {
         }
 
         DataSource ds = new DataSource();
+
+        Controller controller = new Controller();
+        controller.control(ds);
 
 
         clientLogger.info("Client is running (testMode={}), (maxConnection={}).",inTestMode,maxConnectionV);
