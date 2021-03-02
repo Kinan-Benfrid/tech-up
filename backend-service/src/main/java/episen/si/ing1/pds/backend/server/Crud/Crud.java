@@ -3,6 +3,7 @@ package episen.si.ing1.pds.backend.server.Crud;
 import episen.si.ing1.pds.backend.server.pool.DataSource;
 
 import javax.xml.crypto.Data;
+import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -74,11 +75,12 @@ public class Crud {
 
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        DataSource ds = new DataSource(5);
-        DataSource ds2 = new DataSource(8);
-        System.out.println();
+        DataSource ds = new DataSource(8);
+        System.out.println(ds.getNbConnection());
+        System.out.println(ds.getJdbcConnectionPool());
         Crud crud = new Crud(ds);
         Connection c = ds.receiveConnection();
+        Connection c1 = ds.receiveConnection();
         ds.closePool();
 
 

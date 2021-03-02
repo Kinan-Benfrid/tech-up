@@ -9,29 +9,26 @@ import java.util.Properties;
 
 public class JDBCConnectionPool {
     private ArrayList<Connection> physicalConnections;
-    private static String driverName;
-    private static String dataBaseUrl;
-    private static String user;
-    private static String password;
-    private int max_Connection = 3;
-
-    private JDBCConnectionPool(int nbConnection) {
+    private String driverName;
+    private String dataBaseUrl;
+    private String user;
+    private String password;
+    private int max_Connection;
+    public JDBCConnectionPool() {
         driverName = PropertiesReader.Instance.DRIVERNAME;
         dataBaseUrl = PropertiesReader.Instance.DATABASEURL;
         user = PropertiesReader.Instance.USER;
         password = PropertiesReader.Instance.PASSWORD;
         physicalConnections = new ArrayList<>();
-        max_Connection = nbConnection;
-        init();
     }
 
-    public void init() {
+    public void init(int nbConnection) {
+        max_Connection = nbConnection;
         try {
             Class.forName(driverName);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println(max_Connection + "maxconnection");
         for (int i = 0; i < max_Connection; i++) {
             Connection connect = null;
             try {
@@ -72,9 +69,9 @@ public class JDBCConnectionPool {
     }
 
 
-    public static JDBCConnectionPool getInstance(int nbConnection) {
-        return new JDBCConnectionPool(nbConnection);
-    }
+    /*public static JDBCConnectionPool getInstance(int nbConnection) {
+        return null;
+    }*/
 
     public boolean addConnection(Connection connection) {
         if (physicalConnections.size() == max_Connection) {

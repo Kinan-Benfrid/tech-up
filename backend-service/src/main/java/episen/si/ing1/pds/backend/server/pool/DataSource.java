@@ -8,7 +8,8 @@ public class DataSource {
     private JDBCConnectionPool jdbcConnectionPool ;
 
     public DataSource(int nbConnection){
-        jdbcConnectionPool = JDBCConnectionPool.getInstance(nbConnection);
+        System.out.println("hello in data source");
+        jdbcConnectionPool = PoolSingleton.Instance.getInstance(nbConnection);
     }
 
     public Connection receiveConnection() {
