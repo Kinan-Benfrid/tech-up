@@ -34,7 +34,7 @@ public class Test {
         try{
             st = c.createStatement();
             ResultSet rs;
-            rs = st.executeQuery("SELECT Firstname FROM Etudiant");
+            rs = st.executeQuery("SELECT * FROM Etudiant");
             while (true) {
                 if (!rs.next()) break;
                 {
