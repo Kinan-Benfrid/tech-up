@@ -1,23 +1,9 @@
 package connectionPool;
 
-import javax.swing.*;
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Properties;
 
 public class DataSource {
     private JDBCConnectionPool jdbcConnectionPool = JDBCConnectionPool.getInstance();
-
-    public DataSource() throws SQLException, ClassNotFoundException {
-        Properties properties = new Properties();
-        try {
-            properties.load(JDBCConnectionPool.class.getClassLoader().getResourceAsStream("Connection.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        jdbcConnectionPool.init();
-    }
 
     public Connection receiveConnection() {
         return jdbcConnectionPool.getConnection();

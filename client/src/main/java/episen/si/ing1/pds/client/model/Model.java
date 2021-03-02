@@ -10,7 +10,11 @@ import java.sql.Statement;
 public class Model {
     private Connection c;
 
-    public String select(Connection c){
+    public Model(DataSource ds){
+        this.c = ds.receiveConnection();
+    }
+
+    public String select(){
       StringBuilder resultQuery = new StringBuilder();
       Statement statement;
       try {
@@ -34,28 +38,40 @@ public class Model {
       return resultQuery.toString();
     }
 
-    public void insert(Connection c){
-
+    public void insert(String firstName, String lastName){
+        int nbLinesAdded = 0;
+        try {
+            Statement statement = c.createStatement();
+            nbLinesAdded = statement.executeUpdate("INSERT INTO Etudiant (firstname, lastname) VALUES ('"+firstName+"', '"+lastName+"' )");
+            System.out.println("Result of the request : " + nbLinesAdded + " line(s) added");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
-    public void delete(Connection c){
-
+    public void delete(String firstName, String lastName){
+        int nbLinesDeleted = 0;
+        try {
+            Statement statement = c.createStatement();
+            nbLinesDeleted = statement.executeUpdate("DELETE FROM Etudiant WHERE firstname= '"+firstName+"' and lastname = '"+lastName+"' ");
+            System.out.println("Result of the request : " + nbLinesDeleted + " line(s) deleted");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
-    public void update(Connection c){
+    public void update(){
 
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         DataSource ds = new DataSource();
-        DataSource ds2 = new DataSource();
+        Model m = new Model(ds);
+        m.delete("kinan","Benfrid");
+        m.delete("mehdi","koumad");
+        System.out.println(m.select());
 
-        System.out.println(ds.getJdbcConnectionPool());
-        System.out.println(ds2.getJdbcConnectionPool());
-        Connection c = ds.receiveConnection();
-        System.out.println(ds.getNbConnection());
-        Model m = new Model();
-        System.out.println(m.select(c));
+
 
     }
 

@@ -29,29 +29,33 @@ public class JDBCConnectionPool {
             user = properties.getProperty("USER");
             password = properties.getProperty("PASSWORD");
             max_Connection = Integer.valueOf(properties.getProperty("MAX_CONNECTION"));
+            init();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void init() {
-            try {
-                Class.forName(driverName);
-            } catch (ClassNotFoundException e) {
+        try {
+            Class.forName(driverName);
+        } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+        }
+        for (int i =0; i<max_Connection; i++){
+            Connection connect = null;
+            try {
+                connect = DriverManager.getConnection(dataBaseUrl, user,password);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
-            for (int i =0; i<max_Connection; i++){
-                Connection connect = null;
-                try {
-                    connect = DriverManager.getConnection(dataBaseUrl, user,password);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-                physicalConnections.add(connect);
+            physicalConnections.add(connect);
         }
     }
 
-    protected Connection getConnection(){
+    public Connection getConnection(){
+        if (physicalConnections.size()==0){
+            System.out.println("No more connections available");
+        }
         Connection connect = physicalConnections.get(physicalConnections.size()-1);
         physicalConnections.remove(physicalConnections.get(physicalConnections.size()-1));
         return connect;
@@ -67,12 +71,16 @@ public class JDBCConnectionPool {
         }
     }
 
-    public static JDBCConnectionPool getInstance(){
 
+    public static JDBCConnectionPool getInstance(){
         return jdbcConnectionPool;
     }
 
     public boolean addConnection(Connection connection){
+        if (physicalConnections.size()==max_Connection){
+            System.out.println("Can't add connection");
+            return false;
+        }
         return physicalConnections.add(connection);
     }
 

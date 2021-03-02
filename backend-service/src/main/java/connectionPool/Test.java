@@ -1,8 +1,5 @@
 package connectionPool;
 
-
-
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
