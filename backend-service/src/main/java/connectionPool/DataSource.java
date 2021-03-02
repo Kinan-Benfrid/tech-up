@@ -1,28 +1,41 @@
 package connectionPool;
 
+import javax.swing.*;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DataSource {
-    private static JDBCConnectionPool jdbcConnectionPool;
+    private JDBCConnectionPool jdbcConnectionPool = JDBCConnectionPool.getInstance();
 
-    public DataSource(int nbConnection) throws SQLException, ClassNotFoundException {
-        jdbcConnectionPool = JDBCConnectionPool.getInstance();
+    public DataSource() throws SQLException, ClassNotFoundException {
+        Properties properties = new Properties();
+        try {
+            properties.load(JDBCConnectionPool.class.getClassLoader().getResourceAsStream("Connection.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        jdbcConnectionPool.init();
     }
 
-    public static Connection receiveConnection() {
+    public Connection receiveConnection() {
         return jdbcConnectionPool.getConnection();
     }
 
-    /*public static boolean putConnection(Connection connection) {
+    public boolean putConnection(Connection connection) {
         return jdbcConnectionPool.addConnection(connection);
-    }*/
+    }
 
-    public static void closePool() {
+    public void closePool() {
         jdbcConnectionPool.closeConnection();
     }
 
-    public static int getNbConnection(){
+    public int getNbConnection(){
         return jdbcConnectionPool.getSizeArrayConnection();
+    }
+
+    public JDBCConnectionPool getJdbcConnectionPool (){
+        return  jdbcConnectionPool;
     }
 }

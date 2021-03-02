@@ -1,6 +1,8 @@
 package connectionPool;
 
 
+
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,47 +12,55 @@ import java.util.Properties;
 
 public class JDBCConnectionPool {
     private ArrayList<Connection> physicalConnections = new ArrayList<>();
-    private int nbConnection;
-    private static JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool(10);
+    private static JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool() ;
+    private static String driverName;
+    private static String dataBaseUrl;
+    private static String user;
+    private static String password;
+    private static int max_Connection;
 
-    private JDBCConnectionPool(int nbConnection) {
-        this.nbConnection = nbConnection;
+
+    private JDBCConnectionPool() {
+        Properties properties = new Properties();
         try {
-            init(nbConnection);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
+            properties.load(JDBCConnectionPool.class.getClassLoader().getResourceAsStream("Connection.properties")); //load connection.properties file to retreive DataBase parameters
+            driverName = properties.getProperty("DRIVER_NAME");
+            dataBaseUrl = properties.getProperty("DATABASE_URL");
+            user = properties.getProperty("USER");
+            password = properties.getProperty("PASSWORD");
+            max_Connection = Integer.valueOf(properties.getProperty("MAX_CONNECTION"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void init(int nbConnection) throws SQLException, ClassNotFoundException {
-        for (int i =0; i<nbConnection; i++){
-            Connection connect = null;
-            Properties properties = new Properties();
+    public void init() {
             try {
-                properties.load(JDBCConnectionPool.class.getClassLoader().getResourceAsStream("Connection.properties")); //load connection.properties file to retreive DataBase parameters
-            } catch (IOException e) {
+                Class.forName(driverName);
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            Class.forName(properties.getProperty("DRIVER_NAME"));
-            connect= DriverManager.getConnection(properties.getProperty("DATABASE_URL"), properties.getProperty("user"),properties.getProperty("password"));
-            physicalConnections.add(connect);
+            for (int i =0; i<max_Connection; i++){
+                Connection connect = null;
+                try {
+                    connect = DriverManager.getConnection(dataBaseUrl, user,password);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                physicalConnections.add(connect);
         }
     }
 
     protected Connection getConnection(){
         Connection connect = physicalConnections.get(physicalConnections.size()-1);
-        synchronized (connect){
-            return connect;
-        }
+        physicalConnections.remove(physicalConnections.get(physicalConnections.size()-1));
+        return connect;
     }
 
     public void closeConnection(){
         for (Connection connect : physicalConnections){
             try {
                 connect.close();
-                connect.notifyAll();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -58,12 +68,13 @@ public class JDBCConnectionPool {
     }
 
     public static JDBCConnectionPool getInstance(){
-        return  jdbcConnectionPool;
+
+        return jdbcConnectionPool;
     }
 
-    /*public boolean addConnection(Connection connection){
-        return phyicalConnections.add(connection);
-    }*/
+    public boolean addConnection(Connection connection){
+        return physicalConnections.add(connection);
+    }
 
 
 

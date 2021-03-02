@@ -27,7 +27,7 @@ public class Client {
             maxConnectionV = Integer.parseInt(commandLine.getOptionValue("maxConnection"));
         }
 
-        DataSource ds = new DataSource(maxConnectionV);
+        DataSource ds = new DataSource();
 
 
         clientLogger.info("Client is running (testMode={}), (maxConnection={}).",inTestMode,maxConnectionV);
