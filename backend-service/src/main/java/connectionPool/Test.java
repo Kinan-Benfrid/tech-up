@@ -30,6 +30,29 @@ public class Test {
             System.err.println(e.getMessage());
         }
     }
+    public void Select() throws SQLException { // insert function select
+        try{
+            st = c.createStatement();
+            ResultSet rs;
+            rs = st.executeQuery("SELECT Firstname FROM Etudiant");
+            while (true) {
+                if (!rs.next()) break;
+                {
+                    String name = rs.getString("Firstname");
+                    String surname = rs.getString("Lastname");
+                    int idUser = rs.getInt("id");
+                    System.out.println(idUser );
+                    System.out.println(name );
+                    System.out.println(surname);
+                }
+                c.close();
+            }
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+
+    }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         Test t = new Test();
@@ -45,5 +68,6 @@ public class Test {
             System.out.println(lastname);
         }
         t.Insert();
+        t.Select();
     }
 }
