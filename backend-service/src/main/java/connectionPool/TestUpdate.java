@@ -10,16 +10,17 @@ public class TestUpdate {
     private Connection c;
 
     // function update data
-    public void updateData(int id_user) throws SQLException{
+    public void updateData(int id_user, String name, String surname) throws SQLException{
         Connection c=null;
         try{
             Statement stmt=null;
             stmt =c.createStatement();
-            ResultSet rs= stmt.executeQuery("update nom from Etudiant set nom=? prenom=? where id=id_user");
+            ResultSet rs= stmt.executeQuery("update nom from Etudiant set nom="+name+" prenom="+surname+" where nom="+name+" surname="+surname+"");
 
         while(true){
              System.out.println("data has been modify");                    
          }
+         
         
     } catch(Exception e){
         System.out.println(e.getMessage());
@@ -34,6 +35,7 @@ public class TestUpdate {
             t.updateData(id_userse);
             
             }
+            
     }
     
 
