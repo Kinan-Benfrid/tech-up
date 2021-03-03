@@ -2,22 +2,20 @@ package connectionPool;
 
 
 
-import javax.xml.crypto.Data;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Test {
+public class Crud {
     private Connection c;
     private Statement st;
-    private DataSource ds;
+    private final DataSource ds;
 
-    public Test() throws SQLException, ClassNotFoundException {
+    public Crud() throws SQLException, ClassNotFoundException {
 
         ds= new DataSource();
-        c=ds.receiveConnection();
+        c= DataSource.receiveConnection();
         st=c.createStatement();
     }
     public void Insert() throws SQLException { //insert function
@@ -54,11 +52,24 @@ public class Test {
 
     }
 
+
+    public void Delete(){
+        try {
+            int n = st.executeUpdate("Delete from Etudiant where firstname = '?' and lastname = '?' ");
+            System.out.println(n + " deleted lign");
+        } catch (SQLException e) {
+            System.err.println("error");
+            System.err.println(e.getMessage());
+        }
+    }
+
+
+
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        Test t = new Test();
+        Crud t = new Crud();
         JDBCConnectionPool j = new JDBCConnectionPool();
         DataSource ds = new DataSource();
-        t.c= ds.receiveConnection();
+        t.c= DataSource.receiveConnection();
         Statement st = t.c.createStatement();
         ResultSet rs = st.executeQuery("select * from Etudiant"); // sql request for test
         while (rs.next()){
