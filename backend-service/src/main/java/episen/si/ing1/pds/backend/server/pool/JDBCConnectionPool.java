@@ -14,6 +14,7 @@ public class JDBCConnectionPool {
     private String user;
     private String password;
     private int max_Connection;
+
     public JDBCConnectionPool() {
         driverName = PropertiesReader.Instance.DRIVERNAME;
         dataBaseUrl = PropertiesReader.Instance.DATABASEURL;
@@ -40,14 +41,13 @@ public class JDBCConnectionPool {
         }
     }
 
-    // if a client
+    // if a client want a connction and there are no more, he must wait for another client to close his connection
     public Connection getConnection() {
-        System.out.println("df" + physicalConnections.size());
         while (true) {
             synchronized (physicalConnections) {
                 if (physicalConnections.size() == 0) {
                     try {
-                        wait();
+                        physicalConnections.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -69,18 +69,12 @@ public class JDBCConnectionPool {
     }
 
 
-    /*public static JDBCConnectionPool getInstance(int nbConnection) {
-        return null;
-    }*/
-
     public boolean addConnection(Connection connection) {
         if (physicalConnections.size() == max_Connection) {
             System.out.println("Can't add connection");
             return false;
         }
-        synchronized (physicalConnections) {
-            return physicalConnections.add(connection);
-        }
+        return physicalConnections.add(connection);
     }
 
 
