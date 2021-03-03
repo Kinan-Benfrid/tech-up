@@ -3,20 +3,23 @@ package episen.si.ing1.pds.backend.server.model;
 import episen.si.ing1.pds.backend.server.pool.DataSource;
 
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Crud {
-    private final Connection c;
+    private DataSource ds;
 
     public Crud(DataSource ds) {
-        this.c = ds.receiveConnection();
+        this.ds = ds;
     }
 
+    // This Class permits to execute the CRUD operations (create, read, update, delete)
+    // For every method of this class, we recover a connection of the ConnectionPool and
+    // once the operation is completed, it is put back into the Connectionpool
     public String select() {
+        Connection c = ds.receiveConnection();
         StringBuilder resultQuery = new StringBuilder();
         Statement statement;
         try {
@@ -30,17 +33,13 @@ public class Crud {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } finally {
-            try {
-                c.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
         }
+        ds.putConnection(c);
         return resultQuery.toString();
     }
 
     public void insert(String firstName, String lastName) {
+        Connection c = ds.receiveConnection();
         int nbLinesAdded = 0;
         try {
             Statement statement = c.createStatement();
@@ -49,9 +48,11 @@ public class Crud {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        ds.putConnection(c);
     }
 
     public void delete(String firstName, String lastName) {
+        Connection c = ds.receiveConnection();
         int nbLinesDeleted = 0;
         try {
             Statement statement = c.createStatement();
@@ -60,9 +61,12 @@ public class Crud {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        ds.putConnection(c);
+        c = null;
     }
 
     public void update(String firstName, String lastName, String newFirstName, String newLastName) {
+        Connection c = ds.receiveConnection();
         int nbLinesUpdated = 0;
         try {
             Statement statement = c.createStatement();
@@ -71,14 +75,17 @@ public class Crud {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        ds.putConnection(c);
+        c = null;
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         DataSource ds = new DataSource(8);
-        System.out.println(ds.getNbConnection());
+        DataSource ds2 = new DataSource(4);
+        System.out.println(ds.getJdbcConnectionPool());
         System.out.println(ds.getJdbcConnectionPool());
         Crud crud = new Crud(ds);
-
+        System.out.println(crud.select());
         ds.closePool();
     }
 

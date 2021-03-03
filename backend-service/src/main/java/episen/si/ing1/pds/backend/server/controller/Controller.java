@@ -58,6 +58,9 @@ public class Controller {
                     crud.update(firstName, lastName, newFirstName, newLastName);
                     view.showView();
                     break;
+                default:
+                    view.showView();
+                    break;
             }
             response = sc.nextLine();
         }

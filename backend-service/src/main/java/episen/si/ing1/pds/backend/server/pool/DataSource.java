@@ -5,7 +5,7 @@ import episen.si.ing1.pds.backend.server.pool.JDBCConnectionPool;
 import java.sql.Connection;
 
 public class DataSource {
-    private JDBCConnectionPool jdbcConnectionPool ;
+    private static JDBCConnectionPool jdbcConnectionPool ;
 
     public DataSource(int nbConnection){
         jdbcConnectionPool = PoolSingleton.Instance.getInstance(nbConnection);

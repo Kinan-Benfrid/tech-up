@@ -1,11 +1,11 @@
 package episen.si.ing1.pds.backend.server.pool;
 
-import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Properties;
+
 
 public class JDBCConnectionPool {
     private ArrayList<Connection> physicalConnections;
@@ -23,6 +23,10 @@ public class JDBCConnectionPool {
         physicalConnections = new ArrayList<>();
     }
 
+    /**
+     * this method initi
+     * @param nbConnection is the maximum number of connections you can have in the list. This number is chosen at runtime with the maxConnection argument.
+     */
     public void init(int nbConnection) {
         max_Connection = nbConnection;
         try {
@@ -42,6 +46,7 @@ public class JDBCConnectionPool {
     }
 
     // if a client want a connction and there are no more, he must wait for another client to close his connection
+    // Synchronisation is done at the level of the connection list.
     public Connection getConnection() {
         while (true) {
             synchronized (physicalConnections) {
