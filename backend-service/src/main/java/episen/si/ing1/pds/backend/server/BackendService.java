@@ -21,7 +21,7 @@ public class BackendService {
         final CommandLineParser parser = new DefaultParser();
         final CommandLine commandLine = parser.parse(options, args);
         int maxConnectionV = 10;
-        boolean inTestMode = true;
+        boolean inTestMode = false;
         if (commandLine.hasOption("testMode")) {
             inTestMode = true;
         }
