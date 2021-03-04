@@ -24,7 +24,7 @@ public class JDBCConnectionPool {
     }
 
     /**
-     * this method initi
+     * this method initilizes the list by adding Connection in the list
      * @param nbConnection is the maximum number of connections you can have in the list. This number is chosen at runtime with the maxConnection argument.
      */
     public void init(int nbConnection) {

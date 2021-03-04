@@ -16,6 +16,7 @@ public class Controller {
         this.view = view;
     }
 
+
     public void control(DataSource ds) {
         view.showView();
         Scanner sc = new Scanner(System.in);
