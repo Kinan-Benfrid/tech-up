@@ -79,15 +79,5 @@ public class Crud {
         c = null;
     }
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        DataSource ds = new DataSource(8);
-        DataSource ds2 = new DataSource(4);
-        System.out.println(ds.getJdbcConnectionPool());
-        System.out.println(ds.getJdbcConnectionPool());
-        Crud crud = new Crud(ds);
-        System.out.println(crud.select());
-        ds.closePool();
-    }
-
 
 }

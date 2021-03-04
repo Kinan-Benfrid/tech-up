@@ -16,8 +16,7 @@ public class Controller {
         this.view = view;
     }
 
-
-    public void control(DataSource ds) {
+    public void control() {
         view.showView();
         Scanner sc = new Scanner(System.in);
         String response = sc.nextLine();
@@ -32,7 +31,7 @@ public class Controller {
                     System.out.println("Please, enter a firstname and lastname to insert a line \n");
                     System.out.println("Firstname : ");
                     firstName = sc.nextLine();
-                    System.out.println("\n Lastname : ");
+                    System.out.println("\nLastname : ");
                     lastName = sc.nextLine();
                     crud.insert(firstName, lastName);
                     view.showView();
@@ -41,7 +40,7 @@ public class Controller {
                     System.out.println("Please, enter a firstname and lastname to delete \n");
                     System.out.println("Firstname : ");
                     firstName = sc.nextLine();
-                    System.out.println("\n Lastname : ");
+                    System.out.println("\nLastname : ");
                     lastName = sc.nextLine();
                     crud.delete(firstName, lastName);
                     view.showView();
@@ -50,11 +49,11 @@ public class Controller {
                     System.out.println("Please, enter the firstname and lastname you want to change, then enter the new values: \n");
                     System.out.println("First Name : ");
                     firstName = sc.nextLine();
-                    System.out.println("\n Last Name : ");
+                    System.out.println("\nLast Name : ");
                     lastName = sc.nextLine();
-                    System.out.println("\n New First Name : ");
+                    System.out.println("\nNew First Name : ");
                     newFirstName = sc.nextLine();
-                    System.out.println("\n New Last Name : ");
+                    System.out.println("\nNew Last Name : ");
                     newLastName = sc.nextLine();
                     crud.update(firstName, lastName, newFirstName, newLastName);
                     view.showView();

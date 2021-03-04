@@ -33,7 +33,7 @@ public class BackendService {
             Crud crud = new Crud(ds);
             View view = new View();
             Controller controller = new Controller(crud, view);
-            controller.control(ds);
+            controller.control();
         }
 
 
