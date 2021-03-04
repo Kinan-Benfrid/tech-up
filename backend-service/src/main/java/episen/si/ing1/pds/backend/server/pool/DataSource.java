@@ -1,12 +1,14 @@
 package episen.si.ing1.pds.backend.server.pool;
 
-import episen.si.ing1.pds.backend.server.pool.JDBCConnectionPool;
-
 import java.sql.Connection;
 
 public class DataSource {
     private static JDBCConnectionPool jdbcConnectionPool ;
 
+    /**
+     * initializes the jdbcConnectionPool object
+     * @param nbConnection
+     */
     public DataSource(int nbConnection){
         jdbcConnectionPool = PoolSingleton.Instance.getInstance(nbConnection);
     }

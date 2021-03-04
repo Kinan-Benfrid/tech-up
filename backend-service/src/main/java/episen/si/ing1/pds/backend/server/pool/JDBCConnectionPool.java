@@ -1,6 +1,10 @@
 package episen.si.ing1.pds.backend.server.pool;
 
 
+import episen.si.ing1.pds.backend.server.BackendService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,9 +18,13 @@ public class JDBCConnectionPool {
     private String user;
     private String password;
     private int max_Connection;
+    private static final Logger logger = LoggerFactory.getLogger(JDBCConnectionPool.class.getName());
 
+    /**
+     * This constructor uses PropertiesReader to retrieve database parameters
+     */
     public JDBCConnectionPool() {
-        driverName = PropertiesReader.Instance.DRIVERNAME;
+        driverName = PropertiesReader.Instance.DRIVERNAME ;
         dataBaseUrl = PropertiesReader.Instance.DATABASEURL;
         user = PropertiesReader.Instance.USER;
         password = PropertiesReader.Instance.PASSWORD;
@@ -45,8 +53,11 @@ public class JDBCConnectionPool {
         }
     }
 
-    // if a client want a connection and there are no more, he must wait for another client to close his connection
-    // Synchronisation is done at the level of the connection list.
+    /**
+     * if a client want a connection and there are no more, he must wait for another client to close his connection
+     * Synchronisation is done at the level of the connection list.
+     * @return a Connection for the Client
+     */
     public Connection getConnection() {
         while (true) {
             synchronized (physicalConnections) {
@@ -63,6 +74,9 @@ public class JDBCConnectionPool {
         }
     }
 
+    /**
+     * Close every connection of the list of connections
+     */
     public void closeConnection() {
         for (Connection connect : physicalConnections) {
             try {
@@ -73,17 +87,24 @@ public class JDBCConnectionPool {
         }
     }
 
-
+    /**
+     *
+     * @param connection the client used
+     * @return
+     */
     public boolean addConnection(Connection connection) {
         if (physicalConnections.size() == max_Connection) {
-            System.out.println("Can't add connection");
+            logger.info("Cant add connection");
             return false;
         }
         return physicalConnections.add(connection);
     }
 
 
-    // return number of remaining connections
+    /**
+     *
+     * @return number of remaining connections
+     */
     public int getSizeArrayConnection() {
         return physicalConnections.size();
     }

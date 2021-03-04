@@ -3,7 +3,9 @@ package episen.si.ing1.pds.backend.server.pool;
 import java.io.IOException;
 import java.util.Properties;
 
-
+/**
+ * There is no need to read many times Connection.properties file.
+ */
 public enum PropertiesReader {
     Instance;
     String DRIVERNAME;
