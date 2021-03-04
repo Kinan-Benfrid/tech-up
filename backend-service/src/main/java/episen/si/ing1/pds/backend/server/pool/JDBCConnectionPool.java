@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 
 public class JDBCConnectionPool {
-    private final ArrayList<Connection> physicalConnections;
-    private final String driverName;
-    private final String dataBaseUrl;
-    private final String user;
-    private final String password;
+    private ArrayList<Connection> physicalConnections;
+    private String driverName;
+    private String dataBaseUrl;
+    private String user;
+    private String password;
     private int max_Connection;
 
     public JDBCConnectionPool() {

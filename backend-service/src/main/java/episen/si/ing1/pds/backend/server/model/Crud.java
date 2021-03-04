@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Crud {
-    private final DataSource ds;
+    private DataSource ds;
 
     public Crud(DataSource ds) {
         this.ds = ds;
