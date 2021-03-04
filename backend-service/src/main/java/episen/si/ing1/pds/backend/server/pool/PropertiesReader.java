@@ -13,7 +13,7 @@ public enum PropertiesReader {
     PropertiesReader(){
         Properties properties = new Properties();
         try {
-            //load connection.properties file to retreive DataBase parameters
+            //load connection.properties file to retrieve DataBase parameters
             properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("Connection.properties"));
             DRIVERNAME = properties.getProperty("DRIVER_NAME");
             DATABASEURL = properties.getProperty("DATABASE_URL");

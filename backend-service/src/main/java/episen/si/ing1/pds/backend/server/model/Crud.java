@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Crud {
-    private DataSource ds;
+    private final DataSource ds;
 
     public Crud(DataSource ds) {
         this.ds = ds;
@@ -17,7 +17,7 @@ public class Crud {
 
     // This Class permits to execute the CRUD operations (create, read, update, delete)
     // For every method of this class, we recover a connection of the ConnectionPool and
-    // once the operation is completed, it is put back into the Connectionpool
+    // once the operation is completed, it is put back into the ConnectionPool
     public String select() {
         Connection c = ds.receiveConnection();
         StringBuilder resultQuery = new StringBuilder();
