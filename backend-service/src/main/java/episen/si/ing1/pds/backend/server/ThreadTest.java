@@ -15,7 +15,7 @@ public class ThreadTest {
             public void run() {
                 Connection c = ds.receiveConnection();
                 long currenttime = System.currentTimeMillis();
-                while(System.currentTimeMillis() - currenttime <1000){}
+                while(System.currentTimeMillis() - currenttime <7000){}
                 ds.putConnection(c);
                 threadLogger.info("Number of connection in the pool after Thread1 request :" + ds.getNbConnection());
             }
@@ -25,7 +25,7 @@ public class ThreadTest {
             public void run() {
                 Connection c = ds.receiveConnection();
                 long currenttime = System.currentTimeMillis();
-                while(System.currentTimeMillis() - currenttime <1000){}
+                while(System.currentTimeMillis() - currenttime <7000){}
                 ds.putConnection(c);
                 threadLogger.info("Number of connection in the pool after Thread2 request :" + ds.getNbConnection());
             }
@@ -35,7 +35,7 @@ public class ThreadTest {
             public void run() {
                 Connection c = ds.receiveConnection();
                 long currenttime = System.currentTimeMillis();
-                while(System.currentTimeMillis() - currenttime <1000){}
+                while(System.currentTimeMillis() - currenttime <7000){}
                 ds.putConnection(c);
                 threadLogger.info("Number of connection in the pool after Thread3 request : " + ds.getNbConnection());
             }

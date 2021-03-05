@@ -62,7 +62,7 @@ public class JDBCConnectionPool {
             synchronized (physicalConnections) {
                 if (physicalConnections.size() == 0) {
                     try {
-                        physicalConnections.wait(500);
+                        physicalConnections.wait(5000);
                         logger.info("Creation of a new Connection");
                         return DriverManager.getConnection(PropertiesReader.Instance.DATABASEURL,PropertiesReader.Instance.USER, PropertiesReader.Instance.PASSWORD);
                     } catch (InterruptedException e) {
