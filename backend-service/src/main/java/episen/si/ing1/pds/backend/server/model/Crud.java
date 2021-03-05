@@ -3,6 +3,7 @@ package episen.si.ing1.pds.backend.server.model;
 import episen.si.ing1.pds.backend.server.pool.DataSource;
 
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -62,7 +63,6 @@ public class Crud {
             throwables.printStackTrace();
         }
         ds.putConnection(c);
-        c = null;
     }
 
     public void update(String firstName, String lastName, String newFirstName, String newLastName) {
@@ -76,8 +76,6 @@ public class Crud {
             throwables.printStackTrace();
         }
         ds.putConnection(c);
-        c = null;
     }
-
 
 }

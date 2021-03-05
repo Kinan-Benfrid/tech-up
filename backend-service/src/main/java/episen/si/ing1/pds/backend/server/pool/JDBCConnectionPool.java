@@ -1,7 +1,6 @@
 package episen.si.ing1.pds.backend.server.pool;
 
 
-import episen.si.ing1.pds.backend.server.BackendService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +53,7 @@ public class JDBCConnectionPool {
     }
 
     /**
-     * if a client want a connection and there are no more, he must wait for another client to close his connection
+     * if a client want a connection and there are no more, he will wait, and if after that there is still no connection, we create a connection and give it to the client.
      * Synchronisation is done at the level of the connection list.
      * @return a Connection for the Client
      */
@@ -63,9 +62,13 @@ public class JDBCConnectionPool {
             synchronized (physicalConnections) {
                 if (physicalConnections.size() == 0) {
                     try {
-                        physicalConnections.wait();
+                        physicalConnections.wait(500);
+                        logger.info("Creation of a new Connection");
+                        return DriverManager.getConnection(PropertiesReader.Instance.DATABASEURL,PropertiesReader.Instance.USER, PropertiesReader.Instance.PASSWORD);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
                     }
                 } else {
                     return physicalConnections.remove(0);
@@ -93,13 +96,11 @@ public class JDBCConnectionPool {
      * @return
      */
     public boolean addConnection(Connection connection) {
-        if (physicalConnections.size() == max_Connection) {
-            logger.info("Cant add connection");
-            return false;
+        synchronized (physicalConnections){
+            physicalConnections.notifyAll();
+            return physicalConnections.add(connection);
         }
-        return physicalConnections.add(connection);
     }
-
 
     /**
      *

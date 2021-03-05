@@ -1,7 +1,6 @@
 package episen.si.ing1.pds.backend.server.controller;
 
 import episen.si.ing1.pds.backend.server.model.Crud;
-import episen.si.ing1.pds.backend.server.pool.DataSource;
 import episen.si.ing1.pds.backend.server.view.View;
 
 import java.util.Scanner;
@@ -58,6 +57,8 @@ public class Controller {
                     crud.update(firstName, lastName, newFirstName, newLastName);
                     view.showView();
                     break;
+                case "t":
+
                 default:
                     view.showView();
                     break;
