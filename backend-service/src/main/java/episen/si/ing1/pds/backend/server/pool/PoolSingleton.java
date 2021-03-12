@@ -1,6 +1,6 @@
 package episen.si.ing1.pds.backend.server.pool;
 
-public enum PoolSingleton {
+public enum  PoolSingleton {
     /**
      * an instance of JDBCConnectionPool
      */
