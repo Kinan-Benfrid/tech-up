@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 
 public class Controller {
-    private final Crud crud;
-    private final View view;
+    private Crud crud;
+    private View view;
 
     public Controller(Crud crud, View view) {
         this.crud = crud;
