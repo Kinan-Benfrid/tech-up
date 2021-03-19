@@ -1,5 +1,6 @@
 package episen.si.ing1.pds.backend.server;
 
+import episen.si.ing1.pds.backend.server.pool.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,6 +8,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class ServerCore {
     private ServerSocket serverSocket;
@@ -17,18 +20,22 @@ public class ServerCore {
         serverSocket.setSoTimeout(config.getConfig().getSoTimeout());
     }
 
-    public void serve() throws IOException {
+    public void serve(DataSource ds) throws IOException, SQLException {
+        Connection c = ds.receiveConnection();
         try{
             final Socket socket = serverSocket.accept();
             logger.debug("Ok, got a requester");
-            final ClientRequestManager cLientRequestManager = new ClientRequestManager(socket);
+            final ClientRequestManager cLientRequestManager = new ClientRequestManager(socket, c);
             //Wait for my thread
             cLientRequestManager.join();
+
         }catch (SocketTimeoutException | InterruptedException x){
             logger.debug("Ok, got a timeout");
         }
         finally {
+            ds.putConnection(c);
             serverSocket.close();
+
         }
 
 

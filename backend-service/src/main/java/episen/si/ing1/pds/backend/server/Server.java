@@ -1,5 +1,6 @@
 package episen.si.ing1.pds.backend.server;
 
+import episen.si.ing1.pds.backend.server.pool.DataSource;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +19,10 @@ public class Server {
         final CommandLine commandLine = parser.parse(options, args);
         serverConfig = new ServerConfig();
         if (commandLine.hasOption("serverMode")){
+            DataSource ds = new DataSource(10);
             logger.debug("Server mode.");
-            new ServerCore(serverConfig).serve();
+            new ServerCore(serverConfig).serve(ds);
+            ds.closePool();
         }
         else if (commandLine.hasOption("clientMode")){
             logger.debug("Client mode.");
