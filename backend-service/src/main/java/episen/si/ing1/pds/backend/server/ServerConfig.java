@@ -13,6 +13,7 @@ public class ServerConfig {
     private static final String episenServerConfigEnvVar = "EPISEN_SRV_CONFIG";
     private final String episenServerConfigFileLocation;
     private ServerCoreConfig config;
+
     public ServerConfig() throws IOException {
        episenServerConfigFileLocation = System.getenv(episenServerConfigEnvVar);
        logger.debug("Config file = {}",episenServerConfigFileLocation);
