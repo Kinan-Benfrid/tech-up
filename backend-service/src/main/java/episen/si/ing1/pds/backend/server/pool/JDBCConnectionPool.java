@@ -17,11 +17,13 @@ public class JDBCConnectionPool {
     private String user;
     private String password;
     private int max_Connection;
+    private static boolean isInit = false;
     private static final Logger logger = LoggerFactory.getLogger(JDBCConnectionPool.class.getName());
 
     /**
      * This constructor uses PropertiesReader to retrieve database parameters
      */
+
     public JDBCConnectionPool() {
         driverName = PropertiesReader.Instance.DRIVERNAME ;
         dataBaseUrl = PropertiesReader.Instance.DATABASEURL;
