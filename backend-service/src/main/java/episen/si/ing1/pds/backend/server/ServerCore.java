@@ -35,9 +35,7 @@ public class ServerCore {
         finally {
             ds.putConnection(c);
             serverSocket.close();
-
         }
-
 
     }
 
