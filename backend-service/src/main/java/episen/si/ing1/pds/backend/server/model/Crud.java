@@ -78,4 +78,12 @@ public class Crud {
         ds.putConnection(c);
     }
 
+    public static void main(String[] args) {
+        DataSource ds = new DataSource(5);
+        for (int i = 0; i<6; i++){
+            Connection c = ds.receiveConnection();
+            System.out.println(c.hashCode());
+        }
+    }
+
 }

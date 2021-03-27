@@ -1,6 +1,8 @@
 package episen.si.ing1.pds.backend.server;
 
+import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.slf4j.Logger;
@@ -15,8 +17,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.lang.Thread.sleep;
 
 public class ClientRequestManager implements Runnable{
     private static final Logger logger = LoggerFactory.getLogger(ClientRequestManager.class.getName());
@@ -38,26 +43,31 @@ public class ClientRequestManager implements Runnable{
     public void run() {
         byte[] inputData;
         try{
-            Statement statement = c.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Student");
-            inputData = new byte[inputStream.available()]; // create a byte tab with the number of data
+            //Statement statement = c.createStatement();
+            //ResultSet resultSet = statement.executeQuery("SELECT * FROM Student");
+            //while(inputStream.available()==0){
+                System.out.println("temps");
+                sleep(100);
+            //}
+            System.out.println("inputStream "+inputStream.available());
+            inputData = new byte[inputStream.available()]; // create a byte array with the number of data
             inputStream.read(inputData);
-            final ObjectMapper mapper = new ObjectMapper();
-            Map<String, Object> mapJsonFile = mapper.readValue(inputData,new TypeReference<Map<String,Object>>(){});
-            for (Object o: mapJsonFile.values()){
-
-            }
-            logger.debug("MAP" + mapJsonFile.toString() );
+            ObjectMapper mapper = new ObjectMapper(new JsonFactory());
+            JsonNode jsonNode = mapper.readTree(inputData).get("insert").get("firstname");
+            System.out.println("JSONNODE "+jsonNode.asText());
+           // logger.debug("MAP" + mapJsonFile.toString() );
             logger.debug("data received {} bytes, content={}", inputData.length, new String(inputData));
             final Map<String, String> result = new HashMap<>();
             String firstname;
-            while(resultSet.next()){
+            /*while(resultSet.next()){
                 firstname = resultSet.getString(2);
                 result.put("firstname",""+firstname);
-            }
+            }*/
              //send the result of the request
             outputStream.write(mapper.writeValueAsBytes(result));
-        } catch (IOException | SQLException e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

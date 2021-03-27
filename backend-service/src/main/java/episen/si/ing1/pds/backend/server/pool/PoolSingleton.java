@@ -9,7 +9,7 @@ public enum  PoolSingleton {
     PoolSingleton(){
         jdbcConnectionPool = new JDBCConnectionPool();
     }
-
+    
     /**
      * initializes the JDBCConnectionPool object
      * @param nbConnection size of the list of connections

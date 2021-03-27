@@ -60,23 +60,11 @@ public class JDBCConnectionPool {
      * @return a Connection for the Client
      */
     public Connection getConnection() {
-        while (true) {
-            synchronized (physicalConnections) {
-                if (physicalConnections.size() == 0) {
-                    try {
-                        physicalConnections.wait(5000);
-                        logger.info("Creation of a new Connection");
-                        return DriverManager.getConnection(PropertiesReader.Instance.DATABASEURL,PropertiesReader.Instance.USER, PropertiesReader.Instance.PASSWORD);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                } else {
+
+
                     return physicalConnections.remove(0);
-                }
-            }
-        }
+
+
     }
 
     /**
@@ -112,5 +100,12 @@ public class JDBCConnectionPool {
         return physicalConnections.size();
     }
 
+    /**
+     *
+     * @return true if there is no more connection in the pool
+     */
+    public boolean isEmpty(){
+        return physicalConnections.size()==0;
+    }
 
 }

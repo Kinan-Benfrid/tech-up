@@ -7,7 +7,6 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import episen.si.ing1.pds.backend.server.ServerCore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.nio.cs.UTF_8;
 
 import java.io.*;
 import java.net.Socket;
@@ -33,7 +32,8 @@ public class ClientRequest {
         out = clientSocket.getOutputStream();
         in = clientSocket.getInputStream();
         final ObjectMapper mapper = new ObjectMapper(new JsonFactory());
-        Map<String, Object> mapJsonFile = mapper.readValue(new File(clientDataFileLocation), new TypeReference<Map<String,Object>>(){});
+        Student mapJsonFile = mapper.readValue(new File(clientDataFileLocation), Student.class);
+        System.out.println("MapJsonFIlm "+mapJsonFile.toString());
         out.write(mapper.writeValueAsBytes(mapJsonFile));
         logger.debug("request submitted");
     }
