@@ -23,6 +23,16 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.20</version>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.18</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>2.12.2</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -40,7 +50,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>episen.si.ing1.pds.backend.server.BackendService</mainClass>
+                            <mainClass>episen.si.ing1.pds.backend.server.Server</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
