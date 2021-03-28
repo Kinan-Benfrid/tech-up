@@ -46,8 +46,8 @@ public class ClientRequestManager implements Runnable{
             //Statement statement = c.createStatement();
             //ResultSet resultSet = statement.executeQuery("SELECT * FROM Student");
             //while(inputStream.available()==0){
-                System.out.println("temps");
-                sleep(100);
+            System.out.println("temps");
+            sleep(100);
             //}
             System.out.println("inputStream "+inputStream.available());
             inputData = new byte[inputStream.available()]; // create a byte array with the number of data
@@ -55,6 +55,8 @@ public class ClientRequestManager implements Runnable{
             ObjectMapper mapper = new ObjectMapper(new JsonFactory());
             JsonNode jsonNode = mapper.readTree(inputData).get("insert").get("firstname");
             System.out.println("JSONNODE "+jsonNode.asText());
+
+
            // logger.debug("MAP" + mapJsonFile.toString() );
             logger.debug("data received {} bytes, content={}", inputData.length, new String(inputData));
             final Map<String, String> result = new HashMap<>();

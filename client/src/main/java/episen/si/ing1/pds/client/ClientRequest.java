@@ -27,7 +27,7 @@ public class ClientRequest {
         clientSocket = new Socket(config.getConfig().getIpAddress(), config.getConfig().getListenPort());
         clientDataFileLocation = System.getenv(clientDataEnvVar);
     }
-
+    //TODO add switch case if select or insert or delete
     public void startConnection() throws IOException, ClassNotFoundException {
         out = clientSocket.getOutputStream();
         in = clientSocket.getInputStream();
