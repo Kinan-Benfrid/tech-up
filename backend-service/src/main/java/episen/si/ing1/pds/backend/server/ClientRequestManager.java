@@ -29,13 +29,11 @@ public class ClientRequestManager implements Runnable{
     private final OutputStream outputStream;
     private final static String name = "client-thread-manager";
     private Thread self;
-    private Connection c;
 
-    public ClientRequestManager(final Socket socket, Connection c) throws IOException {
+    public ClientRequestManager(final Socket socket) throws IOException {
         inputStream = socket.getInputStream();
         outputStream = socket.getOutputStream();
         self = new Thread(this, name);
-        this.c =c;
         self.run();
     }
 
@@ -43,29 +41,14 @@ public class ClientRequestManager implements Runnable{
     public void run() {
         byte[] inputData;
         try{
-            //Statement statement = c.createStatement();
-            //ResultSet resultSet = statement.executeQuery("SELECT * FROM Student");
-            //while(inputStream.available()==0){
-            System.out.println("temps");
-            sleep(100);
-            //}
-            System.out.println("inputStream "+inputStream.available());
+            sleep(500);
             inputData = new byte[inputStream.available()]; // create a byte array with the number of data
             inputStream.read(inputData);
             ObjectMapper mapper = new ObjectMapper(new JsonFactory());
             JsonNode jsonNode = mapper.readTree(inputData).get("insert").get("firstname");
-            System.out.println("JSONNODE "+jsonNode.asText());
-
-
-           // logger.debug("MAP" + mapJsonFile.toString() );
+            System.out.println("RESULT " + jsonNode.asText());
             logger.debug("data received {} bytes, content={}", inputData.length, new String(inputData));
             final Map<String, String> result = new HashMap<>();
-            String firstname;
-            /*while(resultSet.next()){
-                firstname = resultSet.getString(2);
-                result.put("firstname",""+firstname);
-            }*/
-             //send the result of the request
             outputStream.write(mapper.writeValueAsBytes(result));
         } catch (IOException e) {
             e.printStackTrace();

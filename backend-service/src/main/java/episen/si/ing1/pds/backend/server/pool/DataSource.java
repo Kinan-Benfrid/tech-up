@@ -8,11 +8,12 @@ import java.sql.Connection;
 public class DataSource {
     private static JDBCConnectionPool jdbcConnectionPool ;
     private static final Logger logger = LoggerFactory.getLogger(DataSource.class.getName());
+    private static final int nbConnection = 10;
+    private static DataSource INSTANCE = new DataSource();
     /**
      * initializes the jdbcConnectionPool object
-     * @param nbConnection
      */
-    public DataSource(int nbConnection){
+    private DataSource(){
         jdbcConnectionPool = PoolSingleton.Instance.getInstance(nbConnection);
     }
 
@@ -46,5 +47,9 @@ public class DataSource {
 
     public JDBCConnectionPool getJdbcConnectionPool (){
         return jdbcConnectionPool;
+    }
+
+    public static DataSource getInstance(){
+        return INSTANCE;
     }
 }

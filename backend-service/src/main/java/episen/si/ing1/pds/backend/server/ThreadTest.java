@@ -9,7 +9,7 @@ public class ThreadTest {
     private static final Logger threadLogger = LoggerFactory.getLogger(ThreadTest.class.getName());
 
     public void testThread(){
-        DataSource ds = new DataSource(1);
+        DataSource ds = DataSource.getInstance();
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {

@@ -20,12 +20,11 @@ public class ServerCore {
         serverSocket.setSoTimeout(config.getConfig().getSoTimeout());
     }
 
-    public void serve(DataSource ds) throws IOException, SQLException {
-        Connection c = ds.receiveConnection();
+    public void serve() throws IOException, SQLException {
         try{
             final Socket socket = serverSocket.accept();
             logger.debug("Ok, got a requester");
-            final ClientRequestManager cLientRequestManager = new ClientRequestManager(socket, c);
+            final ClientRequestManager cLientRequestManager = new ClientRequestManager(socket);
             //Wait for my thread
             cLientRequestManager.join();
 
@@ -33,10 +32,8 @@ public class ServerCore {
             logger.debug("Ok, got a timeout");
         }
         finally {
-            ds.putConnection(c);
             serverSocket.close();
         }
-
     }
 
 }

@@ -10,16 +10,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Crud {
-    private DataSource ds;
-
-    public Crud(DataSource ds) {
-        this.ds = ds;
-    }
-
+    private static String s;
+    private static DataSource ds = DataSource.getInstance();
     // This Class permits to execute the CRUD operations (create, read, update, delete)
     // For every method of this class, we recover a connection of the ConnectionPool and
     // once the operation is completed, it is put back into the ConnectionPool
-    public String select() {
+    public static String select() {
         Connection c = ds.receiveConnection();
         StringBuilder resultQuery = new StringBuilder();
         Statement statement;
@@ -39,48 +35,55 @@ public class Crud {
         return resultQuery.toString();
     }
 
-    public void insert(String firstName, String lastName) {
+    public static String insert(String firstName, String lastName) {
+
         Connection c = ds.receiveConnection();
         int nbLinesAdded = 0;
         try {
             Statement statement = c.createStatement();
             nbLinesAdded = statement.executeUpdate("INSERT INTO Student (firstname, lastname) VALUES ('" + firstName + "', '" + lastName + "' )");
-            System.out.println("Result of the request : " + nbLinesAdded + " line(s) added");
+            s = "Result of the insert Request : " + nbLinesAdded + " line(s) added";
+            //System.out.println("Result of the insert Request : " + nbLinesAdded + " line(s) added");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         ds.putConnection(c);
+        return s;
     }
 
-    public void delete(String firstName, String lastName) {
+    public static String delete(String firstName, String lastName) {
         Connection c = ds.receiveConnection();
         int nbLinesDeleted = 0;
         try {
             Statement statement = c.createStatement();
             nbLinesDeleted = statement.executeUpdate("DELETE FROM Student WHERE firstname= '" + firstName + "' and lastname = '" + lastName + "' ");
-            System.out.println("Result of the request : " + nbLinesDeleted + " line(s) deleted");
+            s = "Result of the delete request : " + nbLinesDeleted + " line(s) deleted";
+            //System.out.println("Result of the delete request : " + nbLinesDeleted + " line(s) deleted");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         ds.putConnection(c);
+        return s;
     }
 
-    public void update(String firstName, String lastName, String newFirstName, String newLastName) {
+    public static String update(String firstName, String lastName, String newFirstName, String newLastName) {
         Connection c = ds.receiveConnection();
         int nbLinesUpdated = 0;
         try {
             Statement statement = c.createStatement();
             nbLinesUpdated = statement.executeUpdate("UPDATE Student SET firstname= '" + newFirstName + "', lastname = '" + newLastName + "' WHERE firstname = '" + firstName + "' and lastname = '" + lastName + "'");
-            System.out.println("Result of the request : " + nbLinesUpdated + " line(s) updated");
+            s = "Result of the update request : " + nbLinesUpdated + " line(s) updated";
+            //System.out.println("Result of the update request : " + nbLinesUpdated + " line(s) updated");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         ds.putConnection(c);
+        return s;
     }
 
     public static void main(String[] args) {
-        DataSource ds = new DataSource(5);
-        for (int i = 0; i<6; i++){
+        DataSource ds = DataSource.getInstance();
+        for (int i = 0; i<11; i++){
             Connection c = ds.receiveConnection();
             System.out.println(c.hashCode());
         }

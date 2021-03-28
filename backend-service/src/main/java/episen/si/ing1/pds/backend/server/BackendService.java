@@ -35,12 +35,10 @@ public class BackendService {
             inTestModeT = true;
         }
         if (inTestMode && !inTestModeT) {
-            DataSource ds = new DataSource(maxConnectionV);
-            Crud crud = new Crud(ds);
+            Crud crud = new Crud();
             View view = new View();
             Controller controller = new Controller(crud, view);
             controller.control();
-            ds.closePool();
         }
 
         if (inTestModeT && !inTestMode) {

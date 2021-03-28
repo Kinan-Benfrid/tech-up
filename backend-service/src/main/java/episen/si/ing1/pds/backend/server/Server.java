@@ -19,9 +19,9 @@ public class Server {
         final CommandLine commandLine = parser.parse(options, args);
         serverConfig = new ServerConfig();
         if (commandLine.hasOption("serverMode")){
-            DataSource ds = new DataSource(10);
+            DataSource ds = DataSource.getInstance();
             logger.debug("Server mode.");
-            new ServerCore(serverConfig).serve(ds);
+            new ServerCore(serverConfig).serve();
             ds.closePool();
         }
         else if (commandLine.hasOption("clientMode")){
