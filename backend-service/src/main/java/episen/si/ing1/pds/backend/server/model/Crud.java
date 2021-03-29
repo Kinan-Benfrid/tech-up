@@ -26,7 +26,7 @@ public class Crud {
                 int id = resultSet.getInt(1);
                 String firstname = resultSet.getString(2);
                 String lastname = resultSet.getString(3);
-                resultQuery.append("ID : "+id + ", Firstname : " + firstname + ", Lastname : " + lastname + "\n");
+                resultQuery.append("ID : "+id + ", Firstname : " + firstname + ", Lastname : " + lastname );
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

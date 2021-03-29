@@ -14,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.lang.Thread.sleep;
+
 public class ClientRequest {
     private Socket clientSocket;
     private InputStream in;
@@ -27,15 +29,27 @@ public class ClientRequest {
         clientSocket = new Socket(config.getConfig().getIpAddress(), config.getConfig().getListenPort());
         clientDataFileLocation = System.getenv(clientDataEnvVar);
     }
-    //TODO add switch case if select or insert or delete
-    public void startConnection() throws IOException, ClassNotFoundException {
+
+    public void startConnection() throws IOException, ClassNotFoundException, InterruptedException {
         out = clientSocket.getOutputStream();
         in = clientSocket.getInputStream();
+        byte[] inputData;
         final ObjectMapper mapper = new ObjectMapper(new JsonFactory());
         Student mapJsonFile = mapper.readValue(new File(clientDataFileLocation), Student.class);
         System.out.println("MapJsonFIlm "+mapJsonFile.toString());
         out.write(mapper.writeValueAsBytes(mapJsonFile));
-        logger.debug("request submitted");
+        logger.debug("Request submitted");
+        System.out.println("dqsfqf");
+        while (in.available()==0){
+            System.out.println("Boucle while");
+        }
+        inputData = new byte[in.available()];
+        in.read(inputData);
+        System.out.println(inputData.length);
+        String serverResponse = new String (inputData);
+        System.out.println(serverResponse);
+
+
     }
 
     public void stopConnection() throws IOException {
@@ -43,7 +57,6 @@ public class ClientRequest {
         out.close();
         in.close();
     }
-
 
 
 
