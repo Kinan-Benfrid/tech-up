@@ -42,7 +42,7 @@ public class ClientRequestManager implements Runnable{
     public void run() {
         byte[] inputData;
         try{
-            sleep(100);
+            while(inputStream.available()==0){}
             ObjectMapper mapper = new ObjectMapper(new JsonFactory());
             inputData = new byte[inputStream.available()]; // create a byte array with the number of data
             inputStream.read(inputData);
@@ -51,7 +51,7 @@ public class ClientRequestManager implements Runnable{
             outputStream.write(mapper.writeValueAsBytes(resultQuery(mapper,inputData)));
             logger.debug("Response issued");
 
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

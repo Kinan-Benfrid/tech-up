@@ -39,10 +39,7 @@ public class ClientRequest {
         System.out.println("MapJsonFIlm "+mapJsonFile.toString());
         out.write(mapper.writeValueAsBytes(mapJsonFile));
         logger.debug("Request submitted");
-        System.out.println("dqsfqf");
-        while (in.available()==0){
-            System.out.println("Boucle while");
-        }
+        while (in.available()==0){ }
         inputData = new byte[in.available()];
         in.read(inputData);
         System.out.println(inputData.length);

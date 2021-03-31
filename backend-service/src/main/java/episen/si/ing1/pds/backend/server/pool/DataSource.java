@@ -8,7 +8,7 @@ import java.sql.Connection;
 public class DataSource {
     private static JDBCConnectionPool jdbcConnectionPool ;
     private static final Logger logger = LoggerFactory.getLogger(DataSource.class.getName());
-    private static final int nbConnection = 10;
+    private static final int nbConnection = 1;
     private static DataSource INSTANCE = new DataSource();
     /**
      * initializes the jdbcConnectionPool object
