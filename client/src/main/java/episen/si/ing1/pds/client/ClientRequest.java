@@ -19,23 +19,24 @@ public class ClientRequest {
     private InputStream in;
     private OutputStream out;
     private static final Logger logger = LoggerFactory.getLogger(ClientRequest.class.getName());
-    private static String clientDataFileLocation;
+    private static String clientDataFileLocation;// Déclaration du fichier Json
     private static String clientDataEnvVar = "CLIENT_DATA_JSON";
 
 
     public ClientRequest(final ClientConfig config ) throws IOException {
+        //the client socket take in parametter, the id adress and the port
         clientSocket = new Socket(config.getConfig().getIpAddress(), config.getConfig().getListenPort());
-        clientDataFileLocation = System.getenv(clientDataEnvVar);
+        clientDataFileLocation = System.getenv(clientDataEnvVar);// Json file. mehdi created this file in another place
     }
 
     public void startConnection() throws IOException, ClassNotFoundException {
-        out = clientSocket.getOutputStream();
-        in = clientSocket.getInputStream();
-        final ObjectMapper mapper = new ObjectMapper(new JsonFactory());
-        Student mapJsonFile = mapper.readValue(new File(clientDataFileLocation), Student.class);
+        out = clientSocket.getOutputStream(); // it's use to send the information
+        in = clientSocket.getInputStream();// received of information
+        final ObjectMapper mapper = new ObjectMapper(new JsonFactory());// initialisation of mapper object
+        Student mapJsonFile = mapper.readValue(new File(clientDataFileLocation), Student.class);//Created the student object
         System.out.println("MapJsonFIlm "+mapJsonFile.toString());
-        out.write(mapper.writeValueAsBytes(mapJsonFile));
-        logger.debug("request submitted");
+        out.write(mapper.writeValueAsBytes(mapJsonFile));// send of this object (Student)
+        logger.debug("request submitted");// logger replace println
     }
 
     public void stopConnection() throws IOException {
