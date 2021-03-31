@@ -32,7 +32,7 @@ public class ClientRequestManager implements Runnable{
     private Connection c;
 
     public ClientRequestManager(final Socket socket, Connection c) throws IOException {
-        inputStream = socket.getInputStream();
+        inputStream = socket.getInputStream();// receive the data send by client
         outputStream = socket.getOutputStream();
         self = new Thread(this, name);
         this.c =c;
@@ -51,7 +51,7 @@ public class ClientRequestManager implements Runnable{
             //}
             System.out.println("inputStream "+inputStream.available());
             inputData = new byte[inputStream.available()]; // create a byte array with the number of data
-            inputStream.read(inputData);
+            inputStream.read(inputData);// read the inputStream in inputData
             ObjectMapper mapper = new ObjectMapper(new JsonFactory());
             JsonNode jsonNode = mapper.readTree(inputData).get("insert").get("firstname");
             System.out.println("JSONNODE "+jsonNode.asText());
