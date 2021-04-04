@@ -7,10 +7,27 @@ public class Student {
     private Map<String,String> insert;
     private Map<String,String> delete;
     private Map<String,String> update;
-    //private boolean select;
+    private boolean select;
     public Student() {
     }
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "insert=" + insert +
+                ", delete=" + delete +
+                ", update=" + update +
+                ", select=" + select +
+                '}';
+    }
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
+    }
 
     public Map<String, String> getInsert() {
         return insert;
@@ -36,12 +53,4 @@ public class Student {
         this.update = update;
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "insert=" + insert +
-                ", delete=" + delete +
-                ", update=" + update +
-                '}';
-    }
 }

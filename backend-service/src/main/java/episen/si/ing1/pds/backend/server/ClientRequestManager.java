@@ -48,13 +48,14 @@ public class ClientRequestManager implements Runnable{
     public void join() throws InterruptedException {
         self.join();
     }
-    // TODO check if the insert value is empty
+
     public String resultQuery(ObjectMapper mapper, byte[] inputData) throws IOException {
         StringBuilder resultQuery = new StringBuilder();
         JsonNode dataToInsert = mapper.readTree(inputData).get("insert");
         JsonNode dataToDelete = mapper.readTree(inputData).get("delete");
         JsonNode dataToUpdate = mapper.readTree(inputData).get("update");
-        System.out.println("Data TO INSERT " + dataToInsert.asText());
+        JsonNode select = mapper.readTree(inputData).get("select");
+        System.out.println("Data TO SELECT " + select.asText());
         if (!dataToInsert.asText().equals("null")){
             resultQuery.append(Crud.insert(dataToInsert.get("firstname").asText(), dataToInsert.get("lastname").asText()));
         }
@@ -64,7 +65,12 @@ public class ClientRequestManager implements Runnable{
         if (!dataToUpdate.asText().equals("null")){
             resultQuery.append(Crud.update(dataToUpdate.get("firstname").asText(), dataToUpdate.get("lastname").asText(), dataToUpdate.get("newfirstname").asText(),dataToUpdate.get("newlastname").asText()));
         }
-        resultQuery.append(Crud.select());
+        if (!select.asText().equals("null")){
+            if (select.asText().equals("true")) {
+                resultQuery.append(Crud.select());
+            }
+        }
+
         return resultQuery.toString();
     }
 }
