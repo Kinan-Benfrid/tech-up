@@ -7,9 +7,10 @@ public class Student {
     private Map<String,String> insert;
     private Map<String,String> delete;
     private Map<String,String> update;
-
+    //private boolean select;
     public Student() {
     }
+
 
     public Map<String, String> getInsert() {
         return insert;

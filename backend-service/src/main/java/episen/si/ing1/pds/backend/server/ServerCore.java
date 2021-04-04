@@ -23,11 +23,12 @@ public class ServerCore {
     public void serve() throws IOException, SQLException {
         try{
             while (true){
-            final Socket socket = serverSocket.accept();
-            logger.debug("Ok, got a requester");
-            final ClientRequestManager cLientRequestManager = new ClientRequestManager(socket);
-            //Wait for my thread
-            cLientRequestManager.join();}
+                final Socket socket = serverSocket.accept();
+                logger.debug("Ok, got a requester");
+                final ClientRequestManager cLientRequestManager = new ClientRequestManager(socket);
+                //Wait for my thread
+                cLientRequestManager.join();
+            }
 
         }catch (SocketTimeoutException | InterruptedException x){
             logger.debug("Ok, got a timeout");

@@ -1,10 +1,7 @@
 package episen.si.ing1.pds.client;
 
 import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import episen.si.ing1.pds.backend.server.ServerCore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,8 +41,7 @@ public class ClientRequest {
         in.read(inputData);
         System.out.println(inputData.length);
         String serverResponse = new String (inputData);
-        System.out.println(serverResponse);
-
+        System.out.println(formatString(serverResponse));
 
     }
 
@@ -55,6 +51,14 @@ public class ClientRequest {
         in.close();
     }
 
+    /**
+     *
+     * @param s response of the server
+     * @return the response with a good format
+     */
+    public String formatString(String s){
+        return s.replace('.','\n');
+    }
 
 
 }

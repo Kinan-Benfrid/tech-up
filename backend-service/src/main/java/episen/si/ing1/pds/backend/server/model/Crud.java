@@ -26,7 +26,7 @@ public class Crud {
                 int id = resultSet.getInt(1);
                 String firstname = resultSet.getString(2);
                 String lastname = resultSet.getString(3);
-                resultQuery.append("ID : "+id + ", Firstname : " + firstname + ", Lastname : " + lastname );
+                resultQuery.append("ID : "+id + ", Firstname : " + firstname + ", Lastname : " + lastname +". ");
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -36,14 +36,12 @@ public class Crud {
     }
 
     public static String insert(String firstName, String lastName) {
-
         Connection c = ds.receiveConnection();
         int nbLinesAdded = 0;
         try {
             Statement statement = c.createStatement();
             nbLinesAdded = statement.executeUpdate("INSERT INTO Student (firstname, lastname) VALUES ('" + firstName + "', '" + lastName + "' )");
-            s = "Result of the insert Request : " + nbLinesAdded + " line(s) added";
-            //System.out.println("Result of the insert Request : " + nbLinesAdded + " line(s) added");
+            s = "Result of the insert Request : " + nbLinesAdded + " line(s) added. ";
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -57,7 +55,7 @@ public class Crud {
         try {
             Statement statement = c.createStatement();
             nbLinesDeleted = statement.executeUpdate("DELETE FROM Student WHERE firstname= '" + firstName + "' and lastname = '" + lastName + "' ");
-            s = "Result of the delete request : " + nbLinesDeleted + " line(s) deleted";
+            s = "Result of the delete request : " + nbLinesDeleted + " line(s) deleted. ";
             //System.out.println("Result of the delete request : " + nbLinesDeleted + " line(s) deleted");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -72,7 +70,7 @@ public class Crud {
         try {
             Statement statement = c.createStatement();
             nbLinesUpdated = statement.executeUpdate("UPDATE Student SET firstname= '" + newFirstName + "', lastname = '" + newLastName + "' WHERE firstname = '" + firstName + "' and lastname = '" + lastName + "'");
-            s = "Result of the update request : " + nbLinesUpdated + " line(s) updated";
+            s = "Result of the update request : " + nbLinesUpdated + " line(s) updated. ";
             //System.out.println("Result of the update request : " + nbLinesUpdated + " line(s) updated");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -81,12 +79,12 @@ public class Crud {
         return s;
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         DataSource ds = DataSource.getInstance();
         for (int i = 0; i<11; i++){
             Connection c = ds.receiveConnection();
             System.out.println(c.hashCode());
         }
-    }
+    }*/
 
 }
