@@ -54,13 +54,14 @@ public class ClientRequestManager implements Runnable{
         JsonNode dataToInsert = mapper.readTree(inputData).get("insert");
         JsonNode dataToDelete = mapper.readTree(inputData).get("delete");
         JsonNode dataToUpdate = mapper.readTree(inputData).get("update");
-        if (dataToInsert!=null){
+        System.out.println("Data TO INSERT " + dataToInsert.asText());
+        if (!dataToInsert.asText().equals("null")){
             resultQuery.append(Crud.insert(dataToInsert.get("firstname").asText(), dataToInsert.get("lastname").asText()));
         }
-        if (dataToDelete!=null){
+        if (!dataToDelete.asText().equals("null")){
             resultQuery.append(Crud.delete(dataToDelete.get("firstname").asText(), dataToDelete.get("lastname").asText()));
         }
-        if (dataToUpdate!=null){
+        if (!dataToUpdate.asText().equals("null")){
             resultQuery.append(Crud.update(dataToUpdate.get("firstname").asText(), dataToUpdate.get("lastname").asText(), dataToUpdate.get("newfirstname").asText(),dataToUpdate.get("newlastname").asText()));
         }
         resultQuery.append(Crud.select());
