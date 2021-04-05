@@ -36,7 +36,6 @@ public class ClientRequestManager implements Runnable{
             inputData = new byte[inputStream.available()]; // create a byte array with the number of data
             inputStream.read(inputData);
             logger.debug("data received {} bytes, content={}", inputData.length, new String(inputData));
-            //System.out.println(resultQuery(mapper,inputData));
             outputStream.write(mapper.writeValueAsBytes(resultQuery(mapper,inputData)));
             logger.debug("Response issued");
 
@@ -49,21 +48,35 @@ public class ClientRequestManager implements Runnable{
         self.join();
     }
 
+    /**
+     *
+     * @param mapper
+     * @param inputData Json file sent by the client
+     * @return the result of the requests of the client.
+     * @throws IOException
+     */
     public String resultQuery(ObjectMapper mapper, byte[] inputData) throws IOException {
         StringBuilder resultQuery = new StringBuilder();
         JsonNode dataToInsert = mapper.readTree(inputData).get("insert");
         JsonNode dataToDelete = mapper.readTree(inputData).get("delete");
         JsonNode dataToUpdate = mapper.readTree(inputData).get("update");
         JsonNode select = mapper.readTree(inputData).get("select");
-        System.out.println("Data TO SELECT " + select.asText());
         if (!dataToInsert.asText().equals("null")){
-            resultQuery.append(Crud.insert(dataToInsert.get("firstname").asText(), dataToInsert.get("lastname").asText()));
+            if (dataToInsert.get("wantToInsert").asText().equals("true")){
+                resultQuery.append(Crud.insert(dataToInsert.get("firstname").asText(), dataToInsert.get("lastname").asText()));
+            }
         }
         if (!dataToDelete.asText().equals("null")){
-            resultQuery.append(Crud.delete(dataToDelete.get("firstname").asText(), dataToDelete.get("lastname").asText()));
+            if (dataToDelete.get("wantToDelete").asText().equals("true")){
+                resultQuery.append(Crud.delete(dataToDelete.get("firstname").asText(), dataToDelete.get("lastname").asText()));
+            }
+
         }
         if (!dataToUpdate.asText().equals("null")){
-            resultQuery.append(Crud.update(dataToUpdate.get("firstname").asText(), dataToUpdate.get("lastname").asText(), dataToUpdate.get("newfirstname").asText(),dataToUpdate.get("newlastname").asText()));
+            if (dataToUpdate.get("wantToUpdate").asText().equals("true")){
+                resultQuery.append(Crud.update(dataToUpdate.get("firstname").asText(), dataToUpdate.get("lastname").asText(), dataToUpdate.get("newfirstname").asText(),dataToUpdate.get("newlastname").asText()));
+            }
+
         }
         if (!select.asText().equals("null")){
             if (select.asText().equals("true")) {

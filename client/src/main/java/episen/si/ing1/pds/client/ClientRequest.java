@@ -7,11 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 
-import static java.lang.Thread.sleep;
 
 public class ClientRequest {
     private Socket clientSocket;
@@ -33,13 +29,13 @@ public class ClientRequest {
         byte[] inputData;
         final ObjectMapper mapper = new ObjectMapper(new JsonFactory());
         Student mapJsonFile = mapper.readValue(new File(clientDataFileLocation), Student.class);
-        System.out.println("MapJsonFIlm "+mapJsonFile.toString());
+        //System.out.println("MapJsonFIlm "+mapJsonFile.toString());
         out.write(mapper.writeValueAsBytes(mapJsonFile));
         logger.debug("Request submitted");
         while (in.available()==0){ }
         inputData = new byte[in.available()];
         in.read(inputData);
-        System.out.println(inputData.length);
+        //System.out.println(inputData.length);
         String serverResponse = new String (inputData);
         System.out.println(formatString(serverResponse));
 
