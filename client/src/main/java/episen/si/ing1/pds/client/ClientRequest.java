@@ -32,7 +32,7 @@ public class ClientRequest {
         Student mapJsonFile = mapper.readValue(new File(clientDataFileLocation), Student.class);
         //System.out.println("MapJsonFIlm "+mapJsonFile.toString());
         out.write(mapper.writeValueAsBytes(mapJsonFile));
-        logger.debug("Request submitted");
+        logger.info("Request submitted");
         while (in.available()==0){ }
         inputData = new byte[in.available()];
         in.read(inputData);

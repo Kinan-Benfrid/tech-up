@@ -1,15 +1,30 @@
 package episen.si.ing1.pds.backend.server.config;
 
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 public class DatabaseCoreConfig {
-    private String DRIVERNAME;
+
+    private String DRIVER_NAME;
     private String DATABASE_URL;
     private String USER;
     private String PASSWORD;
-    private Integer MAX_CONNECTION;
+    private int MAX_CONNECTION;
 
     public DatabaseCoreConfig() {
     }
 
+    @JsonGetter("DRIVER_NAME")
+    public String getDRIVER_NAME() {
+        return DRIVER_NAME;
+    }
+
+    public void setDRIVER_NAME(String DRIVER_NAME) {
+        this.DRIVER_NAME = DRIVER_NAME;
+    }
+
+    @JsonGetter("DATABASE_URL")
     public String getDATABASE_URL() {
         return DATABASE_URL;
     }
@@ -18,6 +33,7 @@ public class DatabaseCoreConfig {
         this.DATABASE_URL = DATABASE_URL;
     }
 
+    @JsonGetter("USER")
     public String getUSER() {
         return USER;
     }
@@ -26,6 +42,7 @@ public class DatabaseCoreConfig {
         this.USER = USER;
     }
 
+    @JsonGetter("PASSWORD")
     public String getPASSWORD() {
         return PASSWORD;
     }
@@ -34,26 +51,19 @@ public class DatabaseCoreConfig {
         this.PASSWORD = PASSWORD;
     }
 
-    public Integer getMAX_CONNECTION() {
+    @JsonGetter("MAX_CONNECTION")
+    public int getMAX_CONNECTION() {
         return MAX_CONNECTION;
     }
 
-    public void setMAX_CONNECTION(Integer MAX_CONNECTION) {
+    public void setMAX_CONNECTION(int MAX_CONNECTION) {
         this.MAX_CONNECTION = MAX_CONNECTION;
-    }
-
-    public String getDRIVERNAME() {
-        return DRIVERNAME;
-    }
-
-    public void setDRIVERNAME(String DRIVERNAME) {
-        this.DRIVERNAME = DRIVERNAME;
     }
 
     @Override
     public String toString() {
-        return "DatabaseConfig{" +
-                "DRIVERNAME='" + DRIVERNAME + '\'' +
+        return "DatabaseCoreConfig{" +
+                "DRIVER_NAME='" + DRIVER_NAME + '\'' +
                 ", DATABASE_URL='" + DATABASE_URL + '\'' +
                 ", USER='" + USER + '\'' +
                 ", PASSWORD='" + PASSWORD + '\'' +

@@ -23,12 +23,12 @@ public class ServerCore {
         try{
             while (true){
                 final Socket socket = serverSocket.accept();
-                logger.debug("Ok, got a requester");
+                logger.info("Ok, got a requester");
                 final ClientRequestManager cLientRequestManager = new ClientRequestManager(socket);
             }
 
         }catch (SocketTimeoutException e){
-            logger.debug("Ok, got a timeout");
+            logger.info("Ok, got a timeout");
         }
         finally {
             serverSocket.close();

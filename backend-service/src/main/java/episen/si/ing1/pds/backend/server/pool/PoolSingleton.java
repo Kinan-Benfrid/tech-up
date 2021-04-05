@@ -12,11 +12,10 @@ public enum  PoolSingleton {
     
     /**
      * initializes the JDBCConnectionPool object
-     * @param nbConnection size of the list of connections
      * @return
      */
-    JDBCConnectionPool getInstance(int nbConnection){
-        jdbcConnectionPool.init(nbConnection);
+    JDBCConnectionPool getInstance(){
+        jdbcConnectionPool.init();
         return jdbcConnectionPool;
     }
 

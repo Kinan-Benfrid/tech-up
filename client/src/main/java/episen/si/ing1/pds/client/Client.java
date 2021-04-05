@@ -39,7 +39,7 @@ public class Client {
 
 
 
-        clientLogger.info("Client is running (testMode={}), (maxConnection={}).",inTestMode,maxConnectionV);
+        clientLogger.info("Client is running (testMode={}).",inTestMode);
 
 
     }

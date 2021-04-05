@@ -35,9 +35,9 @@ public class ClientRequestManager implements Runnable{
             ObjectMapper mapper = new ObjectMapper(new JsonFactory());
             inputData = new byte[inputStream.available()]; // create a byte array with the number of data
             inputStream.read(inputData);
-            logger.debug("data received {} bytes, content={}", inputData.length, new String(inputData));
+            logger.info("data received {} bytes, content={}", inputData.length, new String(inputData));
             outputStream.write(mapper.writeValueAsBytes(resultQuery(mapper,inputData)));
-            logger.debug("Response issued");
+            logger.info("Response issued");
         } catch (IOException e) {
             e.printStackTrace();
         }

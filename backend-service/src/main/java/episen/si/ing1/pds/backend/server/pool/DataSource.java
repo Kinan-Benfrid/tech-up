@@ -12,18 +12,12 @@ public class DataSource {
     private static final Logger logger = LoggerFactory.getLogger(DataSource.class.getName());
     //private static final int nbConnection = 1;
     private static DataSource INSTANCE = new DataSource();
-    private DatabaseConfig databaseConfig;
+
     /**
      * initializes the jdbcConnectionPool object
      */
     private DataSource(){
-        try {
-            databaseConfig = new DatabaseConfig();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        jdbcConnectionPool = PoolSingleton.Instance.getInstance(databaseConfig.getConfig().getMAX_CONNECTION());
-        System.out.println("MAXCONNECTION "+databaseConfig.getConfig().getMAX_CONNECTION());
+        jdbcConnectionPool = PoolSingleton.Instance.getInstance();
     }
 
     public Connection receiveConnection() {

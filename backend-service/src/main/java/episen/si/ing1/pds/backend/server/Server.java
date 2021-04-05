@@ -21,7 +21,7 @@ public class Server {
         serverConfig = new ServerConfig();
         if (commandLine.hasOption("serverMode")){
             DataSource ds = DataSource.getInstance();
-            logger.debug("Server mode.");
+            logger.info("Server mode.");
             new ServerCore(serverConfig).serve();
             ds.closePool();
         }

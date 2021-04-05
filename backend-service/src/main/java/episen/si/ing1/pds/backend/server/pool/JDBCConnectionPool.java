@@ -32,20 +32,18 @@ public class JDBCConnectionPool {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(databaseConfig.getConfig().toString());
-        driverName = databaseConfig.getConfig().getDRIVERNAME();
+        driverName = databaseConfig.getConfig().getDRIVER_NAME();
         dataBaseUrl = databaseConfig.getConfig().getDATABASE_URL();
         user = databaseConfig.getConfig().getUSER();
         password = databaseConfig.getConfig().getPASSWORD();
+        max_Connection = databaseConfig.getConfig().getMAX_CONNECTION();
         physicalConnections = new ArrayList<>();
     }
 
     /**
      * this method initializes the list by adding Connection in the list
-     * @param nbConnection is the maximum number of connections you can have in the list. This number is chosen at runtime with the maxConnection argument.
      */
-    public void init(int nbConnection) {
-        max_Connection = nbConnection;
+    public void init() {
         try {
             Class.forName(driverName);
         } catch (ClassNotFoundException e) {

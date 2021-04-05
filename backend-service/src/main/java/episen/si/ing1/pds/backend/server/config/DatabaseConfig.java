@@ -1,5 +1,6 @@
 package episen.si.ing1.pds.backend.server.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.slf4j.Logger;
@@ -16,10 +17,10 @@ public class DatabaseConfig {
 
     public DatabaseConfig() throws IOException {
        databaseConfigFileLocation = System.getenv(databaseConfigEnvVar);
-        logger.debug("Config file = {}",databaseConfigFileLocation);
+        logger.info("Config file = {}",databaseConfigFileLocation);
         final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         config = mapper.readValue(new File(databaseConfigFileLocation), DatabaseCoreConfig.class);
-        logger.debug("Config = {}",config.toString());
+        logger.info("Config = {}",config.toString());
     }
     public DatabaseCoreConfig getConfig(){
         return config;

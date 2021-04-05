@@ -16,10 +16,10 @@ public class ServerConfig {
 
     public ServerConfig() throws IOException {
        episenServerConfigFileLocation = System.getenv(episenServerConfigEnvVar);
-       logger.debug("Config file = {}",episenServerConfigFileLocation);
+       logger.info("Config file = {}",episenServerConfigFileLocation);
        final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
        config = mapper.readValue(new File(episenServerConfigFileLocation), ServerCoreConfig.class);
-       logger.debug("Config = {}",config.toString());
+       logger.info("Config = {}",config.toString());
     }
     public ServerCoreConfig getConfig(){
         return config;

@@ -79,12 +79,8 @@ public class Crud {
         return s;
     }
 
-    /*public static void main(String[] args) {
-        DataSource ds = DataSource.getInstance();
-        for (int i = 0; i<11; i++){
-            Connection c = ds.receiveConnection();
-            System.out.println(c.hashCode());
-        }
-    }*/
+    public static void main(String[] args) {
+
+    }
 
 }
