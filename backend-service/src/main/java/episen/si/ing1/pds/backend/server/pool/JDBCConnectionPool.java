@@ -1,9 +1,11 @@
 package episen.si.ing1.pds.backend.server.pool;
 
 
+import episen.si.ing1.pds.backend.server.config.DatabaseConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,16 +21,22 @@ public class JDBCConnectionPool {
     private int max_Connection;
     private static boolean isInit = false;
     private static final Logger logger = LoggerFactory.getLogger(JDBCConnectionPool.class.getName());
-
+    private DatabaseConfig databaseConfig;
     /**
      * This constructor uses PropertiesReader to retrieve database parameters
      */
 
     public JDBCConnectionPool() {
-        driverName = PropertiesReader.Instance.DRIVERNAME ;
-        dataBaseUrl = PropertiesReader.Instance.DATABASEURL;
-        user = PropertiesReader.Instance.USER;
-        password = PropertiesReader.Instance.PASSWORD;
+        try {
+            databaseConfig = new DatabaseConfig();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(databaseConfig.getConfig().toString());
+        driverName = databaseConfig.getConfig().getDRIVERNAME();
+        dataBaseUrl = databaseConfig.getConfig().getDATABASE_URL();
+        user = databaseConfig.getConfig().getUSER();
+        password = databaseConfig.getConfig().getPASSWORD();
         physicalConnections = new ArrayList<>();
     }
 
