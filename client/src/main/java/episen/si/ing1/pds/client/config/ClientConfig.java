@@ -1,4 +1,4 @@
-package episen.si.ing1.pds.client;
+package episen.si.ing1.pds.client.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;

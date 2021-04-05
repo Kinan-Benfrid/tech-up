@@ -1,4 +1,4 @@
-package episen.si.ing1.pds.backend.server;
+package episen.si.ing1.pds.backend.server.config;
 
 public class ServerCoreConfig {
     private int listenPort;

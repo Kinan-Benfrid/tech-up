@@ -1,4 +1,4 @@
-package episen.si.ing1.pds.client;
+package episen.si.ing1.pds.client.config;
 
 public class ClientCoreConfig {
     private int listenPort;

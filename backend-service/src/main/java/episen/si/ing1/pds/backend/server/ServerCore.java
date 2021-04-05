@@ -1,6 +1,6 @@
 package episen.si.ing1.pds.backend.server;
 
-import episen.si.ing1.pds.backend.server.pool.DataSource;
+import episen.si.ing1.pds.backend.server.config.ServerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ServerCore {
