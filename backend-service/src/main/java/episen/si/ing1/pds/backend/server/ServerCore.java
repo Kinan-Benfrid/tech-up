@@ -25,11 +25,9 @@ public class ServerCore {
                 final Socket socket = serverSocket.accept();
                 logger.debug("Ok, got a requester");
                 final ClientRequestManager cLientRequestManager = new ClientRequestManager(socket);
-                //Wait for my thread
-                cLientRequestManager.join();
             }
 
-        }catch (SocketTimeoutException | InterruptedException x){
+        }catch (SocketTimeoutException e){
             logger.debug("Ok, got a timeout");
         }
         finally {

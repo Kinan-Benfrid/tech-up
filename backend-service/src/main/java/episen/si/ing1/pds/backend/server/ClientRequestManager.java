@@ -38,15 +38,11 @@ public class ClientRequestManager implements Runnable{
             logger.debug("data received {} bytes, content={}", inputData.length, new String(inputData));
             outputStream.write(mapper.writeValueAsBytes(resultQuery(mapper,inputData)));
             logger.debug("Response issued");
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void join() throws InterruptedException {
-        self.join();
-    }
 
     /**
      *
