@@ -1,6 +1,7 @@
 package episen.si.ing1.pds.backend.server;
 
 import episen.si.ing1.pds.backend.server.config.ServerConfig;
+import episen.si.ing1.pds.backend.server.pool.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,12 +20,15 @@ public class ServerCore {
         serverSocket.setSoTimeout(config.getConfig().getSoTimeout());
     }
 
+    // TODO
     public void serve() throws IOException, SQLException {
         try{
             while (true){
                 final Socket socket = serverSocket.accept();
                 logger.info("Ok, got a requester");
-                final ClientRequestManager cLientRequestManager = new ClientRequestManager(socket);
+                //if (DataSource.getInstance().getNbConnection()>0){
+                    final ClientRequestManager cLientRequestManager = new ClientRequestManager(socket);
+               // }
             }
 
         }catch (SocketTimeoutException e){

@@ -20,6 +20,7 @@ public class ClientRequestManager implements Runnable{
     private final static String name = "client-thread-manager";
     private Thread self;
 
+    // TODO Add a connection in the
     public ClientRequestManager(final Socket socket) throws IOException {
         inputStream = socket.getInputStream();
         outputStream = socket.getOutputStream();
