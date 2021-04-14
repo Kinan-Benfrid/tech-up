@@ -1,8 +1,8 @@
-package episen.si.ing1.pds.client.ConfigFenetreElectro;
+package episen.si.ing1.pds.client.ConfigElectroWindow;
 
 import javax.swing.*;
 
-public class PageDeConfig extends JFrame {
+public class PageOfConfig extends JFrame {
     public static void main(String[] args){
 
 
