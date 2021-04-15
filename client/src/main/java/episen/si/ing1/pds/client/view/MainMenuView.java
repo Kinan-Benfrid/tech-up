@@ -38,8 +38,8 @@
             container.setBackground(Color.white);
 
 
-        panH.setPreferredSize(new Dimension(50,50));
-        panb.setPreferredSize(new Dimension(50,50));
+        panH.setPreferredSize(new Dimension(30,30));
+        panb.setPreferredSize(new Dimension(30,30));
 
         panH.setLayout(new BorderLayout());
         panb.setLayout(new BorderLayout());
