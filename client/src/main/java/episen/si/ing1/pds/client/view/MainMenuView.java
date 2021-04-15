@@ -12,11 +12,6 @@
 
         public static void main(String[] args){
 
-        /*JLabel label = new JLabel();
-        label.setText("Tech-up");
-        label.setFont(new Font("Tech-up", Font.PLAIN,20));*/
-
-        JLabel label = new JLabel("TECH-UP");
         JButton b = new JButton("Configurer");
         JButton b1 = new JButton("Louer");
         JButton b2 = new JButton("Afficher les espaces");
@@ -51,14 +46,6 @@
         container.setLayout(new BorderLayout());
         container.add(pan, BorderLayout.SOUTH);
 
-            /*Font police = new Font("Tahoma", Font.BOLD, 16);
-            label.setFont(police);
-            label.setForeground(Color.blue);
-            label.setHorizontalAlignment(JLabel.CENTER);
-            label.setFont(new Font("green", Font.PLAIN,20));
-            //panH.add(label, BorderLayout.NORTH);
-*/
-
         JFrame f = new JFrame("Tech-up");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLayout(new BorderLayout());
@@ -79,27 +66,21 @@
 
 
 
-       /* JLabel label = new JLabel();
-        f.add(label);
-        label.setText("Tech-up");
-        label.setVerticalAlignment(JLabel.TOP);
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setForeground(new Color(0xFFF2634));//color of test
-      // label.setFont(new Font("", Font.PLAIN,20));//size of the text
-        label.setBackground(Color.green);
+            JLabel label = new JLabel();
+            f.add(label);
+            label.setText("Tech-up");
+            label.setVerticalAlignment(JLabel.NORTH);
+            label.setHorizontalAlignment(JLabel.LEFT);
+            label.setForeground(new Color(0xF));//color of test
+            label.setFont(new Font("", Font.PLAIN,20));//size of the text
+            label.setBackground(Color.orange);
             label.setOpaque(true);
             label.setBorder(label.getBorder());
-            //label.setVerticalAlignment(JLabel.CENTER);
-            //label.setHorizontalAlignment(JLabel.CENTER);
-            label.setBounds(0,0,200,200);
-        label.setBounds(0,0,350,200);
-        label.setBackground(Color.green);*/
+            label.setBounds(0,0,600,200);
+            panH.add(label,BorderLayout.NORTH);
+
 
         }
-        public void actionPerformed(ActionEvent e){
-           // if (e.getSource() == b){
-
-            }
         }
 
 
