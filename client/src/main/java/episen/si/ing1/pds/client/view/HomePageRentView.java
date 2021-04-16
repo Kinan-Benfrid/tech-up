@@ -7,7 +7,8 @@ import java.awt.event.ActionListener;
 
 public class HomePageRentView extends JFrame implements ActionListener {
     private final JButton bouton1;
-    private JPanel pan2;
+    private final JPanel pan1;
+    private final JPanel pan2;
 
 
     public HomePageRentView() {
@@ -17,10 +18,10 @@ public class HomePageRentView extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        pan2 = new JPanel();
-        pan2.setBackground(Color.PINK);
-        pan2.setPreferredSize(new Dimension(500,70));
-        this.add(pan2, BorderLayout.PAGE_START);
+        pan1 = new JPanel();
+        pan1.setBackground(Color.PINK);
+        pan1.setPreferredSize(new Dimension(500,70));
+        this.add(pan1, BorderLayout.PAGE_START);
 
         pan2 = new JPanel();
         pan2.setBackground(Color.PINK);
@@ -31,7 +32,7 @@ public class HomePageRentView extends JFrame implements ActionListener {
         JLabel label1 = new JLabel("Bienvenue dans votre espace de réservation !");
         panel.add(label1);
 
-        bouton1 = new JButton("Reserver ");
+        bouton1 = new JButton("Louer mes espaces ");
         bouton1.setBounds(575,400,400,70);
         bouton1.setBackground(Color.black);
         bouton1.setForeground(Color.white);
@@ -39,6 +40,7 @@ public class HomePageRentView extends JFrame implements ActionListener {
 
         getContentPane().add(panel);
 
+        bouton1.addActionListener(this);
 
 
 
@@ -46,7 +48,12 @@ public class HomePageRentView extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        bouton1.setText("Reserver des espaces");
+        //bouton1.setText("Reserver des espaces");
+
+
+        FirstPageRentCriteria fen = new FirstPageRentCriteria();
+        this.dispose();
+
     }
 
 
