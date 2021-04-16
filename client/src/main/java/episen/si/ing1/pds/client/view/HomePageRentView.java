@@ -32,7 +32,7 @@ public class HomePageRentView extends JFrame implements ActionListener {
         JLabel label1 = new JLabel("Bienvenue dans votre espace de réservation !");
         panel.add(label1);
 
-        bouton1 = new JButton("Louer mes espaces ");
+        bouton1 = new JButton(" Louer mes espaces ");
         bouton1.setBounds(575,400,400,70);
         bouton1.setBackground(Color.black);
         bouton1.setForeground(Color.white);
