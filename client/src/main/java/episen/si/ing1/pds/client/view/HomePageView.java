@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class HomePageView extends JFrame implements ActionListener {
+public class HomePageView extends JFrame {
     private JPanel panel;
     private JPanel panel2;
     private JLabel j1,j2,j3,j4;
@@ -13,7 +13,7 @@ public class HomePageView extends JFrame implements ActionListener {
 
     public HomePageView(){
         super("TechUp");
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500,600);
         this.setLocationRelativeTo(null);
 
@@ -50,10 +50,5 @@ public class HomePageView extends JFrame implements ActionListener {
     public static void main(String[] args) {
         HomePageView hpm = new HomePageView();
         hpm.setVisible(true);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 }
