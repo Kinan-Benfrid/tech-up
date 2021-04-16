@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class HomePageRentView extends JFrame implements ActionListener {
     private final JButton bouton1;
-
+    private JPanel pan2;
 
 
     public HomePageRentView() {
@@ -17,7 +17,15 @@ public class HomePageRentView extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        pan2 = new JPanel();
+        pan2.setBackground(Color.PINK);
+        pan2.setPreferredSize(new Dimension(500,70));
+        this.add(pan2, BorderLayout.PAGE_START);
 
+        pan2 = new JPanel();
+        pan2.setBackground(Color.PINK);
+        pan2.setPreferredSize(new Dimension(500,70));
+        this.add(pan2, BorderLayout.PAGE_END);
 
         JPanel panel = new JPanel();
         JLabel label1 = new JLabel("Bienvenue dans votre espace de réservation !");
