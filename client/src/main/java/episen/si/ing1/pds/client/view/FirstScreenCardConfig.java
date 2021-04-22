@@ -1,13 +1,12 @@
 package episen.si.ing1.pds.client.view;
 import javax.swing.*;
-import java.awt.*;
 
-public class FirstScreenConfig extends CommonFrame {
+public class FirstScreenCardConfig extends CommonFrame {
     private JButton b1,b2,b3;
     JLabel j1,j2,j3;
     JPanel jp1;
     private JComboBox jcb;
-    public FirstScreenConfig() {
+    public FirstScreenCardConfig() {
         jp1 = new JPanel();
         this.add(jp1);
         jp1.setLayout(null);
@@ -39,7 +38,7 @@ public class FirstScreenConfig extends CommonFrame {
     }
 
     public static void main(String[] args) {
-        FirstScreenConfig c = new FirstScreenConfig();
+        FirstScreenCardConfig c = new FirstScreenCardConfig();
         c.setVisible(true);
     }
 }
