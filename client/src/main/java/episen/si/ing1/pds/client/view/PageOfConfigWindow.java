@@ -2,7 +2,7 @@ package episen.si.ing1.pds.client.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class PageOfConfigWindow extends JFrame {
+public class PageOfConfigWindow extends CommonFrame {
     public static void main(String[] args){
         Object[][] donnees = {
                 {"Temperature interieure de la piece",10},
@@ -16,12 +16,15 @@ public class PageOfConfigWindow extends JFrame {
         String[] entetes = {"Facteur d'influence sur la fenetre", "Valeur"};
         JTable tableau = new JTable(donnees, entetes);
 
+        JScrollPane scrollPane = new JScrollPane(tableau);
+        scrollPane.getViewport().setViewPosition(new Point(100,100));
 
         JButton b = new JButton("CONFIGURATION DES FENETRES ELECTRO-CHROMATIQUES");
-        b.setBounds(10,40,560,50);
+        b.setBounds(10,300,560,50);
         b.setBackground(Color.cyan);
         JPanel panH = new JPanel();
         JPanel panb= new JPanel();
+       // JPanel pan= new JPanel();
 
         panH.setBackground(Color.orange);
         panb.setBackground(Color.orange);
@@ -30,6 +33,8 @@ public class PageOfConfigWindow extends JFrame {
 
         panH.setLayout(new BorderLayout());
         panb.setLayout(new BorderLayout());
+
+
 
 
         JFrame f = new JFrame("Tech-up");
@@ -41,9 +46,14 @@ public class PageOfConfigWindow extends JFrame {
         f.setLocationRelativeTo(null);
         f.setResizable(false);
         f.getContentPane().add(b);
+        //f.add(pan);
+
         f.add(tableau);
-        f.getContentPane().add(tableau.getTableHeader(), BorderLayout.SOUTH);
-        f.getContentPane().add(tableau, BorderLayout.CENTER);
+        //pan.add(tableau, BorderLayout.CENTER);
+        f.getContentPane().add(tableau.getTableHeader(), BorderLayout.NORTH);
+        f.add(scrollPane, BorderLayout.SOUTH);
+        //f.getContentPane().add(tableau, BorderLayout.CENTER);
+
 
         f.add(panH, BorderLayout.NORTH);
         f.add(panb, BorderLayout.SOUTH);
