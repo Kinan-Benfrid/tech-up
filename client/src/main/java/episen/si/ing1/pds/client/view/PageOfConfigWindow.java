@@ -9,6 +9,7 @@ public class PageOfConfigWindow extends CommonFrame{
     public PageOfConfigWindow(){
 
         pan= new JPanel();
+
         pan.setLayout(null);
         b = new JButton("CONFIGURATION DES FENETRES ELECTRO-CHROMATIQUES");
         b.setBounds(100,110,560,50);
