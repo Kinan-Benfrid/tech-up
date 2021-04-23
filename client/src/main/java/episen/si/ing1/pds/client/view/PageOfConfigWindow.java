@@ -40,7 +40,7 @@ public class PageOfConfigWindow extends CommonFrame{
        */
     }
     public static void main(String[] args) {
-        CommonFrame c = new CommonFrame();
+        PageOfConfigWindow c = new PageOfConfigWindow();
         c.setVisible(true);
 
     }
