@@ -5,15 +5,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class HomePageRentView extends JFrame implements ActionListener {
+public class HomePageRentView extends CommonFrame implements ActionListener {
     private final JButton bouton1;
-    private final JPanel pan1;
-    private final JPanel pan2;
+    //private final JPanel pan1;
+   // private final JPanel pan2;
 
 
     public HomePageRentView() {
 
-        this.setTitle("Louer des espaces");
+      /*  this.setTitle("Louer des espaces");
         this.setSize(200, 200);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,14 +28,16 @@ public class HomePageRentView extends JFrame implements ActionListener {
         pan2.setPreferredSize(new Dimension(500,70));
         this.add(pan2, BorderLayout.PAGE_END);
 
+       */
+
         JPanel panel = new JPanel();
         JLabel label1 = new JLabel("Bienvenue dans votre espace de réservation !");
         panel.add(label1);
 
         bouton1 = new JButton(" Louer mes espaces ");
         bouton1.setBounds(575,400,400,70);
-        bouton1.setBackground(Color.black);
-        bouton1.setForeground(Color.white);
+        bouton1.setBackground(new Color(111,174,143));
+        bouton1.setForeground(Color.black);
         this.add(bouton1);
 
         getContentPane().add(panel);
