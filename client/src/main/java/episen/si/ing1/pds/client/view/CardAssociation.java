@@ -55,7 +55,8 @@ public class CardAssociation extends CommonFrame {
             public void actionPerformed(ActionEvent e) {
                 JFrame frame = new JFrame("Message");
                 JOptionPane.showMessageDialog(frame,"Affectation du badge réussie !");
-
+                MainCardMenu mcm = new MainCardMenu();
+                mcm.setVisible(true);
 
             }
         });
