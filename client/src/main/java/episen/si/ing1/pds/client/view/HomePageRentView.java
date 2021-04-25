@@ -1,5 +1,7 @@
 package episen.si.ing1.pds.client.view;
 
+import episen.si.ing1.pds.client.view.SpaceRental.FirstPageRentCriteria;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

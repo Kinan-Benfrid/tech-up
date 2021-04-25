@@ -1,11 +1,13 @@
-package episen.si.ing1.pds.client.view;
+package episen.si.ing1.pds.client.view.SpaceRental;
+
+import episen.si.ing1.pds.client.view.CommonFrame;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FirstPageSelectionOffers extends CommonFrame{
+public class FirstPageSelectionOffers extends CommonFrame {
 
     private final JPanel panPrincipal;
     private final JPanel panGauche;
