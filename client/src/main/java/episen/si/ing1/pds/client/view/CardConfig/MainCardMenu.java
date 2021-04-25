@@ -1,14 +1,11 @@
-package episen.si.ing1.pds.client.view;
+package episen.si.ing1.pds.client.view.CardConfig;
+
+import episen.si.ing1.pds.client.view.CommonFrame;
 
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ContainerEvent;
-
-import static java.awt.BorderLayout.*;
 
 public class MainCardMenu extends CommonFrame implements ActionListener {
     private Box boxMenu;

@@ -1,10 +1,6 @@
-package episen.si.ing1.pds.client.view;
+package episen.si.ing1.pds.client.view.CardConfig;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ClearanceLevel extends MainCardMenu implements ActionListener{
