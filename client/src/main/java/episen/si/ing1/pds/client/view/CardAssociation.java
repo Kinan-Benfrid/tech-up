@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CardAssociation extends CommonFrame {
+public class CardAssociation extends CommonFrame implements ActionListener{
     private JPanel pan1;
     private JLabel j1,j2,j3;
     private JButton b1,b2;
@@ -15,7 +15,6 @@ public class CardAssociation extends CommonFrame {
         pan1 = new JPanel();
         this.add(pan1);
         pan1.setLayout(null);
-
         b1 = new JButton("retour");
         b1.setBounds(10,15,70,20);
         pan1.add(b1);
@@ -50,22 +49,16 @@ public class CardAssociation extends CommonFrame {
 
         b2 = new JButton("Associer");
         b2.setBounds(140,230,100,20);
-        b2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Message");
-                JOptionPane.showMessageDialog(frame,"Affectation du badge réussie !");
-                MainCardMenu mcm = new MainCardMenu();
-                mcm.setVisible(true);
-
-            }
-        });
         pan1.add(b2);
+        b2.addActionListener(this);
+    }
 
-
-
-
-
+    public void actionPerformed(ActionEvent e) {
+        JFrame frame = new JFrame("Message");
+        JOptionPane.showMessageDialog(frame,"Affectation du badge réussie !");
+        this.dispose();
+        CardSection cs = new CardSection();
+        cs.setVisible(true);
 
     }
 
