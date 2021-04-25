@@ -136,10 +136,8 @@ public class FirstPageRentCriteria extends CommonFrame{
         b2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Message");
-                JOptionPane.showMessageDialog(frame, "Affectation du badge réussie !");
-                MainCardMenu mcm = new MainCardMenu();
-                mcm.setVisible(true);
+                FirstPageSelectionOffers fpso = new FirstPageSelectionOffers();
+                fpso.setVisible(true);
 
             }
         });
