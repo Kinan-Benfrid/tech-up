@@ -1,4 +1,4 @@
-package episen.si.ing1.pds.client.view;
+package episen.si.ing1.pds.client.view.CardConfig;
 
 public class CardAccessEquipments extends MainCardMenu {
     public CardAccessEquipments() {

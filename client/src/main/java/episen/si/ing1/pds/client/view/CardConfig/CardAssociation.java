@@ -1,6 +1,7 @@
-package episen.si.ing1.pds.client.view;
+package episen.si.ing1.pds.client.view.CardConfig;
+import episen.si.ing1.pds.client.view.CommonFrame;
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
