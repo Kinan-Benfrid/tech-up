@@ -30,6 +30,7 @@ public class CommonFrame extends JFrame {
 
         pan3 = new JPanel();
         this.add(pan3);
+        this.setSize(1000,700);
 
     }
 
