@@ -1,16 +1,23 @@
 package episen.si.ing1.pds.client.view.SpaceRental;
 
 import episen.si.ing1.pds.client.view.CommonFrame;
+import episen.si.ing1.pds.client.view.HomePageRentView;
 import episen.si.ing1.pds.client.view.HomePageView;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
 
 public class FirstPageRentCriteria extends CommonFrame {
-
 
     private final JPanel pan1;
     private final JPanel pan2;
@@ -33,7 +40,6 @@ public class FirstPageRentCriteria extends CommonFrame {
 
 
 
-
     public FirstPageRentCriteria() {
 
         setTitle("Louer mes espaces");
@@ -48,8 +54,9 @@ public class FirstPageRentCriteria extends CommonFrame {
         b1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                HomePageView hpm = new HomePageView();
-                hpm.setVisible(true);
+                HomePageRentView hprm = new HomePageRentView();
+                hprm.setVisible(true);
+                dispose();
             }
         });
 
@@ -61,43 +68,35 @@ public class FirstPageRentCriteria extends CommonFrame {
         pan2.add(j1);
         pan2.add(j2);
 
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        JFormattedTextField t1 = new JFormattedTextField(df);
+        t1.setBounds(60, 80, 70, 20);
 
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            t1 = new JFormattedTextField(sdf);
-            t1.setBounds(60, 80, 70, 20);
+        JFormattedTextField t2 = new JFormattedTextField(df);
+        t2.setBounds(180, 80, 70, 20);
 
+        t1.setToolTipText("format : dd/MM/yyyy");
+        t2.setToolTipText("format : dd/MM/yyyy");
 
-        } catch (Exception e) {
-            e.getMessage();
-        }
-
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            t2 = new JFormattedTextField(sdf);
-            t2.setBounds(180, 80, 70, 20);
-
-
-        } catch (Exception e) {
-            e.getMessage();
-        }
         pan2.add(t1);
         pan2.add(t2);
 
-
         j3 = new JLabel("ADULTE");
-        j3.setBounds(60, 110, 100, 20);
+        j3.setBounds(60, 100, 100, 20);
         pan2.add(j3);
-        jcb = new JComboBox();
-        jcb.setBounds(60, 130, 70, 20);
+
+        String[] choice = {"1","2","3","4","Entre 5 et 10","Entre 10 et 20","Entre 20 et 50","Entre 50 et 70","Entre 70 et 100","Entre 100 et 200","Entre 200 et 300","Entre 300 et 500","500 ou +"} ;
+
+        jcb = new JComboBox(choice);
+        jcb.setBounds(60, 120, 100, 20);
         pan2.add(jcb);
 
 
         j4 = new JLabel("BUDGET");
-        j4.setBounds(60, 150, 100, 20);
+        j4.setBounds(60, 140, 100, 20);
         pan2.add(j4);
         t4 = new JTextField();
-        t4.setBounds(60, 170, 70, 20);
+        t4.setBounds(60, 160, 70, 20);
         pan2.add(t4);
 
 
@@ -105,24 +104,16 @@ public class FirstPageRentCriteria extends CommonFrame {
         pan3 = new JPanel();
         pan3.setBorder(new TitledBorder("Quel(s) type(s) d'espace(s) souhaitez-vous louer ?"));
         pan2.add(pan3);
-        pan3.setBounds(50, 200, 400, 50);
+        pan3.setBounds(50, 180, 400, 50);
 
 
         r1 = new JRadioButton("Salle de réunion");
         r2 = new JRadioButton("Open-space");
         r3 = new JRadioButton("Bureau individuel");
 
-        //ButtonGroup bg = new ButtonGroup();
-        // bg.add(r1);
-        // bg.add(r2);
-        // bg.add(r3);
         pan3.add(r1);
         pan3.add(r2);
         pan3.add(r3);
-        //r1.setBounds(60,200,50,10);
-        //r2.setBounds(80,200,50,10);
-        //r3.setBounds(100,200,50,10);
-
 
         pan1 = new JPanel();
         JLabel j0 = new JLabel("Bienvenue dans votre espace de location !");
@@ -139,22 +130,14 @@ public class FirstPageRentCriteria extends CommonFrame {
             public void actionPerformed(ActionEvent e) {
                 FirstPageSelectionOffers fpso = new FirstPageSelectionOffers();
                 fpso.setVisible(true);
-
+                dispose();
             }
         });
         pan2.add(b2);
-
-
     }
-
-
     public static void main(String[] args) {
-
         FirstPageRentCriteria fprc = new FirstPageRentCriteria();
         fprc.setVisible(true);
 
-
     }
-
-
 }

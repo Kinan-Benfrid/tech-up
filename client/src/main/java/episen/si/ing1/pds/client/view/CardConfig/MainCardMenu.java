@@ -16,12 +16,12 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
         boxMenu = new Box(BoxLayout.Y_AXIS);
         boxMenu.setPreferredSize(new Dimension(200, 500));
         boxMenu.setOpaque(true);
-        boxMenu.setBackground(new Color(253, 232, 211));
+        boxMenu.setBackground(new Color(111,174,143));
 
         b1 = new JButton("Badge");
         b1.setPreferredSize(new Dimension(170, 30));
         b1.setFont(new Font("Arial", Font.PLAIN, 12));
-        b1.setBackground(new Color(253, 232, 211));
+        b1.setBackground(new Color(111,174,143));
         b1.addActionListener(this);
         Box box1 = new Box(BoxLayout.X_AXIS);
         box1.add(Box.createGlue());
@@ -32,7 +32,7 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
         b2 = new JButton("Date");
         b2.setPreferredSize(new Dimension(170, 30));
         b2.setFont(new Font("Arial", Font.PLAIN, 12));
-        b2.setBackground(new Color(253, 232, 211));
+        b2.setBackground(new Color(111,174,143));
         b2.addActionListener(this);
         Box box2 = new Box(BoxLayout.X_AXIS);
         box2.add(Box.createGlue());
@@ -43,7 +43,7 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
         b3 = new JButton("Niveau d'habilitation");
         b3.setPreferredSize(new Dimension(170, 30));
         b3.setFont(new Font("Arial", Font.PLAIN, 12));
-        b3.setBackground(new Color(253, 232, 211));
+        b3.setBackground(new Color(111,174,143));
         b3.addActionListener(this);
         Box box3 = new Box(BoxLayout.X_AXIS);
         box3.add(Box.createGlue());
@@ -54,7 +54,7 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
         b4 = new JButton("Zone d'accès");
         b4.setPreferredSize(new Dimension(170, 30));
         b4.setFont(new Font("Arial", Font.PLAIN, 12));
-        b4.setBackground(new Color(253, 232, 211));
+        b4.setBackground(new Color(111,174,143));
         b4.addActionListener(this);
         Box box4 = new Box(BoxLayout.X_AXIS);
         box4.add(Box.createGlue());
@@ -65,7 +65,7 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
         b5 = new JButton("Equipements & capteurs");
         b5.setPreferredSize(new Dimension(170, 30));
         b5.setFont(new Font("Arial", Font.PLAIN, 12));
-        b5.setBackground(new Color(253, 232, 211));
+        b5.setBackground(new Color(111,174,143));
         Box box5 = new Box(BoxLayout.X_AXIS);
         b5.addActionListener(this);
         box5.add(Box.createGlue());
@@ -76,7 +76,7 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
         b6 = new JButton("Activation");
         b6.setPreferredSize(new Dimension(170, 30));
         b6.setFont(new Font("Arial", Font.PLAIN, 12));
-        b6.setBackground(new Color(253, 232, 211));
+        b6.setBackground(new Color(111,174,143));
         b6.addActionListener(this);
         Box box6 = new Box(BoxLayout.X_AXIS);
         box6.add(Box.createGlue());

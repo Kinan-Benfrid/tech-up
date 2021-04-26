@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FirstPageSelectionOffers extends CommonFrame {
+public class SecondPageSelectionOffers extends CommonFrame {
 
     private final JPanel panPrincipal;
     private final JPanel panGauche;
@@ -17,14 +17,15 @@ public class FirstPageSelectionOffers extends CommonFrame {
     private final JPanel panHaut;
     private final JPanel panCentre2;
     private final JButton retour;
-    private final JButton filtre;
+    private  JButton filtre;
     private final JButton suivant;
     private JLabel j1;
-    public FirstPageSelectionOffers() {
+    public SecondPageSelectionOffers() {
 
         panPrincipal = new JPanel();
         this.getContentPane().add(panPrincipal);
         panPrincipal.setLayout(new BorderLayout());
+
 
         panCentre = new JPanel();
         panPrincipal.add(panCentre,BorderLayout.CENTER);
@@ -48,10 +49,14 @@ public class FirstPageSelectionOffers extends CommonFrame {
         panCentre2.add(j4);
         panCentre2.add(j5);
 
+
+
         panHaut = new JPanel();
         panPrincipal.add(panHaut, BorderLayout.NORTH);
         panHaut.setBackground(Color.BLACK);
         panHaut.setLayout(new BorderLayout());
+
+
 
         panDroite = new JPanel();
         panPrincipal.add(panDroite, BorderLayout.EAST);
@@ -63,14 +68,14 @@ public class FirstPageSelectionOffers extends CommonFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (( JOptionPane.showConfirmDialog(null, "Votre offre a bien été enregistrée\n montant déboursé : ","Message",JOptionPane.YES_NO_OPTION)) == JOptionPane.YES_OPTION){
+                if (( JOptionPane.showConfirmDialog(null, "Votre offre a bien été enregistrée\n montant déboursé : " ,"Message",JOptionPane.YES_NO_OPTION)) == JOptionPane.YES_OPTION){
                     HomePageRentView hprm = new HomePageRentView();
                     hprm.setVisible(true);
 
                 }
                 else if (( JOptionPane.showConfirmDialog(null, "Votre offre a bien été enregistrée ","Message",JOptionPane.YES_NO_OPTION)) == JOptionPane.NO_OPTION) {
-                    FirstPageSelectionOffers fpso = new FirstPageSelectionOffers();
-                    fpso.setVisible(true);
+                    SecondPageSelectionOffers spso = new SecondPageSelectionOffers();
+                    spso.setVisible(true);
                 }
                 dispose();
 
@@ -88,28 +93,36 @@ public class FirstPageSelectionOffers extends CommonFrame {
         retour.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FirstPageRentCriteria fen = new FirstPageRentCriteria();
-                fen.setVisible(true);
-                dispose();
-            }
-        });
-
-        filtre = new JButton("Filtre");
-        filtre.setBounds(300, 15, 70, 20);
-        panGauche.add(filtre,BorderLayout.SOUTH);
-        filtre.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
                 SecondPageRentCriteria sprc = new SecondPageRentCriteria();
                 sprc.setVisible(true);
                 dispose();
             }
         });
+
     }
 
     public static void main(String[] args) {
-        FirstPageSelectionOffers fpso = new FirstPageSelectionOffers();
-        fpso.setVisible(true);
+        SecondPageSelectionOffers spso = new SecondPageSelectionOffers();
+        spso.setVisible(true);
     }
 
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
