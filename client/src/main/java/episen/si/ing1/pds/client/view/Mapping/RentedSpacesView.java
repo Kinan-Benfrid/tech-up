@@ -4,6 +4,7 @@ import episen.si.ing1.pds.client.view.CommonFrame;
 
 import javax.swing.*;
 
+//UN MDA NE PEUT PAS FAIRE PLUSIEURS LOCATIONS A CORRIGER
 
 public class RentedSpacesView extends CommonFrame {
     private JPanel jp1;
