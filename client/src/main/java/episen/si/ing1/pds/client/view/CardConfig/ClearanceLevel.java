@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 
 public class ClearanceLevel extends MainCardMenu implements ActionListener{
-    private JPanel p1,p2;
+    private JPanel p1;
     private JButton b1;
     private JLabel l1;
     private JTextField jf1,jf2;
@@ -13,6 +13,7 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
     public ClearanceLevel() {
         p1 = new JPanel();
         p1.setLayout(null);
+        this.add(p1);
 
         l1 = new JLabel("Niveaux d'habilitation");
         l1.setBounds(85,150,170,30);
@@ -43,7 +44,6 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
         p1.add(l1);
         p1.add(b1);
 
-        this.add(p1);
 
     }
 
