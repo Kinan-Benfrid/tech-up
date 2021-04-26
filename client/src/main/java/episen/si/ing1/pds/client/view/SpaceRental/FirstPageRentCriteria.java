@@ -1,14 +1,15 @@
-package episen.si.ing1.pds.client.view;
+package episen.si.ing1.pds.client.view.SpaceRental;
+
+import episen.si.ing1.pds.client.view.CommonFrame;
+import episen.si.ing1.pds.client.view.HomePageView;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class FirstPageRentCriteria extends CommonFrame{
+public class FirstPageRentCriteria extends CommonFrame {
 
 
     private final JPanel pan1;
