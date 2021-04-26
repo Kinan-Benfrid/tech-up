@@ -1,6 +1,7 @@
 package episen.si.ing1.pds.client.view.SpaceRental;
 
 import episen.si.ing1.pds.client.view.CommonFrame;
+import episen.si.ing1.pds.client.view.HomePageRentView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,8 +69,8 @@ public class FirstPageSelectionOffers extends CommonFrame {
             public void actionPerformed(ActionEvent e) {
 
                 if (( JOptionPane.showConfirmDialog(null, "Votre offre a bien été enregistrée ","Message",JOptionPane.YES_NO_CANCEL_OPTION)) == JOptionPane.YES_OPTION){
-        FirstPageRentCriteria fen = new FirstPageRentCriteria();
-                    fen.setVisible(true);
+                    HomePageRentView hprm = new HomePageRentView();
+                    hprm.setVisible(true);
 
                 }
                 else if (( JOptionPane.showConfirmDialog(null, "Votre offre a bien été enregistrée ","Message",JOptionPane.YES_NO_CANCEL_OPTION)) == JOptionPane.NO_OPTION){
