@@ -19,7 +19,6 @@ import java.util.Date;
 
 public class FirstPageRentCriteria extends CommonFrame {
 
-
     private final JPanel pan1;
     private final JPanel pan2;
     private final JPanel pan3;
@@ -41,7 +40,6 @@ public class FirstPageRentCriteria extends CommonFrame {
 
 
 
-
     public FirstPageRentCriteria() {
 
         setTitle("Louer mes espaces");
@@ -58,6 +56,7 @@ public class FirstPageRentCriteria extends CommonFrame {
             public void actionPerformed(ActionEvent e) {
                 HomePageRentView hprm = new HomePageRentView();
                 hprm.setVisible(true);
+                dispose();
             }
         });
 
@@ -81,68 +80,6 @@ public class FirstPageRentCriteria extends CommonFrame {
 
         pan2.add(t1);
         pan2.add(t2);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-        t1.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseReleased(MouseEvent e) {}
-            @Override
-            public void mousePressed(MouseEvent e) {}
-            public void mouseExited(MouseEvent e) {}
-            @Override
-            public void mouseEntered(MouseEvent e) {}
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JTextField t1 = ((JTextField)e.getSource());
-                t1.setText("");
-                t1.getFont().deriveFont(Font.PLAIN);
-                t1.setForeground(Color.BLACK);
-                try {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    t1 = new JFormattedTextField(sdf);
-                    t1.setBounds(60, 80, 70, 20);
-
-
-                } catch (Exception ep) {
-                    ep.getMessage();
-                }
-
-
-
-               t1.removeMouseListener(this);
-
-
-            }
-        });
-
-         */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         j3 = new JLabel("ADULTE");
         j3.setBounds(60, 100, 100, 20);
@@ -178,8 +115,6 @@ public class FirstPageRentCriteria extends CommonFrame {
         pan3.add(r2);
         pan3.add(r3);
 
-
-
         pan1 = new JPanel();
         JLabel j0 = new JLabel("Bienvenue dans votre espace de location !");
 
@@ -195,22 +130,14 @@ public class FirstPageRentCriteria extends CommonFrame {
             public void actionPerformed(ActionEvent e) {
                 FirstPageSelectionOffers fpso = new FirstPageSelectionOffers();
                 fpso.setVisible(true);
-
+                dispose();
             }
         });
         pan2.add(b2);
-
-
     }
-
-
     public static void main(String[] args) {
-
         FirstPageRentCriteria fprc = new FirstPageRentCriteria();
         fprc.setVisible(true);
 
-
     }
-
-
 }

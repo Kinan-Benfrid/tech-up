@@ -46,8 +46,9 @@ public class SecondPageRentCriteria extends CommonFrame {
         b1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FirstPageRentCriteria fprc = new FirstPageRentCriteria();
-                fprc.setVisible(true);
+                FirstPageSelectionOffers fpso = new FirstPageSelectionOffers();
+                fpso.setVisible(true);
+                dispose();
 
             }
         });
@@ -89,8 +90,9 @@ public class SecondPageRentCriteria extends CommonFrame {
         b2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FirstPageSelectionOffers fpso = new FirstPageSelectionOffers();
-                fpso.setVisible(true);
+                SecondPageSelectionOffers spso = new SecondPageSelectionOffers();
+                spso.setVisible(true);
+                dispose();
 
             }
         });
@@ -98,13 +100,9 @@ public class SecondPageRentCriteria extends CommonFrame {
 
 
     }
-
-
     public static void main(String[] args) {
-
         SecondPageRentCriteria sprc = new SecondPageRentCriteria();
         sprc.setVisible(true);
-
 
     }
 
