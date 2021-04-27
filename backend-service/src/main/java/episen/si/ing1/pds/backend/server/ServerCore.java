@@ -6,9 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 
 public class ServerCore {
@@ -26,9 +28,15 @@ public class ServerCore {
             while (true){
                 final Socket socket = serverSocket.accept();
                 logger.info("Ok, got a requester");
-                //if (DataSource.getInstance().getNbConnection()>0){
+                if (DataSource.getInstance().getNbConnection()== 0){
+                    OutputStream out = socket.getOutputStream();
+                    out.write("Server is full, come later".getBytes(StandardCharsets.UTF_8));
+                    out.close();
+                    socket.close();
+                }
+                if (DataSource.getInstance().getNbConnection()> 0) {
                     final ClientRequestManager cLientRequestManager = new ClientRequestManager(socket);
-               // }
+                }
             }
 
         }catch (SocketTimeoutException e){
