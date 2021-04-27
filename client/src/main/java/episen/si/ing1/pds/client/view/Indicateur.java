@@ -1,4 +1,4 @@
-
+package episen.si.ing1.pds.client.view;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
@@ -43,7 +43,6 @@ public class Indicateur extends JFrame implements ActionListener {
         JButton retour = new JButton("Retour à la page précédente");
         panel3.add(retour);
 
-
     }
 
     public static void main(String[] args) {
@@ -55,6 +54,5 @@ public class Indicateur extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
     }
 }
