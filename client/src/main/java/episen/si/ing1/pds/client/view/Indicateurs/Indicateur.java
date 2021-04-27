@@ -2,7 +2,7 @@ package episen.si.ing1.pds.client.view;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class Indicateur extends JFrame implements ActionListener {
+public class Indicateur extends CommonFrame implements ActionListener {
 
     private JPanel panel1, panel2,panel3,panel4;
 
