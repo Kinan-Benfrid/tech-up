@@ -14,6 +14,7 @@ public class HomePageRentView extends CommonFrame implements ActionListener {
 
     public HomePageRentView() {
 
+        super();
         JPanel panel = new JPanel();
         JLabel label1 = new JLabel("Bienvenue dans votre espace de réservation !");
         panel.add(label1);
@@ -25,6 +26,7 @@ public class HomePageRentView extends CommonFrame implements ActionListener {
         this.add(bouton1);
         getContentPane().add(panel);
         bouton1.addActionListener(this);
+
 
     }
 
