@@ -11,8 +11,9 @@ public class CommonFrame extends JFrame {
     public CommonFrame() {
         super("TechUp");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500,600);
+        this.setSize(800,600);
         this.setLocationRelativeTo(null);
+
         BorderLayout bl = new BorderLayout();
         jl = new JLabel("Techup");
         jl.setFont(jl.getFont().deriveFont(30.0f));
@@ -30,6 +31,7 @@ public class CommonFrame extends JFrame {
 
         pan3 = new JPanel();
         this.add(pan3);
+        this.setSize(1000,700);
 
     }
 

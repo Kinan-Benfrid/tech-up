@@ -43,6 +43,7 @@ public class cardConfig extends JFrame {
 
     }
 
+
     public static void main(String[] args) {
         cardConfig c = new cardConfig();
         c.setVisible(true);

@@ -1,4 +1,4 @@
-package episen.si.ing1.pds.client.view;
+package episen.si.ing1.pds.client.view.WindowConfig;
 
 
 
@@ -12,9 +12,11 @@ import java.awt.event.ActionListener;
 import java.util.EventObject;
 
 
-public class WindowBeforePageOfConfig{
+public class WindowBeforePageOfConfig extends CommonFrame{
 
-    public static void main(String[] args){
+
+    public WindowBeforePageOfConfig(){
+
 
         JButton b = new JButton("EQUIPEMENTS");
         JButton b1 = new JButton("Configurer les fenêtres");
@@ -29,7 +31,9 @@ public class WindowBeforePageOfConfig{
         JPanel panH = new JPanel();
         JPanel panb= new JPanel();
         JPanel pan= new JPanel();
-
+this.add(pan);
+this.add(panb);
+this.add(panH);
 
         panH.setBackground(Color.orange);
         panb.setBackground(Color.orange);
@@ -45,28 +49,19 @@ public class WindowBeforePageOfConfig{
         pan.setLayout(new BorderLayout());
 
 
-        JFrame f = new JFrame("Tech-up");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setLayout(new BorderLayout());
-        f.setSize(600,600);
-        f.setVisible(true);
-        f.setResizable(true);
-        f.setLocationRelativeTo(null);
-        f.setResizable(false);
 
-        f.getContentPane().add(b);
-        f.getContentPane().add(b1);
-        f.getContentPane().add(b2);
 
-        f.add(panH, BorderLayout.NORTH);
-        f.add(panb, BorderLayout.SOUTH);
-        f.add(pan, BorderLayout.CENTER);
+        this.getContentPane().add(b);
+        this.getContentPane().add(b1);
+        this.getContentPane().add(b2);
+
+
 
 
 
 
         JLabel label = new JLabel();
-        f.add(label);
+        this.add(label);
         label.setText("Tech-up");
         label.setVerticalAlignment(JLabel.NORTH);
         label.setHorizontalAlignment(JLabel.LEFT);
@@ -77,6 +72,11 @@ public class WindowBeforePageOfConfig{
         label.setBorder(label.getBorder());
         label.setBounds(0,0,600,200);
         panH.add(label,BorderLayout.NORTH);
+    }
+    public static void main(String[] args){
+        WindowBeforePageOfConfig w = new  WindowBeforePageOfConfig();
+        w.setVisible(true);
+
     }
 }
 
