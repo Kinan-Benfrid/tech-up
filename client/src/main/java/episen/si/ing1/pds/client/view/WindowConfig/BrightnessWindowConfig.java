@@ -1,6 +1,7 @@
 package episen.si.ing1.pds.client.view.WindowConfig;
 
 import episen.si.ing1.pds.client.view.CommonFrame;
+import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
     public BrightnessWindowConfig  (){
         b4 = new JButton("CONFIGURATION OF THE BRIGHTNESS");
         b4.setBounds(250,150,450,50);
-        b4.setBackground(new Color(11,174,143));
+        b4.setBackground(new Color(247,255,101));
         b4.setFont(b4.getFont().deriveFont(15.0f));
         this.getContentPane().add(b4);
 
@@ -57,21 +58,20 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
     public static void main(String[] args) {
         BrightnessWindowConfig c = new BrightnessWindowConfig();
         c.setVisible(true);
-
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
 
         Object source = e.getSource();
         if(source == bs){
             this.dispose();
-            PageOfConfigWindow pc = new PageOfConfigWindow();
-            pc.setVisible(true);
+            RentedSpacesView rs = new RentedSpacesView();
+            rs.setVisible(true);
         }
         if(source == br){
-            this.dispose();
+
             TemperatureWindowConfig tc = new TemperatureWindowConfig ();
+            this.dispose();
             tc.setVisible(true);
         }
 
