@@ -54,6 +54,7 @@ public class ClientRequestManager implements Runnable {
                             clientSocket.getInputStream()));
             ObjectMapper mapper = new ObjectMapper();
             String line;
+            // maybe delete the loop
             while ((line = in.readLine()) != null) {
                 RequestSocket request = mapper.readValue(line, RequestSocket.class);
                 sendResponse(request, out);
@@ -145,6 +146,7 @@ public class ClientRequestManager implements Runnable {
         } else if (event.equals("floor_list")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
+            System.out.println("floor" + dataLoaded);
             List<Map> floor = new ArrayList<>();
             String sql = "Select Distinct(floor_id), floor_number from Floor_ Natural Join Space Natural Join Rental Natural Join Maintenance_Department_Administrators Where company_id=? and building_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -165,8 +167,34 @@ public class ClientRequestManager implements Runnable {
 
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
-            //writer.flush();
-            //    outputStream.write(responseMsg.getBytes(StandardCharsets.UTF_8));
+
+
+        } else if (event.equals("space_list")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            System.out.println("space " + dataLoaded);
+            List<Map> spaces = new ArrayList<>();
+            String sql = "Select Distinct(space_id), space_name, space_type from Space Natural Join Rental Natural Join Maintenance_Department_Administrators Where company_id= ? and floor_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, (Integer) dataLoaded.get("company_id"));
+            statement.setInt(2, (Integer) dataLoaded.get("floor_id"));
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                hm.put("space_id", rs.getInt("space_id"));
+                hm.put("space_name", rs.getString("space_name"));
+                hm.put("space_type", rs.getString("space_type"));
+                spaces.add(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", event);
+            response.put("data", spaces);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
         }
 
 

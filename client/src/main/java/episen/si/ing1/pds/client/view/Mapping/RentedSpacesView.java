@@ -2,6 +2,7 @@ package episen.si.ing1.pds.client.view.Mapping;
 
 import episen.si.ing1.pds.client.model.Building;
 import episen.si.ing1.pds.client.model.Company;
+import episen.si.ing1.pds.client.model.Floor;
 import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
@@ -46,11 +47,13 @@ public class RentedSpacesView extends CommonFrame {
         floors = new String[] {"Étage 1", "Étage 2", "Étage 3"};
         spaces = new String[] {"Bureau individuel", "Open space", "Salle de réunion"};
 
-
+        /**
+         * create the request to send to the server
+         */
         RequestSocket request = new RequestSocket();
         request.setRequest("building_list");
         Map<String, Object> hm = new HashMap<>();
-        hm.put("company_id", 1);
+        hm.put("company_id", Company.getCompany_id());
         request.setData(hm);
 
         ResponseSocket response = socketUtility.sendRequest(request);
@@ -95,11 +98,28 @@ public class RentedSpacesView extends CommonFrame {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if(value instanceof  Map) {
                     Map val = (Map) value;
-                    setText("Étage "+val.get("floor_number").toString());
+                    setText("Etage "+val.get("floor_number").toString());
                 }
                 // before we click, setting a title to the JCOMBOBox
                 if(index == -1 && value == null)
                     setText("Selectionner un étage");
+
+                return this;
+            }
+        });
+
+        jc3.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                // we are in a loop
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if(value instanceof  Map) {
+                    Map val = (Map) value;
+                    setText(val.get("space_name").toString());
+                }
+                // before we click, setting a title to the JCOMBOBox
+                if(index == -1 && value == null)
+                    setText("Selectionner un espace");
 
                 return this;
             }
@@ -136,36 +156,36 @@ public class RentedSpacesView extends CommonFrame {
         });
 
 
-       /* jc2.addItemListener(new ItemListener() {
+        jc2.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange() == 1) {
                     Map item = (Map)e.getItem();
-                    int buildingId = (Integer) item.get("building_id");
+                    int floorId = (Integer) item.get("floor_id");
                     RequestSocket requestSocket = new RequestSocket();
-                    Building.setBuilding_id(buildingId);
-                    requestSocket.setEvent("floor_list");
+                    Floor.setFloor_id(floorId);
+                    requestSocket.setRequest("space_list");
                     Map<String,Object> data = new HashMap<>();
                     data.put("company_id", Company.getCompany_id());
-                    data.put("building_id", buildingId);
+                    data.put("floor_id", floorId);
                     requestSocket.setData(data);
 
-                    ResponseSocket responseFloor = socketUtility.sendRequest(requestSocket);
-                    List<Map> floorListFetched = (List<Map>) responseFloor.getData();
+                    ResponseSocket responseSpace = socketUtility.sendRequest(requestSocket);
+                    List<Map> spaceListFetched = (List<Map>) responseSpace.getData();
                     // clear the data in the drop down list
-                    jc2Model.removeAllElements();
-                    for (Map floorElement: floorListFetched) {
-                        jc2Model.addElement(floorElement);
+                    jc3Model.removeAllElements();
+                    for (Map spaceElement: spaceListFetched) {
+                        jc3Model.addElement(spaceElement);
                     }
-                    jc2.setEnabled(true);
+                    jc3.setEnabled(true);
 
-                    jc2.revalidate();
-                    jc2.repaint();
+                    jc3.revalidate();
+                    jc3.repaint();
 
-                    jc2.setSelectedIndex(-1);
+                    jc3.setSelectedIndex(-1);
                 }
             }
-        });*/
+        });
 
         this.add(jp1);
         jp1.setLayout(null);
