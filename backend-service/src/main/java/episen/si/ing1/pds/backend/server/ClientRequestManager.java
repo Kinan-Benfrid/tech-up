@@ -114,9 +114,9 @@ public class ClientRequestManager implements Runnable {
 
 
     public void sendResponse(RequestSocket request, PrintWriter writer) throws Exception {
-        String event = request.getRequest();
+        String requestName = request.getRequest();
 
-        if (event.equals("building_list")) {
+        if (requestName.equals("building_list")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
             List<Map> building = new ArrayList<>();
@@ -133,7 +133,7 @@ public class ClientRequestManager implements Runnable {
             }
             // response is a map of value that is a list of map
             Map<String, Object> response = new HashMap<>();
-            response.put("request", event);
+            response.put("request", requestName);
             response.put("data", building);
 
             String responseMsg = mapper.writeValueAsString(response);
@@ -143,7 +143,7 @@ public class ClientRequestManager implements Runnable {
             logger.info("Response Has been sent");
 //            outputStream.write(responseMsg.getBytes(StandardCharsets.UTF_8));
 
-        } else if (event.equals("floor_list")) {
+        } else if (requestName.equals("floor_list")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
             System.out.println("floor" + dataLoaded);
@@ -162,14 +162,14 @@ public class ClientRequestManager implements Runnable {
             }
             // response is a map of value that is a list of map
             Map<String, Object> response = new HashMap<>();
-            response.put("request", event);
+            response.put("request", requestName);
             response.put("data", floor);
 
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
 
 
-        } else if (event.equals("space_list")) {
+        } else if (requestName.equals("space_list")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
             System.out.println("space " + dataLoaded);
@@ -189,7 +189,7 @@ public class ClientRequestManager implements Runnable {
             }
             // response is a map of value that is a list of map
             Map<String, Object> response = new HashMap<>();
-            response.put("request", event);
+            response.put("request", requestName);
             response.put("data", spaces);
 
             String responseMsg = mapper.writeValueAsString(response);

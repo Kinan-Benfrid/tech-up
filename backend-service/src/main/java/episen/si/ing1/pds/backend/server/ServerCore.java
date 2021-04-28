@@ -16,9 +16,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ServerCore {
+    private static final Logger logger = LoggerFactory.getLogger(ServerCore.class.getName());
     private ServerSocket server;
     private DataSource ds;
-    private static final Logger logger = LoggerFactory.getLogger(ServerCore.class.getName());
 
     public ServerCore(final ServerConfig config, DataSource ds) throws IOException {
         server = new ServerSocket(config.getConfig().getListenPort());
@@ -56,16 +56,13 @@ public class ServerCore {
                 // separately
                 new Thread(clientSock).start();
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if (server != null) {
                 try {
                     server.close();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }

@@ -187,6 +187,14 @@ public class RentedSpacesView extends CommonFrame {
             }
         });
 
+        jc3.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == 1){
+                }
+            }
+        });
+
         this.add(jp1);
         jp1.setLayout(null);
 
