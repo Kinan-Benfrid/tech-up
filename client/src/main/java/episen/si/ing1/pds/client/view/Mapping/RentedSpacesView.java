@@ -17,7 +17,7 @@ import java.net.Socket;
 import java.util.*;
 import java.util.List;
 
-//UN MDA NE PEUT PAS FAIRE PLUSIEURS LOCATIONS A CORRIGER
+
 
 public class RentedSpacesView extends CommonFrame {
     private JPanel jp1;
@@ -48,7 +48,7 @@ public class RentedSpacesView extends CommonFrame {
 
 
         RequestSocket request = new RequestSocket();
-        request.setEvent("building_list");
+        request.setRequest("building_list");
         Map<String, Object> hm = new HashMap<>();
         hm.put("company_id", 1);
         request.setData(hm);
@@ -112,7 +112,7 @@ public class RentedSpacesView extends CommonFrame {
                     int buildingId = (Integer) item.get("building_id");
                     RequestSocket requestSocket = new RequestSocket();
                     Building.setBuilding_id(buildingId);
-                    requestSocket.setEvent("floor_list");
+                    requestSocket.setRequest("floor_list");
                     Map<String,Object> data = new HashMap<>();
                     data.put("company_id", Company.getCompany_id());
                     data.put("building_id", buildingId);

@@ -113,7 +113,7 @@ public class ClientRequestManager implements Runnable {
 
 
     public void sendResponse(RequestSocket request, PrintWriter writer) throws Exception {
-        String event = request.getEvent();
+        String event = request.getRequest();
 
         if (event.equals("building_list")) {
             ObjectMapper mapper = new ObjectMapper();
@@ -132,7 +132,7 @@ public class ClientRequestManager implements Runnable {
             }
             // response is a map of value that is a list of map
             Map<String, Object> response = new HashMap<>();
-            response.put("event", event);
+            response.put("request", event);
             response.put("data", building);
 
             String responseMsg = mapper.writeValueAsString(response);
@@ -160,7 +160,7 @@ public class ClientRequestManager implements Runnable {
             }
             // response is a map of value that is a list of map
             Map<String, Object> response = new HashMap<>();
-            response.put("event", event);
+            response.put("request", event);
             response.put("data", floor);
 
             String responseMsg = mapper.writeValueAsString(response);

@@ -3,8 +3,6 @@ package episen.si.ing1.pds.client.model;
 public class Company {
     private static int company_id = 1;
 
-
-
     public static int getCompany_id(){
         return company_id;
     }

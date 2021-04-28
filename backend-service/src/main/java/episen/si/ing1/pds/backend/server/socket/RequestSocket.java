@@ -1,15 +1,15 @@
 package episen.si.ing1.pds.backend.server.socket;
 
 public class RequestSocket {
-    private String event;
+    private String request;
     private Object data;
 
-    public String getEvent() {
-        return event;
+    public String getRequest() {
+        return request;
     }
 
-    public void setEvent(String event) {
-        this.event = event;
+    public void setRequest(String request) {
+        this.request = request;
     }
 
     public Object getData() {
