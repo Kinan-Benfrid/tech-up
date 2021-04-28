@@ -39,6 +39,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         this.getContentPane().add(br);
         br.addActionListener(this);
 
+
        Object[][] donnees = {
                 {"Temperature interieure de la piece",10},
                 {"Temperature exterieure de la piece", 20},
@@ -58,9 +59,15 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         this.getContentPane().add(tableau.getTableHeader(), BorderLayout.NORTH);
         this.getContentPane().add(tableau,BorderLayout.CENTER);
 
+        JLabel jl = new JLabel("Bienvenue dans votre espace de configuration !");
+        this.add(jl);
+
+
         JScrollPane scrollPane = new JScrollPane(tableau);
         scrollPane.getViewport().setViewPosition(new Point(0,0));
         this.add(scrollPane, BorderLayout.LINE_END);
+
+
     }
 
     public static void main(String[] args) {
