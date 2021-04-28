@@ -47,7 +47,6 @@ public class FirstPageRentCriteria extends CommonFrame {
         this.add(pan2);
         pan2.setLayout(null);
 
-
         b1 = new JButton("retour");
         b1.setBounds(10, 15, 70, 20);
         pan2.add(b1);

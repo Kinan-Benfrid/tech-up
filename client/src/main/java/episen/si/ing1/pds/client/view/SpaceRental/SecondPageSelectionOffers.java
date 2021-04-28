@@ -69,8 +69,8 @@ public class SecondPageSelectionOffers extends CommonFrame {
             public void actionPerformed(ActionEvent e) {
 
                 if (( JOptionPane.showConfirmDialog(null, "Votre offre a bien été enregistrée\n montant déboursé : " ,"Message",JOptionPane.YES_NO_OPTION)) == JOptionPane.YES_OPTION){
-                    HomePageRentView hprm = new HomePageRentView();
-                    hprm.setVisible(true);
+                    SpaceRentalDisplayButton srdb = new SpaceRentalDisplayButton();
+                    srdb.setVisible(true);
 
                 }
                 else if (( JOptionPane.showConfirmDialog(null, "Votre offre a bien été enregistrée ","Message",JOptionPane.YES_NO_OPTION)) == JOptionPane.NO_OPTION) {

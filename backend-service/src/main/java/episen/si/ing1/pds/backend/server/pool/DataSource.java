@@ -22,17 +22,16 @@ public class DataSource {
 
     public Connection receiveConnection() {
         while (true) {
-            synchronized (jdbcConnectionPool) {
-                if (jdbcConnectionPool.isEmpty()) {
-                    try {
-                        jdbcConnectionPool.wait(2000);
-                        logger.info("There is no more connection");
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    return jdbcConnectionPool.getConnection();
+           // synchronized (jdbcConnectionPool) { }
+            if (jdbcConnectionPool.isEmpty()) {
+                try {
+                    //jdbcConnectionPool.wait(2000);
+                    logger.info("There is no more connection");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+            } else {
+                return jdbcConnectionPool.getConnection();
             }
         }
     }
