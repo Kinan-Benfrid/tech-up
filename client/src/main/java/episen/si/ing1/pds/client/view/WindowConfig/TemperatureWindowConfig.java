@@ -1,5 +1,6 @@
 package episen.si.ing1.pds.client.view.WindowConfig;
 
+import episen.si.ing1.pds.client.view.CardConfig.CardSection;
 import episen.si.ing1.pds.client.view.CommonFrame;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
 
         b2 = new JButton("CONFIGURATION DE LA TEMPERATURE");
         b2.setBounds(250,150,450,50);
-        b2.setBackground(new Color(11,174,143));
+        b2.setBackground(new Color(43,250,250));
         b2.setFont(b2.getFont().deriveFont(15.0f));
         this.getContentPane().add(b2);
 
@@ -46,6 +47,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
 
         String[] entetes2 = {"Pourcentage des stores", "Temperature interieure", "Temperature exterieure"};
         table = new JTable(Ttemp, entetes2);
+
         this.add(table);
         this.getContentPane().add(table.getTableHeader(), BorderLayout.NORTH);
         this.getContentPane().add(table,BorderLayout.CENTER);
@@ -75,6 +77,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
             PageOfConfigWindow pc = new PageOfConfigWindow ();
             pc.setVisible(true);
         }
+
 
     }
 
