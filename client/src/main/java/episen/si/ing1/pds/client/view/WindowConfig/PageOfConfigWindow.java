@@ -4,11 +4,14 @@ import episen.si.ing1.pds.client.view.CommonFrame;
 import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.EventObject;
 
 public class PageOfConfigWindow extends CommonFrame implements ActionListener {
     private JPanel pan;
@@ -34,7 +37,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         br = new JButton("Retour");
         br.setBounds(20,90,110,25);
         this.getContentPane().add(br);
-        //br.addActionListener(this);
+        br.addActionListener(this);
 
        Object[][] donnees = {
                 {"Temperature interieure de la piece",10},
@@ -48,7 +51,10 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
 
         String[] entetes = {"Facteur d'influence sur la fenetre", "Valeur"};
         tableau = new JTable(donnees, entetes);
-        this.add(tableau);
+        tableau.setEnabled(false);
+        //tableau.getColumn("donnees").setCellEditor(new Editor_name(new JCheckBox()));
+
+       this.add(tableau);
         this.getContentPane().add(tableau.getTableHeader(), BorderLayout.NORTH);
         this.getContentPane().add(tableau,BorderLayout.CENTER);
 
@@ -70,9 +76,14 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         tc.setVisible(true);
         }
         if(source == br){
-            this.dispose();
             RentedSpacesView rs = new RentedSpacesView();
+            this.dispose();
             rs.setVisible(true);
         }
 }
+
 }
+
+
+
+
