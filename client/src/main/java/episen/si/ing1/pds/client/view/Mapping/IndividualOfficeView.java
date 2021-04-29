@@ -11,7 +11,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
-public class MeetingRoomView extends CommonFrame {
+public class IndividualOfficeView extends CommonFrame {
     private ImageIcon image;
     private JPanel jp1, jp2,jp3;
     private JLabel jl1,jl2,jl3;
@@ -19,14 +19,14 @@ public class MeetingRoomView extends CommonFrame {
     private GridBagLayout gbl;
     private Box box1, box2;
 
-    public MeetingRoomView(){
+    public IndividualOfficeView(){
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel() {
             Image img;
             {
                 try {
-                    img = ImageIO.read(new File("client/src/main/resources/meeting_room.png"));
+                    img = ImageIO.read(new File("client/src/main/resources/individual_office.png"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -91,8 +91,8 @@ public class MeetingRoomView extends CommonFrame {
     }
 
     public static void main(String[] args) {
-        MeetingRoomView m = new MeetingRoomView();
-        m.setVisible(true);
+        IndividualOfficeView i = new IndividualOfficeView();
+        i.setVisible(true);
     }
 }
 
