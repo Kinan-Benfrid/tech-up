@@ -6,6 +6,8 @@ import episen.si.ing1.pds.client.view.CommonFrame;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,7 +17,7 @@ public class OpenSpaceView extends CommonFrame {
     private JLabel jl1,jl2,jl3;
     private JButton jb1;
     private GridBagLayout gbl;
-    private Box box1;
+    private Box box1, box2;
 
     public OpenSpaceView(){
         jp1 = new JPanel();
@@ -24,7 +26,7 @@ public class OpenSpaceView extends CommonFrame {
             Image img;
             {
                 try {
-                    img = ImageIO.read(new File("client/src/main/resources/meeting_room.jpg"));
+                    img = ImageIO.read(new File("client/src/main/resources/open_space.png"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -36,8 +38,37 @@ public class OpenSpaceView extends CommonFrame {
                 super.paintComponent(graphics);
             }
         };
-        box1 = Box.createHorizontalBox();
 
+        jp3.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("X position : " + getMousePosition().getX());
+                System.out.println("Y position : " + getMousePosition().getY());
+                //JOptionPane.showMessageDialog(jp3,"Voici l'exception : ","Titre : exception",JOptionPane.ERROR_MESSAGE);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        box1 = Box.createHorizontalBox();
+        box2 = Box.createHorizontalBox();
         jb1 = new JButton("Retour");
         jl1 = new JLabel("Votre espace : Salle de réunion 1 situé dans l'étage 1 du batiment Copernic");
 
@@ -48,11 +79,14 @@ public class OpenSpaceView extends CommonFrame {
         box1.add(Box.createHorizontalStrut(200));
         box1.add(jl1);
 
+        //increase the argument of createHorizontalStrut to move the panel to the left or the right
+        box2.add(Box.createHorizontalStrut(125));
+        box2.add(jp3);
+
         jp2.add(box1);
-        jp3.setBackground(Color.RED);
         this.add(jp1);
         jp1.add(jp2, BorderLayout.NORTH);
-        jp1.add(jp3);
+        jp1.add(box2);
 
     }
 
