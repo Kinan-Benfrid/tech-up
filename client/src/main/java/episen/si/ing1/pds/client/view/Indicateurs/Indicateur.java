@@ -1,8 +1,12 @@
-package episen.si.ing1.pds.client.view;
-import java.awt.event.ActionListener;
-import javax.swing.*;
 
-public class Indicateur extends CommonFrame implements ActionListener {
+
+package episen.si.ing1.pds.client.view.Indicateurs;
+//import episen.si.ing1.pds.client.view.CommonFrame;
+import javax.swing.*;
+import java.awt.*;
+
+
+public class Indicateur extends CommonFrame  {
 
     private JPanel panel1, panel2,panel3,panel4;
 
@@ -47,12 +51,12 @@ public class Indicateur extends CommonFrame implements ActionListener {
 
     public static void main(String[] args) {
         Indicateur p = new Indicateur();
-
         p.setVisible(true);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
     }
 }
