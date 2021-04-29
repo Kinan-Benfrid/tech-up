@@ -10,4 +10,5 @@ public class Company {
     public static void setCompany_id(int building_id){
         Company.company_id = company_id;
     }
+
 }

@@ -24,7 +24,7 @@ public class OpenSpaceView extends CommonFrame {
             Image img;
             {
                 try {
-                    img = ImageIO.read(new File("client/src/main/resources/open_space.jpg"));
+                    img = ImageIO.read(new File("client/src/main/resources/meeting_room.jpg"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -41,20 +41,18 @@ public class OpenSpaceView extends CommonFrame {
         jb1 = new JButton("Retour");
         jl1 = new JLabel("Votre espace : Salle de réunion 1 situé dans l'étage 1 du batiment Copernic");
 
-        jp1.setLayout(new FlowLayout());
+        jp1.setLayout(new BorderLayout());
         jp2.setPreferredSize(new Dimension(950,50));
-
         box1.setPreferredSize(new Dimension(950,50));
         box1.add(jb1);
         box1.add(Box.createHorizontalStrut(200));
         box1.add(jl1);
 
         jp2.add(box1);
-        jp1.setBackground(Color.RED);
+        jp3.setBackground(Color.RED);
         this.add(jp1);
-        jp1.add(jp2);
+        jp1.add(jp2, BorderLayout.NORTH);
         jp1.add(jp3);
-        jp1.revalidate();
 
     }
 
