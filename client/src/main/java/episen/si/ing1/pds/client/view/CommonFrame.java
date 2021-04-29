@@ -30,7 +30,7 @@ public class CommonFrame extends JFrame {
         this.add(pan2, BorderLayout.PAGE_END);
 
         pan3 = new JPanel();
-        this.add(pan3);
+        this.add(pan3, BorderLayout.CENTER);
         this.setSize(1000,700);
 
     }

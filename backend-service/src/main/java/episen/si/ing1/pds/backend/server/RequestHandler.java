@@ -1,16 +1,11 @@
 package episen.si.ing1.pds.backend.server;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import episen.si.ing1.pds.backend.server.model.Crud;
-import episen.si.ing1.pds.backend.server.pool.DataSource;
 import episen.si.ing1.pds.backend.server.socket.RequestSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,101 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+public class RequestHandler {
+    private static final Logger logger = LoggerFactory.getLogger(RequestHandler.class.getName());
 
-public class ClientRequestManager implements Runnable {
-    private static final Logger logger = LoggerFactory.getLogger(ClientRequestManager.class.getName());
-    private final static String name = "client-thread-manager";
-    private Connection connection;
-    private Socket clientSocket;
-
-
-    // TODO Add a connection in the
-    public ClientRequestManager(Socket socket, Connection connection) throws IOException {
-        this.connection = connection;
-        clientSocket = socket;
-//        writer = new PrintWriter(socket.getOutputStream(), true);
-//        reader = new BufferedReader(new InputStreamReader(new BufferedInputStream(socket.getInputStream())));
-//        self = new Thread(this, name);
-//        self.run();
-    }
-
-    @Override
-    public void run() {
-
-        PrintWriter out = null;
-        BufferedReader in = null;
-        try {
-
-            // get the outputstream of client
-            out = new PrintWriter(
-                    clientSocket.getOutputStream(), true);
-
-            // get the inputstream of client
-            in = new BufferedReader(
-                    new InputStreamReader(
-                            clientSocket.getInputStream()));
-            ObjectMapper mapper = new ObjectMapper();
-            String line;
-            // maybe delete the loop
-            while ((line = in.readLine()) != null) {
-                RequestSocket request = mapper.readValue(line, RequestSocket.class);
-                sendResponse(request, out);
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                if (out != null) {
-                    out.close();
-                }
-                if (in != null) {
-                    in.close();
-                    clientSocket.close();
-                }
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-//        byte[] inputData;
-//        try {
-////            while (inputStream.available() == 0) {
-////            }
-////            inputData = new byte[inputStream.available()]; // create a byte array with the number of data
-////            inputStream.read(inputData);
-////
-////            String msg = new String(inputData);
-//            String msg = reader.readLine();
-//            ObjectMapper mapper = new ObjectMapper();
-//            logger.info(msg);
-//            RequestSocket request = mapper.readValue(msg, RequestSocket.class);
-//
-//            sendResponse(request);
-//
-//            //outputStream.write(mapper.writeValueAsBytes(resultQuery(mapper,inputData)));
-//            logger.info("Response issued");
-//            DataSource.getInstance().putConnection(connection);
-//            RequestSocket request = mapper.readValue(msg, RequestSocket.class);
-//
-//            sendResponse(request);
-//
-//            logger.info("data received {} bytes, content={}", inputData.length, new String(inputData));
-//            //outputStream.write(mapper.writeValueAsBytes(resultQuery(mapper,inputData)));
-//            logger.info("Response issued");
-//        } catch (Exception e) {
-//            try {
-//                reader.close();
-//                writer.close();
-//            } catch (IOException ioException) {
-//                ioException.printStackTrace();
-//            }
-//        }
-    }
-
-
-    public void sendResponse(RequestSocket request, PrintWriter writer) throws Exception {
+    public void sendResponse(RequestSocket request, PrintWriter writer, Connection connection) throws Exception {
         String requestName = request.getRequest();
 
         if (requestName.equals("building_list")) {
@@ -199,5 +103,4 @@ public class ClientRequestManager implements Runnable {
 
 
     }
-
 }

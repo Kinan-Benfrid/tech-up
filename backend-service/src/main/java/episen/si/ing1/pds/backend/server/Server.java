@@ -22,7 +22,7 @@ public class Server {
         if (commandLine.hasOption("serverMode")){
             DataSource ds = DataSource.getInstance();
             logger.info("Server mode.");
-            new ServerCore(serverConfig).serve();
+            new ServerCore(serverConfig, ds).serve();
             ds.closePool();
         }
         else if (commandLine.hasOption("clientMode")){
