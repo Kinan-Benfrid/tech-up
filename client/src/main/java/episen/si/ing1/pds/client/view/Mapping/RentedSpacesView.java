@@ -3,34 +3,33 @@ package episen.si.ing1.pds.client.view.Mapping;
 import episen.si.ing1.pds.client.model.Building;
 import episen.si.ing1.pds.client.model.Company;
 import episen.si.ing1.pds.client.model.Floor;
+import episen.si.ing1.pds.client.model.Space;
 import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
+import episen.si.ing1.pds.client.view.CardConfig.CardSection;
 import episen.si.ing1.pds.client.view.CommonFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.net.Socket;
 import java.util.*;
 import java.util.List;
 
 
-
 public class RentedSpacesView extends CommonFrame {
-    private JPanel jp1;
-    private JComboBox jc1,jc2,jc3;
-    private JLabel jl1,jl2,jl3;
-    private JButton jb1,jb2,jb3,jb4,jb5;
-    private String[] buildings, floors, spaces;
     private final SocketUtility socketUtility = new SocketUtility();
+    private JPanel jp1;
+    private JComboBox jc1, jc2, jc3;
+    private JLabel jl1, jl2, jl3;
+    private JButton jb1, jb2, jb3, jb4, jb5;
+    private String[] buildings, floors, spaces;
 
-    public RentedSpacesView(){
+    public RentedSpacesView() {
+        Space.setSpace_type("");
+
         jp1 = new JPanel();
-
 
         //initializes buttons
         jb1 = new JButton("Retour ");
@@ -43,9 +42,9 @@ public class RentedSpacesView extends CommonFrame {
         jl2 = new JLabel("Sélectionner l'espace que vous voulez afficher : ");
         jl3 = new JLabel("Autres fonctionnalités : ");
 
-        buildings = new String[] {"Batiment 1", "Batiment 2", "Batiment 3"};
-        floors = new String[] {"Étage 1", "Étage 2", "Étage 3"};
-        spaces = new String[] {"Bureau individuel", "Open space", "Salle de réunion"};
+        buildings = new String[]{"Batiment 1", "Batiment 2", "Batiment 3"};
+        floors = new String[]{"Étage 1", "Étage 2", "Étage 3"};
+        spaces = new String[]{"Bureau individuel", "Open space", "Salle de réunion"};
 
         /**
          * create the request to send to the server
@@ -77,12 +76,12 @@ public class RentedSpacesView extends CommonFrame {
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 // we are in a loop
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                if(value instanceof  Map) {
+                if (value instanceof Map) {
                     Map val = (Map) value;
                     setText(val.get("building_name").toString());
                 }
                 // before we click, setting a title to the JCOMBOBox
-                if(index == -1 && value == null)
+                if (index == -1 && value == null)
                     setText("Selectionner un batiment");
 
                 return this;
@@ -96,12 +95,12 @@ public class RentedSpacesView extends CommonFrame {
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 // we are in a loop
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                if(value instanceof  Map) {
+                if (value instanceof Map) {
                     Map val = (Map) value;
-                    setText("Etage "+val.get("floor_number").toString());
+                    setText("Etage " + val.get("floor_number").toString());
                 }
                 // before we click, setting a title to the JCOMBOBox
-                if(index == -1 && value == null)
+                if (index == -1 && value == null)
                     setText("Selectionner un étage");
 
                 return this;
@@ -113,27 +112,27 @@ public class RentedSpacesView extends CommonFrame {
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 // we are in a loop
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                if(value instanceof  Map) {
+                if (value instanceof Map) {
                     Map val = (Map) value;
                     setText(val.get("space_name").toString());
                 }
                 // before we click, setting a title to the JCOMBOBox
-                if(index == -1 && value == null)
+                if (index == -1 && value == null)
                     setText("Selectionner un espace");
 
                 return this;
             }
         });
 
-        jc1.addItemListener(new ItemListener(){
-            public void itemStateChanged(ItemEvent e){
-                if(e.getStateChange() == 1) {
-                    Map item = (Map)e.getItem();
+        jc1.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == 1) {
+                    Map item = (Map) e.getItem();
                     int buildingId = (Integer) item.get("building_id");
                     RequestSocket requestSocket = new RequestSocket();
                     Building.setBuilding_id(buildingId);
                     requestSocket.setRequest("floor_list");
-                    Map<String,Object> data = new HashMap<>();
+                    Map<String, Object> data = new HashMap<>();
                     data.put("company_id", Company.getCompany_id());
                     data.put("building_id", buildingId);
                     requestSocket.setData(data);
@@ -142,7 +141,7 @@ public class RentedSpacesView extends CommonFrame {
                     List<Map> floorListFetched = (List<Map>) responseFloor.getData();
                     // clear the data in the drop down list
                     jc2Model.removeAllElements();
-                    for (Map floorElement: floorListFetched) {
+                    for (Map floorElement : floorListFetched) {
                         jc2Model.addElement(floorElement);
                     }
                     jc2.setEnabled(true);
@@ -159,13 +158,13 @@ public class RentedSpacesView extends CommonFrame {
         jc2.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if(e.getStateChange() == 1) {
-                    Map item = (Map)e.getItem();
+                if (e.getStateChange() == 1) {
+                    Map item = (Map) e.getItem();
                     int floorId = (Integer) item.get("floor_id");
                     RequestSocket requestSocket = new RequestSocket();
                     Floor.setFloor_id(floorId);
                     requestSocket.setRequest("space_list");
-                    Map<String,Object> data = new HashMap<>();
+                    Map<String, Object> data = new HashMap<>();
                     data.put("company_id", Company.getCompany_id());
                     data.put("floor_id", floorId);
                     requestSocket.setData(data);
@@ -174,7 +173,7 @@ public class RentedSpacesView extends CommonFrame {
                     List<Map> spaceListFetched = (List<Map>) responseSpace.getData();
                     // clear the data in the drop down list
                     jc3Model.removeAllElements();
-                    for (Map spaceElement: spaceListFetched) {
+                    for (Map spaceElement : spaceListFetched) {
                         jc3Model.addElement(spaceElement);
                     }
                     jc3.setEnabled(true);
@@ -190,8 +189,58 @@ public class RentedSpacesView extends CommonFrame {
         jc3.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if(e.getStateChange() == 1){
+                if (e.getStateChange() == 1) {
+                    Map item = (Map) e.getItem();
+                    int space_id = (Integer) item.get("space_id");
+                    String space_type = (String) item.get("space_type");
+                    String space_name = (String) item.get("space_name");
+                    Space.setSpace_id(space_id);
+                    Space.setSpace_type(space_type);
+                    Space.setSpace_name(space_name);
+                    System.out.println("Space id : " + space_id + ", space type : " + space_type + ", space name : " + space_name);
+
                 }
+            }
+        });
+
+        jb2.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!Space.getSpace_type().equals("")) {
+                    if (Space.getSpace_type().equals("Salle de réunion")) {
+                        dispose();
+                        MeetingRoomView mr = new MeetingRoomView();
+                        mr.setVisible(true);
+                    } else if (Space.getSpace_type().equals("Bureau individuel")) {
+                        dispose();
+                        IndividualOfficeView iv = new IndividualOfficeView();
+                        iv.setVisible(true);
+                    } else if (Space.getSpace_type().equals("Open space")) {
+                        dispose();
+                        OpenSpaceView os = new OpenSpaceView();
+                        os.setVisible(true);
+                    }
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
             }
         });
 
@@ -199,19 +248,19 @@ public class RentedSpacesView extends CommonFrame {
         jp1.setLayout(null);
 
         //set positions
-        jl1.setBounds(430,20,200,20);
-        jl2.setBounds(20,100,300,20);
-        jl3.setBounds(20,310,200,20);
+        jl1.setBounds(430, 20, 200, 20);
+        jl2.setBounds(20, 100, 300, 20);
+        jl3.setBounds(20, 310, 200, 20);
 
-        jc1.setBounds(20,140,200,20);
-        jc2.setBounds(370,140,200,20);
-        jc3.setBounds(720,140,200,20);
+        jc1.setBounds(20, 140, 200, 20);
+        jc2.setBounds(370, 140, 200, 20);
+        jc3.setBounds(720, 140, 200, 20);
 
-        jb1.setBounds(20,20,200,20);
-        jb2.setBounds(720,200,200,20);
-        jb3.setBounds(20,350,200,20);
-        jb4.setBounds(370,350,200,20);
-        jb5.setBounds(720,350,200,20);
+        jb1.setBounds(20, 20, 200, 20);
+        jb2.setBounds(720, 200, 200, 20);
+        jb3.setBounds(20, 350, 200, 20);
+        jb4.setBounds(370, 350, 200, 20);
+        jb5.setBounds(720, 350, 200, 20);
 
 
         jp1.add(jl1);
@@ -229,8 +278,8 @@ public class RentedSpacesView extends CommonFrame {
         jp1.add(jc3);
     }
 
-     public static void main(String[] args) {
-         RentedSpacesView r = new RentedSpacesView();
-         r.setVisible(true);
+    public static void main(String[] args) {
+        RentedSpacesView r = new RentedSpacesView();
+        r.setVisible(true);
     }
 }

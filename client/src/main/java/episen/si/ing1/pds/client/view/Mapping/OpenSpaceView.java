@@ -67,6 +67,36 @@ public class OpenSpaceView extends CommonFrame {
 
             }
         });
+
+        jb1.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                RentedSpacesView r = new RentedSpacesView();
+                r.setVisible(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
         box1 = Box.createHorizontalBox();
         box2 = Box.createHorizontalBox();
         jb1 = new JButton("Retour");
