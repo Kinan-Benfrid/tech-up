@@ -2,7 +2,8 @@ package episen.si.ing1.pds.client.socket;
 
 public class RequestSocket {
     private String request;
-    private Object data;
+    private Object data ;
+
 
     public void setRequest(String request) {
         this.request = request;

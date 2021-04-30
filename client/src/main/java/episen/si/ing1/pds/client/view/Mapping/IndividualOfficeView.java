@@ -11,7 +11,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
-public class MeetingRoomView extends CommonFrame {
+public class IndividualOfficeView extends CommonFrame {
     private ImageIcon image;
     private JPanel jp1, jp2,jp3;
     private JLabel jl1,jl2,jl3;
@@ -19,8 +19,9 @@ public class MeetingRoomView extends CommonFrame {
     private GridBagLayout gbl;
     private Box box1, box2;
 
-    public MeetingRoomView(){
+    public IndividualOfficeView(){
         jb1 = new JButton("Retour");
+        jl1 = new JLabel("Votre espace : Salle de réunion 1 situé dans l'étage 1 du batiment Copernic");
 
         jp1 = new JPanel();
         jp2 = new JPanel();
@@ -28,7 +29,7 @@ public class MeetingRoomView extends CommonFrame {
             Image img;
             {
                 try {
-                    img = ImageIO.read(new File("client/src/main/resources/meeting_room.png"));
+                    img = ImageIO.read(new File("client/src/main/resources/individual_office.png"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -69,6 +70,7 @@ public class MeetingRoomView extends CommonFrame {
 
             }
         });
+
         jb1.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -101,7 +103,6 @@ public class MeetingRoomView extends CommonFrame {
         box1 = Box.createHorizontalBox();
         box2 = Box.createHorizontalBox();
 
-        jl1 = new JLabel("Votre espace : Salle de réunion 1 situé dans l'étage 1 du batiment Copernic");
 
         jp1.setLayout(new BorderLayout());
         jp2.setPreferredSize(new Dimension(950,50));
@@ -122,8 +123,8 @@ public class MeetingRoomView extends CommonFrame {
     }
 
     public static void main(String[] args) {
-        MeetingRoomView m = new MeetingRoomView();
-        m.setVisible(true);
+        IndividualOfficeView i = new IndividualOfficeView();
+        i.setVisible(true);
     }
 }
 

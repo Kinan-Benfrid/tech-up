@@ -1,8 +1,9 @@
 package episen.si.ing1.pds.client.socket;
 
 public class ResponseSocket {
-    private String request;
-    private Object data;
+    private String request ;
+    private Object data ;
+
 
     public String getRequest() {
         return request;
