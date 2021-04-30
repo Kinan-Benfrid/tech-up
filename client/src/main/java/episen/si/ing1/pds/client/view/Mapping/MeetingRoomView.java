@@ -20,6 +20,8 @@ public class MeetingRoomView extends CommonFrame {
     private Box box1, box2;
 
     public MeetingRoomView(){
+        jb1 = new JButton("Retour");
+
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel() {
@@ -98,7 +100,7 @@ public class MeetingRoomView extends CommonFrame {
 
         box1 = Box.createHorizontalBox();
         box2 = Box.createHorizontalBox();
-        jb1 = new JButton("Retour");
+
         jl1 = new JLabel("Votre espace : Salle de réunion 1 situé dans l'étage 1 du batiment Copernic");
 
         jp1.setLayout(new BorderLayout());

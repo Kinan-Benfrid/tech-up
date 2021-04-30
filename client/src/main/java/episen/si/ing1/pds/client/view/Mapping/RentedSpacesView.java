@@ -206,8 +206,9 @@ public class RentedSpacesView extends CommonFrame {
         jb2.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (!Space.getSpace_type().equals("")) {
+                //if (!Space.getSpace_type().equals("")) {
                     if (Space.getSpace_type().equals("Salle de réunion")) {
+                        System.out.println("BOnjooooourrr");
                         dispose();
                         MeetingRoomView mr = new MeetingRoomView();
                         mr.setVisible(true);
@@ -216,11 +217,12 @@ public class RentedSpacesView extends CommonFrame {
                         IndividualOfficeView iv = new IndividualOfficeView();
                         iv.setVisible(true);
                     } else if (Space.getSpace_type().equals("Open space")) {
+                        System.out.println("dsjihgsdoiughsogi");
                         dispose();
                         OpenSpaceView os = new OpenSpaceView();
                         os.setVisible(true);
                     }
-                }
+                //}
             }
 
             @Override

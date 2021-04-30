@@ -43,15 +43,11 @@ public class ClientRequestManager implements Runnable {
         PrintWriter out = null;
         BufferedReader in = null;
         try {
-
             // get the outputstream of client
-            out = new PrintWriter(
-                    clientSocket.getOutputStream(), true);
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
 
             // get the inputstream of client
-            in = new BufferedReader(
-                    new InputStreamReader(
-                            clientSocket.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             ObjectMapper mapper = new ObjectMapper();
             String line;
             // maybe delete the loop

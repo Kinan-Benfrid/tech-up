@@ -20,6 +20,9 @@ public class IndividualOfficeView extends CommonFrame {
     private Box box1, box2;
 
     public IndividualOfficeView(){
+        jb1 = new JButton("Retour");
+        jl1 = new JLabel("Votre espace : Salle de réunion 1 situé dans l'étage 1 du batiment Copernic");
+
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel() {
@@ -99,8 +102,7 @@ public class IndividualOfficeView extends CommonFrame {
 
         box1 = Box.createHorizontalBox();
         box2 = Box.createHorizontalBox();
-        jb1 = new JButton("Retour");
-        jl1 = new JLabel("Votre espace : Salle de réunion 1 situé dans l'étage 1 du batiment Copernic");
+
 
         jp1.setLayout(new BorderLayout());
         jp2.setPreferredSize(new Dimension(950,50));
