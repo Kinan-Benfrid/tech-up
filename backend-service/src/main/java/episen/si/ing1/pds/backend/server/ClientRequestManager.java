@@ -191,6 +191,26 @@ public class ClientRequestManager implements Runnable {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
 
+        } else if (requestName.equals("card_list")) {
+            ObjectMapper mapper = new ObjectMapper();
+            System.out.println("card " + requestName);
+            List<Map> card = new ArrayList<>();
+            String sql = "select card_id from access_card where affected_card=false;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                hm.put("card_id", rs.getInt("card_id"));
+                card.add(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", card);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
         }
 
 
