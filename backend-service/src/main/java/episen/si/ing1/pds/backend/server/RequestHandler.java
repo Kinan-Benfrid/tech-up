@@ -17,7 +17,7 @@ import java.util.Map;
 public class RequestHandler {
     private static final Logger logger = LoggerFactory.getLogger(RequestHandler.class.getName());
 
-    public void sendResponse(RequestSocket request, PrintWriter writer, Connection connection) throws Exception {
+    public static void sendResponse(RequestSocket request, PrintWriter writer, Connection connection) throws Exception {
         String requestName = request.getRequest();
 
         if (requestName.equals("building_list")) {

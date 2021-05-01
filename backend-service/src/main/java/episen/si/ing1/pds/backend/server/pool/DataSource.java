@@ -20,22 +20,24 @@ public class DataSource {
         jdbcConnectionPool = PoolSingleton.Instance.getInstance();
     }
 
-    public Connection receiveConnection() {
+    public synchronized Connection receiveConnection() {
         Connection c = null;
-            if (jdbcConnectionPool.isEmpty()) {
-                try {
-                    logger.info("There is no more connection");
-                } catch (Exception e) {
-                    e.printStackTrace();
+        if (jdbcConnectionPool.isEmpty()) {
+            try {
+                logger.info("There is no more connection");
+            } catch (Exception e) {
+                e.printStackTrace();
 
-                }
-            } else {
-                c = jdbcConnectionPool.getConnection();
             }
-            return c;
+        } else {
+            c = jdbcConnectionPool.getConnection();
+            notifyAll();
+        }
+        return c;
     }
-
-    public boolean putConnection(Connection connection) { return jdbcConnectionPool.addConnection(connection); }
+    public synchronized boolean  putConnection(Connection connection) {
+        notifyAll();
+        return jdbcConnectionPool.addConnection(connection);  }
 
     public void closePool() { jdbcConnectionPool.closeConnection(); }
 

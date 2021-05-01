@@ -1,5 +1,6 @@
 package episen.si.ing1.pds.backend.server;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import episen.si.ing1.pds.backend.server.model.Crud;
@@ -47,13 +48,22 @@ public class ClientRequestManager implements Runnable {
             String line;
             while ((line = in.readLine()) != null) {
                 RequestSocket request = mapper.readValue(line, RequestSocket.class);
-                sendResponse(request, out);
+                if(connection != null)
+                    sendResponse(request, out);
+                else {
+                    System.out.println("DataSource : " + DataSource.getInstance().getNbConnection());
+                    handleReachedLimitPool(out);
+                }
             }
+
+            //logger.debug("Client has been disconnected");
+           // clientSocket.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            logger.error("client has been disconnected");
         }
         finally {
+            DataSource.getInstance().putConnection(connection);
             try {
                 if (out != null) {
                     out.close();
@@ -172,9 +182,21 @@ public class ClientRequestManager implements Runnable {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
 
+
+
         }
 
+    }
 
+    private void handleReachedLimitPool(PrintWriter writer) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("request", "empty_pool");
+        response.put("data", "there is no more connection in the pool. Retry later.");
+
+        String errorMsg = mapper.writeValueAsString(response);
+        writer.println(errorMsg);
     }
 
 }
