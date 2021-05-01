@@ -1,17 +1,13 @@
 package episen.si.ing1.pds.client.view.WindowConfig;
-import episen.si.ing1.pds.client.view.CardConfig.CardDate;
 import episen.si.ing1.pds.client.view.CommonFrame;
 import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.EventObject;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class PageOfConfigWindow extends CommonFrame implements ActionListener {
     private JPanel pan;
@@ -28,6 +24,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         b1 = new JButton("Rafraichir");
         b1.setBounds(700,220,92,25);
         this.getContentPane().add(b1);
+        b1.addActionListener(this);
 
         bs = new JButton("Suivant");
         bs.setBounds(800,550,92,25);
@@ -68,6 +65,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         this.add(scrollPane, BorderLayout.LINE_END);
 
 
+
     }
 
     public static void main(String[] args) {
@@ -87,9 +85,14 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
             this.dispose();
             rs.setVisible(true);
         }
+        if(source == b1){
+           RentedSpacesView rs = new RentedSpacesView();
+            this.dispose();
+            rs.setVisible(true);
+        }
+    }
 }
 
-}
 
 
 
