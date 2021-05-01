@@ -19,12 +19,14 @@ public class MeetingRoomView extends CommonFrame {
     private GridBagLayout gbl;
     private Box box1, box2;
 
+
+
     public MeetingRoomView(){
         jb1 = new JButton("Retour");
 
         Icon red_icon = null;
         try {
-            red_icon = new ImageIcon(ImageIO.read(new File("client/src/main/resources/red_icon.png")));
+            red_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getRed_icon())));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,7 +39,7 @@ public class MeetingRoomView extends CommonFrame {
             Image img;
             {
                 try {
-                    img = ImageIO.read(new File("client/src/main/resources/meeting_room.png"));
+                    img = ImageIO.read(new File(FileLocation.getMeeting_room()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

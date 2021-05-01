@@ -28,7 +28,7 @@ public class IndividualOfficeView extends CommonFrame {
 
         Icon red_icon = null;
         try {
-            red_icon = new ImageIcon(ImageIO.read(new File("client/src/main/resources/red_icon.png")));
+            red_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getRed_icon())));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,7 +39,7 @@ public class IndividualOfficeView extends CommonFrame {
             Image img;
             {
                 try {
-                    img = ImageIO.read(new File("client/src/main/resources/individual_office.png"));
+                    img = ImageIO.read(new File(FileLocation.getIndividual_office()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
