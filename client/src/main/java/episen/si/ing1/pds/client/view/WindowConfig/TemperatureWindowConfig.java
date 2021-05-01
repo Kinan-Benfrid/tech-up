@@ -1,5 +1,7 @@
 package episen.si.ing1.pds.client.view.WindowConfig;
 
+import episen.si.ing1.pds.client.model.Company;
+import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.CommonFrame;
 
@@ -16,7 +18,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.EventObject;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.sql.*;
 
 public class TemperatureWindowConfig extends CommonFrame implements ActionListener {
     private JPanel pp,pg,pc,pd;
@@ -33,6 +38,13 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
     private JPasswordField passwordField;
    // private JButton btnNewButton;
     public TemperatureWindowConfig (){
+
+        RequestSocket request = new RequestSocket();
+        request.setRequest("Valeur_Formulaire");
+        Map<String, Object> hm = new HashMap<>();
+       // hm.put("id_datatemp", datatemp.getid_datatemp());
+        request.setData(hm);
+
 
         p = new JPanel();
         this.add(p);
@@ -210,61 +222,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
             PageOfConfigWindow pc = new PageOfConfigWindow ();
             pc.setVisible(true);
         }
-        /*if(source == b3){
-                    String Data = null;
-                    int[] row = table.getSelectedRows();
-                    int[] columns = table.getSelectedColumns();
-                    for (int i = 0; i < row.length; i++) {
-                      for (int j = 0; j < columns.length; j++) {
-                            Data = (String) table.getValueAt(row[i], columns[j]);
-                        } }
-                    System.out.println("Table element selected is: " + Data);
 
-            System.out.println("toto");
-            //System.out.println(b.getText());
-
-                }*/
-        if(source == b3){
-
-                  /* String val = val.getText();
-                    String val1 = val1.getText();
-                    String val2 = val2.getText();
-                    String val4 = val4.getText();
-                    String val5Id = val5.getText();
-                    String val6 = val6.getText();
-                    String val61 = val6.getText();
-                    String val62 = val6.getText();*/
-                    String val7ileNumber = val7.getText();
-
-                    /*String val = val.getText();
-                    Scanner sc = new Scanner(System.in);
-                    String Str = sc.nextLine();*/
-                    //int len = val.length();
-                    String msg = "" + val;
-            msg += " \n";
-            //if (len != 10) {
-                //JOptionPane.showMessageDialog(b3, "Enter a valid val7");
-            //}
-
-                    try {
-                        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/swing_demo", "1", "1");
-
-                        String query = "INSERT INTO account values('" + val + "','" + val4 + "','" + val6 + "','" +
-                                val71 + "','" + val5 + "','" + val71 + "')";
-
-                        Statement sta = connection.createStatement();
-                        int x = sta.executeUpdate(query);
-                        if (x == 0) {
-                            JOptionPane.showMessageDialog(b3, "This is alredy exist");
-                        } else /*{
-                            JOptionPane.showMessageDialog(b3,
-                                "Welcome, " + msg + "Your account is sucessfully created");
-                        }*/
-                        connection.close();
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
-        }
     }
 }
 
