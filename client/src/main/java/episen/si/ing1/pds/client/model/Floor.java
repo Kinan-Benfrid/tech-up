@@ -17,7 +17,7 @@ public class Floor {
         return floor_id;
     }
 
-    public static void setFloor_id(int building_id){
-        Floor.floor_id = building_id;
+    public static void setFloor_id(int floor_id){
+        Floor.floor_id = floor_id;
     }
 }

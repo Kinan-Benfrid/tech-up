@@ -49,7 +49,7 @@ public class ClientRequestManager implements Runnable {
             while ((line = in.readLine()) != null) {
                 RequestSocket request = mapper.readValue(line, RequestSocket.class);
                 if(connection != null)
-                    sendResponse(request, out);
+                    RequestHandler.sendResponse(request, out,connection);
                 else {
                     System.out.println("DataSource : " + DataSource.getInstance().getNbConnection());
                     handleReachedLimitPool(out);
@@ -84,7 +84,7 @@ public class ClientRequestManager implements Runnable {
     }
 
 
-    public void sendResponse(RequestSocket request, PrintWriter writer) throws Exception {
+    /*public void sendResponse(RequestSocket request, PrintWriter writer) throws Exception {
         String requestName = request.getRequest();
 
         if (requestName.equals("building_list")) {
@@ -301,7 +301,7 @@ public class ClientRequestManager implements Runnable {
         }
 
 
-    }
+    }*/
 
     private void handleReachedLimitPool(PrintWriter writer) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
