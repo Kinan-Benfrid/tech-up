@@ -1,7 +1,7 @@
 package episen.si.ing1.pds.client.model;
 
 public class Company {
-    private static int company_id = 1;
+    private static int company_id;
     private static String company_name="";
 
     public static int getCompany_id(){
