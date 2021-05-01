@@ -1,16 +1,29 @@
 package episen.si.ing1.pds.client.view;
 
+import episen.si.ing1.pds.client.model.Company;
+import episen.si.ing1.pds.client.model.Person;
+import episen.si.ing1.pds.client.socket.RequestSocket;
+import episen.si.ing1.pds.client.socket.ResponseSocket;
+import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 public class HomePageView extends CommonFrame implements ActionListener {
     private JPanel panel;
     private JLabel j1,j2,j3,j4;
     private JButton b1,b2,b3;
+    private JComboBox jcb1;
+    private SocketUtility socketUtility = new SocketUtility ();
 
     public HomePageView(){
 
@@ -34,11 +47,55 @@ public class HomePageView extends CommonFrame implements ActionListener {
         j2.setFont(new Font("Arial", Font.PLAIN, 18));
         panel.add(j2);
 
-        String c []={"entreprise A","entreprise B","mairie"};
+        RequestSocket requestSocket = new RequestSocket();
+        requestSocket.setRequest("company_list");
+        Map<String, Object> data = new HashMap<> ();
+        requestSocket.setData(data);
 
-        JComboBox cc =new JComboBox(c);
-        cc.setBounds(410,130,200,20);
-        panel.add(cc);
+        System.out.println(data);
+        System.out.println("data" + requestSocket.getData());
+
+        ResponseSocket response = socketUtility.sendRequest(requestSocket);
+        java.util.List<Map> companyList = (List<Map>) response.getData();
+        System.out.println("company" + companyList);
+
+        jcb1 = new JComboBox(new Vector (companyList));
+        jcb1.setBounds(410,130,200,20);
+        panel.add(jcb1);
+
+        jcb1.setSelectedIndex(-1);
+        jcb1.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                // we are in a loop
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof Map) {
+                    Map val = (Map) value;
+                    setText(val.get("company_name").toString());
+                }
+                // before we click, setting a title to the JCOMBOBox
+                if (index == -1 && value == null)
+                    setText("Selectionner votre entreprise");
+
+                return this;
+            }
+        });
+
+        jcb1.addItemListener(new ItemListener () {
+            public void itemStateChanged(ItemEvent e) {
+
+                if (e.getStateChange() == 1) {
+                    Map item = (Map) e.getItem();
+                    int company_id = (Integer) item.get("company_id");
+                    String company_name = (String) item.get("company_name");
+                    Company.setCompany_id (company_id);
+                    Company.setCompany_name (company_name);
+                    System.out.println("company_id" + company_id);
+                    System.out.println(company_name);
+
+                }
+            }
+        });
 
         j3 = new JLabel("Première fois ?");
         j3.setBounds(410,210,200,20);
