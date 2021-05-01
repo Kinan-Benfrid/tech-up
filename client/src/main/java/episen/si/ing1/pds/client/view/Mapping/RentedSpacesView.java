@@ -281,12 +281,10 @@ public class RentedSpacesView extends CommonFrame {
         jp1.add(jc2);
         jp1.add(jc3);
 
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                socketUtility.closeSocket();
-            }
-        });
+        /**
+         * if we close the window, it will close the socket too
+         */
+
     }
 
     public static void main(String[] args) {

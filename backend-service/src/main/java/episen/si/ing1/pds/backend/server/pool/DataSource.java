@@ -31,7 +31,6 @@ public class DataSource {
             }
         } else {
             c = jdbcConnectionPool.getConnection();
-            notifyAll();
         }
         return c;
     }

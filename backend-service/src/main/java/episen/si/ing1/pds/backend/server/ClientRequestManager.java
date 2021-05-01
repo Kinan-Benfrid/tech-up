@@ -56,14 +56,18 @@ public class ClientRequestManager implements Runnable {
                 }
             }
 
-            //logger.debug("Client has been disconnected");
-           // clientSocket.close();
         }
         catch (Exception e) {
             logger.error("client has been disconnected");
         }
         finally {
-            DataSource.getInstance().putConnection(connection);
+            /**
+             * if the client has finished with the connection, we put back the connection in the pool
+             */
+            if (connection!=null) {
+                DataSource.getInstance().putConnection(connection);
+                logger.info("nb connection after closing client : " + DataSource.getInstance().getNbConnection());
+            }
             try {
                 if (out != null) {
                     out.close();

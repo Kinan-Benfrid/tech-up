@@ -92,10 +92,6 @@ public class JDBCConnectionPool {
      * @return
      */
     public boolean addConnection(Connection connection) {
-//        synchronized (physicalConnections){
-//            physicalConnections.notifyAll();
-//
-//        }
         return physicalConnections.add(connection);
     }
 

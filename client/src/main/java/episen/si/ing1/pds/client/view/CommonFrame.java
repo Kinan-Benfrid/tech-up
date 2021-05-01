@@ -1,13 +1,18 @@
 package episen.si.ing1.pds.client.view;
 
+import episen.si.ing1.pds.client.socket.SocketUtility;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.net.Socket;
 
 public class CommonFrame extends JFrame {
     private JPanel pan1,pan2,pan3;
     private JButton b1;
     private JLabel jl;
-
+    private final SocketUtility socketUtility = new SocketUtility();
     public CommonFrame() {
         super("TechUp");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,6 +38,12 @@ public class CommonFrame extends JFrame {
         this.add(pan3, BorderLayout.CENTER);
         this.setSize(1000,700);
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                socketUtility.closeSocket();
+            }
+        });
     }
 
 
