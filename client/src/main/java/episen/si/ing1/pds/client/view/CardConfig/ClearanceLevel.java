@@ -1,7 +1,18 @@
 package episen.si.ing1.pds.client.view.CardConfig;
 
+import episen.si.ing1.pds.client.model.AccessCard;
+import episen.si.ing1.pds.client.model.Person;
+import episen.si.ing1.pds.client.socket.RequestSocket;
+import episen.si.ing1.pds.client.socket.ResponseSocket;
+import episen.si.ing1.pds.client.socket.SocketUtility;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClearanceLevel extends MainCardMenu implements ActionListener{
     private JPanel p1;
@@ -9,6 +20,7 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
     private JLabel l1;
     private JTextField jf1,jf2;
     private JRadioButton jr1,jr2,jr3,jr4;
+    private SocketUtility socketUtility = new SocketUtility ();
 
     public ClearanceLevel() {
         p1 = new JPanel();
@@ -33,9 +45,37 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
         bg.add(jr3);
         bg.add(jr4);
 
+
         b1 = new JButton ("mettre à jour");
         b1.setBounds(200,370,120,30);
-        //b1.addActionListener(this);
+        b1.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JFrame frame = new JFrame("Message");
+                JOptionPane.showMessageDialog(frame, "Niveau d'habilitation mis à jour !");
+                frame.dispose ();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
         p1.add(jr1);
         p1.add(jr2);
@@ -44,12 +84,143 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
         p1.add(l1);
         p1.add(b1);
 
+        jr1.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RequestSocket request = new RequestSocket();
+                request.setRequest("clearance_level0");
+                Map<String, Object> data = new HashMap<> ();
+                data.put("person_id", Person.getPerson_id());
+                data.put("card_id", AccessCard.getCard_id());
+                request.setData(data);
 
+                ResponseSocket response = socketUtility.sendRequest(request);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        jr2.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RequestSocket request = new RequestSocket();
+                request.setRequest("clearance_level1");
+                Map<String, Object> data = new HashMap<> ();
+                data.put("person_id", Person.getPerson_id());
+                data.put("card_id", AccessCard.getCard_id());
+                request.setData(data);
+
+                ResponseSocket response = socketUtility.sendRequest(request);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        jr3.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RequestSocket request = new RequestSocket();
+                request.setRequest("clearance_level2");
+                Map<String, Object> data = new HashMap<> ();
+                data.put("person_id", Person.getPerson_id());
+                data.put("card_id", AccessCard.getCard_id());
+                request.setData(data);
+
+                ResponseSocket response = socketUtility.sendRequest(request);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        jr4.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RequestSocket request = new RequestSocket();
+                request.setRequest("clearance_level3");
+                Map<String, Object> data = new HashMap<> ();
+                data.put("person_id", Person.getPerson_id());
+                data.put("card_id", AccessCard.getCard_id());
+                request.setData(data);
+
+                ResponseSocket response = socketUtility.sendRequest(request);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
     }
 
-    /*public void actionPerformed(ActionEvent e) {
-
-    } */
 
     public static void main(String[] args) {
         ClearanceLevel n = new ClearanceLevel();
