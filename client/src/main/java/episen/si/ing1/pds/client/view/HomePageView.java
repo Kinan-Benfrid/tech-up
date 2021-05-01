@@ -90,8 +90,6 @@ public class HomePageView extends CommonFrame implements ActionListener {
                     String company_name = (String) item.get("company_name");
                     Company.setCompany_id (company_id);
                     Company.setCompany_name (company_name);
-                    System.out.println("company_id" + company_id);
-                    System.out.println(company_name);
 
                 }
             }

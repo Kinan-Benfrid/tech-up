@@ -89,7 +89,6 @@ public class RentedSpacesView extends CommonFrame {
                 return this;
             }
         });
-
         jc1.setSelectedIndex(-1);
 
         jc2.setRenderer(new DefaultListCellRenderer() {
