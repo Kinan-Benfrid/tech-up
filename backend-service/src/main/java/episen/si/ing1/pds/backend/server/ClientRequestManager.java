@@ -166,7 +166,7 @@ public class ClientRequestManager implements Runnable {
             ObjectMapper mapper = new ObjectMapper();
             System.out.println("card " + requestName);
             List<Map> card = new ArrayList<>();
-            String sql = "select card_id from access_card where affected_card=false;";
+            String sql = "select card_id from access_card where affected_card=false ORDER BY card_id ASC;";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -182,9 +182,99 @@ public class ClientRequestManager implements Runnable {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
 
+        } else if (requestName.equals("card_lost")) {
+            ObjectMapper mapper = new ObjectMapper();
+            System.out.println("card " + requestName);
+            List<Map> card = new ArrayList<>();
+            String sql = "select card_id from access_card ORDER BY card_id ASC";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                hm.put("card_id", rs.getInt("card_id"));
+                card.add(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", card);
 
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        } else if (requestName.equals("name_list")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            System.out.println("name " + dataLoaded);
+            System.out.println("name " + requestName);
+            List<Map> name = new ArrayList<>();
+            String sql = "select person_id, person_firstname, person_surname from person where company_id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("company_id"));
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                hm.put("person_id", rs.getInt("person_id"));
+                hm.put("person_firstname", rs.getString("person_firstname"));
+                hm.put("person_surname", rs.getString("person_surname"));
+                name.add(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        } else if (requestName.equals("affected_card")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            System.out.println("data loaded" + request.getData());
+            List<Map> name = new ArrayList<>();
+            String sql = "UPDATE access_card set active= true ,affected_card = true, person_id =? where card_id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,(Integer)dataloaded.get("person_id"));
+            statement.setInt(2,(Integer)dataloaded.get("card_id"));
+            statement.executeUpdate();
+            System.out.println("nb lines updated");
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            name.add(new HashMap());
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+        else if (requestName.equals("maj_list")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            System.out.println("name " + dataLoaded);
+            System.out.println("name " + requestName);
+            List<Map> name = new ArrayList<>();
+            String sql = "select access_card.person_id,person_firstname,person_surname from person inner join access_card on person.person_id = access_card.person_id where affected_card=true and company_id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("company_id"));
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                hm.put("person_id", rs.getInt("person_id"));
+                hm.put("person_firstname", rs.getString("person_firstname"));
+                hm.put("person_surname", rs.getString("person_surname"));
+                name.add(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
 
         }
+
 
     }
 
