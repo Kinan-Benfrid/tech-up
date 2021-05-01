@@ -1,7 +1,5 @@
 package episen.si.ing1.pds.client.view.CardConfig;
-import episen.si.ing1.pds.client.model.AccessCard;
-import episen.si.ing1.pds.client.model.Building;
-import episen.si.ing1.pds.client.model.Company;
+import episen.si.ing1.pds.client.model.*;
 import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
@@ -9,63 +7,78 @@ import episen.si.ing1.pds.client.view.CommonFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-public class CardAssociation extends CommonFrame implements ActionListener{
+public class CardAssociation extends CommonFrame implements ActionListener {
     private JPanel pan1;
-    private JLabel j1,j2,j3;
-    private JButton b1,b2,b3;
-    private JComboBox jcb;
-    private JTextField t1,t2;
+    private JLabel j1, j2, j3;
+    private JButton b1, b2, b3;
+    private JComboBox jcb1,jcb2;
+    //private JTextField t1, t2;
+    private RequestSocket request,requestN;
     private final SocketUtility socketUtility = new SocketUtility();
 
     public CardAssociation() {
         pan1 = new JPanel();
-        this.add(pan1);
         pan1.setLayout(null);
-        b1 = new JButton("retour");
-        b1.setBounds(10,15,70,20);
-        pan1.add(b1);
-        b1.addActionListener(this);
 
-        String [] card_id= {};
         j1 = new JLabel("Attribution d'un badge");
-        j1.setBounds(60,60,400,20);
-        pan1.add(j1);
+        j2 = new JLabel("Veuillez choisir un nom et prénom");
+        b1 = new JButton("retour");
+        b2 = new JButton("Associer");
+        b3 = new JButton("Suivant");
+
+        j1.setBounds(60, 60, 400, 20);
+        j2.setBounds(60, 170, 200, 20);
+        b1.setBounds(10, 15, 70, 20);
+        b2.setBounds(140, 290, 100, 20);
+        b3.setBounds(200, 340, 100, 20);
+
+        b1.addActionListener(this);
+        b2.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RequestSocket request2 = new RequestSocket();
+                request2.setRequest("affected_card");
+                Map<String, Object> data = new HashMap<>();
+                data.put("person_id", Person.getPerson_id());
+                data.put("card_id", AccessCard.getCard_id());
+                request2.setData(data);
+
+                ResponseSocket response2 = socketUtility.sendRequest(request2);
 
 
-        j2 = new JLabel("Nom");
-        j2.setBounds(60,170,100,20);
-        t1 = new JTextField();
-        t1.setBounds(120,170,140,20);
-        pan1.add(j2);
-        pan1.add(t1);
+            }
 
-        j3 = new JLabel("Prénom");
-        j3.setBounds(60,200,100,20);
-        t2 = new JTextField();
-        t2.setBounds(120,200,140,20);
-        pan1.add(j3);
-        pan1.add(t2);
+            @Override
+            public void mousePressed(MouseEvent e) {
 
-        //b2 = new JButton("Retourner l'id de la personne");
-        //b2.setBounds(140,230,220,20);
-        //pan1.add(b2);
-        //b2.addActionListener(this);
+            }
 
-        b3 = new JButton("Associer");
-        b3.setBounds(140,290,100,20);
-        pan1.add(b3);
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
         b3.addActionListener(this);
 
-        RequestSocket request = new RequestSocket();
+
+        request = new RequestSocket();
         request.setRequest("card_list");
         Map<String, Object> hm = new HashMap<>();
         request.setData(hm);
@@ -73,66 +86,131 @@ public class CardAssociation extends CommonFrame implements ActionListener{
         ResponseSocket response = socketUtility.sendRequest(request);
         // data is the list of map we sent in the server (look response)
         List<Map> cardList = (List<Map>) response.getData();
-        jcb = new JComboBox(new Vector(cardList));
-        jcb.setBounds(60,100,200,20);
 
-        System.out.println("Requete :" + request.getRequest());
-        System.out.println("Data :" + request.getData());
-
-        System.out.println(response);
-        System.out.println(response.getData());
+        jcb1 = new JComboBox(new Vector(cardList));
+        jcb1.setBounds(60, 100, 200, 20);
 
 
-        jcb.setRenderer(new DefaultListCellRenderer() {
+        RequestSocket requestSocket = new RequestSocket();
+        requestSocket.setRequest("name_list");
+        Map<String, Object> data = new HashMap<>();
+        data.put("company_id", Company.getCompany_id());
+        requestSocket.setData(data);
+
+        System.out.println(data);
+        System.out.println("data" + requestSocket.getData());
+
+        ResponseSocket response2 = socketUtility.sendRequest(requestSocket);
+        List<Map> nameList = (List<Map>) response2.getData();
+        System.out.println("name" + nameList);
+
+        jcb2 = new JComboBox(new Vector(nameList));
+        jcb2.setBounds(270, 170, 220, 20);
+       // System.out.println(response);
+       // System.out.println(response.getData());
+
+        jcb1.setSelectedIndex(-1);
+        jcb1.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 // we are in a loop
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                if(value instanceof  Map) {
+                if (value instanceof Map) {
                     Map val = (Map) value;
                     setText(val.get("card_id").toString());
                 }
                 // before we click, setting a title to the JCOMBOBox
-                if(index == -1 && value == null)
-                    setText("Selectionner un id de badge");
+                if (index == -1 && value == null)
+                    setText("Sélectionner un id de badge");
 
                 return this;
             }
         });
 
-        jcb.setSelectedIndex(-1);
 
-        jcb.addItemListener(new ItemListener(){
-            public void itemStateChanged(ItemEvent e){
-                if(e.getStateChange() == 1) {
-                    Map item = (Map)e.getItem();
+        jcb1.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == 1) {
+                    Map item = (Map) e.getItem();
                     int cardId = (Integer) item.get("card_id");
-                    //RequestSocket requestSocket = new RequestSocket();
                     AccessCard.setCard_id(cardId);
+                    System.out.println(cardId);
                 }
             }
         });
 
-        pan1.add(jcb);
+        jcb2.setSelectedIndex(-1);
+        jcb2.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                // we are in a loop
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof Map) {
+                    Map val = (Map) value;
+                    setText(val.get("person_firstname").toString() + " " + val.get("person_surname"));
+                }
+                // before we click, setting a title to the JCOMBOBox
+                if (index == -1 && value == null)
+                    setText("Selectionner nom et prénom");
+
+                return this;
+            }
+        });
+
+        jcb2.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+
+                if (e.getStateChange() == 1) {
+                    Map item = (Map) e.getItem();
+                    int person_id = (Integer) item.get("person_id");
+                    String person_firstname = (String) item.get("person_firstname");
+                    String person_surname = (String) item.get("person_surname");
+                    Person.setPerson_id(person_id);
+                    Person.setPerson_firstname(person_firstname);
+                    Person.setPerson_surname(person_surname);
+                    System.out.println("person_id" + person_id);
+                    System.out.println(person_firstname);
+                    System.out.println(person_surname);
+
+                }
+            }
+        });
+
+        pan1.add(j1);
+        pan1.add(j2);
+        pan1.add(b1);
+        pan1.add(b2);
+        pan1.add(b3);
+        pan1.add(jcb1);
+        pan1.add(jcb2);
+        this.add(pan1);
     }
+
 
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-        if(source == b1) {
-        this.dispose();
-        FirstScreenCardConfig fsc = new FirstScreenCardConfig();
-        fsc.setVisible(true); }
-        // else if (source == b2) {
+        if (source == b1) {
+            this.dispose();
+            FirstScreenCardConfig fsc = new FirstScreenCardConfig();
+            fsc.setVisible(true);
+        } else if (source == b3) {
+            this.dispose();
+            CardSection cs = new CardSection();
+            cs.setVisible(true);
+        }
+//        else if (source == b2) {
             //String text1 = t1.getText();
             //String text2 = t2.getText();
 
             //JFrame frame = new JFrame("Message");
             //JOptionPane.showMessageDialog(frame, "Affectation du badge réussie !");
+            //}
         //}
     }
 
-    public static void main(String[] args) {
-        CardAssociation fc = new CardAssociation();
-        fc.setVisible(true);
-    }
+        public static void main (String[]args){
+            CardAssociation fc = new CardAssociation();
+            fc.setVisible(true);
+        }
+
 }
