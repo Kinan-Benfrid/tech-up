@@ -22,6 +22,15 @@ public class MeetingRoomView extends CommonFrame {
     public MeetingRoomView(){
         jb1 = new JButton("Retour");
 
+        Icon red_icon = null;
+        try {
+            red_icon = new ImageIcon(ImageIO.read(new File("client/src/main/resources/red_icon.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JLabel red_icon_panel = new JLabel();
+        red_icon_panel.setIcon(red_icon);
+
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel() {
@@ -40,6 +49,9 @@ public class MeetingRoomView extends CommonFrame {
                 super.paintComponent(graphics);
             }
         };
+
+        jp3.setLayout(null);
+        red_icon_panel.setBounds(450,200,40,40);
 
         jp3.addMouseListener(new MouseListener() {
             @Override
@@ -103,6 +115,7 @@ public class MeetingRoomView extends CommonFrame {
 
         jl1 = new JLabel("Votre espace : Salle de réunion 1 situé dans l'étage 1 du batiment Copernic");
 
+        jp3.add(red_icon_panel);
         jp1.setLayout(new BorderLayout());
         jp2.setPreferredSize(new Dimension(950,50));
         box1.setPreferredSize(new Dimension(950,50));

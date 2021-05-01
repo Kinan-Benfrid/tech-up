@@ -21,20 +21,20 @@ public class DataSource {
     }
 
     public Connection receiveConnection() {
-        while (true) {
-           // synchronized (jdbcConnectionPool) { }
+        Connection c = null;
             if (jdbcConnectionPool.isEmpty()) {
                 try {
-                    //jdbcConnectionPool.wait(2000);
                     logger.info("There is no more connection");
                 } catch (Exception e) {
                     e.printStackTrace();
+
                 }
             } else {
-                return jdbcConnectionPool.getConnection();
+                c = jdbcConnectionPool.getConnection();
             }
-        }
+            return c;
     }
+
     public boolean putConnection(Connection connection) { return jdbcConnectionPool.addConnection(connection); }
 
     public void closePool() { jdbcConnectionPool.closeConnection(); }

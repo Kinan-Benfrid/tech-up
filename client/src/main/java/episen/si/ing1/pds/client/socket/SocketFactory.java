@@ -1,0 +1,24 @@
+package episen.si.ing1.pds.client.socket;
+
+import episen.si.ing1.pds.client.config.ClientConfig;
+
+import java.io.IOException;
+import java.net.Socket;
+
+public enum SocketFactory {
+    Instance;
+    private Socket socket;
+
+    SocketFactory() {
+        try {
+            final ClientConfig clientConfig = new ClientConfig();
+            socket = new Socket(clientConfig.getConfig().getIpAddress(), clientConfig.getConfig().getListenPort());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+}

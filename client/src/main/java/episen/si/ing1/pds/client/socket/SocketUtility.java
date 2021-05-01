@@ -9,18 +9,9 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class SocketUtility {
-    private Socket socket;
+    private Socket socket = SocketFactory.Instance.getSocket();
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public SocketUtility() {
-        try {
-            ClientConfig config = new ClientConfig();
-            socket = new Socket(config.getConfig().getIpAddress(), config.getConfig().getListenPort());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public ResponseSocket sendRequest(RequestSocket request) {
         ResponseSocket responseSocket = null;
@@ -42,5 +33,13 @@ public class SocketUtility {
         }
 
         return responseSocket;
+    }
+
+    public void closeSocket(){
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

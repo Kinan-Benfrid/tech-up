@@ -3,7 +3,7 @@ package episen.si.ing1.pds.client.model;
 public class Space {
     private static int space_id = 1;
     private static String space_name = "";
-    private static String space_type = "";
+    private static Integer space_type = 0;
 
     public static int getSpace_id() {
         return space_id;
@@ -21,11 +21,11 @@ public class Space {
         Space.space_name = space_name;
     }
 
-    public static String getSpace_type() {
+    public static Integer getSpace_type() {
         return space_type;
     }
 
-    public static void setSpace_type(String space_type) {
+    public static void setSpace_type(Integer space_type) {
         Space.space_type = space_type;
     }
 }

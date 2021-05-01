@@ -19,6 +19,7 @@ import java.util.List;
 
 
 public class RentedSpacesView extends CommonFrame {
+
     private final SocketUtility socketUtility = new SocketUtility();
     private JPanel jp1;
     private JComboBox jc1, jc2, jc3;
@@ -27,7 +28,7 @@ public class RentedSpacesView extends CommonFrame {
     private String[] buildings, floors, spaces;
 
     public RentedSpacesView() {
-        Space.setSpace_type("");
+        Space.setSpace_type(0);
 
         jp1 = new JPanel();
 
@@ -171,6 +172,8 @@ public class RentedSpacesView extends CommonFrame {
 
                     ResponseSocket responseSpace = socketUtility.sendRequest(requestSocket);
                     List<Map> spaceListFetched = (List<Map>) responseSpace.getData();
+
+                    System.out.println(spaceListFetched);
                     // clear the data in the drop down list
                     jc3Model.removeAllElements();
                     for (Map spaceElement : spaceListFetched) {
@@ -192,7 +195,7 @@ public class RentedSpacesView extends CommonFrame {
                 if (e.getStateChange() == 1) {
                     Map item = (Map) e.getItem();
                     int space_id = (Integer) item.get("space_id");
-                    String space_type = (String) item.get("space_type");
+                    int space_type = (int) item.get("space_type");
                     String space_name = (String) item.get("space_name");
                     Space.setSpace_id(space_id);
                     Space.setSpace_type(space_type);
@@ -207,17 +210,16 @@ public class RentedSpacesView extends CommonFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //if (!Space.getSpace_type().equals("")) {
-                    if (Space.getSpace_type().equals("Salle de réunion")) {
-                        System.out.println("BOnjooooourrr");
+                System.out.println(Space.getSpace_name());
+                    if (Space.getSpace_type()==1) {
                         dispose();
                         MeetingRoomView mr = new MeetingRoomView();
                         mr.setVisible(true);
-                    } else if (Space.getSpace_type().equals("Bureau individuel")) {
+                    } else if (Space.getSpace_type()==3) {
                         dispose();
                         IndividualOfficeView iv = new IndividualOfficeView();
                         iv.setVisible(true);
-                    } else if (Space.getSpace_type().equals("Open space")) {
-                        System.out.println("dsjihgsdoiughsogi");
+                    } else if (Space.getSpace_type()==2) {
                         dispose();
                         OpenSpaceView os = new OpenSpaceView();
                         os.setVisible(true);
@@ -278,6 +280,13 @@ public class RentedSpacesView extends CommonFrame {
         jp1.add(jc1);
         jp1.add(jc2);
         jp1.add(jc3);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                socketUtility.closeSocket();
+            }
+        });
     }
 
     public static void main(String[] args) {

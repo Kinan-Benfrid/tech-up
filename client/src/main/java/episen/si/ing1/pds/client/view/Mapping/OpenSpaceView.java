@@ -23,6 +23,17 @@ public class OpenSpaceView extends CommonFrame {
         jb1 = new JButton("Retour");
         jl1 = new JLabel("Votre espace : Salle de réunion 1 situé dans l'étage 1 du batiment Copernic");
 
+        Icon red_icon = null;
+        try {
+            red_icon = new ImageIcon(ImageIO.read(new File("client/src/main/resources/red_icon.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JLabel red_icon_panel = new JLabel();
+        red_icon_panel.setIcon(red_icon);
+
+
+
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel() {
@@ -41,6 +52,8 @@ public class OpenSpaceView extends CommonFrame {
                 super.paintComponent(graphics);
             }
         };
+        jp3.setLayout(null);
+        red_icon_panel.setBounds(460,40,40,40);
 
         jp3.addMouseListener(new MouseListener() {
             @Override
@@ -110,6 +123,7 @@ public class OpenSpaceView extends CommonFrame {
         box1.add(jb1);
         box1.add(Box.createHorizontalStrut(200));
         box1.add(jl1);
+        jp3.add(red_icon_panel);
 
         //increase the argument of createHorizontalStrut to move the panel to the left or the right
         box2.add(Box.createHorizontalStrut(125));

@@ -25,6 +25,16 @@ public class IndividualOfficeView extends CommonFrame {
 
         jp1 = new JPanel();
         jp2 = new JPanel();
+
+        Icon red_icon = null;
+        try {
+            red_icon = new ImageIcon(ImageIO.read(new File("client/src/main/resources/red_icon.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JLabel red_icon_panel = new JLabel();
+        red_icon_panel.setIcon(red_icon);
+
         jp3 = new JPanel() {
             Image img;
             {
@@ -41,6 +51,9 @@ public class IndividualOfficeView extends CommonFrame {
                 super.paintComponent(graphics);
             }
         };
+
+        jp3.setLayout(null);
+        red_icon_panel.setBounds(25,200,40,40);
 
         jp3.addMouseListener(new MouseListener() {
             @Override
@@ -103,7 +116,7 @@ public class IndividualOfficeView extends CommonFrame {
         box1 = Box.createHorizontalBox();
         box2 = Box.createHorizontalBox();
 
-
+        jp3.add(red_icon_panel);
         jp1.setLayout(new BorderLayout());
         jp2.setPreferredSize(new Dimension(950,50));
         box1.setPreferredSize(new Dimension(950,50));

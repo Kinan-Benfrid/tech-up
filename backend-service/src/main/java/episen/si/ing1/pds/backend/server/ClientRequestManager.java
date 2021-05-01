@@ -27,14 +27,9 @@ public class ClientRequestManager implements Runnable {
     private Socket clientSocket;
 
 
-    // TODO Add a connection in the
     public ClientRequestManager(Socket socket, Connection connection) throws IOException {
         this.connection = connection;
         clientSocket = socket;
-//        writer = new PrintWriter(socket.getOutputStream(), true);
-//        reader = new BufferedReader(new InputStreamReader(new BufferedInputStream(socket.getInputStream())));
-//        self = new Thread(this, name);
-//        self.run();
     }
 
     @Override
@@ -50,7 +45,6 @@ public class ClientRequestManager implements Runnable {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             ObjectMapper mapper = new ObjectMapper();
             String line;
-            // maybe delete the loop
             while ((line = in.readLine()) != null) {
                 RequestSocket request = mapper.readValue(line, RequestSocket.class);
                 sendResponse(request, out);
@@ -73,39 +67,6 @@ public class ClientRequestManager implements Runnable {
                 e.printStackTrace();
             }
         }
-//        byte[] inputData;
-//        try {
-////            while (inputStream.available() == 0) {
-////            }
-////            inputData = new byte[inputStream.available()]; // create a byte array with the number of data
-////            inputStream.read(inputData);
-////
-////            String msg = new String(inputData);
-//            String msg = reader.readLine();
-//            ObjectMapper mapper = new ObjectMapper();
-//            logger.info(msg);
-//            RequestSocket request = mapper.readValue(msg, RequestSocket.class);
-//
-//            sendResponse(request);
-//
-//            //outputStream.write(mapper.writeValueAsBytes(resultQuery(mapper,inputData)));
-//            logger.info("Response issued");
-//            DataSource.getInstance().putConnection(connection);
-//            RequestSocket request = mapper.readValue(msg, RequestSocket.class);
-//
-//            sendResponse(request);
-//
-//            logger.info("data received {} bytes, content={}", inputData.length, new String(inputData));
-//            //outputStream.write(mapper.writeValueAsBytes(resultQuery(mapper,inputData)));
-//            logger.info("Response issued");
-//        } catch (Exception e) {
-//            try {
-//                reader.close();
-//                writer.close();
-//            } catch (IOException ioException) {
-//                ioException.printStackTrace();
-//            }
-//        }
     }
 
 
@@ -170,7 +131,7 @@ public class ClientRequestManager implements Runnable {
             Map dataLoaded = (Map) request.getData();
             System.out.println("space " + dataLoaded);
             List<Map> spaces = new ArrayList<>();
-            String sql = "Select Distinct(space_id), space_name, space_type from Space Natural Join Rental Natural Join Maintenance_Department_Administrators Where company_id= ? and floor_id = ?";
+            String sql = "Select Distinct(space_id), space_name, spacetype_id from Space Natural Join Rental Natural Join Maintenance_Department_Administrators Where company_id= ? and floor_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setInt(1, (Integer) dataLoaded.get("company_id"));
@@ -180,7 +141,7 @@ public class ClientRequestManager implements Runnable {
                 Map<String, Object> hm = new HashMap<>();
                 hm.put("space_id", rs.getInt("space_id"));
                 hm.put("space_name", rs.getString("space_name"));
-                hm.put("space_type", rs.getString("space_type"));
+                hm.put("space_type", rs.getInt("spacetype_id"));
                 spaces.add(hm);
             }
             // response is a map of value that is a list of map

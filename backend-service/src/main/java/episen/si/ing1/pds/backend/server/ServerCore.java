@@ -6,14 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
-import java.nio.charset.StandardCharsets;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class ServerCore {
     private static final Logger logger = LoggerFactory.getLogger(ServerCore.class.getName());
@@ -22,43 +16,26 @@ public class ServerCore {
 
     public ServerCore(final ServerConfig config, DataSource ds) throws IOException {
         server = new ServerSocket(config.getConfig().getListenPort());
-        server.setSoTimeout(config.getConfig().getSoTimeout());
+        //server.setSoTimeout(config.getConfig().getSoTimeout());
         this.ds = ds;
     }
 
-    // TODO
+
     public void serve() {
         try {
-
-            //if the code doesnt work, initialise the server socket here
             server.setReuseAddress(true);
-
-            // running infinite loop for getting
-            // client request
             while (true) {
-
-                // socket object to receive incoming client
-                // requests
-
                 Socket client = server.accept();
+                logger.info("New client connected" + client.getInetAddress().getHostAddress());
 
-                // Displaying that new client is connected
-                // to server
-                System.out.println("New client connected"
-                        + client.getInetAddress()
-                        .getHostAddress());
-
-                // create a new thread object
-                ClientRequestManager clientSock
-                        = new ClientRequestManager(client, ds.receiveConnection());
-
-                // This thread will handle the client
-                // separately
+                ClientRequestManager clientSock = new ClientRequestManager(client, ds.receiveConnection());
                 new Thread(clientSock).start();
             }
         } catch (IOException e) {
+            logger.info("A client has been disconnected");
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             if (server != null) {
                 try {
                     server.close();
@@ -67,30 +44,7 @@ public class ServerCore {
                 }
             }
         }
-//        try{
-//            while (true){
-//                Socket socket = serverSocket.accept();
-//                logger.info("Ok, got a requester");
-////                if (DataSource.getInstance().getNbConnection()== 0){
-////                    OutputStream out = socket.getOutputStream();
-////                    out.write("Server is full, come later".getBytes(StandardCharsets.UTF_8));
-////                    out.close();
-////                    socket.close();
-////                }
-//                //if (DataSource.getInstance().getNbConnection()> 0) {
-//                    logger.info("New Client has been connected");
-//                    Class.forName("org.postgresql.Driver");
-//                    Connection connection = DriverManager.getConnection("jdbc:postgresql://172.31.254.91:5432/dbtechup", "postgres","techupds");
-//                    ClientRequestManager cLientRequestManager = new ClientRequestManager(socket, connection);
-//              //  }
-//            }
-//
-//        }catch (Exception e){
-//            logger.info("Ok, got a timeout");
-//        }
-//        finally {
-//            serverSocket.close();
-//        }
+
     }
 
 }
