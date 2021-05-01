@@ -231,6 +231,86 @@ public class RequestHandler {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
 
+        } else if (requestName.equals("clearance_level0")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            System.out.println("data loaded" + request.getData());
+            List<Map> name = new ArrayList<>();
+            String sql = "UPDATE access_card set clearance_level=0,affected_card = true,person_id =? where card_id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,(Integer)dataloaded.get("person_id"));
+            statement.setInt(2,(Integer)dataloaded.get("card_id"));
+            statement.executeUpdate();
+            System.out.println("nb lines updated");
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            name.add(new HashMap());
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        } else if (requestName.equals("clearance_level1")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            System.out.println("data loaded" + request.getData());
+            List<Map> name = new ArrayList<>();
+            String sql = "UPDATE access_card set clearance_level=1,affected_card = true,person_id =? where card_id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,(Integer)dataloaded.get("person_id"));
+            statement.setInt(2,(Integer)dataloaded.get("card_id"));
+            statement.executeUpdate();
+            System.out.println("nb lines updated");
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            name.add(new HashMap());
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        } else if (requestName.equals("clearance_level2")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            System.out.println("data loaded" + request.getData());
+            List<Map> name = new ArrayList<>();
+            String sql = "UPDATE access_card set clearance_level=2,affected_card = true,person_id =? where card_id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,(Integer)dataloaded.get("person_id"));
+            statement.setInt(2,(Integer)dataloaded.get("card_id"));
+            statement.executeUpdate();
+            System.out.println("nb lines updated");
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            name.add(new HashMap());
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        } else if (requestName.equals("clearance_level3")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            System.out.println("data loaded" + request.getData());
+            List<Map> name = new ArrayList<>();
+            String sql = "UPDATE access_card set clearance_level=3,affected_card = true,person_id =? where card_id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,(Integer)dataloaded.get("person_id"));
+            statement.setInt(2,(Integer)dataloaded.get("card_id"));
+            statement.executeUpdate();
+            System.out.println("nb lines updated");
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            name.add(new HashMap());
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
         }
 
 
