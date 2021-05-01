@@ -398,6 +398,33 @@ public class RequestHandler {
 
         }
 
+        else if (requestName.equals("meeting_room")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            System.out.println("meeting room " + dataLoaded);
+            List<Map> name= new ArrayList<>();
+            String sql = " Select Distinct(space_id),price from space Where spacetype_id = 1 ";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                hm.put("space_id", rs.getInt("space_id"));
+                // hm.put("space_name", rs.getString("space_name"));
+                hm.put("price", rs.getInt("price"));
+                // hm.put("max person number", rs.getInt("max_person_number"));
+                name.add(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+
 
     }
 }
