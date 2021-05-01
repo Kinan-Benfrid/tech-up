@@ -4,6 +4,8 @@ import episen.si.ing1.pds.client.socket.SocketUtility;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.Socket;
@@ -22,6 +24,35 @@ public class CommonFrame extends JFrame {
         BorderLayout bl = new BorderLayout();
         jl = new JLabel("Techup");
         jl.setFont(jl.getFont().deriveFont(30.0f));
+
+        jl.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                HomePageView h = new HomePageView();
+                h.setVisible(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         pan1 = new JPanel();
         pan1.setLayout(new BorderLayout());
         pan1.add(jl,BorderLayout.WEST);

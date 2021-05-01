@@ -8,6 +8,7 @@ import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.CardConfig.CardSection;
+import episen.si.ing1.pds.client.view.CardConfig.FirstScreenCardConfig;
 import episen.si.ing1.pds.client.view.CommonFrame;
 
 import javax.swing.*;
@@ -248,6 +249,35 @@ public class RentedSpacesView extends CommonFrame {
             }
         });
 
+        jb5.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                FirstScreenCardConfig c = new FirstScreenCardConfig();
+                c.setVisible(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
         this.add(jp1);
         jp1.setLayout(null);
 
@@ -281,9 +311,7 @@ public class RentedSpacesView extends CommonFrame {
         jp1.add(jc2);
         jp1.add(jc3);
 
-        /**
-         * if we close the window, it will close the socket too
-         */
+
 
     }
 
