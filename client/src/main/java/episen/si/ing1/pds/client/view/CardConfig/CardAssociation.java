@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-public class CardAssociation extends CommonFrame implements ActionListener {
+public class CardAssociation extends CommonFrame {
     private JPanel pan1;
     private JLabel j1, j2, j3;
     private JButton b1, b2, b3;
@@ -38,7 +38,34 @@ public class CardAssociation extends CommonFrame implements ActionListener {
         b2.setBounds(140, 290, 100, 20);
         b3.setBounds(200, 340, 100, 20);
 
-        b1.addActionListener(this);
+        b1.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                FirstScreenCardConfig fsc = new FirstScreenCardConfig();
+                fsc.setVisible(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         b2.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -75,7 +102,33 @@ public class CardAssociation extends CommonFrame implements ActionListener {
             }
         });
 
-        b3.addActionListener(this);
+        b3.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                CardSection cs = new CardSection();
+                cs.setVisible(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
 
         request = new RequestSocket();
@@ -187,17 +240,17 @@ public class CardAssociation extends CommonFrame implements ActionListener {
     }
 
 
-    public void actionPerformed(ActionEvent e) {
+    /*public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source == b1) {
             this.dispose();
             FirstScreenCardConfig fsc = new FirstScreenCardConfig();
             fsc.setVisible(true);
-        } else if (source == b3) {
+        } /*else if (source == b3) {
             this.dispose();
             CardSection cs = new CardSection();
             cs.setVisible(true);
-        }
+        } */
 //        else if (source == b2) {
             //String text1 = t1.getText();
             //String text2 = t2.getText();
@@ -206,7 +259,7 @@ public class CardAssociation extends CommonFrame implements ActionListener {
             //JOptionPane.showMessageDialog(frame, "Affectation du badge réussie !");
             //}
         //}
-    }
+
 
         public static void main (String[]args){
             CardAssociation fc = new CardAssociation();

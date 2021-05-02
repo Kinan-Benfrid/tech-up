@@ -1,5 +1,7 @@
 package episen.si.ing1.pds.client.view.CardConfig;
 
+import episen.si.ing1.pds.client.model.SpacePerson;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,12 +10,19 @@ public class CardAccessArea extends MainCardMenu {
     private JButton b1;
     private JComboBox jb1,jb2,jb3;
     private JLabel l1,l2,l3;
+    private JTable jt;
 
     public CardAccessArea() {
         p1 = new JPanel();
         p1.setLayout(null);
         this.add(p1);
 
+
+        SpacePerson space = new SpacePerson ();
+        jt = new JTable (space);
+        jt.setBounds (400,30,300,300);
+
+        p1.add (jt);
         l1 = new JLabel("Bâtiment");
         l1.setBounds(30,20,120,90);
         l1.setFont(new Font("Arial", Font.PLAIN, 20));

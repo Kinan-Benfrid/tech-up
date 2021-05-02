@@ -9,39 +9,40 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EquipmentPerson extends AbstractTableModel {
-    private List<Map> person_list;
+public class SpacePerson  extends AbstractTableModel {
+    private List<Map> space_list;
     private SocketUtility socketUtility = new SocketUtility ();
 
-    public EquipmentPerson() {
+    public SpacePerson() {
         RequestSocket rs = new RequestSocket ();
-        rs.setRequest ("persons_list");
+        rs.setRequest ("spaceP_list");
         Map<String,Object> m = new HashMap<> ();
         m.put("person", Person.getPerson_id ());
         rs.setData (m);
         ResponseSocket responseSocket = socketUtility.sendRequest (rs);
 
-        person_list = (List<Map>) responseSocket.getData ();
+        space_list = (List<Map>) responseSocket.getData ();
 
     }
 
     @Override
     public int getRowCount() {
-        return person_list.size ()+1;
+        return space_list.size ();
     }
 
     @Override
     public int getColumnCount() {
-        return person_list.get (0).size ();
+        return space_list.get (0).size ();
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return person_list.get(rowIndex).get(getColumnName (columnIndex));
+        return space_list.get(rowIndex).get(getColumnName (columnIndex));
     }
 
     @Override
     public String getColumnName(int column) {
-        return person_list.get (0).keySet ().toArray ()[column].toString ();
+        return space_list.get (0).keySet ().toArray ()[column].toString ();
     }
 }
+
