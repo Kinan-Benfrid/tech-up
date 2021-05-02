@@ -1,6 +1,7 @@
 package episen.si.ing1.pds.client.view.CardConfig;
 
 import episen.si.ing1.pds.client.view.CommonFrame;
+import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class MainCardMenu extends CommonFrame implements ActionListener {
     private Box boxMenu;
-    private JButton b1, b2, b3, b4, b5, b6;
+    private JButton b0,b1, b2, b3, b4, b5, b6,b7;
 
     public MainCardMenu() {
 
@@ -17,6 +18,17 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
         boxMenu.setPreferredSize(new Dimension(200, 500));
         boxMenu.setOpaque(true);
         boxMenu.setBackground(new Color(111,174,143));
+
+        b0 = new JButton("Retour Accueil");
+        b0.setPreferredSize(new Dimension(170, 30));
+        b0.setFont(new Font("Arial", Font.PLAIN, 12));
+        b0.setBackground(new Color(111,174,143));
+        b0.addActionListener(this);
+        Box box0 = new Box(BoxLayout.X_AXIS);
+        box0.add(Box.createGlue());
+        box0.add(b0);
+        box0.add(Box.createGlue());
+        boxMenu.add(box0, b0);
 
         b1 = new JButton("Badge");
         b1.setPreferredSize(new Dimension(170, 30));
@@ -84,13 +96,28 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
         box6.add(Box.createGlue());
         boxMenu.add(box6, b6);
 
+        b7 = new JButton("Rechercher");
+        b7.setPreferredSize(new Dimension(170, 30));
+        b7.setFont(new Font("Arial", Font.PLAIN, 12));
+        b7.setBackground(new Color(111,174,143));
+        b7.addActionListener(this);
+        Box box7 = new Box(BoxLayout.X_AXIS);
+        box7.add(Box.createGlue());
+        box7.add(b7);
+        box7.add(Box.createGlue());
+        boxMenu.add(box7, b7);
+
         this.add(boxMenu, BorderLayout.WEST);
 
     }
 
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-        if(source == b1) {
+        if(source == b0) {
+            this.dispose();
+            RentedSpacesView r = new RentedSpacesView();
+            r.setVisible(true);
+        } else if(source == b1) {
             this.dispose();
             CardSection cs = new CardSection();
             cs.setVisible(true);
@@ -119,6 +146,10 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
             this.dispose();
             ActivationCard ac = new ActivationCard();
             ac.setVisible(true);
+        } else if(source == b7) {
+            this.dispose();
+            SearchingCard sc = new SearchingCard();
+            sc.setVisible(true);
         }
     }
 
