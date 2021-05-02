@@ -45,7 +45,7 @@ public class RequestHandler {
             logger.info(responseMsg);
             writer.println(responseMsg);
             logger.info("Response Has been sent");
-//            outputStream.write(responseMsg.getBytes(StandardCharsets.UTF_8));
+
 
         } else if (requestName.equals("floor_list")) {
             ObjectMapper mapper = new ObjectMapper();

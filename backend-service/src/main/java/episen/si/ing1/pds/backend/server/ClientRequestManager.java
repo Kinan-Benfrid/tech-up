@@ -83,7 +83,6 @@ public class ClientRequestManager implements Runnable {
         }
     }
 
-
     private void handleReachedLimitPool(PrintWriter writer) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
 
