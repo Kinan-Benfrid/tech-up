@@ -25,7 +25,7 @@ public class OpenSpaceView extends CommonFrame {
 
         Icon red_icon = null;
         try {
-            red_icon = new ImageIcon(ImageIO.read(new File("client/src/main/resources/red_icon.png")));
+            red_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getRed_icon())));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,7 +40,7 @@ public class OpenSpaceView extends CommonFrame {
             Image img;
             {
                 try {
-                    img = ImageIO.read(new File("client/src/main/resources/open_space.png"));
+                    img = ImageIO.read(new File(FileLocation.getOpen_space()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -52,6 +52,7 @@ public class OpenSpaceView extends CommonFrame {
                 super.paintComponent(graphics);
             }
         };
+
         jp3.setLayout(null);
         red_icon_panel.setBounds(460,40,40,40);
 

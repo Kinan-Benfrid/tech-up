@@ -1,5 +1,10 @@
 package episen.si.ing1.pds.client.view.Mapping;
 
+import episen.si.ing1.pds.client.model.Company;
+import episen.si.ing1.pds.client.model.Space;
+import episen.si.ing1.pds.client.socket.RequestSocket;
+import episen.si.ing1.pds.client.socket.ResponseSocket;
+import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.CommonFrame;
 
 
@@ -10,6 +15,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MeetingRoomView extends CommonFrame {
     private ImageIcon image;
@@ -18,13 +26,26 @@ public class MeetingRoomView extends CommonFrame {
     private JButton jb1;
     private GridBagLayout gbl;
     private Box box1, box2;
+    private final SocketUtility socketUtility = new SocketUtility();
+
+
 
     public MeetingRoomView(){
         jb1 = new JButton("Retour");
 
+        RequestSocket request = new RequestSocket();
+        request.setRequest("position_list");
+        Map<String, Object> hm = new HashMap<>();
+        hm.put("space_id", Space.getSpace_id());
+        request.setData(hm);
+
+        ResponseSocket response = socketUtility.sendRequest(request);
+        List<Map> positionList = (List<Map>) response.getData();
+        System.out.println("List of position : " + positionList );
+
         Icon red_icon = null;
         try {
-            red_icon = new ImageIcon(ImageIO.read(new File("client/src/main/resources/red_icon.png")));
+            red_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getRed_icon())));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,7 +58,7 @@ public class MeetingRoomView extends CommonFrame {
             Image img;
             {
                 try {
-                    img = ImageIO.read(new File("client/src/main/resources/meeting_room.png"));
+                    img = ImageIO.read(new File(FileLocation.getMeeting_room()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
