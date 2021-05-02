@@ -33,24 +33,16 @@ public class MeetingRoomView extends CommonFrame {
     public MeetingRoomView(){
         jb1 = new JButton("Retour");
 
-        RequestSocket request = new RequestSocket();
-        request.setRequest("position_list");
-        Map<String, Object> hm = new HashMap<>();
-        hm.put("space_id", Space.getSpace_id());
-        request.setData(hm);
 
-        ResponseSocket response = socketUtility.sendRequest(request);
-        List<Map> positionList = (List<Map>) response.getData();
-        System.out.println("List of position : " + positionList );
-
-        Icon red_icon = null;
-        try {
-            red_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getRed_icon())));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        JLabel red_icon_panel = new JLabel();
-        red_icon_panel.setIcon(red_icon);
+//        Icon red_icon = null;
+//      Icon blue_icon = null;
+//        try {
+//            red_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getRed_icon())));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        JLabel red_icon_panel = new JLabel();
+//        red_icon_panel.setIcon(red_icon);
 
         jp1 = new JPanel();
         jp2 = new JPanel();
@@ -70,9 +62,44 @@ public class MeetingRoomView extends CommonFrame {
                 super.paintComponent(graphics);
             }
         };
-
         jp3.setLayout(null);
-        red_icon_panel.setBounds(450,200,40,40);
+
+        RequestSocket request = new RequestSocket();
+        request.setRequest("position");
+        Map<String, Object> hm = new HashMap<>();
+        hm.put("space_id", Space.getSpace_id());
+        request.setData(hm);
+        ResponseSocket response = socketUtility.sendRequest(request);
+        List<Map> positionList = (List<Map>) response.getData();
+        System.out.println("List of position : " + positionList );
+
+        for (Map m : positionList){
+            try{
+                if ((boolean) m.get("available")){
+                    System.out.println("X_POSITION : " + m.get("x_position"));
+                    System.out.println("Y_POSITION : " + m.get("y_position"));
+                    Icon blue_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getBlue_icon())));
+                    JLabel blue_icon_label = new JLabel();
+                    blue_icon_label.setIcon(blue_icon);
+                    blue_icon_label.setBounds((int) m.get("x_position"),(int) m.get("y_position"),40,40);
+                    jp3.add(blue_icon_label);
+                }
+                else{
+                    System.out.println("X_POSITION : " + m.get("x_position"));
+                    System.out.println("Y_POSITION : " + m.get("y_position"));
+                    Icon red_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getRed_icon())));
+                    JLabel red_icon_label = new JLabel();
+                    red_icon_label.setIcon(red_icon);
+                    red_icon_label.setBounds((int) m.get("x_position"),(int) m.get("y_position"),40,40);
+                    jp3.add(red_icon_label);
+                }
+            }  catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
 
         jp3.addMouseListener(new MouseListener() {
             @Override
@@ -136,7 +163,7 @@ public class MeetingRoomView extends CommonFrame {
 
         jl1 = new JLabel("Votre espace : Salle de réunion 1 situé dans l'étage 1 du batiment Copernic");
 
-        jp3.add(red_icon_panel);
+        //jp3.add(red_icon_panel);
         jp1.setLayout(new BorderLayout());
         jp2.setPreferredSize(new Dimension(950,50));
         box1.setPreferredSize(new Dimension(950,50));

@@ -26,7 +26,7 @@ public class SocketUtility {
             String msg = reader.readLine();
             System.out.println(msg);
             ResponseSocket responseS = mapper.readValue(msg, ResponseSocket.class);
-            //System.out.println("Request " +responseS.getRequest());
+
             System.out.println(responseS.getData());
             if(responseS.getRequest().equals("empty_pool")) {
                 throw new IllegalAccessException(responseS.getData().toString());

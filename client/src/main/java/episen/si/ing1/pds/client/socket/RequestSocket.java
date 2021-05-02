@@ -20,4 +20,12 @@ public class RequestSocket {
     public Object getData() {
         return data;
     }
+
+    @Override
+    public String toString() {
+        return "RequestSocket{" +
+                "request='" + request + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }
