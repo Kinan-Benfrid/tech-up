@@ -73,6 +73,7 @@ public class RequestHandler {
             writer.println(responseMsg);
 
 
+
         } else if (requestName.equals("space_list")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
@@ -395,7 +396,6 @@ public class RequestHandler {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
 
-
         }
 
         else if (requestName.equals("meeting_room")) {
@@ -423,8 +423,31 @@ public class RequestHandler {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
 
+        } else if (requestName.equals("position_list")) {
+                ObjectMapper mapper = new ObjectMapper();
+                Map dataLoaded = (Map) request.getData();
+                System.out.println("space" + dataLoaded);
+                List<Map> position = new ArrayList<>();
+                String sql = "select position_id, x_position, y_position, available from position where space_id = ?";
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setInt(1, (Integer) dataLoaded.get("space_id"));
+                ResultSet rs = statement.executeQuery();
+                while (rs.next()) {
+                    Map<String, Object> hm = new HashMap<>();
+                    hm.put("position_id", rs.getInt("position_id"));
+                    hm.put("x_position", rs.getInt("x_position"));
+                    hm.put("y_position", rs.getInt("y_position"));
+                    hm.put("available", rs.getBoolean("available"));
+                    position.add(hm);
+                }
+                logger.info("DATA TO SENT : " + position);
+                // response is a map of value that is a list of map
+                Map<String, Object> response = new HashMap<>();
+                response.put("request", requestName);
+                response.put("data", position);
+
+                String responseMsg = mapper.writeValueAsString(response);
+                writer.println(responseMsg);
         }
-
-
     }
 }
