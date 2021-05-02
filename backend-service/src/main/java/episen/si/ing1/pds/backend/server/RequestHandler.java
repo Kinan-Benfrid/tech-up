@@ -424,28 +424,31 @@ public class RequestHandler {
 
         } else if (requestName.equals("meeting_room")) {
             ObjectMapper mapper = new ObjectMapper();
-            Map dataLoaded = (Map) request.getData();
-            System.out.println("meeting room " + dataLoaded);
-            List<Map> name= new ArrayList<>();
-            String sql = " Select Distinct(space_id),price from space Where spacetype_id = 1 ";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            Map dataloaded = (Map) request.getData();
+           // int person_id = (int) dataloaded.get ("person");
+            String query = "Select Distinct(space_id),space_name,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id  Where spacetype_id = 1 and rental_id is NULL;";
+            PreparedStatement statement = connection.prepareStatement (query);
+           //statement.setInt (1,person_id);
+            ResultSet rs = statement.executeQuery ();
+            List<Map> list = new ArrayList<> ();
+            while(rs.next ()) {
+                Map m = new HashMap ();
+                m.put("space_id",rs.getInt ("space_id"));
+                m.put ("space_name",rs.getString ("space_name"));
+                m.put ("floor_number",rs.getInt ("floor_number"));
+                m.put ("building_name",rs.getString ("building_name"));
+                m.put ("price",rs.getInt ("price"));
 
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                Map<String, Object> hm = new HashMap<>();
-                hm.put("space_id", rs.getInt("space_id"));
-                // hm.put("space_name", rs.getString("space_name"));
-                hm.put("price", rs.getInt("price"));
-                // hm.put("max person number", rs.getInt("max_person_number"));
-                name.add(hm);
+                list.add(m);
             }
-            // response is a map of value that is a list of map
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
-            response.put("data", name);
+            response.put("data", list);
+            System.out.println (list);
 
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
+
 
         } else if (requestName.equals("position")) {
                 ObjectMapper mapper = new ObjectMapper();
