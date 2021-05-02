@@ -1,196 +1,217 @@
 package episen.si.ing1.pds.client.view.WindowConfig;
 
-import episen.si.ing1.pds.client.model.Company;
+import episen.si.ing1.pds.client.model.AccessCard;
+import episen.si.ing1.pds.client.model.Measured;
+import episen.si.ing1.pds.client.model.Person;
 import episen.si.ing1.pds.client.socket.RequestSocket;
+import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.CommonFrame;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.TableCellEditor;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import java.util.EventObject;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
-import java.sql.*;
+import java.util.Vector;
 
 public class TemperatureWindowConfig extends CommonFrame implements ActionListener {
-    private JPanel pp,pg,pc,pd;
-    private JButton b2, b3, bs, br;
-    private JTable table;
-    //private final SocketUtility socketUtility = new SocketUtility();
+    private JButton bconf, bvalid, bs, br;
+    private final SocketUtility socketUtility = new SocketUtility();
     private static final long serialVersionUID = 1L;
-    private JPanel contentPane, p;
-    private JTextField val,val1,val2;
-    private JTextField val4;
-    private JTextField val5;
-    private JTextField val6, val61,val62;
-    private JTextField val7, val71;
-    private JPasswordField passwordField;
-   // private JButton btnNewButton;
+    private JPanel p;
+    private JTextField val,valtemp2,valtemp3,valtemp4,valtemp5,valtemp6,valtemp7,valtemp8,
+    valtemp9,  valtemp10     ;
+
+    private JLabel labelTitre, labelTitre1, labelval,labelvaltemp2,labelvaltemp3,labelvaltemp4,
+    labelvaltemp5, lblvaltemp6 ,lblvaltemp7,lblvaltemp8,labelvaltemp9,labelvaltemp10  ;
+
     public TemperatureWindowConfig (){
-
-        RequestSocket request = new RequestSocket();
-        request.setRequest("Valeur_Formulaire");
-        Map<String, Object> hm = new HashMap<>();
-       // hm.put("id_datatemp", datatemp.getid_datatemp());
-        request.setData(hm);
-
 
         p = new JPanel();
         this.add(p);
         p.setLayout(null);
 //début De la configuration de la temperature interieure
-        JLabel labelTitre = new JLabel("Temperature interieure");
+        // déclaration of label title(text)
+        labelTitre = new JLabel("Temperature interieure");
         labelTitre.setFont(new Font("Times New Roman", Font.PLAIN, 22));
         labelTitre.setBounds(92, 82, 325, 50);
         p.add(labelTitre);
 
-        JLabel labelTitre1 = new JLabel("Temperature exterieure");
+        labelTitre1 = new JLabel("Temperature exterieure");
         labelTitre1.setFont(new Font("Times New Roman", Font.PLAIN, 22));
         labelTitre1.setBounds(602, 82, 325, 50);
         p.add(labelTitre1);
 
-
-        JLabel labelval = new JLabel("Valeur < 5 °");
+//declaration of the label for the inside temperature value
+        labelval = new JLabel("Entre 0-5 °");
         labelval.setFont(new Font("Arial", Font.PLAIN, 18));
         labelval.setBounds(58, 130, 110, 29);
         p.add(labelval);
 
-        JLabel labelval1 = new JLabel("Entre 5°-10°");
-        labelval1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelval1.setBounds(58, 181, 110, 29);
-        p.add(labelval1);
+       labelvaltemp2 = new JLabel("Entre 6°-10°");
+        labelvaltemp2.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelvaltemp2.setBounds(58, 181, 110, 29);
+        p.add(labelvaltemp2);
 
-        JLabel labelval2 = new JLabel("Entre 10°-15°");
-        labelval2.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelval2.setBounds(58, 232, 110, 29);
-        p.add(labelval2);
+        labelvaltemp3 = new JLabel("Entre 11°-15°");
+        labelvaltemp3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelvaltemp3.setBounds(58, 232, 110, 29);
+        p.add(labelvaltemp3);
 
 
-        JLabel labelval4 = new JLabel("Entre 15°-20°");
-        labelval4.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelval4.setBounds(58, 283, 110, 29);
-        p.add(labelval4);
+       labelvaltemp4 = new JLabel("Entre 16°-20°");
+        labelvaltemp4.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelvaltemp4.setBounds(58, 283, 110, 29);
+        p.add(labelvaltemp4);
 
-        JLabel labelval5 = new JLabel(" Valeur > 20°");
-        labelval5.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelval5.setBounds(58, 334, 124, 36);
-        p.add(labelval5);
+        labelvaltemp5 = new JLabel(" Entre 21-40°");
+        labelvaltemp5.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelvaltemp5.setBounds(58, 334, 124, 36);
+        p.add(labelvaltemp5);
 
+//We can write in this TextField for the inside temperature
         val = new JTextField();
         val.setFont(new Font("Tahoma", Font.PLAIN, 32));
         val.setBounds(214, 130, 228, 40);
         p.add(val);
         val.setColumns(10);
-        //val.getActionListeners(b3);
+        //val.getActionListeners(bvalid);
 
-        val1 = new JTextField();
-        val1.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        val1.setBounds(214, 181, 228, 40);
-        p.add(val1);
-        val1.setColumns(10);
+        valtemp2 = new JTextField();
+        valtemp2.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        valtemp2.setBounds(214, 181, 228, 40);
+        p.add(valtemp2);
+        valtemp2.setColumns(10);
 
-        val2 = new JTextField();
-        val2.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        val2.setBounds(214, 232, 228, 40);
-        p.add(val2);
-        val2.setColumns(10);
+        valtemp3 = new JTextField();
+        valtemp3.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        valtemp3.setBounds(214, 232, 228, 40);
+        p.add(valtemp3);
+        valtemp3.setColumns(10);
 
-        val4 = new JTextField();
-        val4.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        val4.setBounds(214, 283, 228, 40);
-        p.add(val4);
-        val4.setColumns(10);
+        valtemp4 = new JTextField();
+        valtemp4.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        valtemp4.setBounds(214, 283, 228, 40);
+        p.add(valtemp4);
+        valtemp4.setColumns(10);
 
-        val5 = new JTextField();
-        val5.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        val5.setBounds(214, 334, 228, 40);
-        p.add(val5);
-        val5.setColumns(10);
+        valtemp5 = new JTextField();
+        valtemp5.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        valtemp5.setBounds(214, 334, 228, 40);
+        p.add(valtemp5);
+        valtemp5.setColumns(10);
 //fin
-//Début config temperature exterieure
+////declaration of the label for the outside temperature value
 
-        JLabel lblval6 = new JLabel("Valeur < 15 °");
-        lblval6.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        lblval6.setBounds(542, 130, 110, 29);
-        p.add(lblval6);
+       lblvaltemp6 = new JLabel("Entre 0-15 °");
+        lblvaltemp6.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lblvaltemp6.setBounds(542, 130, 110, 29);
+        p.add(lblvaltemp6);
 
-        JLabel lblval61 = new JLabel("Entre 15°-20°");
-        lblval61.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        lblval61.setBounds(542, 181, 110, 29);
-        p.add(lblval61);
+       lblvaltemp7 = new JLabel("Entre 16°-20°");
+        lblvaltemp7.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lblvaltemp7.setBounds(542, 181, 110, 29);
+        p.add(lblvaltemp7);
 
-        JLabel lblval62 = new JLabel("Entre 20°-25°");
-        lblval62.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        lblval62.setBounds(542, 232, 110, 29);
-        p.add(lblval62);
+       lblvaltemp8 = new JLabel("Entre 21°-25°");
+        lblvaltemp8.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lblvaltemp8.setBounds(542, 232, 110, 29);
+        p.add(lblvaltemp8);
 
-        JLabel labelval7 = new JLabel("Entre 25°-30°");
-        labelval7.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelval7.setBounds(542, 283, 110, 29);
-        p.add(labelval7);
+        labelvaltemp9 = new JLabel("Entre 26°-30°");
+        labelvaltemp9.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelvaltemp9.setBounds(542, 283, 110, 29);
+        p.add(labelvaltemp9);
 
-        JLabel labelval71 = new JLabel("Valeur > 30°");
-        labelval71.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelval71.setBounds(542, 334, 110, 29);
-        p.add(labelval71);
+        labelvaltemp10 = new JLabel("Entre 30-40°");
+        labelvaltemp10.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelvaltemp10.setBounds(542, 334, 110, 29);
+        p.add(labelvaltemp10);
 
-        val6 = new JTextField();
-        val6.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        val6.setBounds(707, 130, 228, 40);
-        p.add(val6);
-        val6.setColumns(10);
+//We can write in this TextField for the outside temperature
+        valtemp6 = new JTextField();
+        valtemp6.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        valtemp6.setBounds(707, 130, 228, 40);
+        p.add(valtemp6);
+        valtemp6.setColumns(10);
 
-        val61 = new JTextField();
-        val61.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        val61.setBounds(707, 181, 228, 40);
-        p.add(val61);
-        val61.setColumns(10);
+        valtemp7 = new JTextField();
+        valtemp7.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        valtemp7.setBounds(707, 181, 228, 40);
+        p.add(valtemp7);
+        valtemp7.setColumns(10);
 
-        val62 = new JTextField();
-        val62.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        val62.setBounds(707, 232, 228, 40);
-        p.add(val62);
-        val62.setColumns(10);
+        valtemp8 = new JTextField();
+        valtemp8.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        valtemp8.setBounds(707, 232, 228, 40);
+        p.add(valtemp8);
+        valtemp8.setColumns(10);
 
-        val7 = new JTextField();
-        val7.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        val7.setBounds(707, 283, 228, 40);
-        p.add(val7);
-        val7.setColumns(10);
+        valtemp9 = new JTextField();
+        valtemp9.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        valtemp9.setBounds(707, 283, 228, 40);
+        p.add(valtemp9);
+        valtemp9.setColumns(10);
 
-        val71 = new JTextField();
-        val71.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        val71.setBounds(707, 334, 228, 40);
-        p.add(val71);
-        val71.setColumns(10);
-
-
-
+        valtemp10 = new JTextField();
+        valtemp10.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        valtemp10.setBounds(707, 334, 228, 40);
+        p.add(valtemp10);
+        valtemp10.setColumns(10);
 
 
 //Creation of the button
-        b2 = new JButton("CONFIGURATION DE LA TEMPERATURE");
-        b2.setBounds(250,20,450,50);
-        b2.setBackground(new Color(111,174,143));
-        b2.setFont(b2.getFont().deriveFont(15.0f));
-        p.add(b2);
+        bconf = new JButton("CONFIGURATION DE LA TEMPERATURE");
+        bconf.setBounds(250,20,450,50);
+        bconf.setBackground(new Color(111,174,143));
+        bconf.setFont(bconf.getFont().deriveFont(15.0f));
+        p.add(bconf);
 
-        b3 = new JButton("Valider");
-        b3.setBounds(800,380,92,25);
-        p.add(b3);
-        b3.addActionListener(this);
-        p.add(b3);
+        bvalid = new JButton("Valider");
+        bvalid.setBounds(800,380,92,25);
+        p.add(bvalid);
+        bvalid.addActionListener(this);
+        //Clik in the put take the data in measure
+        /*bvalid.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent e) {
+                RequestSocket request2 = new RequestSocket();
+                request2.setRequest("Temp");
+                Map<String, Object> data = new HashMap<>();
+                data.put("id_measure", Measured.getid_measure());
+                request2.setData(data);
+
+                ResponseSocket response2 = socketUtility.sendRequest(request2);
+
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });*/
+
+        p.add(bvalid);
         bs = new JButton("Suivant");
         bs.setBounds(800,450,92,25);
         p.add(bs);
@@ -203,6 +224,33 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
         p.add(br);
         br.addActionListener(this);
 
+       /* RequestSocket request = new RequestSocket();
+        request.setRequest("Temp_interne");
+        Map<String, Object> hm = new HashMap<>();
+        hm.put("id_measure", Measured.getid_measure());
+        request.setData(hm);
+
+        ResponseSocket response = socketUtility.sendRequest(request);
+        // data is the list of map we sent in the server (look response)
+        List<Map> TempInterne1 = (List<Map>) response.getData();
+
+        val = new JTextField("TempInterne1");
+        val.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                // we are in a loop
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof Map) {
+                    Map val = (Map) value;
+                    setText(val.get("inside_temp_measured_value").toString());
+                }
+                // before we click, setting a title to the JCOMBOBox
+                if (index == -1 && value == null)
+                    setText("Selectionner un batiment");
+
+                return this;
+            }
+        });*/
     }
 
         public static void main(String[] args) {
@@ -221,6 +269,50 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
             this.dispose();
             PageOfConfigWindow pc = new PageOfConfigWindow ();
             pc.setVisible(true);
+        }
+        if(source == bvalid){
+
+            String v = val.getText();
+            int v_pars = Integer.parseInt(v);
+            System.out.println(v_pars);
+
+            String v2 = valtemp2.getText();
+            int v2_pars = Integer.parseInt(v2);
+            System.out.println(v2_pars);
+
+            String v3 = valtemp3.getText();
+            int v3_pars = Integer.parseInt(v3);
+            System.out.println(v3_pars);
+
+            String v4 = valtemp4.getText();
+            int v4_pars = Integer.parseInt(v4);
+            System.out.println(v4_pars);
+
+            String v5 = valtemp5.getText();
+            int v5_pars = Integer.parseInt(v5);
+            System.out.println(v5_pars);
+
+            String v6 = valtemp6.getText();
+            int v6_pars = Integer.parseInt(v6);
+            System.out.println(v6_pars);
+
+            String v7 = valtemp7.getText();
+            int v7_pars = Integer.parseInt(v7);
+            System.out.println(v7_pars);
+
+            String v8 = valtemp8.getText();
+            int v8_pars = Integer.parseInt(v8);
+            System.out.println(v8_pars);
+
+            String v9 = valtemp9.getText();
+            int v9_pars = Integer.parseInt(v9);
+            System.out.println(v9_pars);
+
+            String v10 = valtemp10.getText();
+            int v10_pars = Integer.parseInt(v10);
+            System.out.println(v10_pars);
+
+
         }
 
     }
