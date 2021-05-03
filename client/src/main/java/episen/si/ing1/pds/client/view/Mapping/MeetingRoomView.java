@@ -82,6 +82,35 @@ public class MeetingRoomView extends CommonFrame {
                     JLabel blue_icon_label = new JLabel();
                     blue_icon_label.setIcon(blue_icon);
                     blue_icon_label.setBounds((int) m.get("x_position"),(int) m.get("y_position"),40,40);
+                    blue_icon_label.addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                           PlaceEquipmentView p = new PlaceEquipmentView();
+                            m.get(4);
+                           p.setVisible(true);
+
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+
+                        }
+                    });
                     jp3.add(blue_icon_label);
                 }
                 else{
