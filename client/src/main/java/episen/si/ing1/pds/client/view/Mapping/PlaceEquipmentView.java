@@ -9,10 +9,7 @@ import sun.nio.cs.UTF_8;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +23,7 @@ public class PlaceEquipmentView extends JFrame {
     private JLabel jl1;
 
     public PlaceEquipmentView() {
+
         RequestSocket request = new RequestSocket();
         request.setRequest("equipment_list");
         Map<String, Object> hm = new HashMap<>();
@@ -35,7 +33,7 @@ public class PlaceEquipmentView extends JFrame {
         List<Map> equipment_list = (List<Map>) response.getData();
         System.out.println("EQUIPMENT " + equipment_list.get(0));
 
-        jl1 = new JLabel("Sélectionnez un équipement à placer");
+        jl1 = new JLabel("Selectionnez un equipement a placer");
         jp1 = new JPanel();
         jp1.setLayout(null);
         jb1 = new JButton("Placer");
@@ -47,6 +45,7 @@ public class PlaceEquipmentView extends JFrame {
                     Map item = (Map) e.getItem();
                     int equipment_id = (Integer) item.get("equipment_id");
                     Equipment.setEquipment_id(equipment_id);
+                    System.out.println("EQUIPMENT ID " + equipment_id);
                 }
             }
         });
@@ -103,6 +102,14 @@ public class PlaceEquipmentView extends JFrame {
         this.add(jp1);
         this.setSize(600,500);
         this.setLocationRelativeTo(null);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                MeetingRoomView.isPopUpActive = false;
+            }
+        });
+
     }
 
     public static void main(String[] args) {

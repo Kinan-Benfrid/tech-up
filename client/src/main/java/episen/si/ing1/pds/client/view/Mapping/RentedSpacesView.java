@@ -37,16 +37,13 @@ public class RentedSpacesView extends CommonFrame {
         jb1 = new JButton("Retour ");
         jb2 = new JButton("Afficher la carte ");
         jb3 = new JButton("Louer un espace ");
-        jb4 = new JButton("Configurer fenêtres électromatiques ");
-        jb5 = new JButton("Configurer carte d'accès ");
+        jb4 = new JButton("Configurer fenetres electromatiques ");
+        jb5 = new JButton("Configurer carte d'acces ");
 
-        jl1 = new JLabel("Vos espaces loués");
-        jl2 = new JLabel("Sélectionner l'espace que vous voulez afficher : ");
-        jl3 = new JLabel("Autres fonctionnalités : ");
+        jl1 = new JLabel("Vos espaces loues");
+        jl2 = new JLabel("Selectionner l'espace que vous voulez afficher : ");
+        jl3 = new JLabel("Autres fonctionnalites : ");
 
-        buildings = new String[]{"Batiment 1", "Batiment 2", "Batiment 3"};
-        floors = new String[]{"Étage 1", "Étage 2", "Étage 3"};
-        spaces = new String[]{"Bureau individuel", "Open space", "Salle de réunion"};
 
         /**
          * create the request to send to the server
@@ -102,7 +99,7 @@ public class RentedSpacesView extends CommonFrame {
                 }
                 // before we click, setting a title to the JCOMBOBox
                 if (index == -1 && value == null)
-                    setText("Selectionner un étage");
+                    setText("Selectionner un etage");
 
                 return this;
             }

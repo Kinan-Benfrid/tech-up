@@ -1,6 +1,8 @@
 package episen.si.ing1.pds.client.view.Mapping;
 
+import episen.si.ing1.pds.client.model.Building;
 import episen.si.ing1.pds.client.model.Company;
+import episen.si.ing1.pds.client.model.Floor;
 import episen.si.ing1.pds.client.model.Space;
 import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
@@ -26,6 +28,7 @@ public class MeetingRoomView extends CommonFrame {
     private JButton jb1;
     private GridBagLayout gbl;
     private Box box1, box2;
+    protected static boolean isPopUpActive = false;
     private final SocketUtility socketUtility = new SocketUtility();
 
 
@@ -82,35 +85,36 @@ public class MeetingRoomView extends CommonFrame {
                     JLabel blue_icon_label = new JLabel();
                     blue_icon_label.setIcon(blue_icon);
                     blue_icon_label.setBounds((int) m.get("x_position"),(int) m.get("y_position"),40,40);
-                    blue_icon_label.addMouseListener(new MouseListener() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                           PlaceEquipmentView p = new PlaceEquipmentView();
-                            m.get(4);
-                           p.setVisible(true);
+                    if (!isPopUpActive)
+                        blue_icon_label.addMouseListener(new MouseListener() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                               isPopUpActive = true;
+                               PlaceEquipmentView p = new PlaceEquipmentView();
+                               p.setVisible(true);
 
-                        }
+                            }
 
-                        @Override
-                        public void mousePressed(MouseEvent e) {
+                            @Override
+                            public void mousePressed(MouseEvent e) {
 
-                        }
+                            }
 
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
+                            @Override
+                            public void mouseReleased(MouseEvent e) {
 
-                        }
+                            }
 
-                        @Override
-                        public void mouseEntered(MouseEvent e) {
+                            @Override
+                            public void mouseEntered(MouseEvent e) {
 
-                        }
+                            }
 
-                        @Override
-                        public void mouseExited(MouseEvent e) {
+                            @Override
+                            public void mouseExited(MouseEvent e) {
 
-                        }
-                    });
+                            }
+                        });
                     jp3.add(blue_icon_label);
                 }
                 else{
@@ -190,7 +194,7 @@ public class MeetingRoomView extends CommonFrame {
         box1 = Box.createHorizontalBox();
         box2 = Box.createHorizontalBox();
 
-        jl1 = new JLabel("Votre espace : Salle de réunion 1 situé dans l'étage 1 du batiment Copernic");
+        jl1 = new JLabel("Votre espace : " + Space.getSpace_name() + " situe dans l'etage " + Floor.getFloor_number() + " du " + Building.getBuiling_name());
 
         //jp3.add(red_icon_panel);
         jp1.setLayout(new BorderLayout());
