@@ -543,6 +543,27 @@ public class RequestHandler {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
 
+        } else if (requestName.equals("uninstall_equipment")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            System.out.println("data loaded" + request.getData());
+            List<Map> name = new ArrayList<>();
+            String updatePosition = "update position_ set equipment_id = null, available = true where position_id = ?";
+            String updateEquipment = "UPDATE equipment set equipment_state = false where equipment_id = ?";
+            PreparedStatement statement1 = connection.prepareStatement(updatePosition);
+            PreparedStatement statement2 = connection.prepareStatement(updateEquipment);
+            statement1.setInt(1, (Integer) dataloaded.get("position_id"));
+            statement2.setInt(1, (Integer) dataloaded.get("equipment_id"));
+            statement1.executeUpdate();
+            statement2.executeUpdate();
+
+            Map<String, Object> response = new HashMap<>();
+            name.add(new HashMap());
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
         }
 
     }
