@@ -127,8 +127,10 @@ public class RentedSpacesView extends CommonFrame {
                 if (e.getStateChange() == 1) {
                     Map item = (Map) e.getItem();
                     int buildingId = (Integer) item.get("building_id");
+                    String buildingName = (String) item.get("building_name");
                     RequestSocket requestSocket = new RequestSocket();
                     Building.setBuilding_id(buildingId);
+                    Building.setBuiling_name(buildingName);
                     requestSocket.setRequest("floor_list");
                     Map<String, Object> data = new HashMap<>();
                     data.put("company_id", Company.getCompany_id());

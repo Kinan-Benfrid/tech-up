@@ -56,7 +56,7 @@ public class PlaceEquipmentView extends JFrame {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (value instanceof Map) {
                     Map val = (Map) value;
-                    setText(val.get("equipment_name").toString());
+                    setText(val.get("equipment_name").toString() + " " +val.get("equipment_id").toString());
                 }
                 if (index == -1 && value == null)
                     setText("Selectionner un equipement");
@@ -67,7 +67,13 @@ public class PlaceEquipmentView extends JFrame {
         jb1.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                RequestSocket request = new RequestSocket();
+                request.setRequest("place_equipment");
+                Map<String, Object> hm = new HashMap<>();
+                hm.put("equipment_id", Equipment.getEquipment_id());
+                hm.put("position_id", Position.getPosition_id());
+                request.setData(hm);
+                ResponseSocket response = socketUtility.sendRequest(request);
             }
 
             @Override

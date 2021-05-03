@@ -1,9 +1,6 @@
 package episen.si.ing1.pds.client.view.Mapping;
 
-import episen.si.ing1.pds.client.model.Building;
-import episen.si.ing1.pds.client.model.Company;
-import episen.si.ing1.pds.client.model.Floor;
-import episen.si.ing1.pds.client.model.Space;
+import episen.si.ing1.pds.client.model.*;
 import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
@@ -89,6 +86,7 @@ public class MeetingRoomView extends CommonFrame {
                         blue_icon_label.addMouseListener(new MouseListener() {
                             @Override
                             public void mouseClicked(MouseEvent e) {
+                               Position.setPosition_id( (int) m.get("position_id"));
                                isPopUpActive = true;
                                PlaceEquipmentView p = new PlaceEquipmentView();
                                p.setVisible(true);
