@@ -1,5 +1,6 @@
 package episen.si.ing1.pds.client.view.Mapping;
 
+import episen.si.ing1.pds.client.model.Position;
 import episen.si.ing1.pds.client.model.Space;
 import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
@@ -31,14 +32,7 @@ public class OpenSpaceView extends CommonFrame {
         jb1 = new JButton("Retour");
         jl1 = new JLabel("Votre espace : Salle de réunion 1 situé dans l'étage 1 du batiment Copernic");
 
-        /*Icon red_icon = null;
-        try {
-            red_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getRed_icon())));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        JLabel red_icon_panel = new JLabel();
-        red_icon_panel.setIcon(red_icon);*/
+
 
 
 
@@ -73,6 +67,7 @@ public class OpenSpaceView extends CommonFrame {
 
         for (Map m : positionList){
             try{
+                Position.setPosition_id( (int) m.get("position_id"));
                 if ((boolean) m.get("available")){
                     System.out.println("X_POSITION : " + m.get("x_position"));
                     System.out.println("Y_POSITION : " + m.get("y_position"));
@@ -118,7 +113,34 @@ public class OpenSpaceView extends CommonFrame {
                     JLabel red_icon_label = new JLabel();
                     red_icon_label.setIcon(red_icon);
                     red_icon_label.setBounds((int) m.get("x_position"),(int) m.get("y_position"),40,40);
-                    jp3.add(red_icon_label);
+                    jp3.add(red_icon_label).addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            Position.setPosition_id( (int) m.get("position_id"));
+                            EquipmentCheckView ec = new EquipmentCheckView();
+                            ec.setVisible(true);
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+
+                        }
+                    });
                 }
             }  catch (IOException e) {
                 e.printStackTrace();

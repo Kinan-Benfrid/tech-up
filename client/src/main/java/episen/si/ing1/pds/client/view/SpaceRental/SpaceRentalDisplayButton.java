@@ -14,16 +14,18 @@ public class SpaceRentalDisplayButton extends CommonFrame implements ActionListe
 
     private final JButton bouton1;
     private final JButton bouton2;
-    private final JPanel pan1;
-    private final JPanel pan2;
+    private  JPanel panneau;
+    private  JPanel pan2;
+
+    private  JPanel panGauche;
+    private  JPanel panCentre;
+    private JPanel panDroite;
+    private JPanel panHaut;
 
         public SpaceRentalDisplayButton() {
             super();
-            setTitle(" Titre de la Fenetre ");
 
-
-
-
+/*
             pan2 = new JPanel();
             this.add(pan2);
             pan2.setLayout(null);
@@ -52,7 +54,19 @@ public class SpaceRentalDisplayButton extends CommonFrame implements ActionListe
            bouton2.addActionListener(this);
 
 
-            //pack();
+ */
+
+            JPanel panneau = new JPanel();
+            panneau.setBackground(Color.darkGray);
+            panneau.setLayout(new BoxLayout(panneau, BoxLayout.Y_AXIS));
+            getContentPane().add(panneau);
+            bouton1 = new JButton("bouton1");
+             bouton2 = new JButton("Encore un bouton");
+            panneau.add(bouton1);
+            panneau.add(bouton2);
+
+
+
         }
 
 

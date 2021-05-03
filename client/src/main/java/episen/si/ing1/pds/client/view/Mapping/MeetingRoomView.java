@@ -1,7 +1,6 @@
 package episen.si.ing1.pds.client.view.Mapping;
 
-import episen.si.ing1.pds.client.model.Company;
-import episen.si.ing1.pds.client.model.Space;
+import episen.si.ing1.pds.client.model.*;
 import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
@@ -26,6 +25,7 @@ public class MeetingRoomView extends CommonFrame {
     private JButton jb1;
     private GridBagLayout gbl;
     private Box box1, box2;
+    protected static boolean isPopUpActive = false;
     private final SocketUtility socketUtility = new SocketUtility();
 
 
@@ -78,17 +78,59 @@ public class MeetingRoomView extends CommonFrame {
                 if ((boolean) m.get("available")){
                     System.out.println("X_POSITION : " + m.get("x_position"));
                     System.out.println("Y_POSITION : " + m.get("y_position"));
+
                     Icon blue_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getBlue_icon())));
                     JLabel blue_icon_label = new JLabel();
                     blue_icon_label.setIcon(blue_icon);
                     blue_icon_label.setBounds((int) m.get("x_position"),(int) m.get("y_position"),40,40);
-                    blue_icon_label.addMouseListener(new MouseListener() {
+                    if (!isPopUpActive)
+                        blue_icon_label.addMouseListener(new MouseListener() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                               Position.setPosition_id( (int) m.get("position_id"));
+                               isPopUpActive = true;
+                               PlaceEquipmentView p = new PlaceEquipmentView();
+                               p.setVisible(true);
+
+                            }
+
+                            @Override
+                            public void mousePressed(MouseEvent e) {
+
+                            }
+
+                            @Override
+                            public void mouseReleased(MouseEvent e) {
+
+                            }
+
+                            @Override
+                            public void mouseEntered(MouseEvent e) {
+
+                            }
+
+                            @Override
+                            public void mouseExited(MouseEvent e) {
+
+                            }
+                        });
+                    jp3.add(blue_icon_label);
+                }
+                else{
+                    System.out.println("X_POSITION : " + m.get("x_position"));
+                    System.out.println("Y_POSITION : " + m.get("y_position"));
+                    Icon red_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getRed_icon())));
+                    JLabel red_icon_label = new JLabel();
+                    red_icon_label.setIcon(red_icon);
+                    red_icon_label.setBounds((int) m.get("x_position"),(int) m.get("y_position"),40,40);
+                    jp3.add(red_icon_label).addMouseListener(new MouseListener() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                           PlaceEquipmentView p = new PlaceEquipmentView();
-                            m.get(4);
-                           p.setVisible(true);
-
+                            System.out.println("POSITION AA : " + m.get("position_id"));
+                            Position.setPosition_id( (int) m.get("position_id"));
+                            isPopUpActive = true;
+                            EquipmentCheckView ec = new EquipmentCheckView();
+                            ec.setVisible(true);
                         }
 
                         @Override
@@ -111,16 +153,6 @@ public class MeetingRoomView extends CommonFrame {
 
                         }
                     });
-                    jp3.add(blue_icon_label);
-                }
-                else{
-                    System.out.println("X_POSITION : " + m.get("x_position"));
-                    System.out.println("Y_POSITION : " + m.get("y_position"));
-                    Icon red_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getRed_icon())));
-                    JLabel red_icon_label = new JLabel();
-                    red_icon_label.setIcon(red_icon);
-                    red_icon_label.setBounds((int) m.get("x_position"),(int) m.get("y_position"),40,40);
-                    jp3.add(red_icon_label);
                 }
             }  catch (IOException e) {
                 e.printStackTrace();
@@ -190,7 +222,7 @@ public class MeetingRoomView extends CommonFrame {
         box1 = Box.createHorizontalBox();
         box2 = Box.createHorizontalBox();
 
-        jl1 = new JLabel("Votre espace : Salle de réunion 1 situé dans l'étage 1 du batiment Copernic");
+        jl1 = new JLabel("Votre espace : " + Space.getSpace_name() + " situe dans l'etage " + Floor.getFloor_number() + " du " + Building.getBuiling_name());
 
         //jp3.add(red_icon_panel);
         jp1.setLayout(new BorderLayout());
