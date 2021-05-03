@@ -78,6 +78,7 @@ public class MeetingRoomView extends CommonFrame {
                 if ((boolean) m.get("available")){
                     System.out.println("X_POSITION : " + m.get("x_position"));
                     System.out.println("Y_POSITION : " + m.get("y_position"));
+
                     Icon blue_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getBlue_icon())));
                     JLabel blue_icon_label = new JLabel();
                     blue_icon_label.setIcon(blue_icon);
@@ -122,7 +123,36 @@ public class MeetingRoomView extends CommonFrame {
                     JLabel red_icon_label = new JLabel();
                     red_icon_label.setIcon(red_icon);
                     red_icon_label.setBounds((int) m.get("x_position"),(int) m.get("y_position"),40,40);
-                    jp3.add(red_icon_label);
+                    jp3.add(red_icon_label).addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            System.out.println("POSITION AA : " + m.get("position_id"));
+                            Position.setPosition_id( (int) m.get("position_id"));
+                            isPopUpActive = true;
+                            EquipmentCheckView ec = new EquipmentCheckView();
+                            ec.setVisible(true);
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+
+                        }
+                    });
                 }
             }  catch (IOException e) {
                 e.printStackTrace();
