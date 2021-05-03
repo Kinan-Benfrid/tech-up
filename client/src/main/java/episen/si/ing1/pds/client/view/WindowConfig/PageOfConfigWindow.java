@@ -13,9 +13,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 public class PageOfConfigWindow extends CommonFrame implements ActionListener {
     private JButton bconf,betat, braf, bs, br;
@@ -24,8 +25,8 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
     private JPanel p;
     private JTextField valtempi,valtempex,pourstore,vallumin,vallumex,pourteinte;
 
-    private JLabel labelTitre, labelTitre1, labelval,labelvaltempi,labelvaltempex,labelpourstore,
-            labelvallumin, lblvallumex ,lblvallumex7,lblpourteinte,labelvallumex9,labelvallumex10  ;
+    private JLabel labelvaltempi,labelvaltempex,labelpourstore,
+            labelvallumin, lblvallumex ,lblpourteinte;
 
     public PageOfConfigWindow(){
         p = new JPanel();
@@ -48,7 +49,6 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelpourstore.setFont(new Font("Tahoma", Font.PLAIN, 15));
         labelpourstore.setBounds(58, 283, 110, 29);
         p.add(labelpourstore);
-
 
 
 
@@ -128,17 +128,14 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         braf .setBounds(800,380,92,25);
         p.add(braf );
         braf .addActionListener(this);
-        p.add(braf );
 
         bs = new JButton("Suivant");
         bs.setBounds(800,450,92,25);
         p.add(bs);
         bs.addActionListener(this);
-        p.add(bs);
 
         br = new JButton("Retour");
         br.setBounds(10,20,110,25);
-        p.add(br);
         p.add(br);
         br.addActionListener(this);
     }
@@ -165,41 +162,18 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         if(source == braf){
             //Le click doit envoyer une requêtte à la base de donnée pour recupere les valeurs
 
-            braf.addMouseListener(new MouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    RequestSocket request2 = new RequestSocket();
-                    request2.setRequest("temp");
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("id_measure", Measured.getid_measure());
-                    request2.setData(data);
+            RequestSocket request = new RequestSocket();
+            request.setRequest("tempA");
+            Map<String, Object> data = new HashMap<>();
+            data.put("id_measure", Measured.getid_measure());
+            request.setData(data);
 
-                    ResponseSocket response2 = socketUtility.sendRequest(request2);
+           /* System.out.println(data);
+            System.out.println("data" + request.getData());*/
 
-
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-
-                }
-            });
-
+            ResponseSocket response2 = socketUtility.sendRequest(request);
+            java.util.List<Map> valeurTempi = (List<Map>) response2.getData();
+            valtempi = new JTextField(String.valueOf(valeurTempi));
         }
 
 
