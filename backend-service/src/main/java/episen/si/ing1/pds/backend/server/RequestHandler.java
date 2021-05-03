@@ -472,6 +472,33 @@ public class RequestHandler {
 
                 String responseMsg = mapper.writeValueAsString(response);
                 writer.println(responseMsg);
+        } else if (requestName.equals("equipment_list")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            List<Map> building = new ArrayList<>();
+            String sql = "select equipment_id, equipment_name, is_sensor from attribuate NATURAL Join equipment where equipment_id not in (Select equipment_id from attribuate where rental_id in (Select rental_id from space where space_id = ?) and equipment_id in (select equipment_id from position_))";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            // setInt permits to put value in sql variable.
+            statement.setInt(1, (Integer) dataLoaded.get("space_id"));
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                hm.put("equipment_id", rs.getInt("equipment_id"));
+                hm.put("equipment_name", rs.getString("equipment_name"));
+                hm.put("is_sensor", rs.getBoolean("is_sensor"));
+                building.add(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", building);
+
+            String responseMsg = mapper.writeValueAsString(response);
+
+            logger.info(responseMsg);
+            writer.println(responseMsg);
+
         }
+
     }
 }
