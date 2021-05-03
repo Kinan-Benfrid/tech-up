@@ -42,7 +42,7 @@ public class HomePageView extends CommonFrame implements ActionListener {
         panel.add(j1);
 
 
-        j2 = new JLabel("Sélectionnez votre entreprise");
+        j2 = new JLabel("Selectionnez votre entreprise");
         j2.setBounds(390,80,260,20);
         j2.setFont(new Font("Arial", Font.PLAIN, 18));
         panel.add(j2);
@@ -95,7 +95,7 @@ public class HomePageView extends CommonFrame implements ActionListener {
             }
         });
 
-        j3 = new JLabel("Première fois ?");
+        j3 = new JLabel("Premiere fois ?");
         j3.setBounds(410,210,200,20);
         j3.setFont(new Font("Arial", Font.PLAIN, 14));
         panel.add(j3);
