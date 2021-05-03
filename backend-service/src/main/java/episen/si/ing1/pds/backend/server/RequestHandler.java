@@ -424,7 +424,7 @@ public class RequestHandler {
             ObjectMapper mapper = new ObjectMapper();
             Map dataloaded = (Map) request.getData();
             // int person_id = (int) dataloaded.get ("person");
-            String query = "Select Distinct(space_id),space_name,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id  Where spacetype_id = 1 and rental_id is NULL;";
+            String query = "Select Distinct(space_id),space_name,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id  Where spacetype_id = 1 and rental_id is NULL";
             PreparedStatement statement = connection.prepareStatement(query);
             //statement.setInt (1,person_id);
             ResultSet rs = statement.executeQuery();
