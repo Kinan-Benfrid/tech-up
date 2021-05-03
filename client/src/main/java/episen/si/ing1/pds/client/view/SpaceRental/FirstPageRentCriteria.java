@@ -1,20 +1,22 @@
 package episen.si.ing1.pds.client.view.SpaceRental;
 
+import episen.si.ing1.pds.client.model.*;
+import episen.si.ing1.pds.client.socket.RequestSocket;
+import episen.si.ing1.pds.client.socket.ResponseSocket;
+import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.CommonFrame;
 import episen.si.ing1.pds.client.view.HomePageRentView;
 import episen.si.ing1.pds.client.view.HomePageView;
+import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import java.util.*;
+import java.util.List;
 
 
 public class FirstPageRentCriteria extends CommonFrame {
@@ -38,8 +40,8 @@ public class FirstPageRentCriteria extends CommonFrame {
     private final JLabel j4;
     private JLabel j5;
 
-
-
+    private List<Map> meeting_list;
+    private final SocketUtility socketUtility = new SocketUtility ();
     public FirstPageRentCriteria() {
 
         setTitle("Louer mes espaces");
@@ -84,7 +86,7 @@ public class FirstPageRentCriteria extends CommonFrame {
         j3.setBounds(60, 100, 100, 20);
         pan2.add(j3);
 
-        String[] choice = {"1","2","3","4","Entre 5 et 10","Entre 10 et 20","Entre 20 et 50","Entre 50 et 70","Entre 70 et 100","Entre 100 et 200","Entre 200 et 300","Entre 300 et 500","500 ou +"} ;
+        String[] choice = {"1", "2", "3", "4", "Entre 5 et 10", "Entre 10 et 20", "Entre 20 et 50", "Entre 50 et 70", "Entre 70 et 100", "Entre 100 et 200", "Entre 200 et 300", "Entre 300 et 500", "500 ou +"};
 
         jcb = new JComboBox(choice);
         jcb.setBounds(60, 120, 100, 20);
@@ -97,7 +99,6 @@ public class FirstPageRentCriteria extends CommonFrame {
         t4 = new JTextField();
         t4.setBounds(60, 160, 70, 20);
         pan2.add(t4);
-
 
 
         pan3 = new JPanel();
@@ -124,19 +125,119 @@ public class FirstPageRentCriteria extends CommonFrame {
 
         b2 = new JButton("Suivant");
         b2.setBounds(400, 270, 100, 20);
+
+
+        b2.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         b2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FirstPageSelectionOffers fpso = new FirstPageSelectionOffers();
-                fpso.setVisible(true);
-                dispose();
+                if (r1.isSelected()) {
+
+
+                    dispose();
+                  FirstPageSelectionOffers fpso = new FirstPageSelectionOffers();
+                  fpso.setVisible(true);
+
+                } else {
+                    System.out.println("la case n'est pas cochée");
+                }
             }
+
         });
+
+
         pan2.add(b2);
     }
+
+
+    /*
+        r1.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+
+                Object obj = e.getItem();
+                //String selection = (String)obj;
+
+                if (obj == r1) {
+                  //  Map item = (Map) e.getItem();
+                    //int cardId = (Integer) item.get("card_id");
+
+
+                    request = new RequestSocket();
+                    request.setRequest("meeting_room");
+                    Map<String, Object> hm = new HashMap<>();
+                    request.setData(hm);
+                    System.out.println("Requete :" + request.getRequest());
+                    System.out.println("Data :" + request.getData());
+
+
+                    ResponseSocket response = socketUtility.sendRequest(request);
+                    // data is the list of map we sent in the server (look response)
+                    java.util.List<Map> meeting_list = (List<Map>) response.getData();
+                    System.out.println("name" + meeting_list);
+
+
+                    System.out.println(response);
+                    System.out.println(response.getData());
+                    validate();
+                }
+            }
+        });
+
+
+ */
+
+
+/*
+    public void actionPerformed(ActionEvent e) {
+
+        Object source = e.getSource();
+        if (source == r1) {
+            this.dispose();
+            FirstPageRentCriteria fprc = new FirstPageRentCriteria();
+            fprc.setVisible(true);
+        }
+        if (source == r2) {
+            this.dispose();
+            RentedSpacesView r = new RentedSpacesView();
+            r.setVisible(true);
+        }
+
+    }
+
+
+ */
+
     public static void main(String[] args) {
         FirstPageRentCriteria fprc = new FirstPageRentCriteria();
         fprc.setVisible(true);
 
     }
 }
+
+
+

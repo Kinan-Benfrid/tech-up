@@ -1,5 +1,10 @@
 package episen.si.ing1.pds.client.view.Mapping;
 
+import episen.si.ing1.pds.client.model.Position;
+import episen.si.ing1.pds.client.model.Space;
+import episen.si.ing1.pds.client.socket.RequestSocket;
+import episen.si.ing1.pds.client.socket.ResponseSocket;
+import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.CommonFrame;
 
 
@@ -10,8 +15,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class OpenSpaceView extends CommonFrame {
+    private final SocketUtility socketUtility = new SocketUtility();
     private ImageIcon image;
     private JPanel jp1, jp2,jp3;
     private JLabel jl1,jl2,jl3;
@@ -23,14 +32,7 @@ public class OpenSpaceView extends CommonFrame {
         jb1 = new JButton("Retour");
         jl1 = new JLabel("Votre espace : Salle de réunion 1 situé dans l'étage 1 du batiment Copernic");
 
-        Icon red_icon = null;
-        try {
-            red_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getRed_icon())));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        JLabel red_icon_panel = new JLabel();
-        red_icon_panel.setIcon(red_icon);
+
 
 
 
@@ -54,7 +56,97 @@ public class OpenSpaceView extends CommonFrame {
         };
 
         jp3.setLayout(null);
-        red_icon_panel.setBounds(460,40,40,40);
+        RequestSocket request = new RequestSocket();
+        request.setRequest("position");
+        Map<String, Object> hm = new HashMap<>();
+        hm.put("space_id", Space.getSpace_id());
+        request.setData(hm);
+        ResponseSocket response = socketUtility.sendRequest(request);
+        java.util.List<Map> positionList = (List<Map>) response.getData();
+        System.out.println("List of position : " + positionList );
+
+        for (Map m : positionList){
+            try{
+                Position.setPosition_id( (int) m.get("position_id"));
+                if ((boolean) m.get("available")){
+                    System.out.println("X_POSITION : " + m.get("x_position"));
+                    System.out.println("Y_POSITION : " + m.get("y_position"));
+                    Icon blue_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getBlue_icon())));
+                    JLabel blue_icon_label = new JLabel();
+                    blue_icon_label.setIcon(blue_icon);
+                    blue_icon_label.setBounds((int) m.get("x_position"),(int) m.get("y_position"),40,40);
+                    blue_icon_label.addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            PlaceEquipmentView p = new PlaceEquipmentView();
+                            m.get(4);
+                            p.setVisible(true);
+
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+
+                        }
+                    });
+                    jp3.add(blue_icon_label);
+                }
+                else{
+                    System.out.println("X_POSITION : " + m.get("x_position"));
+                    System.out.println("Y_POSITION : " + m.get("y_position"));
+                    Icon red_icon = new ImageIcon(ImageIO.read(new File(FileLocation.getRed_icon())));
+                    JLabel red_icon_label = new JLabel();
+                    red_icon_label.setIcon(red_icon);
+                    red_icon_label.setBounds((int) m.get("x_position"),(int) m.get("y_position"),40,40);
+                    jp3.add(red_icon_label).addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            Position.setPosition_id( (int) m.get("position_id"));
+                            EquipmentCheckView ec = new EquipmentCheckView();
+                            ec.setVisible(true);
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+
+                        }
+                    });
+                }
+            }  catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        //red_icon_panel.setBounds(460,40,40,40);
 
         jp3.addMouseListener(new MouseListener() {
             @Override
@@ -124,7 +216,7 @@ public class OpenSpaceView extends CommonFrame {
         box1.add(jb1);
         box1.add(Box.createHorizontalStrut(200));
         box1.add(jl1);
-        jp3.add(red_icon_panel);
+        //jp3.add(red_icon_panel);
 
         //increase the argument of createHorizontalStrut to move the panel to the left or the right
         box2.add(Box.createHorizontalStrut(125));

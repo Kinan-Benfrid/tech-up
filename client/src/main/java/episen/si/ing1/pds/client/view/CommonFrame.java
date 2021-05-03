@@ -69,6 +69,9 @@ public class CommonFrame extends JFrame {
         this.add(pan3, BorderLayout.CENTER);
         this.setSize(1000,700);
 
+        /**
+         * Close the socket and the connection when we close the application
+         */
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {

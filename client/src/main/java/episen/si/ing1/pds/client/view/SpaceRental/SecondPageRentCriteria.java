@@ -90,6 +90,7 @@ public class SecondPageRentCriteria extends CommonFrame {
         b2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 SecondPageSelectionOffers spso = new SecondPageSelectionOffers();
                 spso.setVisible(true);
                 dispose();
