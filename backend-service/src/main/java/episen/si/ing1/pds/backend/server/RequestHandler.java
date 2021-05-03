@@ -446,9 +446,77 @@ public class RequestHandler {
 
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
+        }
 
+        else if (requestName.equals("meeting_list")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            // int person_id = (int) dataloaded.get ("person");
+            String query = "SELECT count(space_id) as countable from space where spacetype_id = 1 and rental_id is NULL";
+            PreparedStatement statement = connection.prepareStatement(query);
+            //statement.setInt (1,person_id);
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("countable", rs.getInt("countable"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            System.out.println(list);
 
-        } else if (requestName.equals("position")) {
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+        else if (requestName.equals("OpenSpace_list")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            // int person_id = (int) dataloaded.get ("person");
+            String query = "SELECT count(space_id) as countable2 from space where spacetype_id = 2 and rental_id is NULL";
+            PreparedStatement statement = connection.prepareStatement(query);
+            //statement.setInt (1,person_id);
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("countable2", rs.getInt("countable2"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            System.out.println(list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+
+        else if (requestName.equals("Office_list")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            // int person_id = (int) dataloaded.get ("person");
+            String query = "SELECT count(space_id) as countable3 from space where spacetype_id = 3 and rental_id is NULL";
+            PreparedStatement statement = connection.prepareStatement(query);
+            //statement.setInt (1,person_id);
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("countable3", rs.getInt("countable3"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            System.out.println(list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+
+        else if (requestName.equals("position")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
             List<Map> position = new ArrayList<>();
