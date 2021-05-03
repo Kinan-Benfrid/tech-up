@@ -472,6 +472,7 @@ public class RequestHandler {
 
                 String responseMsg = mapper.writeValueAsString(response);
                 writer.println(responseMsg);
+
         } else if (requestName.equals("equipment_list")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
@@ -495,10 +496,35 @@ public class RequestHandler {
 
             String responseMsg = mapper.writeValueAsString(response);
 
-            logger.info(responseMsg);
             writer.println(responseMsg);
 
+        } else if (requestName.equals("place_equipment")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            System.out.println("data loaded" + request.getData());
+            List<Map> name = new ArrayList<>();
+            String updatePosition = "update position_ set equipment_id = ?, available = false where position_id = ?";
+            String updateEquipment = "UPDATE equipment set equipment_state = true where equipment_id = ?";
+            PreparedStatement statement1 = connection.prepareStatement(updatePosition);
+            PreparedStatement statement2 = connection.prepareStatement(updateEquipment);
+            statement1.setInt(1,(Integer)dataloaded.get("equipment_id"));
+            statement1.setInt(2,(Integer)dataloaded.get("position_id"));
+            statement2.setInt(1,(Integer)dataloaded.get("equipment_id"));
+            statement1.executeUpdate();
+            statement2.executeUpdate();
+            System.out.println("nb lines updated");
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            name.add(new HashMap());
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
         }
+
+
 
     }
 }
