@@ -1,7 +1,7 @@
 package episen.si.ing1.pds.client.model;
 
 public class Datatemp {
-    private static int id_datatemp;
+    private static int id_datatemp=1;
 
 
     public static int getid_datatemp() {
