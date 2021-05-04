@@ -551,18 +551,18 @@ public class RequestHandler {
             String sql;
             int request_id = (int)dataLoaded.get("request_id");
             if (request_id==1){
-                sql = "select equipment_id, equipment_name, is_sensor from attribuate NATURAL Join equipment where equipment_id not in (Select equipment_id from attribuate where rental_id in (Select rental_id from space where space_id = ?) and equipment_id in (select equipment_id from position_))";
+                sql = "select equipment_id, equipment_name, is_sensor from equipment where rental_id = (select rental_id from space where space_id = ?) and equipment_id NOT in (select equipment_id from position_ where equipment_id is not null)";
             }
             else if (request_id ==2){
-                sql="select equipment_id, equipment_name, is_sensor from attribuate NATURAL Join equipment where equipment_id not in (Select equipment_id from attribuate where rental_id in (Select rental_id from space where space_id = ?) and equipment_id in (select equipment_id from position_)) and equipmenttype_id!=5";
+                sql="select equipment_id, equipment_name, is_sensor from equipment where rental_id = (select rental_id from space where space_id = ?) and equipment_id NOT in (select equipment_id from position_ where equipment_id is not null) and equipmenttype_id!=5";
             }else if (request_id ==3){
-                sql = "select equipment_id, equipment_name, is_sensor from attribuate NATURAL Join equipment where equipment_id not in (Select equipment_id from attribuate where rental_id in (Select rental_id from space where space_id = ?) and equipment_id in (select equipment_id from position_)) and equipmenttype_id!=4";
+                sql = "select equipment_id, equipment_name, is_sensor from equipment where rental_id = (select rental_id from space where space_id = ?) and equipment_id NOT in (select equipment_id from position_ where equipment_id is not null) and equipmenttype_id!=4";
             }else if (request_id ==4){
-                sql = "select equipment_id, equipment_name, is_sensor from attribuate NATURAL Join equipment where equipment_id not in (Select equipment_id from attribuate where rental_id in (Select rental_id from space where space_id = ?) and equipment_id in (select equipment_id from position_)) and equipmenttype_id!=4 and equipmenttype_id!=5";
+                sql = "select equipment_id, equipment_name, is_sensor from equipment where rental_id = (select rental_id from space where space_id = ?) and equipment_id NOT in (select equipment_id from position_ where equipment_id is not null) and equipmenttype_id!=4 and equipmenttype_id!=5";
             }else if (request_id ==5){
-                sql = "select equipment_id, equipment_name, is_sensor from attribuate NATURAL Join equipment where equipment_id not in (Select equipment_id from attribuate where rental_id in (Select rental_id from space where space_id = ?) and equipment_id in (select equipment_id from position_)) and equipmenttype_id!=9 and equipmenttype_id!=8 and equipmenttype_id!=4";
+                sql = "select equipment_id, equipment_name, is_sensor from equipment where rental_id = (select rental_id from space where space_id = ?) and equipment_id NOT in (select equipment_id from position_ where equipment_id is not null) and equipmenttype_id!=9 and equipmenttype_id!=8 and equipmenttype_id!=4";
             } else{
-                sql = "select equipment_id, equipment_name, is_sensor from attribuate NATURAL Join equipment where equipment_id not in (Select equipment_id from attribuate where rental_id in (Select rental_id from space where space_id = ?) and equipment_id in (select equipment_id from position_)) and equipmenttype_id!=5 and equipmenttype_id!=9 and equipmenttype_id!=8 and equipmenttype_id!=4";
+                sql = "select equipment_id, equipment_name, is_sensor from equipment where rental_id = (select rental_id from space where space_id = ?) and equipment_id NOT in (select equipment_id from position_ where equipment_id is not null) and equipmenttype_id!=5 and equipmenttype_id!=9 and equipmenttype_id!=8 and equipmenttype_id!=4";
             }
             PreparedStatement statement = connection.prepareStatement(sql);
             // setInt permits to put value in sql variable.
