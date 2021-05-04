@@ -144,8 +144,8 @@ public class RentedSpacesView extends CommonFrame {
                     for (Map floorElement : floorListFetched) {
                         jc2Model.addElement(floorElement);
                     }
+                    jc3.setEnabled(false);
                     jc2.setEnabled(true);
-
                     jc2.revalidate();
                     jc2.repaint();
 
@@ -212,18 +212,17 @@ public class RentedSpacesView extends CommonFrame {
                 System.out.println(Space.getSpace_name());
                     if (Space.getSpace_type()==1) {
                         dispose();
-                        MeetingRoomView mr = new MeetingRoomView();
-                        mr.setVisible(true);
+                        SpaceView spaceView = new SpaceView(System.getenv("IMG")+"\\meeting_room.png",200,250);
+                        spaceView.setVisible(true);
                     } else if (Space.getSpace_type()==3) {
                         dispose();
-                        IndividualOfficeView iv = new IndividualOfficeView();
-                        iv.setVisible(true);
+                        SpaceView spaceView = new SpaceView(System.getenv("IMG")+"\\individual_office.png",200,250);
+                        spaceView.setVisible(true);
                     } else if (Space.getSpace_type()==2) {
                         dispose();
-                        OpenSpaceView os = new OpenSpaceView();
-                        os.setVisible(true);
+                        SpaceView spaceView = new SpaceView(System.getenv("IMG")+"\\open_space.png",200,125);
+                        spaceView.setVisible(true);
                     }
-                //}
             }
 
             @Override

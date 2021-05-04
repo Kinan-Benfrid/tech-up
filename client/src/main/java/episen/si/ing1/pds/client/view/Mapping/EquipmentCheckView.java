@@ -43,14 +43,14 @@ public class EquipmentCheckView extends JFrame {
         jb1.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("UNINSTALL");
-                /*RequestSocket request = new RequestSocket();
-                request.setRequest("place_equipment");
+                RequestSocket request = new RequestSocket();
+                request.setRequest("uninstall_equipment");
                 Map<String, Object> hm = new HashMap<>();
-                hm.put("equipment_id", Equipment.getEquipment_id());
                 hm.put("position_id", Position.getPosition_id());
+                hm.put("equipment_id", equipment_id);
                 request.setData(hm);
-                ResponseSocket response = socketUtility.sendRequest(request);*/
+                ResponseSocket response = socketUtility.sendRequest(request);
+                System.out.println("Suppression");
             }
 
             @Override
@@ -76,7 +76,7 @@ public class EquipmentCheckView extends JFrame {
 
         jp1.add(jb1);
         jp1.add(jl1);
-        jl1.setBounds(210,20,240,40);
+        jl1.setBounds(210,20,280,40);
         jb1.setBounds(210,240,200,40);
 
         this.add(jp1);
@@ -92,9 +92,5 @@ public class EquipmentCheckView extends JFrame {
 
     }
 
-    public static void main(String[] args) {
-        PlaceEquipmentView p =new PlaceEquipmentView();
-        p.setVisible(true);
-    }
 
 }
