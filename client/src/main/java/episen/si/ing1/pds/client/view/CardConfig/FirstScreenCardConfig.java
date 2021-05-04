@@ -131,8 +131,8 @@ public class FirstScreenCardConfig extends CommonFrame implements ActionListener
             ca.setVisible(true); }
         else if (source == b2) {
             this.dispose();
-            MainCardMenu mc = new MainCardMenu();
-            mc.setVisible(true);
+            CardSection cs = new CardSection();
+            cs.setVisible(true);
         } else if (source == b3) {
             this.dispose();
             SearchingCard sc = new SearchingCard();

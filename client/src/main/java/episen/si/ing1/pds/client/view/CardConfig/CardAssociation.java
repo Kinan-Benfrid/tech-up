@@ -8,6 +8,7 @@ import episen.si.ing1.pds.client.view.CommonFrame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,15 +70,14 @@ public class CardAssociation extends CommonFrame {
         b2.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                RequestSocket request2 = new RequestSocket();
-                request2.setRequest("affected_card");
-                Map<String, Object> data = new HashMap<>();
-                data.put("person_id", Person.getPerson_id());
-                data.put("card_id", AccessCard.getCard_id());
-                request2.setData(data);
+                    RequestSocket request2 = new RequestSocket ();
+                    request2.setRequest ("affected_card");
+                    Map<String, Object> data = new HashMap<> ();
+                    data.put ("person_id", Person.getPerson_id ());
+                    data.put ("card_id", AccessCard.getCard_id ());
+                    request2.setData (data);
 
-                ResponseSocket response2 = socketUtility.sendRequest(request2);
-
+                    ResponseSocket response2 = socketUtility.sendRequest (request2);
 
             }
 

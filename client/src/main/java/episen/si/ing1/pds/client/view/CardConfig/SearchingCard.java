@@ -33,14 +33,12 @@ public class SearchingCard extends CommonFrame implements ActionListener {
         jp1.setLayout(null);
 
         j1 = new JLabel("Rechercher un badge ?");
-        j1 = new JLabel("Rechercher un badge ?");
         b1 = new JButton("retour");
         b2 = new JButton("Rechercher");
 
         j1.setBounds(30,50,200,20);
-        b1.setBounds(10, 15, 70, 20);
-        b1.setBounds(10, 15, 70, 20);
-        b2.setBounds(100, 15, 70, 20);
+        b1.setBounds(10, 15, 100, 20);
+        b2.setBounds(100, 200, 150, 20);
 
         RequestSocket request = new RequestSocket();
         request.setRequest("card_lost");
@@ -49,37 +47,6 @@ public class SearchingCard extends CommonFrame implements ActionListener {
 
         ResponseSocket response = socketUtility.sendRequest(request);
         List<Map> cardLost = (List<Map>) response.getData();
-
-
-        /*RequestSocket request2 = new RequestSocket();
-        request2.setRequest("search_card");
-        Map<String, Object> data1 = new HashMap<> ();
-        data1.put ("card_id", AccessCard.getCard_id ());
-        request2.setData (data1);
-
-        ResponseSocket response2 = socketUtility.sendRequest (request2);
-        List<Map> searchCard = (List<Map>) response2.getData ();
-
-
-        String data[][] = new String[searchCard.size ()][5];
-        int i = 0;
-        for (Map<String, Object> m : searchCard) {
-            data[i][0] = (String) m.get ("person_firstname");
-        }
-
-        DefaultTableModel model = new DefaultTableModel(data);
-        jt.add (model); */
-           // JTable table = new JTable();
-
-        /*boxMenu = new Box(BoxLayout.X_AXIS);
-        boxMenu.setBounds(200,250,280,310);
-        jp1.add(boxMenu);
-
-        j2 = new JLabel("nom");
-        j2.setFont(new Font("Arial", Font.PLAIN, 12));
-        Box box0 = new Box(BoxLayout.X_AXIS);
-        box0.add(j2);
-        boxMenu.add((Box) searchCard,j2); */
 
 
         jcb1 = new JComboBox(new Vector(cardLost));
@@ -111,6 +78,44 @@ public class SearchingCard extends CommonFrame implements ActionListener {
                     AccessCard.setCard_id(cardId);
                     System.out.println(cardId);
                 }
+            }
+        });
+
+        b2.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RequestSocket request2 = new RequestSocket();
+                request2.setRequest("search_card");
+                Map<String, Object> data1 = new HashMap<> ();
+                data1.put ("card_id", AccessCard.getCard_id ());
+                request2.setData (data1);
+
+                ResponseSocket response2 = socketUtility.sendRequest (request2);
+                List<Map> searchCard = (List<Map>) response2.getData ();
+
+                dispose ();
+                CardSection cs = new CardSection ();
+                cs.setVisible (true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
             }
         });
 

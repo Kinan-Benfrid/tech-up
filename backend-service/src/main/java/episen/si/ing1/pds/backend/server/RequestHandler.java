@@ -647,6 +647,166 @@ public class RequestHandler {
 
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
+        } else if (requestName.equals("building_access")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            System.out.println("name " + dataLoaded);
+            System.out.println("name " + requestName);
+            List<Map> name = new ArrayList<>();
+            String sql = "select building_id, building_name from person natural join access_card natural join card_building natural join building where card_id =?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                hm.put("building_id", rs.getInt("building_id"));
+                hm.put("building_name", rs.getString("building_name"));
+                name.add(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+            System.out.println (response);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        } else if (requestName.equals("floor_access")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            System.out.println("name " + dataLoaded);
+            System.out.println("name " + requestName);
+            List<Map> name = new ArrayList<>();
+            String sql = "select floor_id, floor_number from person natural join access_card natural join card_building natural join building natural join floor_ where card_id =?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                hm.put("floor_id", rs.getInt("floor_id"));
+                hm.put("floor_number", rs.getString("floor_number"));
+                name.add(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+            System.out.println (response);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        } else if (requestName.equals("space_access")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            System.out.println("name " + dataLoaded);
+            System.out.println("name " + requestName);
+            List<Map> name = new ArrayList<>();
+            String sql = "select space_id, space_name from  building natural join floor_ natural join space natural join company where floor_id =? and building_id =? and company_id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("floor_id"));
+            statement.setInt(2, (Integer) dataLoaded.get("building_id"));
+            statement.setInt(3, (Integer) dataLoaded.get("company_id"));
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                hm.put("space_id", rs.getInt("space_id"));
+                hm.put("space_name", rs.getString("space_name"));
+                name.add(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+            System.out.println (response);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        } else if (requestName.equals("name_person")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            System.out.println("name " + dataLoaded);
+            System.out.println("name " + requestName);
+            List<Map> name = new ArrayList<>();
+            String sql = "select person_firstname,person_surname,birth_date,position_p, clearance_level from person natural join access_card where card_id =?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                //hm.put("person_id", rs.getInt("person_id"));
+                hm.put("person_surname", rs.getString("person_surname"));
+                hm.put("person_firstname", rs.getString("person_firstname"));
+                hm.put("birth_date", rs.getString("birth_date"));
+                hm.put("position_p", rs.getString("position_p"));
+                hm.put("clearance_level", rs.getInt("clearance_level"));
+                name.add(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+            System.out.println (response);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        } else if (requestName.equals("building_person")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            System.out.println("name " + dataLoaded);
+            System.out.println("name " + requestName);
+            List<Map> name = new ArrayList<>();
+            String sql = "select building_name from person natural join access_card natural join building  where card_id =?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                //hm.put("person_id", rs.getInt("person_id"));
+                hm.put("building_name", rs.getString("building_name"));
+                name.add(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+            System.out.println (response);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        } else if (requestName.equals("search_card")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            System.out.println("name " + dataLoaded);
+            System.out.println("name " + requestName);
+            List<Map> name = new ArrayList<>();
+            String sql = "select person_firstname,person_surname,birth_date,position_p, clearance_level from person natural join access_card where card_id =?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                //hm.put("person_id", rs.getInt("person_id"));
+                hm.put("person_surname", rs.getString("person_surname"));
+                hm.put("person_firstname", rs.getString("person_firstname"));
+                hm.put("birth_date", rs.getString("birth_date"));
+                hm.put("position_p", rs.getString("position_p"));
+                hm.put("clearance_level", rs.getInt("clearance_level"));
+                name.add(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+            System.out.println (response);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
         }
 
     }
