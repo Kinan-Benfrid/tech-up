@@ -1,13 +1,10 @@
 package episen.si.ing1.pds.client.view.SpaceRental;
 
-import episen.si.ing1.pds.client.model.*;
 import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.CommonFrame;
 import episen.si.ing1.pds.client.view.HomePageRentView;
-import episen.si.ing1.pds.client.view.HomePageView;
-import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -17,6 +14,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
+import  episen.si.ing1.pds.client.model.*;
+
 
 
 public class FirstPageRentCriteria extends CommonFrame {
@@ -24,9 +23,9 @@ public class FirstPageRentCriteria extends CommonFrame {
     private final JPanel pan1;
     private final JPanel pan2;
     private final JPanel pan3;
-    private final JRadioButton r1;
-    private final JRadioButton r2;
-    private final JRadioButton r3;
+    private  JRadioButton r1;
+    private  JRadioButton r2;
+    private  JRadioButton r3;
     private final JButton b1;
     private final JButton b2;
     private final JComboBox jcb;
@@ -39,9 +38,11 @@ public class FirstPageRentCriteria extends CommonFrame {
     private final JLabel j3;
     private final JLabel j4;
     private JLabel j5;
+     List<Map> meeting_list,OpenSpace_list,Office_list;
 
-    private List<Map> meeting_list;
-    private final SocketUtility socketUtility = new SocketUtility ();
+
+
+    public SocketUtility socketUtility = new SocketUtility ();
     public FirstPageRentCriteria() {
 
         setTitle("Louer mes espaces");
@@ -65,7 +66,7 @@ public class FirstPageRentCriteria extends CommonFrame {
         j1 = new JLabel("ARRIVÉE");
         j1.setBounds(60, 60, 400, 20);
         j2 = new JLabel("DÉPART");
-        j2.setBounds(180, 60, 400, 20);
+        j2.setBounds(160, 60, 400, 20);
         pan2.add(j1);
         pan2.add(j2);
 
@@ -74,7 +75,7 @@ public class FirstPageRentCriteria extends CommonFrame {
         t1.setBounds(60, 80, 70, 20);
 
         JFormattedTextField t2 = new JFormattedTextField(df);
-        t2.setBounds(180, 80, 70, 20);
+        t2.setBounds(160, 80, 70, 20);
 
         t1.setToolTipText("format : dd/MM/yyyy");
         t2.setToolTipText("format : dd/MM/yyyy");
@@ -104,16 +105,136 @@ public class FirstPageRentCriteria extends CommonFrame {
         pan3 = new JPanel();
         pan3.setBorder(new TitledBorder("Quel(s) type(s) d'espace(s) souhaitez-vous louer ?"));
         pan2.add(pan3);
-        pan3.setBounds(50, 180, 400, 50);
+        pan3.setBounds(50, 180, 400, 100);
 
 
-        r1 = new JRadioButton("Salle de réunion");
-        r2 = new JRadioButton("Open-space");
-        r3 = new JRadioButton("Bureau individuel");
 
-        pan3.add(r1);
-        pan3.add(r2);
-        pan3.add(r3);
+
+        RequestSocket rs = new RequestSocket ();
+        rs.setRequest ("meeting_list");
+        Map<String,Object> m = new HashMap<> ();
+        //m.put("person", Person.getPerson_id ());
+        rs.setData(m);
+        System.out.println("-------");
+       ResponseSocket responseSocket = socketUtility.sendRequest (rs);
+
+        meeting_list = (List<Map>) responseSocket.getData ();
+
+        JComboBox jcb1 = new JComboBox();
+        int countable = (int) meeting_list.get(0).get("countable");
+        for(int i = 0;i <= countable; i++) {
+       jcb1.addItem(("salle de réunion x " + i));
+        }
+
+
+        jcb1.setSelectedIndex(-1);
+        jcb1.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                // we are in a loop
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                //if (value instanceof Map) {
+                  //  Map val = (Map) value;
+                  //  setText(val.get("card_id").toString());
+               // }
+                // before we click, setting a title to the JCOMBOBox
+                if (index == -1 && value == null)
+                    setText(" salle de réunion ");
+
+                return this;
+            }
+        });
+
+
+//---------------------------------
+
+        RequestSocket rs2 = new RequestSocket ();
+        rs2.setRequest ("OpenSpace_list");
+        Map<String,Object> m2 = new HashMap<> ();
+        //m.put("person", Person.getPerson_id ());
+        rs2.setData(m2);
+        System.out.println("-------");
+        ResponseSocket responseSocket2 = socketUtility.sendRequest (rs2);
+
+        OpenSpace_list = (List<Map>) responseSocket2.getData ();
+
+
+        JComboBox jcb2 = new JComboBox();
+       int countable2 = (int) OpenSpace_list.get(0).get("countable2");
+        for(int i = 0;i <= countable2; i++) {
+            jcb2.addItem(("Open space x " + i));
+        }
+
+
+        jcb2.setSelectedIndex(-1);
+        jcb2.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                // we are in a loop
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                //if (value instanceof Map) {
+                //  Map val = (Map) value;
+                //  setText(val.get("card_id").toString());
+                // }
+                // before we click, setting a title to the JCOMBOBox
+                if (index == -1 && value == null)
+                    setText("Open space");
+
+                return this;
+            }
+        });
+
+
+//---------------------------------
+
+
+        RequestSocket rs3 = new RequestSocket ();
+        rs3.setRequest ("Office_list");
+        Map<String,Object> m3 = new HashMap<> ();
+        //m.put("person", Person.getPerson_id ());
+        rs3.setData(m3);
+        System.out.println("-------");
+        ResponseSocket responseSocket3 = socketUtility.sendRequest (rs3);
+
+
+        Office_list = (List<Map>) responseSocket3.getData ();
+
+
+        JComboBox jcb3 = new JComboBox();
+       int countable3 = (int) Office_list.get(0).get("countable3");
+              for(int i = 0;i <= countable3; i++) {
+              jcb3.addItem(("Bureau individuel x " + i));
+            }
+
+
+        jcb3.setSelectedIndex(-1);
+        jcb3.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                // we are in a loop
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                //if (value instanceof Map) {
+                //  Map val = (Map) value;
+                //  setText(val.get("card_id").toString());
+                // }
+                // before we click, setting a title to the JCOMBOBox
+                if (index == -1 && value == null)
+                    setText("Bureau individuel ");
+
+                return this;
+            }
+        });
+
+
+
+
+
+        pan3.add(jcb1);
+      pan3.add(jcb2);
+       pan3.add(jcb3);
+
+
+
 
         pan1 = new JPanel();
         JLabel j0 = new JLabel("Bienvenue dans votre espace de location !");
@@ -124,7 +245,7 @@ public class FirstPageRentCriteria extends CommonFrame {
 
 
         b2 = new JButton("Suivant");
-        b2.setBounds(400, 270, 100, 20);
+        b2.setBounds(380, 300, 100, 20);
 
 
         b2.addMouseListener(new MouseListener() {

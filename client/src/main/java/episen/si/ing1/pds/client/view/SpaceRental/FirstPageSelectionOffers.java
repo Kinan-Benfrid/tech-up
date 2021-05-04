@@ -141,7 +141,6 @@ public class FirstPageSelectionOffers extends CommonFrame {
         //panCentre.add(new JScrollPane(jt), BorderLayout.CENTER);
 
 
-
         p1 = new JPanel();
         p1.setLayout(null);
         this.add(p1);
