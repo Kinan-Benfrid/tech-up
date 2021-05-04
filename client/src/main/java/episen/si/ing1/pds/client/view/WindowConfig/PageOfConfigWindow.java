@@ -148,14 +148,24 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
             RequestSocket request = new RequestSocket();
             request.setRequest("tempA");
 
+            //java.util.List<Map> valeurTempA = (List<Map>) response2.getData();
+            //System.out.println("voici les donnes recu" + valeurTempA );
+
             ResponseSocket response2 = socketUtility.sendRequest(request);
-            java.util.List<Map> valeurTempA = (List<Map>) response2.getData();
+            Map<String, Object> valeurTempA = (Map<String, Object>) response2.getData();
+            System.out.println(valeurTempA );
+            int tempinr = (int) valeurTempA.get("tempin");
+            int tempexr = (int) valeurTempA.get("tempex");
+            int storer = (int) valeurTempA.get("pstore");
             System.out.println("voici les donnes recu" + valeurTempA );
 
+            System.out.println("tempinterieureRecu" + tempinr);
+            System.out.println("tempexterieureRecu" + tempexr);
+            System.out.println("tempexterieureRecu" + storer);
+
+            //labeltempextfiel.setTempinr(temin);
 
         }
-
-
     }
 }
 
