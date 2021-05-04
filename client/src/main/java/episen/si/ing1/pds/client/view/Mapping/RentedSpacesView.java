@@ -7,14 +7,14 @@ import episen.si.ing1.pds.client.model.Space;
 import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
-import episen.si.ing1.pds.client.view.CardConfig.CardSection;
 import episen.si.ing1.pds.client.view.CardConfig.FirstScreenCardConfig;
 import episen.si.ing1.pds.client.view.CommonFrame;
+import episen.si.ing1.pds.client.view.SpaceRental.FirstPageRentCriteria;
+import episen.si.ing1.pds.client.view.WindowConfig.PageOfConfigWindow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.net.Socket;
 import java.util.*;
 import java.util.List;
 
@@ -207,21 +207,79 @@ public class RentedSpacesView extends CommonFrame {
         jb2.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //if (!Space.getSpace_type().equals("")) {
+
                 System.out.println(Space.getSpace_name());
-                    if (Space.getSpace_type()==1) {
-                        dispose();
-                        SpaceView spaceView = new SpaceView(System.getenv("IMG")+"\\meeting_room.png",200,250);
-                        spaceView.setVisible(true);
-                    } else if (Space.getSpace_type()==3) {
-                        dispose();
-                        SpaceView spaceView = new SpaceView(System.getenv("IMG")+"\\individual_office.png",200,250);
-                        spaceView.setVisible(true);
-                    } else if (Space.getSpace_type()==2) {
-                        dispose();
-                        SpaceView spaceView = new SpaceView(System.getenv("IMG")+"\\open_space.png",200,125);
-                        spaceView.setVisible(true);
-                    }
+                if (Space.getSpace_type() == 1) {
+                    dispose();
+                    SpaceView spaceView = new SpaceView(System.getenv("IMG") + "\\meeting_room.png", 200, 250);
+                    spaceView.setVisible(true);
+                } else if (Space.getSpace_type() == 3) {
+                    dispose();
+                    SpaceView spaceView = new SpaceView(System.getenv("IMG") + "\\individual_office.png", 200, 250);
+                    spaceView.setVisible(true);
+                } else if (Space.getSpace_type() == 2) {
+                    dispose();
+                    SpaceView spaceView = new SpaceView(System.getenv("IMG") + "\\open_space.png", 200, 125);
+                    spaceView.setVisible(true);
+                }
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        jb3.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                FirstPageRentCriteria f = new FirstPageRentCriteria();
+                f.setVisible(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        jb4.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                PageOfConfigWindow p = new PageOfConfigWindow();
+                p.setVisible(true);
             }
 
             @Override
