@@ -26,90 +26,72 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
     private JTextField valtempi,valtempex,pourstore,vallumin,vallumex,pourteinte;
 
     private JLabel labelvaltempi,labelvaltempex,labelpourstore,
-            labelvallumin, lblvallumex ,lblpourteinte;
+            labelvallumin, lblvallumex ,lblpourteinte, labeltempextfiel,labeltempintfiel,labelpStore,labelluminterne,labellumiexterne,labelpteinte;
 
     public PageOfConfigWindow(){
         p = new JPanel();
         this.add(p);
         p.setLayout(null);
 
+        labeltempextfiel = new JLabel("Temperature exterieur(°)");
+        labeltempextfiel.setFont(new Font("Arial", Font.PLAIN, 18));
+        labeltempextfiel.setBounds(58, 100, 210, 29);
+        p.add(labeltempextfiel);
 
-        labelvaltempi = new JLabel("Temp_interieure");
-        labelvaltempi.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        labelvaltempi.setBounds(58, 181, 110, 29);
-        p.add(labelvaltempi);
+        labeltempintfiel = new JLabel("Temperature interieure(°)");
+        labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labeltempintfiel.setBounds(58, 150, 210, 29);
+        p.add(labeltempintfiel);
 
-        labelvaltempex = new JLabel("Temp_exterieure");
-        labelvaltempex.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        labelvaltempex.setBounds(58, 232, 110, 29);
-        p.add(labelvaltempex);
+        labelpStore = new JLabel("P_Store(%)");
+        labelpStore.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelpStore.setBounds(58, 200, 210, 29);
+        p.add(labelpStore);
 
+        labeltempextfiel = new JLabel("0°");
+        labeltempextfiel.setFont(new Font("Arial", Font.PLAIN, 18));
+        labeltempextfiel.setBounds(358, 100, 210, 29);
+        p.add(labeltempextfiel);
 
-        labelpourstore = new JLabel("% Store");
-        labelpourstore.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        labelpourstore.setBounds(58, 283, 110, 29);
-        p.add(labelpourstore);
+        labeltempintfiel = new JLabel("0°");
+        labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labeltempintfiel.setBounds(358, 150, 210, 29);
+        p.add(labeltempintfiel);
 
+        labelpStore = new JLabel("0");
+        labelpStore.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelpStore.setBounds(358, 200, 210, 29);
+        p.add(labelpStore);
+//lum
+        labelluminterne = new JLabel("Luminosite interne");
+        labelluminterne.setFont(new Font("Arial", Font.PLAIN, 18));
+        labelluminterne.setBounds(58, 250, 210, 29);
+        p.add(labelluminterne);
 
+        labellumiexterne= new JLabel("Luminosite exteriure(lux)");
+        labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labellumiexterne.setBounds(58, 300, 210, 29);
+        p.add(labellumiexterne);
 
-        valtempi = new JTextField();
-        valtempi.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        valtempi.setBounds(214, 181, 228, 40);
-        p.add(valtempi);
-        valtempi.setColumns(10);
+        labelpteinte = new JLabel("P_teinte(%)");
+        labelpteinte.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelpteinte.setBounds(58, 350, 210, 29);
+        p.add(labelpteinte);
 
-        valtempex = new JTextField();
-        valtempex.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        valtempex.setBounds(214, 232, 228, 40);
-        p.add(valtempex);
-        valtempex.setColumns(10);
+        labelluminterne = new JLabel("0 ");
+        labelluminterne.setFont(new Font("Arial", Font.PLAIN, 18));
+        labelluminterne.setBounds(358, 250, 210, 29);
+        p.add(labelluminterne);
 
-        pourstore = new JTextField();
-        pourstore.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        pourstore.setBounds(214, 283, 228, 40);
-        p.add(pourstore);
-        pourstore.setColumns(10);
+        labellumiexterne= new JLabel("0");
+        labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labellumiexterne.setBounds(358, 300, 210, 29);
+        p.add(labellumiexterne);
 
-
-
-        labelvallumin = new JLabel("Lum_interieure");
-        labelvallumin.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        labelvallumin.setBounds(542, 181, 110, 29);
-        p.add(labelvallumin);
-
-        lblvallumex = new JLabel("Lum_exterieure");
-        lblvallumex.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        lblvallumex.setBounds(542, 232, 110, 29);
-        p.add(lblvallumex);
-
-
-
-        lblpourteinte = new JLabel("% teinte");
-        lblpourteinte.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        lblpourteinte.setBounds(542, 283, 110, 29);
-        p.add(lblpourteinte);
-
-
-        vallumin = new JTextField();
-        vallumin.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        vallumin.setBounds(707,181 , 228, 40);
-        p.add(vallumin);
-        vallumin.setColumns(10);
-
-        vallumex = new JTextField();
-        vallumex.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        vallumex.setBounds(707, 232, 228, 40);
-        p.add(vallumex);
-        vallumex.setColumns(10);
-
-
-        pourteinte = new JTextField();
-        pourteinte.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        pourteinte.setBounds(707, 283, 228, 40);
-        p.add(pourteinte);
-        pourteinte.setColumns(10);
-
-
+        labelpteinte = new JLabel("0");
+        labelpteinte.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelpteinte.setBounds(358, 350, 210, 29);
+        p.add(labelpteinte);
 
 //Creation of the button
         bconf = new JButton("CONFIGURATION DES FENETRES ELECTROCHROMATIQUES");
@@ -173,7 +155,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
 
             ResponseSocket response2 = socketUtility.sendRequest(request);
             java.util.List<Map> valeurTempi = (List<Map>) response2.getData();
-            valtempi = new JTextField(String.valueOf(valeurTempi));
+
         }
 
 
