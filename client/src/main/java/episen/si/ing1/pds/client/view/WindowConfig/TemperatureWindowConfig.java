@@ -97,11 +97,13 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
         }
         if(source == bv){
 
-           String v6 = tempextfiel.getText();
+            String v6 = tempextfiel.getText();
             int v6_pars = Integer.parseInt(v6);
 
             String v7 = tempintfiel.getText();
             int v7_pars = Integer.parseInt(v7);
+
+
 
             RequestSocket request = new RequestSocket();
             request.setRequest("temp");
@@ -109,13 +111,24 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
             //data.put("id_measure", Measured.getid_measure());
             data.put("temp_exterieure", v6_pars);
             data.put("temp_interieure", v7_pars);
-            request.setData(data);
             System.out.println(data);
-            System.out.println("Envoyé");
-
+            request.setData(data);
 
             ResponseSocket response2 = socketUtility.sendRequest(request);
             java.util.List<Map> valeurTempi = (List<Map>) response2.getData();
+
+
+
+            //System.out.println("data" + request.getData());
+
+
+
+
+         //  System.out.println("Envoyé");
+
+
+           // ResponseSocket response2 = socketUtility.sendRequest(request);
+           // java.util.List<Map> valeurTempi = (List<Map>) response2.getData();
 
 
             /*ResponseSocket response2 = socketUtility.sendRequest(request);//recupere le message
