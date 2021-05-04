@@ -24,6 +24,7 @@ public class PlaceEquipmentView extends JFrame {
 
 
     public PlaceEquipmentView(SpaceView spaceView) {
+        Equipment.setEquipment_id(0);
         String requestName = "equipment_list";;
         Map<String, Object> hm = new HashMap<>();
         hm.put("space_id", Space.getSpace_id());
@@ -88,19 +89,21 @@ public class PlaceEquipmentView extends JFrame {
         jb1.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                RequestSocket request = new RequestSocket();
-                request.setRequest("place_equipment");
-                Map<String, Object> hm = new HashMap<>();
-                hm.put("equipment_id", Equipment.getEquipment_id());
-                hm.put("position_id", Position.getPosition_id());
-                request.setData(hm);
-                ResponseSocket response = socketUtility.sendRequest(request);
-                SpaceView.isPopUpActive = false;
-                System.out.println("FILE LOCATION " + spaceView.getFileLocation());
-                SpaceView spaceView1 = new SpaceView(spaceView.getFileLocation(),spaceView.getX1(),spaceView.getX2());
-                spaceView1.setVisible(true);
-                spaceView.dispose();
-                dispose();
+                if (Equipment.getEquipment_id() != 0) {
+                    RequestSocket request = new RequestSocket();
+                    request.setRequest("place_equipment");
+                    Map<String, Object> hm = new HashMap<>();
+                    hm.put("equipment_id", Equipment.getEquipment_id());
+                    hm.put("position_id", Position.getPosition_id());
+                    request.setData(hm);
+                    ResponseSocket response = socketUtility.sendRequest(request);
+                    SpaceView.isPopUpActive = false;
+                    System.out.println("FILE LOCATION " + spaceView.getFileLocation());
+                    SpaceView spaceView1 = new SpaceView(spaceView.getFileLocation(), spaceView.getX1(), spaceView.getX2());
+                    spaceView1.setVisible(true);
+                    spaceView.dispose();
+                    dispose();
+                }
             }
 
             @Override
