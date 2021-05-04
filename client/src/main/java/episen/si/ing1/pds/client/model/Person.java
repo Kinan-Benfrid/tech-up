@@ -1,7 +1,7 @@
 package episen.si.ing1.pds.client.model;
 
 public class Person {
-    private static int person_id=1;
+    private static int person_id;
     private static String person_firstname = "";
     private static String person_surname = "";
 
