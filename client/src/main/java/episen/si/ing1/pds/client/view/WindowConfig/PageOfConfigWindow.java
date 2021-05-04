@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.lang.*;
 import java.util.Vector;
 
 public class PageOfConfigWindow extends CommonFrame implements ActionListener {
@@ -146,15 +147,11 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
 
             RequestSocket request = new RequestSocket();
             request.setRequest("tempA");
-            Map<String, Object> data = new HashMap<>();
-            data.put("id_measure", Measured.getid_measure());
-            request.setData(data);
-
-           /* System.out.println(data);
-            System.out.println("data" + request.getData());*/
 
             ResponseSocket response2 = socketUtility.sendRequest(request);
-            java.util.List<Map> valeurTempi = (List<Map>) response2.getData();
+            java.util.List<Map> valeurTempA = (List<Map>) response2.getData();
+            System.out.println("voici les donnes recu" + valeurTempA );
+
 
         }
 
