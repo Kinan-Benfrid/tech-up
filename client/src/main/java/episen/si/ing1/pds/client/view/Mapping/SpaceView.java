@@ -25,11 +25,18 @@ public class SpaceView extends CommonFrame {
     private JButton jb1;
     private GridBagLayout gbl;
     private Box box1, box2;
+    private SpaceView spaceView;
+    private int x1,x2;
+    private String fileLocation;
+    protected static boolean isPopUpActive = false;
     private final SocketUtility socketUtility = new SocketUtility();
 
 
 
     public SpaceView(String fileLocation, int x1, int x2){
+        this.fileLocation = fileLocation;
+        this.x1 = x1;
+        this.x2 = x2;
         jb1 = new JButton("Retour");
 
         jp1 = new JPanel();
@@ -68,14 +75,18 @@ public class SpaceView extends CommonFrame {
                     JLabel blue_icon_label = new JLabel();
                     blue_icon_label.setIcon(blue_icon);
                     blue_icon_label.setBounds((int) m.get("x_position"),(int) m.get("y_position"),40,40);
+                    spaceView = this;
                         blue_icon_label.addMouseListener(new MouseListener() {
                             @Override
                             public void mouseClicked(MouseEvent e) {
-                                Position.setPosition_id( (int) m.get("position_id"));
-                                Position.setX_position((int) m.get("x_position"));
-                                Position.setY_position((int) m.get("y_position"));
-                                PlaceEquipmentView p = new PlaceEquipmentView();
-                                p.setVisible(true);
+                                if (!isPopUpActive) {
+                                    Position.setPosition_id((int) m.get("position_id"));
+                                    Position.setX_position((int) m.get("x_position"));
+                                    Position.setY_position((int) m.get("y_position"));
+                                    isPopUpActive = true;
+                                    PlaceEquipmentView p = new PlaceEquipmentView(spaceView);
+                                    p.setVisible(true);
+                                }
                             }
                             @Override
                             public void mousePressed(MouseEvent e) {
@@ -104,12 +115,16 @@ public class SpaceView extends CommonFrame {
                     JLabel red_icon_label = new JLabel();
                     red_icon_label.setIcon(red_icon);
                     red_icon_label.setBounds((int) m.get("x_position"),(int) m.get("y_position"),40,40);
+                    spaceView = this;
                     jp3.add(red_icon_label).addMouseListener(new MouseListener() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                            Position.setPosition_id( (int) m.get("position_id"));
-                            EquipmentCheckView ec = new EquipmentCheckView();
-                            ec.setVisible(true);
+                            if (!isPopUpActive) {
+                                Position.setPosition_id((int) m.get("position_id"));
+                                isPopUpActive = true;
+                                EquipmentCheckView ec = new EquipmentCheckView(spaceView);
+                                ec.setVisible(true);
+                            }
                         }
 
                         @Override
@@ -222,5 +237,16 @@ public class SpaceView extends CommonFrame {
 
     }
 
+    protected int getX1() {
+        return x1;
+    }
+
+    protected int getX2() {
+        return x2;
+    }
+
+    protected String getFileLocation() {
+        return fileLocation;
+    }
 }
 

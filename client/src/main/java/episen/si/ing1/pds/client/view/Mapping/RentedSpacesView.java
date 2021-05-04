@@ -58,7 +58,7 @@ public class RentedSpacesView extends CommonFrame {
         // data is the list of map we sent in the server (look response)
         List<Map> buildingList = (List<Map>) response.getData();
         jc1 = new JComboBox(new Vector(buildingList));
-
+        Map <String,Object> m = new HashMap<>();
 
         DefaultComboBoxModel jc2Model = new DefaultComboBoxModel();
 
@@ -139,7 +139,6 @@ public class RentedSpacesView extends CommonFrame {
 
                     ResponseSocket responseFloor = socketUtility.sendRequest(requestSocket);
                     List<Map> floorListFetched = (List<Map>) responseFloor.getData();
-                    // clear the data in the drop down list
                     jc2Model.removeAllElements();
                     for (Map floorElement : floorListFetched) {
                         jc2Model.addElement(floorElement);

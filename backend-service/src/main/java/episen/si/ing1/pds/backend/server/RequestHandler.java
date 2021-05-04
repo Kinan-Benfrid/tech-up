@@ -19,7 +19,6 @@ public class RequestHandler {
 
     public static void sendResponse(RequestSocket request, PrintWriter writer, Connection connection) throws Exception {
         String requestName = request.getRequest();
-
         if (requestName.equals("building_list")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
