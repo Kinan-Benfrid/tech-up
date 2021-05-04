@@ -19,7 +19,7 @@ public class EquipmentCheckView extends JFrame {
     private JLabel jl1;
 
 
-    public EquipmentCheckView() {
+    public EquipmentCheckView(SpaceView spaceView) {
         RequestSocket request = new RequestSocket();
         request.setRequest("equipment_on_position");
         Map<String, Object> hm = new HashMap<>();
@@ -50,7 +50,12 @@ public class EquipmentCheckView extends JFrame {
                 hm.put("equipment_id", equipment_id);
                 request.setData(hm);
                 ResponseSocket response = socketUtility.sendRequest(request);
-                System.out.println("Suppression");
+                SpaceView.isPopUpActive = false;
+                System.out.println("FILE LOCATION " + spaceView.getFileLocation());
+                SpaceView spaceView1 = new SpaceView(spaceView.getFileLocation(),spaceView.getX1(),spaceView.getX2());
+                spaceView1.setVisible(true);
+                spaceView.dispose();
+                dispose();
             }
 
             @Override
@@ -86,7 +91,11 @@ public class EquipmentCheckView extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-
+                SpaceView.isPopUpActive = false;
+                SpaceView spaceView1 = new SpaceView(spaceView.getFileLocation(),spaceView.getX1(),spaceView.getX2());
+                spaceView1.setVisible(true);
+                spaceView.dispose();
+                dispose();
             }
         });
 

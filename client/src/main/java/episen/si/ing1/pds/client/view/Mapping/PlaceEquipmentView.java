@@ -23,7 +23,7 @@ public class PlaceEquipmentView extends JFrame {
     private JLabel jl1;
 
 
-    public PlaceEquipmentView() {
+    public PlaceEquipmentView(SpaceView spaceView) {
         String requestName = "equipment_list";;
         Map<String, Object> hm = new HashMap<>();
         hm.put("space_id", Space.getSpace_id());
@@ -95,6 +95,12 @@ public class PlaceEquipmentView extends JFrame {
                 hm.put("position_id", Position.getPosition_id());
                 request.setData(hm);
                 ResponseSocket response = socketUtility.sendRequest(request);
+                SpaceView.isPopUpActive = false;
+                System.out.println("FILE LOCATION " + spaceView.getFileLocation());
+                SpaceView spaceView1 = new SpaceView(spaceView.getFileLocation(),spaceView.getX1(),spaceView.getX2());
+                spaceView1.setVisible(true);
+                spaceView.dispose();
+                dispose();
             }
 
             @Override
@@ -133,6 +139,12 @@ public class PlaceEquipmentView extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                SpaceView.isPopUpActive = false;
+                System.out.println("FILE LOCATION " + spaceView.getFileLocation());
+                SpaceView spaceView1 = new SpaceView(spaceView.getFileLocation(),spaceView.getX1(),spaceView.getX2());
+                spaceView1.setVisible(true);
+                spaceView.dispose();
+                dispose();
             }
         });
 
