@@ -4,6 +4,7 @@ public class Space {
     private static int space_id = 1;
     private static String space_name = "";
     private static Integer space_type = 0;
+    private static int countable;
 
     public static int getSpace_id() {
         return space_id;
@@ -28,4 +29,9 @@ public class Space {
     public static void setSpace_type(Integer space_type) {
         Space.space_type = space_type;
     }
+
+    public static int getCountable(int countable){return Space.countable;}
+
+    public static void setCountable(int countable){ Space.countable=countable;}
+
 }
