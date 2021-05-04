@@ -25,7 +25,6 @@ public class SpaceView extends CommonFrame {
     private JButton jb1;
     private GridBagLayout gbl;
     private Box box1, box2;
-    //protected static boolean isPopUpActive = false;
     private final SocketUtility socketUtility = new SocketUtility();
 
 
@@ -53,6 +52,7 @@ public class SpaceView extends CommonFrame {
         };
         jp3.setLayout(null);
 
+
         RequestSocket request = new RequestSocket();
         request.setRequest("position");
         Map<String, Object> hm = new HashMap<>();
@@ -61,13 +61,9 @@ public class SpaceView extends CommonFrame {
         ResponseSocket response = socketUtility.sendRequest(request);
         List<Map> positionList = (List<Map>) response.getData();
         System.out.println("List of position : " + positionList );
-
         for (Map m : positionList){
             try{
                 if ((boolean) m.get("available")){
-                    System.out.println("X_POSITION : " + m.get("x_position"));
-                    System.out.println("Y_POSITION : " + m.get("y_position"));
-
                     Icon blue_icon = new ImageIcon(ImageIO.read(new File(System.getenv("IMG")+"\\blue_icon.png")));
                     JLabel blue_icon_label = new JLabel();
                     blue_icon_label.setIcon(blue_icon);
@@ -76,11 +72,11 @@ public class SpaceView extends CommonFrame {
                             @Override
                             public void mouseClicked(MouseEvent e) {
                                 Position.setPosition_id( (int) m.get("position_id"));
+                                Position.setX_position((int) m.get("x_position"));
+                                Position.setY_position((int) m.get("y_position"));
                                 PlaceEquipmentView p = new PlaceEquipmentView();
                                 p.setVisible(true);
-
                             }
-
                             @Override
                             public void mousePressed(MouseEvent e) {
 
@@ -104,8 +100,6 @@ public class SpaceView extends CommonFrame {
                     jp3.add(blue_icon_label);
                 }
                 else{
-                    System.out.println("X_POSITION : " + m.get("x_position"));
-                    System.out.println("Y_POSITION : " + m.get("y_position"));
                     Icon red_icon = new ImageIcon(ImageIO.read(new File(System.getenv("IMG")+"\\red_icon.png")));
                     JLabel red_icon_label = new JLabel();
                     red_icon_label.setIcon(red_icon);
@@ -113,7 +107,6 @@ public class SpaceView extends CommonFrame {
                     jp3.add(red_icon_label).addMouseListener(new MouseListener() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                            System.out.println("POSITION AA : " + m.get("position_id"));
                             Position.setPosition_id( (int) m.get("position_id"));
                             EquipmentCheckView ec = new EquipmentCheckView();
                             ec.setVisible(true);
@@ -229,9 +222,5 @@ public class SpaceView extends CommonFrame {
 
     }
 
-    public static void main(String[] args) {
-        MeetingRoomView m = new MeetingRoomView();
-        m.setVisible(true);
-    }
 }
 

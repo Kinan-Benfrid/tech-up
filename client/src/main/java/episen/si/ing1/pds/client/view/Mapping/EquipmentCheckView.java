@@ -92,9 +92,5 @@ public class EquipmentCheckView extends JFrame {
 
     }
 
-    public static void main(String[] args) {
-        PlaceEquipmentView p =new PlaceEquipmentView();
-        p.setVisible(true);
-    }
 
 }

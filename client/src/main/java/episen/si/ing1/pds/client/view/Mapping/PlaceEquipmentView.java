@@ -22,12 +22,33 @@ public class PlaceEquipmentView extends JFrame {
     private JPanel jp1;
     private JLabel jl1;
 
-    public PlaceEquipmentView() {
 
-        RequestSocket request = new RequestSocket();
-        request.setRequest("equipment_list");
+    public PlaceEquipmentView() {
+        String requestName = "equipment_list";;
         Map<String, Object> hm = new HashMap<>();
         hm.put("space_id", Space.getSpace_id());
+        if (Space.getSpace_type()==1){
+            if (Position.getX_position()==450 && Position.getY_position()==200 ){
+                hm.put("request_id", 1);
+            } else{
+                hm.put("request_id", 2);
+            }
+        } else if (Space.getSpace_type()==2){
+            if ((Position.getX_position()==0 && Position.getY_position()==200) || (Position.getX_position()==200 && Position.getY_position()==360) ){
+                hm.put("request_id", 3);
+            } else{
+                hm.put("request_id", 4);
+            }
+        } else{
+            if (Position.getX_position()==450 && Position.getY_position()==200 ){
+                hm.put("request_id", 5);
+            } else{
+                hm.put("request_id", 6);
+            }
+        }
+
+        RequestSocket request = new RequestSocket();
+        request.setRequest(requestName);
         request.setData(hm);
         ResponseSocket response = socketUtility.sendRequest(request);
         List<Map> equipment_list = (List<Map>) response.getData();
@@ -112,15 +133,11 @@ public class PlaceEquipmentView extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                MeetingRoomView.isPopUpActive = false;
             }
         });
 
+
     }
 
-    public static void main(String[] args) {
-        PlaceEquipmentView p =new PlaceEquipmentView();
-        p.setVisible(true);
-    }
 
 }

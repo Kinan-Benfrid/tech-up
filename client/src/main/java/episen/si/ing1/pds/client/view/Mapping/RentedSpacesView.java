@@ -144,8 +144,8 @@ public class RentedSpacesView extends CommonFrame {
                     for (Map floorElement : floorListFetched) {
                         jc2Model.addElement(floorElement);
                     }
+                    jc3.setEnabled(false);
                     jc2.setEnabled(true);
-
                     jc2.revalidate();
                     jc2.repaint();
 
