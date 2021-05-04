@@ -122,12 +122,6 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
             Map temp = (Map) response2.getData();
             System.out.println(temp);*/
 
-
-
-
-
-
-
         }
     }
 
