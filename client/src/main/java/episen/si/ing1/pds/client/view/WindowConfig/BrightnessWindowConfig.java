@@ -31,39 +31,30 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
         this.add(p);
         p.setLayout(null);
 
-        labelluminterne = new JLabel("Luminosite interne");
+        labelluminterne = new JLabel("Luminosite exterieure(lux)");
         labelluminterne.setFont(new Font("Arial", Font.PLAIN, 18));
         labelluminterne.setBounds(58, 130, 210, 29);
         p.add(labelluminterne);
 
-        labellumiexterne= new JLabel("Luminosite exteriure(lux)");
+        labellumiexterne= new JLabel("Luminosite interneteriure");
         labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labellumiexterne.setBounds(58, 181, 210, 29);
         p.add(labellumiexterne);
 
-        labelpteinte = new JLabel("P_Store(%)");
-        labelpteinte.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelpteinte.setBounds(58, 232, 210, 29);
-        p.add(labelpteinte);
-
-        luminterne = new JTextField();
-        luminterne.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        luminterne.setBounds(314, 140, 228, 40);
-        p.add(luminterne);
-        luminterne.setColumns(10);
-        //tempextfiel.getActionListeners(btempextfielid);
 
         lumiexterne = new JTextField();
         lumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        lumiexterne.setBounds(314, 181, 228, 40);
+        lumiexterne.setBounds(314, 130, 228, 40);
         p.add(lumiexterne);
         lumiexterne.setColumns(10);
+        //tempextfiel.getActionListeners(btempextfielid);
 
-        pteinte = new JTextField();
-        pteinte.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        pteinte.setBounds(314, 232, 228, 40);
-        p.add(pteinte);
-        pteinte.setColumns(10);
+        luminterne = new JTextField();
+        luminterne.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        luminterne.setBounds(314, 181, 228, 40);
+        p.add(luminterne);
+        luminterne.setColumns(10);
+
 
         bconf = new JButton("CONFIGURATION DE LA LUMIERE");
         bconf.setBounds(250,20,450,50);
@@ -103,54 +94,37 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                 pc.setVisible(true);
             }
             if(source == bv){
-                InsertTemp(Integer.parseInt(luminterne.getText()), Integer.parseInt(lumiexterne.getText()) , Integer.parseInt(pteinte.getText()) ) ;
+
+                String vl6 = lumiexterne.getText();
+                int v6_pars = Integer.parseInt(vl6);
+
+                String vl7 = luminterne.getText();
+                int v7_pars = Integer.parseInt(vl7);
+
                 RequestSocket request = new RequestSocket();
-                request.setRequest("Valeur_temperature");
-                Map<String, Integer> data = new HashMap<>();
-                data.put("Temp_interieure",InsertTemp);
+                request.setRequest("lum");
+                Map<String, Object> data = new HashMap<>();
+                //data.put("id_measure", Measured.getid_measure());
+                data.put("lumminosite_exterieure", v6_pars);
+                data.put("luminosite_interieure", v7_pars);
+
                 request.setData(data);
 
-                ResponseSocket response2 = socketUtility.sendRequest(request);
-                Object tempextfie_temp = (List<Map>) response2.getData();
-                System.out.println(tempextfie_temp);
+                System.out.println(data);
+                System.out.println("send");
 
+
+                ResponseSocket response2 = socketUtility.sendRequest(request);
+                java.util.List<Map> valeurTempi = (List<Map>) response2.getData();
+
+
+            /*ResponseSocket response2 = socketUtility.sendRequest(request);//recupere le message
+            Map temp = (Map) response2.getData();
+            System.out.println(temp);*/
 
             }
         }
 
-        private void InsertTemp(int store, int temp_int, int temp_ext) {
-        }
-
-
-
-
-/*
-    request = new RequestSocket();
-        request.setRequest("temperature");
-        Map<String, Object> hm = new HashMap<>();
-        request.setData(hm);
-
-        ResponseSocket response = socketUtility.sendRequest(request);
-        // data is the list of map we sent in the server (look response)
-        List<Map> cardList = (List<Map>) response.getData();
-
-        jcb1 = new JComboBox(new Vector(cardList));
-        jcb1.setBounds(60, 100, 200, 20);
-
-
-        RequestSocket requestSocket = new RequestSocket();
-        requestSocket.setRequest("name_list");
-        Map<String, Object> data = new HashMap<>();
-        data.put("company_id", Company.getCompany_id());
-        requestSocket.setData(data);
-
-        System.out.println(data);
-        System.out.println("data" + requestSocket.getData());
-
-        ResponseSocket response2 = socketUtility.sendRequest(requestSocket);
-        List<Map> nameList = (List<Map>) response2.getData();
-        System.out.println("name" + nameList);
-*/
     public static void main (String[]args){
         BrightnessWindowConfig bw = new BrightnessWindowConfig();
         bw.setVisible(true);
