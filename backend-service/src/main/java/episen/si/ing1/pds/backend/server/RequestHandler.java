@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.lang.*;
+
+
+import static java.lang.Math.floorDiv;
 
 public class RequestHandler {
     private static final Logger logger = LoggerFactory.getLogger(RequestHandler.class.getName());
@@ -47,7 +51,9 @@ public class RequestHandler {
             logger.info("Response Has been sent");
 
 
-        } else if (requestName.equals("floor_list")) {
+        }
+
+        else if (requestName.equals("floor_list")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
             System.out.println("floor" + dataLoaded);
@@ -808,6 +814,56 @@ public class RequestHandler {
             writer.println(responseMsg);
 
         }
+        else if (requestName.equals("tempA")) {
+            //ObjectMapper mapper = new ObjectMapper();
+            //Map dataloaded = (Map) request.getData();
+            System.out.println("Ok serveur");
+            /*List<Map> name = new ArrayList<>();
+            String sql = "SELECT inside_temp_measured_value FROM measured WHERE inside_temp_measured_value = 5";
+            PreparedStatement statement = connection.prepareStatement(sql); // requette mis dans statement
+            ResultSet rs = statement.executeQuery();//statement execute
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                hm.put("measure", rs.getInt("inside_temp_measured_value")); // retourne un map
+                name.add(hm); // aujouter dans la liste
+            }
+            System.out.println(name);
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            name.add(new HashMap());
+            response.put("request", requestName);
+            response.put("data", name); //dans client on met le name la
 
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+*/
+        }
+        else if (requestName.equals("temp")) {
+            //ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> dataloaded = (Map<String, Object>) request.getData();
+            System.out.println(dataloaded );
+            int tempex = (int) dataloaded.get("temp_exterieure");
+            int tempin = (int) dataloaded.get("temp_interieure");
+            //System.out.println("temperature exterieure" + tempex );
+            //System.out.println("temperature interieure" + tempin );
+            int pstore0 = 0;
+            int pstore =( ((Math.max(Math.abs(tempex),Math.abs(tempin)) - Math.min(Math.abs(tempex),Math.abs(tempin)))/Math.max(Math.abs(tempex),Math.abs(tempin))) * 100);
+            if(tempex == tempin){
+                System.out.println(pstore0);
+            }
+            else {
+                System.out.println(pstore);
+            }
+
+            //System.out.println((max(abs(tempex),abs(tempin)) - min((abs(tempex),abs(tempin)),floorDiv(max(abs(tempex),abs(tempin))));
+
+
+        }
+        else if (requestName.equals("lum")) {
+            //ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            System.out.println(dataloaded);
+
+        }
     }
 }
