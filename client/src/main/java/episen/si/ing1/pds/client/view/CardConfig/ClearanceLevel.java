@@ -16,9 +16,8 @@ import java.util.Map;
 
 public class ClearanceLevel extends MainCardMenu implements ActionListener{
     private JPanel p1;
-    private JButton b1;
+    private JButton b1,b2,b3;
     private JLabel l1;
-    private JTextField jf1,jf2;
     private JRadioButton jr1,jr2,jr3,jr4;
     private SocketUtility socketUtility = new SocketUtility ();
 
@@ -45,15 +44,13 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
         bg.add(jr3);
         bg.add(jr4);
 
-
-        b1 = new JButton ("mettre à jour");
-        b1.setBounds(200,370,120,30);
+        b1 = new JButton ("Valider");
+        b1.setBounds(400,300,120,30);
         b1.addMouseListener (new MouseListener () {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JFrame frame = new JFrame("Message");
-                JOptionPane.showMessageDialog(frame, "Niveau d'habilitation mis à jour !");
-                frame.dispose ();
+                JOptionPane.showMessageDialog(frame, "Affectation du badge réussie !");
             }
 
             @Override
@@ -77,12 +74,14 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
             }
         });
 
+
         p1.add(jr1);
         p1.add(jr2);
         p1.add(jr3);
         p1.add(jr4);
         p1.add(l1);
         p1.add(b1);
+
 
         jr1.addMouseListener (new MouseListener () {
             @Override

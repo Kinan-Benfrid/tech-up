@@ -79,6 +79,9 @@ public class CardAssociation extends CommonFrame {
 
                     ResponseSocket response2 = socketUtility.sendRequest (request2);
 
+                JFrame frame = new JFrame("Message");
+                JOptionPane.showMessageDialog(frame, "Affectation du badge réussie !");
+
             }
 
             @Override
@@ -105,6 +108,7 @@ public class CardAssociation extends CommonFrame {
         b3.addMouseListener (new MouseListener () {
             @Override
             public void mouseClicked(MouseEvent e) {
+                dispose ();
                 CardSection cs = new CardSection();
                 cs.setVisible(true);
             }
@@ -238,28 +242,6 @@ public class CardAssociation extends CommonFrame {
         pan1.add(jcb2);
         this.add(pan1);
     }
-
-
-    /*public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-        if (source == b1) {
-            this.dispose();
-            FirstScreenCardConfig fsc = new FirstScreenCardConfig();
-            fsc.setVisible(true);
-        } /*else if (source == b3) {
-            this.dispose();
-            CardSection cs = new CardSection();
-            cs.setVisible(true);
-        } */
-//        else if (source == b2) {
-            //String text1 = t1.getText();
-            //String text2 = t2.getText();
-
-            //JFrame frame = new JFrame("Message");
-            //JOptionPane.showMessageDialog(frame, "Affectation du badge réussie !");
-            //}
-        //}
-
 
         public static void main (String[]args){
             CardAssociation fc = new CardAssociation();
