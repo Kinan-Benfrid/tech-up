@@ -68,11 +68,11 @@ public class CardSection extends MainCardMenu {
             j3.setText ((String)m.get("birth_date"));
             j4.setText ((String)m.get("position_p"));
             j5.setText (String.valueOf ((Integer)m.get("clearance_level")));
-            j1.setBounds (260,30,170,30);
-            j2.setBounds (210,30,250,30);
-            j3.setBounds (190,100,200,30);
-            j4.setBounds (190,150,200,30);
-            j5.setBounds (190,180,200,30);
+            j1.setBounds (260,30,300,30);
+            j2.setBounds (210,30,300,30);
+            j3.setBounds (190,100,300,30);
+            j4.setBounds (190,150,300,30);
+            j5.setBounds (190,180,300,30);
             j1.setFont(new Font("Arial", Font.PLAIN, 13));
             j2.setFont(new Font("Arial", Font.PLAIN, 13));
             j3.setFont(new Font("Arial", Font.PLAIN, 13));

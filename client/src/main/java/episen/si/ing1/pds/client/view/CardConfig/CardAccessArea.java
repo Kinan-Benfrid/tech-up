@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -218,17 +220,49 @@ public class CardAccessArea extends MainCardMenu {
             }
         });
 
-        /*
-
-
-        String [] sp = {};
-        jb3 = new JComboBox(sp);
-        jb3.setBounds(30,380,230,20);  */
-
         b1 = new JButton("Valider");
         b1.setBounds(50,430,150,20);
-        //jb2.setBounds(30,235,230,20);
-        //jb3.setBounds(30,380,230,20);
+
+        b1.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RequestSocket request = new RequestSocket();
+                request.setRequest("insert_access");
+                Map<String, Object> hm = new HashMap<> ();
+                hm.put("company_id", Company.getCompany_id());
+                hm.put ("person_id", Person.getPerson_id ());
+                hm.put("card_id", AccessCard.getCard_id ());
+                hm.put("building_id", Building.getBuiling_id ());
+                hm.put("floor_id", Floor.getFloor_id ());
+                hm.put("space_id", Space.getSpace_id ());
+                request.setData(hm);
+
+                ResponseSocket response1 = socketUtility.sendRequest(request);
+                // data is the list of map we sent in the server (look response)
+                List<Map> insertAccess = (List<Map>) response1.getData();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
 
         p1.add(l1);
         p1.add(jb1);
