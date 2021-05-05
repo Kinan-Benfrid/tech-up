@@ -1065,15 +1065,16 @@ public class RequestHandler {
             int lumex = (int) dataloaded1 .get("lumminosite_exterieure");
             int limin = (int) dataloaded1 .get("luminosite_interieure");
             int psteinte0 = 0;
-            int a = Math.max(Math.abs(lumex),Math.abs(lumex));
-            int b = Math.min(Math.abs(limin),Math.abs(limin));
+            int a = Math.abs(lumex);
+            int b = Math.abs(limin);
             int d = (a-b);
-            int e = (a+b);
-            int pteinte = (d*100/e);
-            if(lumex == limin){
+            int e = (100*d/a);
+            int pteinte =(100 - e);
+
+            if(lumex <15 ){
                 System.out.println(psteinte0);
             }
-            if(lumex != limin) {
+            if(lumex > 15 ) {
                 System.out.println(a);
                 System.out.println(b);
                 System.out.println(d);
