@@ -21,7 +21,8 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
     private static final long serialVersionUID = 1L;
     private JPanel p;
     private JTextField tempextfiel,tempintfiel;
-    private JLabel labeltempextfiel,labeltempintfiel;
+    private JLabel labeltempextfiel,labeltempintfiel,labeltempextfielecoute, labeltempintfielecouteur;
+
 
     public TemperatureWindowConfig (){
 
@@ -34,24 +35,50 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
         labeltempextfiel.setBounds(58, 130, 210, 29);
         p.add(labeltempextfiel);
 
-       labeltempintfiel = new JLabel("Temperature interieure(°)");
-        labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labeltempintfiel.setBounds(58, 181, 210, 29);
-        p.add(labeltempintfiel);
-
+        labeltempextfielecoute = new JLabel(" ");
+        labeltempextfielecoute.setFont(new Font("Arial", Font.PLAIN, 25));
+        labeltempextfielecoute.setBounds(575, 130, 210, 29);
+        p.add(labeltempextfielecoute);
 
         tempextfiel = new JTextField();
         tempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 32));
         tempextfiel.setBounds(314, 130, 228, 40);
         p.add(tempextfiel);
         tempextfiel.setColumns(10);
+        tempextfiel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input3 = tempextfiel.getText();
+                labeltempextfielecoute.setText(input3);
+            }
+        });
 
 
-      tempintfiel = new JTextField();
+
+
+        labeltempintfiel = new JLabel("Temperature interieure(°)");
+        labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labeltempintfiel.setBounds(58, 181, 210, 29);
+        p.add(labeltempintfiel);
+
+        labeltempintfielecouteur = new JLabel("" );
+        labeltempintfielecouteur.setFont(new Font("Tahoma", Font.PLAIN, 25));
+        labeltempintfielecouteur.setBounds(575, 181, 210, 29);
+        p.add(labeltempintfielecouteur);
+
+        tempintfiel = new JTextField();
         tempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 32));
         tempintfiel.setBounds(314, 181, 228, 40);
         p.add(tempintfiel);
         tempintfiel.setColumns(10);
+        tempintfiel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input4= tempintfiel.getText();
+                labeltempintfielecouteur.setText(input4);
+            }
+        });
+
 
 //Creation of the button
         bconf = new JButton("CONFIGURATION DE LA TEMPERATURE");
@@ -97,13 +124,21 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
         }
         if(source == bv){
 
+
             String v6 = tempextfiel.getText();
             int v6_pars = Integer.parseInt(v6);
 
             String v7 = tempintfiel.getText();
             int v7_pars = Integer.parseInt(v7);
 
-
+            /*if(v7 == new String())
+            {
+            JOptionPane.showMessageDialog(this,
+                    "Saisir\n entier",
+                    " erreur ",
+                    JOptionPane.WARNING_MESSAGE);
+            }
+            else {*/
 
             RequestSocket request = new RequestSocket();
             request.setRequest("temp");
@@ -137,7 +172,6 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
 
         }
     }
-
-}
+    }
 
 
