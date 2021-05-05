@@ -17,6 +17,7 @@ public class EquipmentCheckView extends JFrame {
     private JButton jb1;
     private JPanel jp1;
     private JLabel jl1;
+    private String equipmentState ;
 
 
     public EquipmentCheckView(SpaceView spaceView) {
@@ -32,14 +33,19 @@ public class EquipmentCheckView extends JFrame {
         String equipment_name = (String) equipment_list.get(0).get("equipment_name");
         int equipment_id = (int) equipment_list.get(0).get("equipment_id");
         boolean equipment_state = (boolean) equipment_list.get(0).get("equipment_state");
+        if (equipment_state) {
+            equipmentState = "Active";
+        }else{
+            equipmentState = "Desactive";
+        }
 
         jl1 = new JLabel("qsfqsf");
         jp1 = new JPanel();
         jp1.setLayout(null);
         jb1 = new JButton("Desinstaller equipement");
 
-        jl1.setText("Nom : " + equipment_name + " Etat : " + equipment_state + " ");
-
+        jl1.setText("Nom : " + equipment_name + " " + equipment_id + " Etat : " + equipment_state + " ");
+        jl1.setText("<html> Nom : "+equipment_name+" " + equipment_id + " <br/> Etat : "+ equipmentState+" </html>");
         jb1.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {

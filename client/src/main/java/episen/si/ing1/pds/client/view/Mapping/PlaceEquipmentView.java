@@ -53,7 +53,7 @@ public class PlaceEquipmentView extends JFrame {
         request.setData(hm);
         ResponseSocket response = socketUtility.sendRequest(request);
         List<Map> equipment_list = (List<Map>) response.getData();
-        System.out.println("EQUIPMENT " + equipment_list.get(0));
+        System.out.println("EQUIPMENTTTTESSST " + equipment_list);
 
         jl1 = new JLabel("Selectionnez un equipement a placer");
         jp1 = new JPanel();
