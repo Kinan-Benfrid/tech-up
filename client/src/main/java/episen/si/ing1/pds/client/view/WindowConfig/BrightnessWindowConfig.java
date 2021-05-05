@@ -141,7 +141,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                 request.setData(data);
 
                 ResponseSocket response2 = socketUtility.sendRequest(request);
-                java.util.List<Map> valeurTempi = (List<Map>) response2.getData();
+               // java.util.List<Map> valeurTempi = (List<Map>) response2.getData();
 
             }
         }
