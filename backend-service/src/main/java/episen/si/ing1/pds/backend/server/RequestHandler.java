@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -670,18 +671,20 @@ public class RequestHandler {
             Map dataLoaded = (Map) request.getData();
             //int nombre  = (int) dataloaded.get("NumberP");
             System.out.println(dataLoaded.get("NumberP"));
+            //Integer nb = (int ) dataLoaded.get("NumberP");
+            String query = "Select space_name,size_space, max_person_number,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where max_person_number >= 1 and rental_id is NULL";
+            System.out.println("Requete  : " + query);
 
-            String query = "Select space_name,size_space, max_person_number,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id  Where max_person_number >= ? and rental_id is NULL";
-
-            PreparedStatement statement = connection.prepareStatement(query);
-           statement.setInt(1, (Integer) dataLoaded.get("NumberP"));
 
            // statement.setInt (1,nombre);
 
+            PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
+
             List<Map> list = new ArrayList<>();
             while (rs.next()) {
                 Map m = new HashMap();
+                System.out.println("INTERIEUUR");
                 m.put("space_name", rs.getString("space_name"));
                 m.put("size_space", rs.getInt("size_space"));
                 m.put("max_person_number", rs.getInt("max_person_number"));
@@ -694,8 +697,6 @@ public class RequestHandler {
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             response.put("data", list);
-            System.out.println(list);
-
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
         }
