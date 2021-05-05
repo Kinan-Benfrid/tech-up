@@ -993,7 +993,6 @@ public class RequestHandler {
 
         }
         else if (requestName.equals("tempA")) {
-            System.out.println("serveur ok");
             ObjectMapper mapper = new ObjectMapper();
             String sql = "SELECT inside_temperature, outside_temperature, pstore FROM datatemp WHERE id_datatemp = 1";
             String sql2 = "select lum_exterieure,lum_interieure, pteinte from luminosite WHERE id_lum = 1";
@@ -1013,12 +1012,10 @@ public class RequestHandler {
                 hm.put("lumin", rs2.getInt("lum_interieure"));
                 hm.put("pteinte", rs2.getInt("pteinte"));
             }
-           System.out.println(hm);
 
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             response.put("data", hm);
-            System.out.println (response);
 
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
@@ -1028,7 +1025,6 @@ public class RequestHandler {
         else if (requestName.equals("temp")) {
             ObjectMapper mapper = new ObjectMapper();
             Map<String, Object> dataloaded = (Map<String, Object>) request.getData();
-            System.out.println(dataloaded );
             int tempex = (int) dataloaded.get("temp_exterieure");
             int tempin = (int) dataloaded.get("temp_interieure");
             int pstore0 = 0;
@@ -1036,20 +1032,10 @@ public class RequestHandler {
             int b = Math.min(Math.abs(tempex),Math.abs(tempin));
             int d = (a-b);
             int psore= (d*100/a);
-            if(tempex == tempin){
-                System.out.println(pstore0);
-            }
-            if(tempex != tempin) {
-                System.out.println(a);
-                System.out.println(b);
-                System.out.println(d);
-                System.out.println(psore);
-            }
+
         String sql = "UPDATE datatemp SET inside_temperature = " + tempin + ", outside_temperature = " + tempex + ", pstore = " + psore + " WHERE id_datatemp = 1";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
-            System.out.println("Update ok");
-
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
 
@@ -1060,30 +1046,23 @@ public class RequestHandler {
         else if (requestName.equals("lum")) {
             ObjectMapper mapper = new ObjectMapper();
             Map<String, Object> dataloaded1 = (Map<String, Object>) request.getData();
-            System.out.println(dataloaded1 );
             int lumex = (int) dataloaded1 .get("lumminosite_exterieure");
             int limin = (int) dataloaded1 .get("luminosite_interieure");
             int psteinte0 = 0;
             int a = Math.abs(lumex);
             int b = Math.abs(limin);
             int d = (a-b);
-            int e = (100*d/a);
-            int pteinte =(100 - e);
+            int e = (100*d);
+            int f = (e/a);
+            int pteinte =(100 - f);
 
-            if(lumex <15 ){
-                System.out.println(psteinte0);
+            if(lumex < 15 && (0 < limin && limin < 15)){
             }
-            if(lumex > 15 ) {
-                System.out.println(a);
-                System.out.println(b);
-                System.out.println(d);
-                System.out.println(e);
-                System.out.println(pteinte);
+            if(lumex > 15 && (0 < limin && limin < 15)) {
             }
             String sql = "UPDATE luminosite SET lum_exterieure = " + lumex + ", lum_interieure = " + limin + ", pteinte = " + pteinte + " WHERE id_lum = 1";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
-            System.out.println("Update lumiere ok");
 
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
