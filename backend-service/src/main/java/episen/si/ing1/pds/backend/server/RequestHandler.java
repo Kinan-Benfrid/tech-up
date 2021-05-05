@@ -1054,11 +1054,12 @@ public class RequestHandler {
             int d = (a-b);
             int e = (100*d);
             int f = (e/a);
-            int pteinte =(100 - f);
-
+            int pteinte =(100 -f);
             if(lumex < 15 && (0 < limin && limin < 15)){
+                System.out.println(psteinte0 );
             }
             if(lumex > 15 && (0 < limin && limin < 15)) {
+                System.out.println(pteinte);
             }
             String sql = "UPDATE luminosite SET lum_exterieure = " + lumex + ", lum_interieure = " + limin + ", pteinte = " + pteinte + " WHERE id_lum = 1";
             PreparedStatement statement = connection.prepareStatement(sql);
