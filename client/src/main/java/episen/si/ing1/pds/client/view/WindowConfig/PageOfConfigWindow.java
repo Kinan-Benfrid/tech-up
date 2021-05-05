@@ -25,10 +25,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
     private final SocketUtility socketUtility = new SocketUtility();
     private static final long serialVersionUID = 1L;
     private JPanel p;
-    private JTextField valtempi,valtempex,pourstore,vallumin,vallumex,pourteinte;
-
-    private JLabel labelvaltempi,labelvaltempex,labelpourstore,
-            labelvallumin, lblvallumex ,lblpourteinte, labeltempextfiel,labeltempintfiel,labelpStore,labelluminterne,labellumiexterne,labelpteinte;
+    private JLabel labeltempextfiel,labeltempintfiel,labelpStore,labelluminterne,labellumiexterne,labelpteinte,labelinstruction;
 
     public PageOfConfigWindow(){
         p = new JPanel();
@@ -52,14 +49,14 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelpStore.setForeground(new Color(255,0,0));
         p.add(labelpStore);
 
-        labeltempextfiel = new JLabel("0°");
-        labeltempextfiel.setFont(new Font("Arial", Font.PLAIN, 25));
+        labeltempextfiel = new JLabel("0");
+        labeltempextfiel.setFont(new Font("Arial", Font.PLAIN, 20));
         labeltempextfiel.setBounds(358, 100, 210, 29);
         p.add(labeltempextfiel);
 
 
-        labeltempintfiel = new JLabel("0°");
-        labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 25));
+        labeltempintfiel = new JLabel("0");
+        labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 20));
         labeltempintfiel.setBounds(358, 150, 210, 29);
         p.add(labeltempintfiel);
 
@@ -80,7 +77,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labellumiexterne.setBounds(58, 300, 210, 29);
         p.add(labellumiexterne);
 
-        labelpteinte = new JLabel("P_teinte(%)");
+        labelpteinte = new JLabel("P_Teinte(%)");
         labelpteinte.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelpteinte.setBounds(58, 350, 210, 29);
         labelpteinte.setFont(labelpStore.getFont().deriveFont(20.0f));
@@ -88,12 +85,12 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         p.add(labelpteinte);
 
         labelluminterne = new JLabel("0 ");
-        labelluminterne.setFont(new Font("Arial", Font.PLAIN, 25));
+        labelluminterne.setFont(new Font("Arial", Font.PLAIN, 20));
         labelluminterne.setBounds(358, 250, 210, 29);
         p.add(labelluminterne);
 
         labellumiexterne= new JLabel("0");
-        labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 25));
+        labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 20));
         labellumiexterne.setBounds(358, 300, 210, 29);
         p.add(labellumiexterne);
 
@@ -103,6 +100,11 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelpteinte.setFont(labelpStore.getFont().deriveFont(20.0f));
         labelpteinte.setForeground(new Color(255,0,0));
         p.add(labelpteinte);
+
+        labelinstruction = new JLabel("Faites suivant pour configure la temperature");
+        labelinstruction.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        labelinstruction.setBounds(58, 450, 400, 29);
+        p.add(labelinstruction);
 
 //Creation of the button
         bconf = new JButton("CONFIGURATION DES FENETRES ELECTROCHROMATIQUES");
