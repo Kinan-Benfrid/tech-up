@@ -23,7 +23,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
     private JTextField luminterne,lumiexterne,pteinte;
     ;
 
-    private JLabel  labelluminterne,labellumiexterne,labelpteinte;
+    private JLabel  labelluminterne,labellumiexterne,labelluminterneecoute,labellumiexterneecoute;
     private Integer InsertTemp;
 
     public BrightnessWindowConfig() {
@@ -31,29 +31,55 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
         this.add(p);
         p.setLayout(null);
 
-        labelluminterne = new JLabel("Luminosite exterieure(lux)");
+        labelluminterne = new JLabel("Luminosite interieure");
         labelluminterne.setFont(new Font("Arial", Font.PLAIN, 18));
         labelluminterne.setBounds(58, 130, 210, 29);
         p.add(labelluminterne);
 
-        labellumiexterne= new JLabel("Luminosite interneteriure");
-        labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labellumiexterne.setBounds(58, 181, 210, 29);
-        p.add(labellumiexterne);
+        labelluminterneecoute = new JLabel("");
+        labelluminterneecoute.setFont(new Font("Arial", Font.PLAIN, 25));
+        labelluminterneecoute.setBounds(575, 130, 210, 29);
+        p.add(labelluminterneecoute);
 
-
-        lumiexterne = new JTextField();
-        lumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        lumiexterne.setBounds(314, 130, 228, 40);
-        p.add(lumiexterne);
-        lumiexterne.setColumns(10);
-        //tempextfiel.getActionListeners(btempextfielid);
 
         luminterne = new JTextField();
         luminterne.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        luminterne.setBounds(314, 181, 228, 40);
+        luminterne.setBounds(314, 130, 228, 40);
         p.add(luminterne);
         luminterne.setColumns(10);
+        luminterne.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input2 = luminterne.getText();
+                labelluminterneecoute.setText(input2);
+            }
+        });
+
+        labellumiexterne= new JLabel("Luminosite exterieure(lux)");
+        labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labellumiexterne.setBounds(58, 181, 220, 29);
+        p.add(labellumiexterne);
+
+        labellumiexterneecoute= new JLabel("");
+        labellumiexterneecoute.setFont(new Font("Tahoma", Font.PLAIN, 25));
+        labellumiexterneecoute.setBounds(575, 181, 210, 29);
+        p.add(labellumiexterneecoute);
+
+        lumiexterne = new JTextField();
+        lumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        lumiexterne.setBounds(314, 181, 228, 40);
+        p.add(lumiexterne);
+        lumiexterne.setColumns(10);
+        lumiexterne.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            String input = lumiexterne.getText();
+                labellumiexterneecoute.setText(input);
+
+            }
+        });
+        //tempextfiel.getActionListeners(btempextfielid);
+
 
 
         bconf = new JButton("CONFIGURATION DE LA LUMIERE");
@@ -98,8 +124,12 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                 String vl6 = lumiexterne.getText();
                 int v6_pars = Integer.parseInt(vl6);
 
+                System.out.println(v6_pars);
+
                 String vl7 = luminterne.getText();
                 int v7_pars = Integer.parseInt(vl7);
+
+
 
                 RequestSocket request = new RequestSocket();
                 request.setRequest("lum");
@@ -107,20 +137,11 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                 //data.put("id_measure", Measured.getid_measure());
                 data.put("lumminosite_exterieure", v6_pars);
                 data.put("luminosite_interieure", v7_pars);
-
-                request.setData(data);
-
                 System.out.println(data);
-                System.out.println("send");
-
+                request.setData(data);
 
                 ResponseSocket response2 = socketUtility.sendRequest(request);
                 java.util.List<Map> valeurTempi = (List<Map>) response2.getData();
-
-
-            /*ResponseSocket response2 = socketUtility.sendRequest(request);//recupere le message
-            Map temp = (Map) response2.getData();
-            System.out.println(temp);*/
 
             }
         }
