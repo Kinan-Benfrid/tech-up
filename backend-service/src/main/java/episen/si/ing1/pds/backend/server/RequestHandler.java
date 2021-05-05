@@ -1074,7 +1074,6 @@ public class RequestHandler {
         } else if (requestName.equals("equipment_is_used")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
-            List<Map> floor = new ArrayList<>();
             String sql = "select equipment_id from equipment where equipment_id not in(select equipment_id from position_ where equipment_id is not null) and equipment_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -1134,6 +1133,29 @@ public class RequestHandler {
             response.put("request", requestName);
             response.put("data", equipment);
             System.out.println (response);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        } else if (requestName.equals("equipment_is_uninstalled")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            List<Map> floor = new ArrayList<>();
+            String sql = "select equipment_id from position_ where position_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            System.out.println("EQUIPMEMENT DESISNEGTE" + dataLoaded);
+            statement.setInt(1, (Integer) dataLoaded.get("equipment_id"));
+            ResultSet rs = statement.executeQuery();
+            boolean isUninstalled = true;
+            while (rs.next()) {
+                isUninstalled = false;
+                System.out.println("Valeur equipment_id : " + rs.getInt("equipment_id"));
+            }
+            Map<String, Object> hm = new HashMap<>();
+            hm.put("isUninstalled", isUninstalled);
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", hm);
 
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
