@@ -1,5 +1,6 @@
 package episen.si.ing1.pds.client.view.WindowConfig;
 import episen.si.ing1.pds.client.model.Measured;
+import episen.si.ing1.pds.client.model.Position;
 import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
@@ -151,19 +152,26 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
             //java.util.List<Map> valeurTempA = (List<Map>) response2.getData();
             //System.out.println("voici les donnes recu" + valeurTempA );
 
-            ResponseSocket response2 = socketUtility.sendRequest(request);
-            Map<String, Object> valeurTempA = (Map<String, Object>) response2.getData();
-            System.out.println(valeurTempA );
-            int tempinr = (int) valeurTempA.get("tempin");
-            int tempexr = (int) valeurTempA.get("tempex");
-            int storer = (int) valeurTempA.get("pstore");
-            System.out.println("voici les donnes recu" + valeurTempA );
+            ResponseSocket response = socketUtility.sendRequest(request);
+            // List<java.util.Map> valeurTempA = (List<Map>) response2.getData();
+            //System.out.println("voici les donnes recu" + valeurTempA );
+
+            /*Object tempinr =  valeurTempA.get(Integer.parseInt("temping"));
+            Object tempexr =  valeurTempA.get(Integer.parseInt("temper"));
+            Object storer = valeurTempA.get(Integer.parseInt("store"));
 
             System.out.println("tempinterieureRecu" + tempinr);
             System.out.println("tempexterieureRecu" + tempexr);
             System.out.println("tempexterieureRecu" + storer);
-
+*/
             //labeltempextfiel.setTempinr(temin);
+
+           /* int valeurTempA= (int) response.getData();
+            System.out.println("voici les donnes recu" + valeurTempA );
+            int equipment_name = (int) valeurTempA.get("inside_temperature");
+            int equipment_id = (int) valeurTempA.get(0).get("outside_temperature");
+            int equipment_store = (int) valeurTempA.get(0).get("pstore");
+            System.out.println(equipment_name);*/
 
         }
     }
