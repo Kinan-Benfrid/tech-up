@@ -120,7 +120,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                 String vl6 = lumiexterne.getText();
                 int v6_pars = Integer.parseInt(vl6);
                 if( v6_pars > 100){
-                    JOptionPane.showMessageDialog(luminterne,"Attention ! La luminosité exterieure doit être inferieure à 100", "Avertissement", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(lumiexterne,"Attention ! La luminosité exterieure doit être inferieure à 100", "Avertissement", JOptionPane.WARNING_MESSAGE);
                 }
 
                 String vl7 = luminterne.getText();
