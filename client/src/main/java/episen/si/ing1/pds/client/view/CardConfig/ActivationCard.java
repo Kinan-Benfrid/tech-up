@@ -128,6 +128,33 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
 
         b2 = new JButton("Dissocier");
         b2.setBounds(30,330,170,20);
+
+        b1.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         b2.addMouseListener (new MouseListener () {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -136,10 +163,11 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
                 Map<String, Object> data = new HashMap<> ();
                 data.put("person_id", Person.getPerson_id());
                 data.put("card_id", AccessCard.getCard_id());
-                data.put ("active",AccessCard.getActive ());
+                //data.put ("active",AccessCard.getActive ());
                 request.setData(data);
 
                 ResponseSocket response = socketUtility.sendRequest(request);
+                System.out.println (response);
             }
 
             @Override
