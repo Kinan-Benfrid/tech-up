@@ -135,9 +135,16 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
 
             String v6 = tempextfiel.getText();
             int v6_pars = Integer.parseInt(v6);
+            if( v6_pars > 100){
+                JOptionPane.showMessageDialog(tempextfiel,"Attention ! La temperature exterieure doit être inferieure à 100", "Avertissement", JOptionPane.WARNING_MESSAGE);
+            }
 
             String v7 = tempintfiel.getText();
             int v7_pars = Integer.parseInt(v7);
+            if( v6_pars > 100){
+                JOptionPane.showMessageDialog(tempintfiel,"Attention ! La temperature interieure doit être inferieure à 100", "Avertissement", JOptionPane.WARNING_MESSAGE);
+            }
+
 
             RequestSocket request = new RequestSocket();
             request.setRequest("temp");
