@@ -83,7 +83,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
 //Creation of the button
         bconf = new JButton("CONFIGURATION DE LA TEMPERATURE");
         bconf.setBounds(250,20,450,50);
-        bconf.setBackground(new Color(111,174,143));
+        bconf.setBackground(new Color(172,242,183));
         bconf.setFont(bconf.getFont().deriveFont(15.0f));
         p.add(bconf);
 
