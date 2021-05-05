@@ -84,7 +84,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
 
         bconf = new JButton("CONFIGURATION DE LA LUMIERE");
         bconf.setBounds(250,20,450,50);
-        bconf.setBackground(new Color(111,174,143));
+        bconf.setBackground(new Color(223,175,44));
         bconf.setFont(bconf.getFont().deriveFont(15.0f));
         p.add(bconf);
 
@@ -93,17 +93,17 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
         p.add(bv);
         bv.addActionListener(this);
 
-        bs = new JButton("Suivant");
+        bs = new JButton("Sortir");
         bs.setBounds(800,450,92,25);
         p.add(bs);
         bs.addActionListener(this);
 
 
 
-        br = new JButton("Retour");
+        /*br = new JButton("Retour");
         br.setBounds(10,20,110,25);
         p.add(br);
-        br.addActionListener(this);
+        br.addActionListener(this);*/
 
     }
 
@@ -111,14 +111,14 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
             Object source = eb.getSource();
             if(source == bs){
                 this.dispose();
-                RentedSpacesView bw = new RentedSpacesView();
+                PageOfConfigWindow bw = new PageOfConfigWindow();
                 bw.setVisible(true);
             }
-            if(source == br){
+            /*if(source == br){
                 this.dispose();
                 PageOfConfigWindow pc = new PageOfConfigWindow ();
                 pc.setVisible(true);
-            }
+            }*/
             if(source == bv){
 
                 String vl6 = lumiexterne.getText();
