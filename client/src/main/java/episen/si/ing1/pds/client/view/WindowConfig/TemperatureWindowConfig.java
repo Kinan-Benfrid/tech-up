@@ -54,8 +54,6 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
         });
 
 
-
-
         labeltempintfiel = new JLabel("Temperature interieure(°)");
         labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labeltempintfiel.setBounds(58, 181, 210, 29);
@@ -150,25 +148,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
             request.setData(data);
 
             ResponseSocket response2 = socketUtility.sendRequest(request);
-            java.util.List<Map> valeurTempi = (List<Map>) response2.getData();
-
-
-
-            //System.out.println("data" + request.getData());
-
-
-
-
-         //  System.out.println("Envoyé");
-
-
-           // ResponseSocket response2 = socketUtility.sendRequest(request);
-           // java.util.List<Map> valeurTempi = (List<Map>) response2.getData();
-
-
-            /*ResponseSocket response2 = socketUtility.sendRequest(request);//recupere le message
-            Map temp = (Map) response2.getData();
-            System.out.println(temp);*/
+            //java.util.List<Map> valeurTempi = (List<Map>) response2.getData();
 
         }
     }
