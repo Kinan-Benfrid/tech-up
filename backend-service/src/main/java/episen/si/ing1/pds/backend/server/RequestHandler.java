@@ -987,54 +987,102 @@ public class RequestHandler {
 
         }
         else if (requestName.equals("tempA")) {
-            //ObjectMapper mapper = new ObjectMapper();
-            //Map dataloaded = (Map) request.getData();
-            System.out.println("Ok serveur");
-            /*List<Map> name = new ArrayList<>();
-            String sql = "SELECT inside_temp_measured_value FROM measured WHERE inside_temp_measured_value = 5";
-            PreparedStatement statement = connection.prepareStatement(sql); // requette mis dans statement
-            ResultSet rs = statement.executeQuery();//statement execute
+            System.out.println("serveur ok");
+            ObjectMapper mapper = new ObjectMapper();
+            String sql = "SELECT inside_temperature, outside_temperature, pstore FROM datatemp WHERE id_datatemp = 1";
+            String sql2 = "select lum_exterieure,lum_interieure, pteinte from luminosite WHERE id_lum = 1";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            PreparedStatement statement2 = connection.prepareStatement(sql2);
+            ResultSet rs2 = statement2.executeQuery();
+
+            Map<String, Object> hm = new HashMap<>();
             while (rs.next()) {
-                Map<String, Object> hm = new HashMap<>();
-                hm.put("measure", rs.getInt("inside_temp_measured_value")); // retourne un map
-                name.add(hm); // aujouter dans la liste
+                hm.put("tempin", rs.getInt("inside_temperature"));
+                hm.put("tempex", rs.getInt("outside_temperature"));
+                hm.put("pstore", rs.getInt("pstore"));
             }
-            System.out.println(name);
-            // response is a map of value that is a list of map
+            while (rs2.next()) {
+                hm.put("lumex", rs2.getInt("lum_exterieure"));
+                hm.put("lumin", rs2.getInt("lum_interieure"));
+                hm.put("pteinte", rs2.getInt("pteinte"));
+            }
+           System.out.println(hm);
+
             Map<String, Object> response = new HashMap<>();
-            name.add(new HashMap());
             response.put("request", requestName);
-            response.put("data", name); //dans client on met le name la
+            response.put("data", hm);
+            System.out.println (response);
 
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
-*/
+
+
         }
         else if (requestName.equals("temp")) {
-            //ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = new ObjectMapper();
             Map<String, Object> dataloaded = (Map<String, Object>) request.getData();
             System.out.println(dataloaded );
             int tempex = (int) dataloaded.get("temp_exterieure");
             int tempin = (int) dataloaded.get("temp_interieure");
-            //System.out.println("temperature exterieure" + tempex );
-            //System.out.println("temperature interieure" + tempin );
             int pstore0 = 0;
-            int pstore =( ((Math.max(Math.abs(tempex),Math.abs(tempin)) - Math.min(Math.abs(tempex),Math.abs(tempin)))/Math.max(Math.abs(tempex),Math.abs(tempin))) * 100);
+            int a = Math.max(Math.abs(tempex),Math.abs(tempin));
+            int b = Math.min(Math.abs(tempex),Math.abs(tempin));
+            int d = (a-b);
+            int psore= (d*100/a);
             if(tempex == tempin){
                 System.out.println(pstore0);
             }
-            else {
-                System.out.println(pstore);
+            if(tempex != tempin) {
+                System.out.println(a);
+                System.out.println(b);
+                System.out.println(d);
+                System.out.println(psore);
             }
+        String sql = "UPDATE datatemp SET inside_temperature = " + tempin + ", outside_temperature = " + tempex + ", pstore = " + psore + " WHERE id_datatemp = 1";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+            System.out.println("Update ok");
 
-            //System.out.println((max(abs(tempex),abs(tempin)) - min((abs(tempex),abs(tempin)),floorDiv(max(abs(tempex),abs(tempin))));
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
 
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
 
         }
         else if (requestName.equals("lum")) {
-            //ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            System.out.println(dataloaded);
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> dataloaded1 = (Map<String, Object>) request.getData();
+            System.out.println(dataloaded1 );
+            int lumex = (int) dataloaded1 .get("lumminosite_exterieure");
+            int limin = (int) dataloaded1 .get("luminosite_interieure");
+            int psteinte0 = 0;
+            int a = Math.max(Math.abs(lumex),Math.abs(lumex));
+            int b = Math.min(Math.abs(limin),Math.abs(limin));
+            int d = (a-b);
+            int e = (a+b);
+            int pteinte = (d*100/e);
+            if(lumex == limin){
+                System.out.println(psteinte0);
+            }
+            if(lumex != limin) {
+                System.out.println(a);
+                System.out.println(b);
+                System.out.println(d);
+                System.out.println(e);
+                System.out.println(pteinte);
+            }
+            String sql = "UPDATE luminosite SET lum_exterieure = " + lumex + ", lum_interieure = " + limin + ", pteinte = " + pteinte + " WHERE id_lum = 1";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+            System.out.println("Update lumiere ok");
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
 
         }
     }
