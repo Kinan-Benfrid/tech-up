@@ -17,7 +17,6 @@ import java.util.Map;
 import java.lang.*;
 
 
-import static java.lang.Math.floorDiv;
 
 public class RequestHandler {
     private static final Logger logger = LoggerFactory.getLogger(RequestHandler.class.getName());
@@ -1091,6 +1090,29 @@ public class RequestHandler {
 
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
+
+        } else if (requestName.equals("equipment_is_used")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            List<Map> floor = new ArrayList<>();
+            String sql = "select equipment_id from equipment where equipment_id not in(select equipment_id from position_ where equipment_id is not null) and equipment_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, (Integer) dataLoaded.get("equipment_id"));
+            ResultSet rs = statement.executeQuery();
+            boolean isUsed = false;
+            while (rs.next()) {
+                isUsed = true;
+            }
+            Map<String, Object> hm = new HashMap<>();
+            hm.put("isUsed", isUsed);
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", hm);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
 
         }
     }
