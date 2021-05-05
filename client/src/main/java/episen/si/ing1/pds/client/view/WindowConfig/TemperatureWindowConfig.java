@@ -156,7 +156,6 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
             request.setData(data);
 
             ResponseSocket response2 = socketUtility.sendRequest(request);
-            //java.util.List<Map> valeurTempi = (List<Map>) response2.getData();
 
         }
     }
