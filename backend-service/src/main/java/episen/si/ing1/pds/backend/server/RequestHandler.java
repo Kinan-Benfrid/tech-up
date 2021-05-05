@@ -503,7 +503,7 @@ public class RequestHandler {
             Map dataloaded = (Map) request.getData();
             System.out.println("data loaded" + request.getData());
             List<Map> name = new ArrayList<>();
-            String sql = "UPDATE access_card set affected_card = false,clearance_level=null person_id =null where card_id=?";
+            String sql = "UPDATE access_card set affected_card = false,clearance_level=null, person_id =null where card_id=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (Integer) dataloaded.get("card_id"));
             statement.executeUpdate();
@@ -1092,6 +1092,50 @@ public class RequestHandler {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
 
+
+        } else if (requestName.equals("show_equipment")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            System.out.println (dataLoaded);
+            List<Map> equipment = new ArrayList<>();
+            String sql = "select designation from card_equipmenttype natural join equipment_type  where card_id =?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                hm.put("designation", rs.getString("designation"));
+                equipment.add(hm);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", equipment);
+            System.out.println (response);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        } else if (requestName.equals("show_space")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            System.out.println (dataLoaded);
+            List<Map> equipment = new ArrayList<>();
+            String sql = "select designation from card_spacetype natural join space_type  where card_id =?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> hm = new HashMap<>();
+                hm.put("designation", rs.getString("designation"));
+                equipment.add(hm);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", equipment);
+            System.out.println (response);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
 
         }
     }

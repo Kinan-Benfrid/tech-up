@@ -94,6 +94,7 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
                 request.setData(data);
 
                 ResponseSocket response = socketUtility.sendRequest(request);
+                System.out.println (response);
             }
 
             @Override
@@ -126,8 +127,9 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
                 data.put("person_id", Person.getPerson_id());
                 data.put("card_id", AccessCard.getCard_id());
                 request.setData(data);
-
+                request.getData ();
                 ResponseSocket response = socketUtility.sendRequest(request);
+                System.out.println (response);
             }
 
             @Override
@@ -162,6 +164,7 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
                 request.setData(data);
 
                 ResponseSocket response = socketUtility.sendRequest(request);
+                System.out.println (response);
             }
 
             @Override

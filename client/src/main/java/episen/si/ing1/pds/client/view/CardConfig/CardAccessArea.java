@@ -93,7 +93,7 @@ public class CardAccessArea extends MainCardMenu {
                     RequestSocket request2 = new RequestSocket();
                     String building_name = (String) item.get("building_name");
                     Building.setBuilding_id(buildingId);
-                    Building.setBuilding_name (building_name);
+                    Building.setBuiling_name (building_name);
                     System.out.println (buildingId);
                     request2.setRequest("floor_access");
                     Map<String, Object> hm2 = new HashMap<> ();
