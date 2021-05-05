@@ -567,19 +567,20 @@ public class RequestHandler {
             writer.println(responseMsg);
 
 
-        } else if (requestName.equals("meeting_room")) {
+        } else if (requestName.equals("spaceA_list")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataloaded = (Map) request.getData();
             // int person_id = (int) dataloaded.get ("person");
-            String query = "Select Distinct(space_id),space_name,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id  Where spacetype_id = 1 and rental_id is NULL";
+            String query = "Select space_name,size_space, max_person_number,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id  Where rental_id is NULL";
             PreparedStatement statement = connection.prepareStatement(query);
             //statement.setInt (1,person_id);
             ResultSet rs = statement.executeQuery();
             List<Map> list = new ArrayList<>();
             while (rs.next()) {
                 Map m = new HashMap();
-                m.put("space_id", rs.getInt("space_id"));
                 m.put("space_name", rs.getString("space_name"));
+                m.put("size_space", rs.getInt("size_space"));
+                m.put("max_person_number", rs.getInt("max_person_number"));
                 m.put("floor_number", rs.getInt("floor_number"));
                 m.put("building_name", rs.getString("building_name"));
                 m.put("price", rs.getInt("price"));
@@ -598,8 +599,10 @@ public class RequestHandler {
         else if (requestName.equals("meeting_list")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataloaded = (Map) request.getData();
+           // int nombre  = Space.getnumberPerson;
             // int person_id = (int) dataloaded.get ("person");
             String query = "SELECT count(space_id) as countable from space where spacetype_id = 1 and rental_id is NULL";
+           // String query = "SELECT count(space_id) as countable from space where spacetype_id>=" + nombre + "  and rental_id is NULL";
             PreparedStatement statement = connection.prepareStatement(query);
             //statement.setInt (1,person_id);
             ResultSet rs = statement.executeQuery();
@@ -662,6 +665,34 @@ public class RequestHandler {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
         }
+        else if (requestName.equals("Number_person")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            int nombre  = (int) dataloaded.get("NumberP");
+            String query = "Select space_name,size_space, max_person_number,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id  Where max_person_number >= " + nombre + "and rental_id is NULL";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("space_name", rs.getString("space_name"));
+                m.put("size_space", rs.getInt("size_space"));
+                m.put("max_person_number", rs.getInt("max_person_number"));
+                m.put("floor_number", rs.getInt("floor_number"));
+                m.put("building_name", rs.getString("building_name"));
+                m.put("price", rs.getInt("price"));
+
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            System.out.println(list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+
 
         else if (requestName.equals("position")) {
             ObjectMapper mapper = new ObjectMapper();
