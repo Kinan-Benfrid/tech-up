@@ -33,18 +33,18 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
 
         labelluminterne = new JLabel("Luminosite interieure");
         labelluminterne.setFont(new Font("Arial", Font.PLAIN, 18));
-        labelluminterne.setBounds(58, 130, 210, 29);
+        labelluminterne.setBounds(58, 150, 210, 29);
         p.add(labelluminterne);
 
         labelluminterneecoute = new JLabel("");
         labelluminterneecoute.setFont(new Font("Arial", Font.PLAIN, 25));
-        labelluminterneecoute.setBounds(575, 130, 210, 29);
+        labelluminterneecoute.setBounds(575, 150, 210, 29);
         p.add(labelluminterneecoute);
 
 
         luminterne = new JTextField();
         luminterne.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        luminterne.setBounds(314, 130, 228, 40);
+        luminterne.setBounds(314, 150, 228, 40);
         p.add(luminterne);
         luminterne.setColumns(10);
         luminterne.addActionListener(new ActionListener() {
@@ -55,19 +55,20 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
             }
         });
 
+
         labellumiexterne= new JLabel("Luminosite exterieure(lux)");
         labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labellumiexterne.setBounds(58, 181, 220, 29);
+        labellumiexterne.setBounds(58, 201, 220, 29);
         p.add(labellumiexterne);
 
         labellumiexterneecoute= new JLabel("");
         labellumiexterneecoute.setFont(new Font("Tahoma", Font.PLAIN, 25));
-        labellumiexterneecoute.setBounds(575, 181, 210, 29);
+        labellumiexterneecoute.setBounds(575, 201, 210, 29);
         p.add(labellumiexterneecoute);
 
         lumiexterne = new JTextField();
         lumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        lumiexterne.setBounds(314, 181, 228, 40);
+        lumiexterne.setBounds(314, 201, 228, 40);
         p.add(lumiexterne);
         lumiexterne.setColumns(10);
         lumiexterne.addActionListener(new ActionListener() {
@@ -114,23 +115,21 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                 PageOfConfigWindow bw = new PageOfConfigWindow();
                 bw.setVisible(true);
             }
-            /*if(source == br){
-                this.dispose();
-                PageOfConfigWindow pc = new PageOfConfigWindow ();
-                pc.setVisible(true);
-            }*/
             if(source == bv){
 
                 String vl6 = lumiexterne.getText();
                 int v6_pars = Integer.parseInt(vl6);
-
-                System.out.println(v6_pars);
+                if( v6_pars > 100){
+                    JOptionPane.showMessageDialog(luminterne,"Attention ! La luminosité exterieure doit être inferieure à 100", "Avertissement", JOptionPane.WARNING_MESSAGE);
+                }
 
                 String vl7 = luminterne.getText();
                 int v7_pars = Integer.parseInt(vl7);
+                if( v7_pars > 15){
+                    JOptionPane.showMessageDialog(luminterne,"Attention ! La luminosité interieure doit être entre 0 et 15", "Avertissement", JOptionPane.WARNING_MESSAGE);
+                }
 
-
-
+                if (0 < v7_pars && v7_pars< 15 ){
                 RequestSocket request = new RequestSocket();
                 request.setRequest("lum");
                 Map<String, Object> data = new HashMap<>();
@@ -144,6 +143,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                // java.util.List<Map> valeurTempi = (List<Map>) response2.getData();
 
             }
+        }
         }
 
     public static void main (String[]args){

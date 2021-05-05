@@ -7,6 +7,10 @@ import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.CommonFrame;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,13 +19,13 @@ import java.util.List;
 import java.util.Map;
 
 
-public class TemperatureWindowConfig extends CommonFrame implements ActionListener {
+public class TemperatureWindowConfig extends CommonFrame implements ActionListener{
     private JButton bconf, bv, bs, br;
     private final SocketUtility socketUtility = new SocketUtility();
     private static final long serialVersionUID = 1L;
     private JPanel p;
     private JTextField tempextfiel,tempintfiel;
-    private JLabel labeltempextfiel,labeltempintfiel,labeltempextfielecoute, labeltempintfielecouteur;
+    private JLabel labeltempextfiel,labeltempintfiel,labeltempextfielecoute, labeltempintfielecouteur,labelinstruction;
 
 
     public TemperatureWindowConfig (){
@@ -32,17 +36,17 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
 
         labeltempextfiel = new JLabel("Temperature exterieure(°)");
         labeltempextfiel.setFont(new Font("Arial", Font.PLAIN, 18));
-        labeltempextfiel.setBounds(58, 130, 210, 29);
+        labeltempextfiel.setBounds(58, 150, 210, 29);
         p.add(labeltempextfiel);
 
         labeltempextfielecoute = new JLabel(" ");
         labeltempextfielecoute.setFont(new Font("Arial", Font.PLAIN, 25));
-        labeltempextfielecoute.setBounds(575, 130, 210, 29);
+        labeltempextfielecoute.setBounds(575, 150, 210, 29);
         p.add(labeltempextfielecoute);
 
         tempextfiel = new JTextField();
         tempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        tempextfiel.setBounds(314, 130, 228, 40);
+        tempextfiel.setBounds(314, 150, 228, 40);
         p.add(tempextfiel);
         tempextfiel.setColumns(10);
         tempextfiel.addActionListener(new ActionListener() {
@@ -56,17 +60,17 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
 
         labeltempintfiel = new JLabel("Temperature interieure(°)");
         labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labeltempintfiel.setBounds(58, 181, 210, 29);
+        labeltempintfiel.setBounds(58, 201, 210, 29);
         p.add(labeltempintfiel);
 
         labeltempintfielecouteur = new JLabel("" );
         labeltempintfielecouteur.setFont(new Font("Tahoma", Font.PLAIN, 25));
-        labeltempintfielecouteur.setBounds(575, 181, 210, 29);
+        labeltempintfielecouteur.setBounds(575, 201, 210, 29);
         p.add(labeltempintfielecouteur);
 
         tempintfiel = new JTextField();
         tempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        tempintfiel.setBounds(314, 181, 228, 40);
+        tempintfiel.setBounds(314, 201, 228, 40);
         p.add(tempintfiel);
         tempintfiel.setColumns(10);
         tempintfiel.addActionListener(new ActionListener() {
@@ -76,6 +80,11 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
                 labeltempintfielecouteur.setText(input4);
             }
         });
+
+        labelinstruction = new JLabel("Faites suivant pour configure la luminosite");
+        labelinstruction.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        labelinstruction.setBounds(58, 450, 400, 29);
+        p.add(labelinstruction);
 
 
 //Creation of the button
@@ -107,6 +116,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
                     TemperatureWindowConfig c = new TemperatureWindowConfig();
             c.setVisible(true);
 
+
         }
     public void actionPerformed(ActionEvent eb) {
         Object source = eb.getSource();
@@ -129,15 +139,6 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
             String v7 = tempintfiel.getText();
             int v7_pars = Integer.parseInt(v7);
 
-            /*if(v7 == new String())
-            {
-            JOptionPane.showMessageDialog(this,
-                    "Saisir\n entier",
-                    " erreur ",
-                    JOptionPane.WARNING_MESSAGE);
-            }
-            else {*/
-
             RequestSocket request = new RequestSocket();
             request.setRequest("temp");
             Map<String, Object> data = new HashMap<>();
@@ -152,6 +153,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
 
         }
     }
+
     }
 
 
