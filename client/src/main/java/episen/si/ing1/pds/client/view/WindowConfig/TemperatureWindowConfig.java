@@ -1,153 +1,138 @@
 package episen.si.ing1.pds.client.view.WindowConfig;
 
-import episen.si.ing1.pds.client.model.*;
 import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.CommonFrame;
-
 import javax.swing.*;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-
 public class TemperatureWindowConfig extends CommonFrame implements ActionListener{
-    //initialization of variable
-    private JButton bconf, bv, bs, br;
+    //declaration of variable
+    private JButton bconfiguration, bvalider, bsuivant, bretour;
     private final SocketUtility socketUtility = new SocketUtility();
     private static final long serialVersionUID = 1L;
-    private JPanel p;
+    private JPanel panel;
     private JTextField tempextfiel,tempintfiel;
     private JLabel labeltempextfiel,labeltempintfiel,labeltempextfielecoute, labeltempintfielecouteur,labelinstruction;
 
 
     public TemperatureWindowConfig (){
 
-        p = new JPanel();
-        this.add(p);
-        p.setLayout(null);
+        panel = new JPanel();
+        this.add(panel);
+        panel.setLayout(null);
 
-        labeltempextfiel = new JLabel("Temperature exterieure(°)");
-        labeltempextfiel.setFont(new Font("Arial", Font.PLAIN, 18));
-        labeltempextfiel.setBounds(58, 150, 250, 29);
-        p.add(labeltempextfiel);
+// label and textfiel for outside temperature
+        labeltempextfiel = new JLabel("Temperature exterieure_entier(°)");
+        labeltempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labeltempextfiel.setBounds(58, 150, 400, 29);
+        panel.add(labeltempextfiel);
 
-        labeltempextfielecoute = new JLabel(" ");
-        labeltempextfielecoute.setFont(new Font("Arial", Font.PLAIN, 25));
-        labeltempextfielecoute.setBounds(575, 150, 210, 29);
-        p.add(labeltempextfielecoute);
+        labeltempextfielecoute = new JLabel(" ");//listening if we do enter
+        labeltempextfielecoute.setFont(new Font("Tahoma", Font.PLAIN, 25));
+        labeltempextfielecoute.setBounds(650, 150, 210, 29);
+        panel.add(labeltempextfielecoute);
 
         tempextfiel = new JTextField();
         tempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        tempextfiel.setBounds(314, 150, 228, 40);
-        p.add(tempextfiel);
+        tempextfiel.setBounds(334, 150, 228, 40);
+        panel.add(tempextfiel);
         tempextfiel.setColumns(10);
         tempextfiel.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 String input3 = tempextfiel.getText();
                 labeltempextfielecoute.setText(input3);
             }
         });
-
-
-        labeltempintfiel = new JLabel("Temperature interieure(°)");
+// label and textfiel for outside temperature
+        labeltempintfiel = new JLabel("Temperature interieure_entier(°)");
         labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labeltempintfiel.setBounds(58, 201, 210, 29);
-        p.add(labeltempintfiel);
+        labeltempintfiel.setBounds(58, 201, 400, 29);
+        panel.add(labeltempintfiel);
 
         labeltempintfielecouteur = new JLabel("" );
         labeltempintfielecouteur.setFont(new Font("Tahoma", Font.PLAIN, 25));
         labeltempintfielecouteur.setBounds(575, 201, 210, 29);
-        p.add(labeltempintfielecouteur);
+        panel.add(labeltempintfielecouteur);
 
         tempintfiel = new JTextField();
         tempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        tempintfiel.setBounds(314, 201, 228, 40);
-        p.add(tempintfiel);
+        tempintfiel.setBounds(334, 201, 228, 40);
+        panel.add(tempintfiel);
         tempintfiel.setColumns(10);
         tempintfiel.addActionListener(new ActionListener() {
-            // where we put inter, the print value
             public void actionPerformed(ActionEvent e) {
                 String input4= tempintfiel.getText();
                 labeltempintfielecouteur.setText(input4);
             }
         });
-
-        labelinstruction = new JLabel("Faites suivant pour configurer la luminosite");
+//label for said to use to continue
+        labelinstruction = new JLabel("Faites suivant pour configurer la luminosité");
         labelinstruction.setFont(new Font("Tahoma", Font.PLAIN, 17));
         labelinstruction.setBounds(58, 450, 400, 29);
-        p.add(labelinstruction);
+        panel.add(labelinstruction);
 
 
 //Creation of the button
-        bconf = new JButton("CONFIGURATION DE LA TEMPERATURE");
-        bconf.setBounds(250,20,450,50);
-        bconf.setBackground(new Color(172,242,183));
-        bconf.setFont(bconf.getFont().deriveFont(15.0f));
-        p.add(bconf);
+        bconfiguration = new JButton("CONFIGURATION DE LA TEMPERATURE");
+        bconfiguration.setBounds(250,20,450,50);
+        bconfiguration.setBackground(new Color(172,242,183));
+        bconfiguration.setFont(bconfiguration.getFont().deriveFont(15.0f));
+        panel.add(bconfiguration);
 
-        bv = new JButton("Valider");
-        bv.setBounds(800,380,92,25);
-        p.add(bv);
-        bv.addActionListener(this);
+        bvalider = new JButton("Valider");
+        bvalider.setBounds(800,380,92,25);
+        panel.add(bvalider);
+        bvalider.addActionListener(this);
 
-        bs = new JButton("Suivant");
-        bs.setBounds(800,450,92,25);
-        p.add(bs);
-        bs.addActionListener(this);
+        bsuivant = new JButton("Suivant");
+        bsuivant.setBounds(800,450,92,25);
+        panel.add(bsuivant);
+        bsuivant.addActionListener(this);
 
-        br = new JButton("Retour");
-        br.setBounds(10,20,110,25);
-        p.add(br);
-
-        br.addActionListener(this);
+        bretour = new JButton("Retour");
+        bretour.setBounds(10,20,110,25);
+        panel.add(bretour);
+        bretour.addActionListener(this);
 
     }
 
-        public static void main(String[] args) {
-                    TemperatureWindowConfig c = new TemperatureWindowConfig();
-            c.setVisible(true);
-
-
-        }
     public void actionPerformed(ActionEvent eb) {
         Object source = eb.getSource();
-        if(source == bs){
+        if(source == bsuivant){
             this.dispose();
             BrightnessWindowConfig bw = new BrightnessWindowConfig();
             bw.setVisible(true);
         }
-        if(source == br){
+        if(source == bretour){
             this.dispose();
             PageOfConfigWindow pc = new PageOfConfigWindow ();
             pc.setVisible(true);
         }
-        if(source == bv){
+        if(source == bvalider){
 
                 String v6 = tempextfiel.getText();
+                int v6_pars = Integer.parseInt(v6);//transform string to interger
+                if ( v6_pars > 45 || v6_pars < -5){ // if outside temperature ist >45° or < -5°, application print error message
+                JOptionPane.showMessageDialog(tempextfiel,"La temperature Exterieure doit être comprise entre -10° & 45°", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                }
                 String v7 = tempintfiel.getText();
-                int v6_pars = Integer.parseInt(v6);//transform string and interger
-                if ( v6_pars > 45){
-                JOptionPane.showMessageDialog(tempextfiel,"Attention ! La temperature exterieure doit être inferieure à 45", "Avertissement", JOptionPane.WARNING_MESSAGE);
-            }
-            int v7_pars = Integer.parseInt(v7);
-            if( v7_pars > 45){
-                JOptionPane.showMessageDialog(tempintfiel,"Attention ! La temperature interieure doit être inferieure à 45", "Avertissement", JOptionPane.WARNING_MESSAGE);
-            }
+                int v7_pars = Integer.parseInt(v7);
+                if( v7_pars > 45 || v7_pars < -5){ // if inside temperature ist >45° or < -5°, application print error message
+                JOptionPane.showMessageDialog(tempintfiel,"La temperature Interieure doit être compris entre -10° & 45°", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                }
+                else JOptionPane.showMessageDialog(tempintfiel,"Ok", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
+
 //sent request to server
+            if((v6_pars< 45 && v6_pars > -5) && (v7_pars< 45 && v7_pars > -5)){
             RequestSocket request = new RequestSocket();
             request.setRequest("temperature");
             Map<String, Object> data = new HashMap<>();
-            //data.put("id_measure", Measured.getid_measure());
             data.put("temp_exterieure", v6_pars);
             data.put("temp_interieure", v7_pars);
             System.out.println(data);
@@ -155,12 +140,14 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
 
 //receive server response
             ResponseSocket response2 = socketUtility.sendRequest(request);
-
-            JOptionPane.showMessageDialog(tempintfiel,"Pris en compte", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
-
+        }
         }
     }
 
+    public static void main(String[] args) {
+        TemperatureWindowConfig c = new TemperatureWindowConfig();
+        c.setVisible(true);
     }
+}
 
 

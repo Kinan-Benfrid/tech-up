@@ -1271,7 +1271,7 @@ public class RequestHandler {
             int d = (a-b);
             int psore= (d*100/a); // calculate the percent of blinds
             String sql = "UPDATE datatemp SET inside_temperature = " + tempin + ", outside_temperature = " + tempex + ", pstore = " + psore + " WHERE id_datatemp = 1";
-            String sql2 = "INSERT INTO setting_temp (date_inser, inside_temperature, outside_temperature )  VALUES ( NOW(),?, ? );";
+            String sql2 = "INSERT INTO setting_temp (date_inser, inside_temperature, outside_temperature )  VALUES ( NOW(),?, ? )";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
             PreparedStatement statement2 = connection.prepareStatement(sql2);
@@ -1299,18 +1299,20 @@ public class RequestHandler {
             int f = (e/a);
             int pteinte =(100 -f);
             if(lumex < 15 && (0 < limin && limin < 15)){
-                System.out.println(psteinte0 );
             }
             if(lumex > 15 && (0 < limin && limin < 15)) {
-                System.out.println(pteinte);
             }
             String sql = "UPDATE luminosite SET lum_exterieure = " + lumex + ", lum_interieure = " + limin + ", pteinte = " + pteinte + " WHERE id_lum = 1";
+            String sql2 = "INSERT INTO setting_bright (date_insert, inside_brigh, outside_brigh )  VALUES ( NOW(),?, ? )";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
+            PreparedStatement statement2 = connection.prepareStatement(sql2);
+            statement2.setInt(1, (Integer) dataloaded1.get("luminosite_interieure"));
+            statement2.setInt(2, (Integer) dataloaded1.get("lumminosite_exterieure"));
+            statement2.executeUpdate();
 
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
-
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
 
