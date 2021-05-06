@@ -27,24 +27,13 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
     private final JPanel pan1;
     private final JPanel pan2;
     private final JPanel pan3;
-    private JRadioButton r1;
-    private JRadioButton r2;
-    private JRadioButton r3;
     private final JButton retour;
     private final JButton suivant;
-    private JComboBox jcb;
     private final JTextField jtAdulte;
     private final JTextField jtBudget;
-    private JTextField t2;
-    private JTextField t4;
     private final JLabel Adulte;
     private final JLabel Budget;
-    private JLabel j0;
-    private JLabel j1;
-    private JLabel j2;
-    private JLabel j3;
-    private JLabel j4;
-    private JLabel j5;
+
 
     public FirstPageRentCriteria() {
 
