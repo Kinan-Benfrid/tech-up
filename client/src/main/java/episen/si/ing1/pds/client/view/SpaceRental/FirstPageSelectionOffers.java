@@ -6,6 +6,7 @@ import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.CommonFrame;
 import episen.si.ing1.pds.client.view.HomePageRentView;
+import episen.si.ing1.pds.client.view.HomePageView;
 import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
 
 import javax.swing.*;
@@ -184,11 +185,27 @@ public class FirstPageSelectionOffers extends CommonFrame implements ActionListe
             fprc.setVisible(true);
         } else if (source == suivant) {
             this.dispose();
+
             JOptionPane d = new JOptionPane();
-            int retour = JOptionPane.showConfirmDialog(this, "le message",
+            int boite = JOptionPane.showConfirmDialog(this, "Votre offre a bien été enregistrée",
                     "le titre", JOptionPane.OK_CANCEL_OPTION);
 
-        } else if (source == filtre) {
+
+            if ((boite == JOptionPane.OK_OPTION)){
+                this.dispose();
+                HomePageView hpm = new HomePageView();
+                hpm.setVisible(true);
+                this.setVisible(false);
+
+            }
+            else {
+                this.dispose();
+                FirstPageSelectionOffers fpso = new FirstPageSelectionOffers();
+                fpso.setVisible(true);
+            }
+
+
+    } else if (source == filtre) {
             this.dispose();
             SecondPageRentCriteria sprc = new SecondPageRentCriteria();
             sprc.setVisible(true);
