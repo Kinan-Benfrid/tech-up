@@ -33,16 +33,11 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
         l1.setFont(new Font("Arial", Font.PLAIN, 20));
         l1.setBounds(30,20,350,90);
 
-        jr1 = new JRadioButton ("Activer lae badge");
-        jr2 = new JRadioButton ("Désactivation");
+        jr1 = new JRadioButton ("Activer le badge");
+        jr2 = new JRadioButton ("Désactiver le badge");
         jr2.setBounds (30,130,300,40);
         jr1.setBounds(30,90,300,40);
-        //jcb = new JCheckBox("Activer le badge");
-        //jcb.setBounds(30,90,200,90);
-        //jcb.setSelected(true);
-        //jcb.addActionListener(this);
-        //jcb.setSelected (false);
-
+        //sending request in the listner to active and deactivate a card
         jr1.addMouseListener (new MouseListener () {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -120,7 +115,6 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
 
         b1 = new JButton("Valider");
         b1.setBounds(150,200,100,20);
-        b1.addActionListener(this);
 
         l2 = new JLabel("Dissocier le badge");
         l2.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -132,7 +126,8 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
         b1.addMouseListener (new MouseListener () {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                JFrame frame = new JFrame("Message");
+                JOptionPane.showMessageDialog(frame,"Le badge est maintenant à jour !");
             }
 
             @Override
@@ -163,11 +158,13 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
                 Map<String, Object> data = new HashMap<> ();
                 data.put("person_id", Person.getPerson_id());
                 data.put("card_id", AccessCard.getCard_id());
-                //data.put ("active",AccessCard.getActive ());
                 request.setData(data);
 
                 ResponseSocket response = socketUtility.sendRequest(request);
                 System.out.println (response);
+
+                JFrame frame = new JFrame("Message");
+                JOptionPane.showMessageDialog(frame,"Badge désassocié");
             }
 
             @Override
@@ -200,60 +197,6 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
         p1.add(b2);
     }
 
-
-    /*public void actionPerformed(ActionEvent e) {
-        boolean status = jcb.isSelected();
-        Object source = e.getSource();
-
-        if (status) {
-            RequestSocket request = new RequestSocket();
-            request.setRequest("active_cardT");
-
-            Map<String, Object> data = new HashMap<> ();
-            data.put("person_id", Person.getPerson_id());
-            data.put("card_id", AccessCard.getCard_id());
-            data.put ("active",AccessCard.getActive ());
-            request.setData(data);
-
-            ResponseSocket response = socketUtility.sendRequest(request);
-            //JFrame frame = new JFrame("Message");
-            //JOptionPane.showMessageDialog(frame,"Le badge est maintenant activé !");
-            //this.dispose();
-            //CardSection cs = new CardSection();
-            //cs.setVisible(true);
-        } else {
-            //System.out.println ("blabla");
-            RequestSocket request2 = new RequestSocket();
-            request2.setRequest("active_cardF");
-            Map<String, Object> data = new HashMap<> ();
-            data.put("person_id", Person.getPerson_id());
-            data.put("card_id", AccessCard.getCard_id());
-            data.put ("active",AccessCard.getActive ());
-            request2.setData(data);
-
-            ResponseSocket response2 = socketUtility.sendRequest(request2);
-        }
-
-        if(source == b1) {
-            JFrame frame = new JFrame("Message");
-            JOptionPane.showMessageDialog(frame,"Le badge est maintenant à jour !");
-            frame.dispose();
-        } else if(source == b2) {
-            RequestSocket request = new RequestSocket();
-            request.setRequest("dissociate");
-            Map<String, Object> data = new HashMap<> ();
-            data.put("person_id", Person.getPerson_id());
-            data.put("card_id", AccessCard.getCard_id());
-            data.put ("active",AccessCard.getActive ());
-            request.setData(data);
-
-            ResponseSocket response = socketUtility.sendRequest(request);
-
-            JFrame frame = new JFrame("Message");
-            JOptionPane.showMessageDialog(frame,"Le badge est maintenant désassocié !");
-            frame.dispose();
-        }
-    } */
 
     public static void main(String[] args) {
         ActivationCard ac = new ActivationCard();

@@ -50,7 +50,7 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
             @Override
             public void mouseClicked(MouseEvent e) {
                 JFrame frame = new JFrame("Message");
-                JOptionPane.showMessageDialog(frame, "Affectation du badge réussie !");
+                JOptionPane.showMessageDialog(frame, "Mise à jour réussie !");
             }
 
             @Override
@@ -127,7 +127,7 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
                 data.put("person_id", Person.getPerson_id());
                 data.put("card_id", AccessCard.getCard_id());
                 request.setData(data);
-                request.getData ();
+
                 ResponseSocket response = socketUtility.sendRequest(request);
                 System.out.println (response);
             }

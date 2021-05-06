@@ -19,7 +19,7 @@ import java.util.Map;
 public class CardSection extends MainCardMenu {
     private JPanel p1;
     private JButton b1,b2;
-    private JLabel j1,j2,j3,j4,j5,j6,j7,j8,j9,j10,j11;
+    private JLabel j1,j2,j3,j4,j5,j6,j7,j8,j9,j10,j11,j12,j13;
     private SocketUtility socketUtility = new SocketUtility();
 
     public CardSection() {
@@ -30,12 +30,18 @@ public class CardSection extends MainCardMenu {
         j7 = new JLabel ("Date de naissance");
         j8 = new JLabel ("poste");
         j9 = new JLabel ("Niveau d'habilitation");
+        j11 = new JLabel ("Type de poste");
+        j12 = new JLabel ("Equipements");
+        j13 = new JLabel ("Zone d'accès");
 
         j6.setBounds (20,30,150,30);
         j7.setBounds (20,100,150,30);
         j8.setBounds (20,150,150,30);
         j9.setBounds (20,180,150,30);
-
+        j11.setBounds (20,220,150,30);
+        j12.setBounds (100,270,150,30);
+        j13.setBounds (310,270,150,30);
+        //sending a request
         RequestSocket requestSocket = new RequestSocket();
         requestSocket.setRequest("name_person");
         Map<String, Object> data = new HashMap<>();
@@ -46,15 +52,6 @@ public class CardSection extends MainCardMenu {
         ResponseSocket response = socketUtility.sendRequest(requestSocket);
         List<Map> namePerson = (List<Map>) response.getData();
 
-        /*RequestSocket requestSocket3 = new RequestSocket();
-        requestSocket3.setRequest("building_person");
-        Map<String, Object> data2 = new HashMap<>();
-        data2.put ("person_id",Person.getPerson_id ());
-        data2.put("card_id", AccessCard.getCard_id ());
-        requestSocket3.setData(data2);
-
-        ResponseSocket response3 = socketUtility.sendRequest(requestSocket3);
-        List<Map> buildingPerson = (List<Map>) response3.getData(); */
 
         RequestSocket requestSocket4 = new RequestSocket();
         requestSocket4.setRequest("show_equipment");
@@ -80,7 +77,7 @@ public class CardSection extends MainCardMenu {
         List<Map> showSpace = (List<Map>) response5.getData();
         System.out.println ("data equipmenttype kinan" + showEquipment);
 
-
+        //table in which data is retrieved
         String columns[] = {"designation"};
         String dataEq[][] = new String[showEquipment.size ()][1];
 
@@ -123,49 +120,39 @@ public class CardSection extends MainCardMenu {
         table2.setShowVerticalLines(true);
 
 
-        table.setBounds (100,360,200,200);
-        table2.setBounds (310,360,200,200);
+        table.setBounds (100,310,200,200);
+        table2.setBounds (310,310,200,200);
         p1.add (table);
         p1.add (table2);
-
+        //data placed in the following JLabels
         for (Map m : namePerson) {
             j1 = new JLabel ();
             j2 = new JLabel ();
             j3 = new JLabel ();
             j4 = new JLabel ();
             j5 = new JLabel ();
-            j5 = new JLabel ();
+            j10 = new JLabel ();
             j1.setText((String) m.get ("person_surname"));
             j2.setText ((String)m.get("person_firstname"));
             j3.setText ((String)m.get("birth_date"));
             j4.setText ((String)m.get("position_p"));
             j5.setText (String.valueOf ((Integer)m.get("clearance_level")));
-            j1.setBounds (260,30,300,30);
-            j2.setBounds (210,30,300,30);
+            j10.setText ((String)m.get("position_type"));
+            j1.setBounds (275,30,300,30);
+            j2.setBounds (210,30,230,30);
             j3.setBounds (190,100,300,30);
             j4.setBounds (190,150,300,30);
             j5.setBounds (190,180,300,30);
+            j10.setBounds (190,220,300,30);
             j1.setFont(new Font("Arial", Font.PLAIN, 13));
             j2.setFont(new Font("Arial", Font.PLAIN, 13));
             j3.setFont(new Font("Arial", Font.PLAIN, 13));
             j4.setFont(new Font("Arial", Font.PLAIN, 13));
             j5.setFont(new Font("Arial", Font.PLAIN, 13));
+            j10.setFont(new Font("Arial", Font.PLAIN, 13));
 
         }
 
-        /*for (Map m : buildingPerson) {
-            j10 = new JLabel ();
-            j11 = new JLabel ();
-            text = new JTextArea ();
-            j10.setText((String) m.get ("building_name"));
-            j11.setText((String) m.get ("building_name"));
-            j10.setBounds (260,230,400,30);
-            //text.setBounds ();
-            j11.setBounds (260,260,170,30);
-            j10.setFont(new Font("Arial", Font.PLAIN, 13));
-            j11.setFont(new Font("Arial", Font.PLAIN, 13));
-
-        } */
         p1.add (j1);
         p1.add (j2);
         p1.add (j3);
@@ -175,8 +162,10 @@ public class CardSection extends MainCardMenu {
         p1.add (j7);
         p1.add (j8);
         p1.add (j9);
-        //p1.add (j10);
-       // p1.add (j11);
+        p1.add (j10);
+        p1.add (j11);
+        p1.add (j12);
+        p1.add (j13);
         this.add(p1);
 
 

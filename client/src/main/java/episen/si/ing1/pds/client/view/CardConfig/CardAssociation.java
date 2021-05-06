@@ -19,7 +19,6 @@ public class CardAssociation extends CommonFrame {
     private JLabel j1, j2, j3;
     private JButton b1, b2, b3;
     private JComboBox jcb1,jcb2;
-    //private JTextField t1, t2;
     private RequestSocket request,requestN;
     private final SocketUtility socketUtility = new SocketUtility();
 
@@ -32,6 +31,7 @@ public class CardAssociation extends CommonFrame {
         b1 = new JButton("retour");
         b2 = new JButton("Associer");
         b3 = new JButton("Suivant");
+
 
         j1.setBounds(60, 60, 400, 20);
         j2.setBounds(60, 170, 200, 20);
@@ -70,6 +70,7 @@ public class CardAssociation extends CommonFrame {
         b2.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+
                     RequestSocket request2 = new RequestSocket ();
                     request2.setRequest ("affected_card");
                     Map<String, Object> data = new HashMap<> ();
@@ -163,8 +164,6 @@ public class CardAssociation extends CommonFrame {
 
         jcb2 = new JComboBox(new Vector(nameList));
         jcb2.setBounds(270, 170, 220, 20);
-       // System.out.println(response);
-       // System.out.println(response.getData());
 
         jcb1.setSelectedIndex(-1);
         jcb1.setRenderer(new DefaultListCellRenderer() {

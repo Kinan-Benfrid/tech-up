@@ -30,16 +30,11 @@ public class CardAccessArea extends MainCardMenu {
         this.add(p1);
 
 
-        SpacePerson space = new SpacePerson ();
-        jt = new JTable (space);
-        jt.setBounds (400,30,300,300);
-
-        p1.add (jt);
         l1 = new JLabel("Bâtiment");
         l1.setBounds(30,20,120,90);
         l1.setFont(new Font("Arial", Font.PLAIN, 20));
 
-
+        //sending request
         RequestSocket request = new RequestSocket();
         request.setRequest("building_access");
         Map<String, Object> hm = new HashMap<> ();
@@ -52,6 +47,7 @@ public class CardAccessArea extends MainCardMenu {
         // data is the list of map we sent in the server (look response)
         List<Map> buildingAccess = (List<Map>) response1.getData();
 
+        //creating jcombobox to retrieve data in
         DefaultComboBoxModel jc2Model = new DefaultComboBoxModel();
 
         jb2 = new JComboBox(jc2Model);
