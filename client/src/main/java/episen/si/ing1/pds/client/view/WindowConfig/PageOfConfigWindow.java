@@ -26,7 +26,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
     private final SocketUtility socketUtility = new SocketUtility();
     private static final long serialVersionUID = 1L;
     private JPanel p;
-    private JLabel labeltempextfiel,labeltempintfiel,labelpStore,labelluminterne,labellumiexterne,labelpteinte,labelinstruction;
+    private JLabel labeltempextfiel,labelinstructionR,labeltempintfiel,labelpStore,labelluminterne,labellumiexterne,labelpteinte,labelinstruction;
 
     public PageOfConfigWindow(){
         p = new JPanel();
@@ -102,10 +102,15 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelpteinte.setForeground(new Color(155,0,0));
         p.add(labelpteinte);
 
-        labelinstruction = new JLabel("Faites suivant pour configurer la température");
+        labelinstruction = new JLabel("Faites suivant pour configurer la température  ---->");
         labelinstruction.setFont(new Font("Tahoma", Font.PLAIN, 17));
         labelinstruction.setBounds(58, 450, 400, 29);
         p.add(labelinstruction);
+
+        labelinstructionR = new JLabel("Rafrâichissez pour voir l'état actuel des fenêtres");
+        labelinstructionR.setFont(new Font("Tahoma", Font.PLAIN, 13));
+        labelinstructionR.setBounds(700, 400, 400, 29);
+        p.add(labelinstructionR);
 
 //Creation of the button
         bconf = new JButton("CONFIGURATION DES FENETRES ELECTROCHROMATIQUES");
