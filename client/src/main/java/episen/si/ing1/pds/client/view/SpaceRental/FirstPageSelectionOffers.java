@@ -10,6 +10,8 @@ import episen.si.ing1.pds.client.view.HomePageView;
 import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +30,8 @@ public class FirstPageSelectionOffers extends CommonFrame implements ActionListe
     private final JButton retour;
     private final JButton filtre;
     private final JButton suivant;
-    private JPanel p1 = new JPanel();
+    private final JPanel p1;
+    private final JPanel pan3;
     private JLabel j1;
 
     public FirstPageSelectionOffers() {
@@ -45,19 +48,35 @@ public class FirstPageSelectionOffers extends CommonFrame implements ActionListe
 
         /**initialize JBouton**/
         retour = new JButton("retour");
+        retour.setBounds(10, 15, 70, 20);
         suivant = new JButton("suivant");
+        suivant.setBounds(350, 300, 100, 20);
         filtre = new JButton("Ajoutez des capteurs ? par ici ");
-
+        filtre.setBounds(70, 300, 250, 20);
+        retour.setBounds(10, 15, 70, 20);
 
         /**initialize JPanel**/
         p1 = new JPanel();
         this.add(p1);
-        p1.setBounds(20, 20, 300, 300);
+        p1.setLayout(null);
+        pan3 = new JPanel();
+        pan3.setLayout(null);
+        Border lineborder = BorderFactory.createLineBorder(new Color(111,174,143), 3);
+        pan3.setBorder(lineborder);
+
+
+
 
         /**initialize JCombobox**/
         JComboBox jc1 = new JComboBox(new Vector(Number));
         JComboBox jc2 = new JComboBox(new Vector(Number));
         JComboBox jc3 = new JComboBox(new Vector(Number));
+
+        jc3.setBounds(70, 240, 450, 20);
+        jc2.setBounds(70, 210, 450, 20);
+        jc1.setBounds(70, 180, 450, 20);
+
+
 
 
         /**addition of the listener event**/
@@ -169,9 +188,10 @@ public class FirstPageSelectionOffers extends CommonFrame implements ActionListe
         p1.add(jc1);
         p1.add(jc2);
         p1.add(jc3);
+
+        p1.add(retour);
         p1.add(suivant);
         p1.add(filtre);
-        p1.add(retour);
 
 
     }
