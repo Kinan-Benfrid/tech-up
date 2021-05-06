@@ -67,7 +67,6 @@ public class SpaceView extends CommonFrame {
         request.setData(hm);
         ResponseSocket response = socketUtility.sendRequest(request);
         List<Map> positionList = (List<Map>) response.getData();
-        System.out.println("List of position : " + positionList );
         for (Map m : positionList){
             try{
                 if ((boolean) m.get("available")){
@@ -111,7 +110,21 @@ public class SpaceView extends CommonFrame {
                     jp3.add(blue_icon_label);
                 }
                 else{
-                    Icon red_icon = new ImageIcon(ImageIO.read(new File(System.getenv("IMG")+"\\red_icon.png")));
+                    RequestSocket request2 = new RequestSocket();
+                    request2.setRequest("equipment_on_position");
+                    Map<String, Object> hm2 = new HashMap<>();
+                    hm2.put("position_id", m.get("position_id"));
+                    request2.setData(hm2);
+                    ResponseSocket response2 = socketUtility.sendRequest(request2);
+                    List<Map> equipment_list = (List<Map>) response2.getData();
+                    String file_img ="";
+                    if ((boolean) equipment_list.get(0).get("equipment_state")){
+                        file_img = "red_icon_activate.png";
+                    }
+                    else{
+                        file_img = "red_icon_desactivate.png";
+                    }
+                    Icon red_icon = new ImageIcon(ImageIO.read(new File(System.getenv("IMG")+"\\"+file_img)));
                     JLabel red_icon_label = new JLabel();
                     red_icon_label.setIcon(red_icon);
                     red_icon_label.setBounds((int) m.get("x_position"),(int) m.get("y_position"),40,40);

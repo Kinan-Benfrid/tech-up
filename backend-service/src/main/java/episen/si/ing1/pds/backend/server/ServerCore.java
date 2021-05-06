@@ -16,7 +16,6 @@ public class ServerCore {
 
     public ServerCore(final ServerConfig config, DataSource ds) throws IOException {
         server = new ServerSocket(config.getConfig().getListenPort());
-        //server.setSoTimeout(config.getConfig().getSoTimeout());
         this.ds = ds;
     }
 
@@ -26,7 +25,7 @@ public class ServerCore {
             server.setReuseAddress(true);
             while (true) {
                 Socket client = server.accept();
-                logger.info("New client connected" + client.getInetAddress().getHostAddress());
+                logger.info("New client connected");
 
                 ClientRequestManager clientSock = new ClientRequestManager(client, ds.receiveConnection());
                 new Thread(clientSock).start();
@@ -39,6 +38,7 @@ public class ServerCore {
             if (server != null) {
                 try {
                     server.close();
+                    DataSource.getInstance().closePool();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

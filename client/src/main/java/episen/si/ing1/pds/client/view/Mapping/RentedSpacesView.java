@@ -173,7 +173,6 @@ public class RentedSpacesView extends CommonFrame {
                     ResponseSocket responseSpace = socketUtility.sendRequest(requestSocket);
                     List<Map> spaceListFetched = (List<Map>) responseSpace.getData();
 
-                    System.out.println(spaceListFetched);
                     // clear the data in the drop down list
                     jc3Model.removeAllElements();
                     for (Map spaceElement : spaceListFetched) {
@@ -200,7 +199,6 @@ public class RentedSpacesView extends CommonFrame {
                     Space.setSpace_id(space_id);
                     Space.setSpace_type(space_type);
                     Space.setSpace_name(space_name);
-                    System.out.println("Space id : " + space_id + ", space type : " + space_type + ", space name : " + space_name);
 
                 }
             }
@@ -209,8 +207,6 @@ public class RentedSpacesView extends CommonFrame {
         jb2.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
-                System.out.println(Space.getSpace_name());
                 if (Space.getSpace_type() == 1) {
                     dispose();
                     SpaceView spaceView = new SpaceView(System.getenv("IMG") + "\\meeting_room.png", 200, 250);
@@ -224,7 +220,6 @@ public class RentedSpacesView extends CommonFrame {
                     SpaceView spaceView = new SpaceView(System.getenv("IMG") + "\\open_space.png", 200, 125);
                     spaceView.setVisible(true);
                 }
-
             }
 
             @Override
