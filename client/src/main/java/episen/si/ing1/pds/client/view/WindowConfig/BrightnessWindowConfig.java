@@ -112,33 +112,54 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
             if(source == bvalider){
 
                 String vl6 = lumiexterne.getText();
-                int v6_pars = Integer.parseInt(vl6);
-                if( v6_pars > 50 || v6_pars < 0){
-                    JOptionPane.showMessageDialog(lumiexterne,"La luminosité Exterieure doit être comprise entre 0 & 50 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
-                }
-
                 String vl7 = luminterne.getText();
-                int v7_pars = Integer.parseInt(vl7);
-                if( v7_pars > 15 || v7_pars < 0){
-                    JOptionPane.showMessageDialog(luminterne,"La luminosité Interieure doit être comprise entre 0 & 50 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                int v6_pars;
+
+                if(!isInteger(vl7) ||!isInteger(vl6) ){
+                    JOptionPane.showMessageDialog(luminterne,"Saisir un entier !", "ERREUR", JOptionPane.ERROR_MESSAGE);
                 }
-                else JOptionPane.showMessageDialog(luminterne,"Ok", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
+                else {
+                    v6_pars = Integer.parseInt(vl6);
+                    if( v6_pars > 50 || v6_pars < 0)
+                    {
+                        JOptionPane.showMessageDialog(lumiexterne,"La luminosité Exterieure doit être comprise entre 0 & 50 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                    }
 
-                if(( v7_pars < 15 && v7_pars > 0) &&( v6_pars < 50 && v6_pars > 0)){
-                RequestSocket request = new RequestSocket();
-                request.setRequest("lum");
-                Map<String, Object> data = new HashMap<>();
-                data.put("lumminosite_exterieure", v6_pars);
-                data.put("luminosite_interieure", v7_pars);
-                System.out.println(data);
-                request.setData(data);
-                System.out.println(data);
+                    int v7_pars = Integer.parseInt(vl7);
+                    if( v7_pars > 15 || v7_pars < 0)
+                    {
+                        JOptionPane.showMessageDialog(luminterne,"La luminosité Interieure doit être comprise entre 0 & 50 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                    }
 
-                ResponseSocket response2 = socketUtility.sendRequest(request);
+                    if(( v7_pars < 15 && v7_pars > 0) &&( v6_pars < 50 && v6_pars > 0)){
+                    RequestSocket request = new RequestSocket();
+                    request.setRequest("lum");
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("lumminosite_exterieure", v6_pars);
+                    data.put("luminosite_interieure", v7_pars);
+                    System.out.println(data);
+                    request.setData(data);
+                    System.out.println(data);
+                    JOptionPane.showMessageDialog(luminterne,"configuration prise en compte", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
+
+
+                        ResponseSocket response2 = socketUtility.sendRequest(request);
+            }
         }
-        }
+            }
         }
 
+    public static boolean isInteger(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            int i = Integer.parseInt(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
 
     public static void main (String[]args){
         BrightnessWindowConfig bw = new BrightnessWindowConfig();
