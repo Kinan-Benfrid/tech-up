@@ -670,7 +670,7 @@ public class RequestHandler {
             Map dataLoaded = (Map) request.getData();
           // int nombre  = (int) dataLoaded.get("NumberP");
             System.out.println(dataLoaded.get("NumberP"));
-            String query = "Select space_name,size_space, max_person_number,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where max_person_number >= 1 and rental_id is NULL";
+            String query = "Select space_id,space_name,size_space, max_person_number,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where max_person_number >= 1 and rental_id is NULL";
             System.out.println("Requete  : " + query);
 
 
@@ -682,6 +682,7 @@ public class RequestHandler {
             List<Map> list = new ArrayList<>();
             while (rs.next()) {
                 Map m = new HashMap();
+                m.put("space_id", rs.getInt("space_id"));
                 m.put("space_name", rs.getString("space_name"));
                 m.put("size_space", rs.getInt("size_space"));
                 m.put("max_person_number", rs.getInt("max_person_number"));
