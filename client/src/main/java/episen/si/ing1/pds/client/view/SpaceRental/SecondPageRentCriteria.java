@@ -68,7 +68,6 @@ public class SecondPageRentCriteria extends CommonFrame {
         pan3.setBorder(new TitledBorder(" Veuillez séléctionner le(s) type(s) de capteur(s) que vous souhaitez ?"));
         pan2.add(pan3);
         pan3.setBounds(60, 60, 600, 800);
-        pan3.setBackground(Color.GREEN);
 
 
 
