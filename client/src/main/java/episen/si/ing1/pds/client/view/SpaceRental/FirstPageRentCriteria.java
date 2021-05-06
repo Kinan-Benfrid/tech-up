@@ -43,7 +43,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         pan2.setLayout(null);
 
 
-        //initialize JBouton
+        /**initialize JBouton*/
         retour = new JButton("retour");
         retour.setBounds(10, 15, 70, 20);
         pan2.add(retour);
@@ -53,7 +53,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         suivant.addActionListener(this);
 
 
-        //initialize JLabel
+        /**initialize JLabel*/
         JLabel Description = new JLabel("Veuillez remplir les critères ci dessous ");
         Description.setBounds(55, 5, 500, 100);
         Adulte = new JLabel("ADULTE");
@@ -62,26 +62,26 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         Budget.setBounds(200, 140, 100, 20);
 
 
-        //initialize JTextfield
+        /**initialize JTextfield*/
         jtAdulte = new JTextField();
         jtAdulte.setBounds(200, 120, 70, 20);
         jtBudget = new JTextField();
         jtBudget.setBounds(200, 160, 100, 20);
 
-        //initialize JPanel
+        /**initialize JPanel*/
         pan1 = new JPanel();
         JLabel j0 = new JLabel("Bienvenue dans votre espace de location !");
         pan3 = new JPanel();
         pan3.setBorder(new TitledBorder("Quel(s) type(s) d'espace(s) souhaitez-vous louer ?"));
         pan2.add(pan3);
         pan3.setLayout(null);
-        Border lineborder = BorderFactory.createLineBorder(new Color(111,174,143), 3);
+        Border lineborder = BorderFactory.createLineBorder(new Color(111, 174, 143), 3);
         pan3.setBorder(lineborder);
 
         pan3.setBounds(50, 180, 400, 200);
 
 
-        // Add components to Panels
+        /** Add components to Panels*/
         pan1.add(j0);
         pan1.setBounds(600, 10, 500, 20);
         pan2.add(pan1);
@@ -94,6 +94,11 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
 
     }
 
+    public static void main(String[] args) {
+        FirstPageRentCriteria fprc = new FirstPageRentCriteria();
+        fprc.setVisible(true);
+
+    }
 
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
@@ -117,7 +122,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                 FirstPageSelectionOffers fpso = new FirstPageSelectionOffers();
                 fpso.setVisible(true);
 
-//sent request to server
+                /**sent request to server*/
 
                 Person.setNumber_person(jtAdulte.getText());
 
@@ -128,21 +133,11 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                 System.out.println(data);
                 request.setData(data);
 
-                //System.out.println("ZZZZZZZZZZ" + Person.getNumber_person());
-
-
-                //receive server response
+                /**receive server response**/
                 ResponseSocket response2 = socketUtility.sendRequest(request);
 
             }
         }
-    }
-
-
-    public static void main(String[] args) {
-        FirstPageRentCriteria fprc = new FirstPageRentCriteria();
-        fprc.setVisible(true);
-
     }
 }
 
