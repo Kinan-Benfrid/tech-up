@@ -61,10 +61,8 @@ public class FirstPageSelectionOffers extends CommonFrame implements ActionListe
         p1.setLayout(null);
         pan3 = new JPanel();
         pan3.setLayout(null);
-        Border lineborder = BorderFactory.createLineBorder(new Color(111,174,143), 3);
+        Border lineborder = BorderFactory.createLineBorder(new Color(111, 174, 143), 3);
         pan3.setBorder(lineborder);
-
-
 
 
         /**initialize JCombobox**/
@@ -75,8 +73,6 @@ public class FirstPageSelectionOffers extends CommonFrame implements ActionListe
         jc3.setBounds(70, 240, 450, 20);
         jc2.setBounds(70, 210, 450, 20);
         jc1.setBounds(70, 180, 450, 20);
-
-
 
 
         /**addition of the listener event**/
@@ -211,21 +207,20 @@ public class FirstPageSelectionOffers extends CommonFrame implements ActionListe
                     "le titre", JOptionPane.OK_CANCEL_OPTION);
 
 
-            if ((boite == JOptionPane.OK_OPTION)){
+            if ((boite == JOptionPane.OK_OPTION)) {
                 this.dispose();
                 HomePageView hpm = new HomePageView();
                 hpm.setVisible(true);
                 this.setVisible(false);
 
-            }
-            else {
+            } else {
                 this.dispose();
                 FirstPageSelectionOffers fpso = new FirstPageSelectionOffers();
                 fpso.setVisible(true);
             }
 
 
-    } else if (source == filtre) {
+        } else if (source == filtre) {
             this.dispose();
             SecondPageRentCriteria sprc = new SecondPageRentCriteria();
             sprc.setVisible(true);
