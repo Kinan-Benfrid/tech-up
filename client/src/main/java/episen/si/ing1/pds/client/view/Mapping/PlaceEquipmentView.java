@@ -53,7 +53,6 @@ public class PlaceEquipmentView extends JFrame {
         request.setData(hm);
         ResponseSocket response = socketUtility.sendRequest(request);
         List<Map> equipment_list = (List<Map>) response.getData();
-        System.out.println("EQUIPMENTTTTESSST " + equipment_list);
 
         jl1 = new JLabel("Selectionnez un equipement a placer");
         jp1 = new JPanel();
@@ -67,7 +66,6 @@ public class PlaceEquipmentView extends JFrame {
                     Map item = (Map) e.getItem();
                     int equipment_id = (Integer) item.get("equipment_id");
                     Equipment.setEquipment_id(equipment_id);
-                    System.out.println("EQUIPMENT ID " + equipment_id);
                 }
             }
         });
@@ -107,7 +105,6 @@ public class PlaceEquipmentView extends JFrame {
                         request.setData(hm);
                         ResponseSocket response2 = socketUtility.sendRequest(request);
                         SpaceView.isPopUpActive = false;
-                        System.out.println("FILE LOCATION " + spaceView.getFileLocation());
                         SpaceView spaceView1 = new SpaceView(spaceView.getFileLocation(), spaceView.getX1(), spaceView.getX2());
                         spaceView1.setVisible(true);
                         spaceView.dispose();
@@ -116,7 +113,6 @@ public class PlaceEquipmentView extends JFrame {
                 }else{
                     JOptionPane.showMessageDialog(getContentPane(), "Equipement deja utilise quelque part !");
                     SpaceView.isPopUpActive = false;
-                    System.out.println("FILE LOCATION " + spaceView.getFileLocation());
                     SpaceView spaceView1 = new SpaceView(spaceView.getFileLocation(), spaceView.getX1(), spaceView.getX2());
                     spaceView1.setVisible(true);
                     spaceView.dispose();
@@ -161,7 +157,6 @@ public class PlaceEquipmentView extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 SpaceView.isPopUpActive = false;
-                System.out.println("FILE LOCATION " + spaceView.getFileLocation());
                 SpaceView spaceView1 = new SpaceView(spaceView.getFileLocation(),spaceView.getX1(),spaceView.getX2());
                 spaceView1.setVisible(true);
                 spaceView.dispose();
