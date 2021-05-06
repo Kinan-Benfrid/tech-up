@@ -1168,12 +1168,11 @@ public class RequestHandler {
             Map<String, Object> dataloaded1 = (Map<String, Object>) request.getData();
             int lumex = (int) dataloaded1 .get("lumminosite_exterieure");
             int limin = (int) dataloaded1 .get("luminosite_interieure");
-            int psteinte0 = 0;
             int a = Math.abs(lumex);
             int b = Math.abs(limin);
-            int d = (a-b);
+            int d = (Math.max(a,b)-Math.min(a,b));
             int e = (100*d);
-            int f = (e/a);
+            int f = (e/Math.max(a,b));
             int pteinte =(f);
             if(lumex < 15 && (0 < limin && limin < 15)){
             }
