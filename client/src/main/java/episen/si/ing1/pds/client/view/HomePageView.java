@@ -52,12 +52,9 @@ public class HomePageView extends CommonFrame implements ActionListener {
         Map<String, Object> data = new HashMap<> ();
         requestSocket.setData(data);
 
-        System.out.println(data);
-        System.out.println("data" + requestSocket.getData());
 
         ResponseSocket response = socketUtility.sendRequest(requestSocket);
         java.util.List<Map> companyList = (List<Map>) response.getData();
-        System.out.println("company" + companyList);
 
         jcb1 = new JComboBox(new Vector (companyList));
         jcb1.setBounds(410,130,200,20);
