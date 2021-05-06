@@ -128,7 +128,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                     v7_pars = Integer.parseInt(vl7);
                     if( v7_pars > 15 || v7_pars < 0)
                     {
-                        JOptionPane.showMessageDialog(luminterne,"La luminosité Interieure doit être comprise entre 0 & 50 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(luminterne,"La luminosité Interieure doit être comprise entre 0 & 15 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
                     if(( v7_pars < 15 && v7_pars > 0) &&( v6_pars < 50 && v6_pars > 0)){
