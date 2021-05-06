@@ -566,10 +566,8 @@ public class RequestHandler {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
              int company_id  = (int) dataLoaded.get("company_id");
-            //System.out.println(dataLoaded.get("company_id"));
             String query = " insert into rental (id_mda) SELECT rental.id_mda from rental INNER JOIN maintenance_department_administrators  on rental.id_mda = maintenance_department_administrators.id_mda where company_id = " + company_id + " ";
             System.out.println("Requete  : " + query);
-
             PreparedStatement statement = connection.prepareStatement(query);
             statement.executeUpdate();
             Map<String, Object> response = new HashMap<>();
