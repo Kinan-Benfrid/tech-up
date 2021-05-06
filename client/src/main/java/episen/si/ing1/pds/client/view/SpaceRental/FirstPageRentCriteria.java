@@ -75,7 +75,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         pan3.setBorder(new TitledBorder("Quel(s) type(s) d'espace(s) souhaitez-vous louer ?"));
         pan2.add(pan3);
         pan3.setLayout(null);
-        Border lineborder = BorderFactory.createLineBorder(Color.black, 1);
+        Border lineborder = BorderFactory.createLineBorder(new Color(111,174,143), 3);
         pan3.setBorder(lineborder);
 
         pan3.setBounds(50, 180, 400, 200);
