@@ -9,6 +9,7 @@ import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.CardConfig.FirstScreenCardConfig;
 import episen.si.ing1.pds.client.view.CommonFrame;
+import episen.si.ing1.pds.client.view.HomePageView;
 import episen.si.ing1.pds.client.view.SpaceRental.FirstPageRentCriteria;
 import episen.si.ing1.pds.client.view.WindowConfig.PageOfConfigWindow;
 
@@ -306,6 +307,35 @@ public class RentedSpacesView extends CommonFrame {
                 dispose();
                 FirstScreenCardConfig c = new FirstScreenCardConfig();
                 c.setVisible(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        jb1.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                HomePageView h = new HomePageView();
+                h.setVisible(true);
             }
 
             @Override

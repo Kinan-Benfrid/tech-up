@@ -119,10 +119,10 @@ public class SpaceView extends CommonFrame {
                     List<Map> equipment_list = (List<Map>) response2.getData();
                     String file_img ="";
                     if ((boolean) equipment_list.get(0).get("equipment_state")){
-                        file_img = "red_icon_activate.png";
+                        file_img = "red_icon_activated.png";
                     }
                     else{
-                        file_img = "red_icon_desactivate.png";
+                        file_img = "red_icon_desactivated.png";
                     }
                     Icon red_icon = new ImageIcon(ImageIO.read(new File(System.getenv("IMG")+"\\"+file_img)));
                     JLabel red_icon_label = new JLabel();
