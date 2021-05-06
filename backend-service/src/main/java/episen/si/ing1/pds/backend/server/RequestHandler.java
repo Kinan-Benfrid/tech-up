@@ -668,21 +668,20 @@ public class RequestHandler {
         else if (requestName.equals("Number_person")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
-            //int nombre  = (int) dataLoaded.get("NumberP");
+          // int nombre  = (int) dataLoaded.get("NumberP");
             System.out.println(dataLoaded.get("NumberP"));
             String query = "Select space_name,size_space, max_person_number,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where max_person_number >= 1 and rental_id is NULL";
             System.out.println("Requete  : " + query);
 
 
             PreparedStatement statement = connection.prepareStatement(query);
-            //statement.setInt (1,nombre);
+           // statement.setInt (1,nombre);
 
             ResultSet rs = statement.executeQuery();
 
             List<Map> list = new ArrayList<>();
             while (rs.next()) {
                 Map m = new HashMap();
-                System.out.println("INTERIEUUR");
                 m.put("space_name", rs.getString("space_name"));
                 m.put("size_space", rs.getInt("size_space"));
                 m.put("max_person_number", rs.getInt("max_person_number"));
@@ -695,6 +694,245 @@ public class RequestHandler {
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             response.put("data", list);
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+
+
+
+        else if (requestName.equals("Imprimante")) {
+            ObjectMapper mapper = new ObjectMapper();
+
+            Map dataloaded = (Map) request.getData();
+            System.out.println("data loaded" + request.getData());
+
+            // Map dataloaded = (Map) request.getData();
+            // int person_id = (int) dataloaded.get ("person");
+            String query = "select count(equipment_id) from equipment where equipmenttype_id = 2 and equipment_id NOT in (select equipment_id from attribuate)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            //statement.setInt (1,person_id);
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("count", rs.getInt("count"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            System.out.println(list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+        else if (requestName.equals("Prise connectee")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            // int person_id = (int) dataloaded.get ("person");
+            String query = "select count(equipment_id) from equipment where equipmenttype_id = 1 and equipment_id NOT in (select equipment_id from attribuate)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            //statement.setInt (1,person_id);
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("count", rs.getInt("count"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            System.out.println(list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+
+        else if (requestName.equals("Capteur presence")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            // int person_id = (int) dataloaded.get ("person");
+            String query = "select count(equipment_id) from equipment where equipmenttype_id = 6 and equipment_id NOT in (select equipment_id from attribuate)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            //statement.setInt (1,person_id);
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("count", rs.getInt("count"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            System.out.println(list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+
+        else if (requestName.equals("Imprimante 3D")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            // int person_id = (int) dataloaded.get ("person");
+            String query = "select count(equipment_id) from equipment where equipmenttype_id = 9 and equipment_id NOT in (select equipment_id from attribuate)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            //statement.setInt (1,person_id);
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("count", rs.getInt("count"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            System.out.println(list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+
+        else if (requestName.equals("Capteur de ventilation")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            // int person_id = (int) dataloaded.get ("person");
+            String query = "select count(equipment_id) from equipment where equipmenttype_id = 7 and equipment_id NOT in (select equipment_id from attribuate)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            //statement.setInt (1,person_id);
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("count", rs.getInt("count"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            System.out.println(list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+
+        else if (requestName.equals("Capteur Luminosite")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            // int person_id = (int) dataloaded.get ("person");
+            String query = "select count(equipment_id) from equipment where equipmenttype_id = 3 and equipment_id NOT in (select equipment_id from attribuate)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            //statement.setInt (1,person_id);
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("count", rs.getInt("count"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            System.out.println(list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+
+        else if (requestName.equals("Television")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            // int person_id = (int) dataloaded.get ("person");
+            String query = "select count(equipment_id) from equipment where equipmenttype_id = 8 and equipment_id NOT in (select equipment_id from attribuate)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            //statement.setInt (1,person_id);
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("count", rs.getInt("count"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            System.out.println(list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+
+        else if (requestName.equals("Fenetre electro-chromatique")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            // int person_id = (int) dataloaded.get ("person");
+            String query = "select count(equipment_id) from equipment where equipmenttype_id = 5 and equipment_id NOT in (select equipment_id from attribuate)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            //statement.setInt (1,person_id);
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("count", rs.getInt("count"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            System.out.println(list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+
+        else if (requestName.equals("Capteur Fumee")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            // int person_id = (int) dataloaded.get ("person");
+
+            String query = "select count(equipment_id) from equipment where equipmenttype_id = 10 and equipment_id NOT in (select equipment_id from attribuate)";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            // statement.setInt (1,person_id);
+
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("count", rs.getInt("count"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            System.out.println(list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+        else if (requestName.equals("Video projecteur")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            System.out.println(dataloaded);
+
+            String query = "select count(equipment_id) from equipment where equipmenttype_id = 4 and equipment_id NOT in (select equipment_id from attribuate)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            //statement.setInt (1,person_id);
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("count", rs.getInt("count"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            System.out.println(list);
+
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
         }
