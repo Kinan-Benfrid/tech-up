@@ -18,7 +18,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
     private static final long serialVersionUID = 1L;
     private JPanel panel;
     private JTextField tempextfiel,tempintfiel;
-    private JLabel labeltempextfiel,labeltempintfiel,labeltempextfielecoute, labeltempintfielecouteur,labelinstruction;
+    private JLabel labeltempextfiel,labelinstructionR ,labeltempintfiel,labeltempextfielecoute, labeltempintfielecouteur,labelinstruction;
 
 
     public TemperatureWindowConfig (){
@@ -72,11 +72,10 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
             }
         });
 //label for said to use to continue
-        labelinstruction = new JLabel("Faites suivant pour configurer la luminosité");
+        labelinstruction = new JLabel("Faites suivant pour configurer la luminosité  ---->");
         labelinstruction.setFont(new Font("Tahoma", Font.PLAIN, 17));
         labelinstruction.setBounds(58, 450, 400, 29);
         panel.add(labelinstruction);
-
 
 //Creation of the button
         bconfiguration = new JButton("CONFIGURATION DE LA TEMPERATURE");
@@ -84,6 +83,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
         bconfiguration.setBackground(new Color(172,242,183));
         bconfiguration.setFont(bconfiguration.getFont().deriveFont(15.0f));
         panel.add(bconfiguration);
+
 
         bvalider = new JButton("Valider");
         bvalider.setBounds(800,380,92,25);
@@ -132,7 +132,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
                       JOptionPane.showMessageDialog(tempextfiel,"La temperature Exterieure doit être comprise entre -30° & 45°", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 //sent request to server
-                    if((v6_pars< 45 && v6_pars > -30) && (v7_pars< 45 && v7_pars > -30)){
+                    if((v6_pars < 45 && v6_pars > -30) && (v7_pars < 45 && v7_pars > -30)){
                     RequestSocket request = new RequestSocket();
                     request.setRequest("temperature");
                     Map<String, Object> data = new HashMap<>();
