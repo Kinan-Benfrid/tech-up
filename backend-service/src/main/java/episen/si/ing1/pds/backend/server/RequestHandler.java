@@ -668,14 +668,14 @@ public class RequestHandler {
         else if (requestName.equals("Number_person")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
-          // int nombre  = (int) dataLoaded.get("NumberP");
+           int nombre  = (int) dataLoaded.get("NumberP");
             System.out.println(dataLoaded.get("NumberP"));
-            String query = "Select space_id,space_name,size_space, max_person_number,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where max_person_number >= 1 and rental_id is NULL";
+            String query = "Select space_id,space_name,size_space, max_person_number,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where max_person_number >= ? and rental_id is NULL";
             System.out.println("Requete  : " + query);
 
 
             PreparedStatement statement = connection.prepareStatement(query);
-           // statement.setInt (1,nombre);
+            statement.setInt (1,nombre);
 
             ResultSet rs = statement.executeQuery();
 

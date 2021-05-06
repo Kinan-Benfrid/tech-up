@@ -6,214 +6,193 @@ import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.CommonFrame;
 import episen.si.ing1.pds.client.view.HomePageRentView;
+import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-public class FirstPageSelectionOffers extends CommonFrame {
+public class FirstPageSelectionOffers extends CommonFrame implements ActionListener {
+    private final SocketUtility socketUtility = new SocketUtility();
 
 
-    private  JPanel panPrincipal;
-    private  JPanel panGauche;
-    private  JPanel panCentre;
-    private  JPanel panDroite;
-    private  JPanel panHaut;
-    private JPanel panCentre2;
-    private  JButton retour;
-    private  JButton filtre;
-    private  JButton suivant;
+    private JPanel South;
+    private final JButton retour;
+    private final JButton filtre;
+    private final JButton suivant;
     private JPanel p1 = new JPanel();
     private JLabel j1;
+
     public FirstPageSelectionOffers() {
 
-        /*
-/**
- * create the request to send to the server
-
         RequestSocket request = new RequestSocket();
-        request.setRequest("meeting_room");
-        Map<String, Object> hm = new HashMap<>();
-        request.setData(hm);
-        */
-
-
-
-/*
-        panPrincipal = new JPanel();
-        this.getContentPane().add(panPrincipal);
-        panPrincipal.setLayout(new BorderLayout());
-
-        panCentre = new JPanel();
-        panPrincipal.add(panCentre,BorderLayout.CENTER);
-        panCentre.setBackground(Color.RED);
-       // panCentre.setLayout(null);
-
-      //  panCentre2 = new JPanel();
-       // panCentre.add(panCentre2);
-       // panCentre2.setBackground(Color.WHITE);
-       // panCentre2.setBounds(550,200,300,300);
-       // panCentre2.add((Component) meeting_list);
-
-        //JLabel j1 = new JLabel(String.valueOf(meeting_list));
-
-        JLabel j2 = new JLabel("arretez");
-        JLabel j3 = new JLabel("Veuillez");
-        JLabel j4 = new JLabel("bonsoirrrrr");
-        JLabel j5 = new JLabel("nous sommes présent");
-       // JComboBox jcb = new JComboBox(new Vector(meeting_list));
-       // panCentre2.add(jcb);
-        panCentre2.add(j1);
-        panCentre2.add(j2);
-        panCentre2.add(j3);
-        panCentre2.add(j4);
-        panCentre2.add(j5);
-
-
-
-        panHaut = new JPanel();
-        panPrincipal.add(panHaut, BorderLayout.NORTH);
-        panHaut.setBackground(Color.BLACK);
-        panHaut.setLayout(new BorderLayout());
-
-        panDroite = new JPanel();
-        panPrincipal.add(panDroite, BorderLayout.EAST);
-        panDroite.setBackground(Color.blue);
-        panDroite.setLayout(new BorderLayout()); // pour pouvoir positionner le bouton en south bordelayout, car un panel par défaut c du flowlayout donc régit par l'emplacement de droite à gauche
-        suivant = new JButton("suivant");
-        panDroite.add(suivant,BorderLayout.SOUTH);
-        suivant.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                if (( JOptionPane.showConfirmDialog(null, "Votre offre a bien été enregistrée\n montant déboursé : ","Message",JOptionPane.YES_NO_OPTION)) == JOptionPane.YES_OPTION){
-                    SpaceRentalDisplayButton srdb = new SpaceRentalDisplayButton();
-                    srdb.setVisible(true);
-
-                }
-                else if (( JOptionPane.showConfirmDialog(null, "Votre offre a bien été enregistrée ","Message",JOptionPane.YES_NO_OPTION)) == JOptionPane.NO_OPTION) {
-                    FirstPageSelectionOffers fpso = new FirstPageSelectionOffers();
-                    fpso.setVisible(true);
-                }
-                dispose();
-
-            }
-        });
-
-        panGauche = new JPanel();
-        panPrincipal.add(panGauche, BorderLayout.WEST);
-        panGauche.setBackground(Color.GREEN);
-        panGauche.setLayout(new BorderLayout());
-        retour = new JButton("retour");
-
-        panGauche.add(retour, BorderLayout.NORTH);
-
-        retour.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                FirstPageRentCriteria fen = new FirstPageRentCriteria();
-                fen.setVisible(true);
-                dispose();
-            }
-        });
-
-        filtre = new JButton("Filtre");
-        filtre.setBounds(300, 15, 70, 20);
-        panGauche.add(filtre,BorderLayout.SOUTH);
-        filtre.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SecondPageRentCriteria sprc = new SecondPageRentCriteria();
-                sprc.setVisible(true);
-                dispose();
-            }
-        });
-
-
- */
-
-
-        //panCentre.add(new JScrollPane(jt), BorderLayout.CENTER);
-
-
-        p1 = new JPanel();
-        p1.setLayout(null);
-        this.add(p1);
-
-        MeetingRoom meet = new MeetingRoom();
-        JTable jt = new JTable (meet);
-        jt.setBounds (400,30,300,300);
-        p1.add (jt);
-
-
-
-/*
-        int i = 0;
-        for(Map m : meeting_list){
-            String price = (String) m.get("price");
-            data[i][0] = price;
-         i++;   //  data[i][1] = value;
-        }
-
-
-        for(int i = 0; i < meeting_list.toArray().length; i++) {
-            data[i][0] = meeting_list.get(i).get(0);
-            //  data[i][1] = value;
-            System.out.println(meeting_list.get(1).get(0));
-        }
-/*
-       int i =0;
-
-        for (Map list : meeting_list) {
-            data[i][0] = list.get(i);
-          //  data[i][1] = value;
-            i++;
-        }
-        /*
-        for (Map.Entry<String, Integer> entry : meeting_list.entrySet()) {
-            String key = entry.getKey();
-            String value = String.valueOf((int) entry.getValue());
-            data[i][0] = key;
-            data[i][1] = value;
-            i++;
-        }
-
-
-        String[] entetes = {"Price", "Space Id"};
-        Object[][] data = new String[10][2];
-
-        request = new RequestSocket();
-        request.setRequest("meeting_room");
-        Map<String, Integer> hm = new HashMap<>();
-      //  hm.put("price", Person.getPerson_id());
-        hm.put("space", Space.getSpace_id());
-        request.setData(hm);
-
-        System.out.println("Requete :" + request.getRequest());
-        System.out.println("Data :" + request.getData());
-
+        request.setRequest("Number_person");
+        Map<String, Object> data = new HashMap<>();
+        data.put("NumberP", Person.getNumber_person());
+        request.setData(data);
         ResponseSocket response = socketUtility.sendRequest(request);
-        // data is the list of map we sent in the server (look response)
-        List<Map> meeting_list = (List<Map>) response.getData();
+
+        List<Map> Number = (List<Map>) response.getData();
 
 
+        /**initialize JBouton**/
+        retour = new JButton("retour");
+        suivant = new JButton("suivant");
+        filtre = new JButton("Ajoutez des capteurs ? par ici ");
 
 
+        /**initialize JPanel**/
+        p1 = new JPanel();
+        this.add(p1);
+        p1.setBounds(20, 20, 300, 300);
 
-       // JTable tableau = new JTable(data, entetes);
-
-       // panCentre.add(tableau);
-
-
- */
+        /**initialize JCombobox**/
+        JComboBox jc1 = new JComboBox(new Vector(Number));
+        JComboBox jc2 = new JComboBox(new Vector(Number));
+        JComboBox jc3 = new JComboBox(new Vector(Number));
 
 
+        /**addition of the listener event**/
+        retour.addActionListener(this);
+        filtre.addActionListener(this);
+        suivant.addActionListener(this);
 
+
+        /**Manage the recovery and the default value of Jcomboboxes plus the management of their event**/
+
+        int size = Number.size();
+        // jc1.setSelectedIndex(-1);
+        jc1.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                // we are in a loop
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                for (int i = 0; i < size; i++) {
+                    if (value instanceof Map) {
+
+                        Map val = (Map) value;
+                        setText("Offre " + i + " : " + val.get("space_name").toString() + ", " + val.get("size_space").toString() + "m2, " + val.get("max_person_number").toString() + " personne max, " + val.get("price").toString() + "€");
+
+                    }
+                }
+                // before we click, setting a title to the JCOMBOBox
+                if (index == -1 && value == null)
+                    setText("Sélectionnez votre offre");
+
+                return this;
+            }
+        });
+
+        jc1.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+
+                if (e.getStateChange() == 1) {
+                    Map item = (Map) e.getItem();
+                    int space_id = (Integer) item.get("space_id");
+                    //int space_type = (int) item.get("space_type");
+                    // int space_type = (int) item.get("space_type");
+
+
+                    String space_name = (String) item.get("space_name");
+                    //Space.setSpace_id(space_id);
+                    // Space.setSpace_type(space_type);
+                    Space.setSpace_name(space_name);
+                    //  System.out.println("Space id : " + space_id + ", space type : " + space_type + ", space name : " + space_name);
+                    System.out.println("Space id : " + space_id + "space name : " + space_name);
+
+                   /* if(jc1.getSelectedIndex()==i){
+                        jc2.setEnabled(false);
+                    }
+                }
+                    */
+                }
+
+            }
+        });
+
+
+        jc2.setSelectedIndex(-1);
+        jc2.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                // we are in a loop
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                for (int i = 0; i < size; i++) {
+                    if (value instanceof Map) {
+
+                        Map val = (Map) value;
+                        setText("Offre " + i + " : " + val.get("space_name").toString() + ", " + val.get("size_space").toString() + "m2, " + val.get("max_person_number").toString() + " personne max, " + val.get("price").toString() + "€");
+
+                    }
+                }
+                if (index == -1 && value == null)
+                    setText("Sélectionnez votre offre");
+
+                return this;
+            }
+        });
+
+
+        jc3.setSelectedIndex(-1);
+        jc3.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                // we are in a loop
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                for (int i = 0; i < size; i++) {
+                    if (value instanceof Map) {
+
+                        Map val = (Map) value;
+                        setText("Offre " + i + " : " + val.get("space_name").toString() + ", " + val.get("size_space").toString() + "m2, " + val.get("max_person_number").toString() + " personne max, " + val.get("price").toString() + "€");
+
+                    }
+                }
+                // before we click, setting a title to the JCOMBOBox
+                if (index == -1 && value == null)
+                    setText("Sélectionnez votre offre");
+
+                return this;
+            }
+        });
+
+
+        /**Add components to Panels**/
+        p1.add(jc1);
+        p1.add(jc2);
+        p1.add(jc3);
+        p1.add(suivant);
+        p1.add(filtre);
+        p1.add(retour);
+
+
+    }
+
+
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+        if (source == retour) {
+            this.dispose();
+            FirstPageRentCriteria fprc = new FirstPageRentCriteria();
+            fprc.setVisible(true);
+        } else if (source == suivant) {
+            this.dispose();
+            JOptionPane d = new JOptionPane();
+            int retour = JOptionPane.showConfirmDialog(this, "le message",
+                    "le titre", JOptionPane.OK_CANCEL_OPTION);
+
+        } else if (source == filtre) {
+            this.dispose();
+            SecondPageRentCriteria sprc = new SecondPageRentCriteria();
+            sprc.setVisible(true);
+        }
     }
 
     public static void main(String[] args) {

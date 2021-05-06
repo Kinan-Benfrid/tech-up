@@ -4,6 +4,7 @@ public class Person {
     private static int person_id;
     private static String person_firstname = "";
     private static String person_surname = "";
+    private static String number_person;
 
     public static int getPerson_id(){
         return person_id;
@@ -28,4 +29,13 @@ public class Person {
     public static void setPerson_surname(String person_surname) {
         Person.person_surname = person_surname;
     }
+
+
+    public static String getNumber_person() {
+        return number_person;
+    }
+    public static String setNumber_person(String number_person) {
+         return Person.number_person = number_person;
+    }
+
 }
