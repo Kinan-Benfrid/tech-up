@@ -1162,7 +1162,7 @@ public class RequestHandler {
             int d = (a-b);
             int e = (100*d);
             int f = (e/a);
-            int pteinte =(100 -f);
+            int pteinte =(f);
             if(lumex < 15 && (0 < limin && limin < 15)){
             }
             if(lumex > 15 && (0 < limin && limin < 15)) {
