@@ -131,7 +131,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                         JOptionPane.showMessageDialog(luminterne,"La luminosité Interieure doit être comprise entre 0 & 15 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
-                    if(( v7_pars < 15 && v7_pars > 0) &&( v6_pars < 50 && v6_pars > 0)){
+                    if(( v7_pars <= 15 && v7_pars >= 0) &&( v6_pars <= 50 && v6_pars >= 0)){
                     RequestSocket request = new RequestSocket();
                     request.setRequest("lum");
                     Map<String, Object> data = new HashMap<>();

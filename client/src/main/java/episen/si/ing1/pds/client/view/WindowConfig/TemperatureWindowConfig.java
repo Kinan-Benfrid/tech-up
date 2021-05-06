@@ -132,7 +132,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
                       JOptionPane.showMessageDialog(tempextfiel,"La temperature Exterieure doit être comprise entre -30° & 45°", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 //sent request to server
-                    if((v6_pars < 45 && v6_pars > -30) && (v7_pars < 45 && v7_pars > -30)){
+                    if((v6_pars <= 45 && v6_pars >= -30) && (v7_pars <= 45 && v7_pars >= -30)){
                     RequestSocket request = new RequestSocket();
                     request.setRequest("temperature");
                     Map<String, Object> data = new HashMap<>();
