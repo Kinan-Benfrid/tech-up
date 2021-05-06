@@ -8,7 +8,7 @@ public class Building {
         return building_id;
     }
 
-    public static void setBuilding_id(int builing_id){
+    public static void setBuilding_id(int building_id){
         Building.building_id = building_id;
     }
 
