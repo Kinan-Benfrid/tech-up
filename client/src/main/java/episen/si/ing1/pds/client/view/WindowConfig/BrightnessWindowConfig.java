@@ -30,13 +30,13 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
         panel.setLayout(null);
 
 //label textfiel for insde brightness
-        labelluminterne = new JLabel("Luminosite interieure_entier");
-        labelluminterne.setFont(new Font("Arial", Font.PLAIN, 18));
+        labelluminterne = new JLabel("Luminosite interieure (entier(lux))");
+        labelluminterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelluminterne.setBounds(58, 150, 400, 29);
         panel.add(labelluminterne);
 
         labelluminterneecoute = new JLabel("");
-        labelluminterneecoute.setFont(new Font("Arial", Font.PLAIN, 25));
+        labelluminterneecoute.setFont(new Font("Tahoma", Font.PLAIN, 25));
         labelluminterneecoute.setBounds(575, 150, 210, 29);
         panel.add(labelluminterneecoute);
 
@@ -52,7 +52,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
             }
         });
 
-        labellumiexterne= new JLabel("Luminosite exterieure_entier(lux)");
+        labellumiexterne= new JLabel("Luminosite exterieure (entier(lux))");
         labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labellumiexterne.setBounds(58, 201, 400, 29);
         panel.add(labellumiexterne);
@@ -113,7 +113,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
 
                 String vl6 = lumiexterne.getText();
                 String vl7 = luminterne.getText();
-                int v6_pars;
+                int v6_pars,v7_pars ;
 
                 if(!isInteger(vl7) ||!isInteger(vl6) ){
                     JOptionPane.showMessageDialog(luminterne,"Saisir un entier !", "ERREUR", JOptionPane.ERROR_MESSAGE);
@@ -125,7 +125,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                         JOptionPane.showMessageDialog(lumiexterne,"La luminosité Exterieure doit être comprise entre 0 & 50 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
-                    int v7_pars = Integer.parseInt(vl7);
+                    v7_pars = Integer.parseInt(vl7);
                     if( v7_pars > 15 || v7_pars < 0)
                     {
                         JOptionPane.showMessageDialog(luminterne,"La luminosité Interieure doit être comprise entre 0 & 50 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
@@ -140,10 +140,11 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                     System.out.println(data);
                     request.setData(data);
                     System.out.println(data);
+
                     JOptionPane.showMessageDialog(luminterne,"configuration prise en compte", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 
 
-                        ResponseSocket response2 = socketUtility.sendRequest(request);
+                    ResponseSocket response2 = socketUtility.sendRequest(request);
             }
         }
             }
