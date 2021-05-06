@@ -20,6 +20,7 @@ import java.util.Map;
 
 
 public class TemperatureWindowConfig extends CommonFrame implements ActionListener{
+    //initialization of variable
     private JButton bconf, bv, bs, br;
     private final SocketUtility socketUtility = new SocketUtility();
     private static final long serialVersionUID = 1L;
@@ -36,7 +37,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
 
         labeltempextfiel = new JLabel("Temperature exterieure(°)");
         labeltempextfiel.setFont(new Font("Arial", Font.PLAIN, 18));
-        labeltempextfiel.setBounds(58, 150, 210, 29);
+        labeltempextfiel.setBounds(58, 150, 250, 29);
         p.add(labeltempextfiel);
 
         labeltempextfielecoute = new JLabel(" ");
@@ -74,14 +75,14 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
         p.add(tempintfiel);
         tempintfiel.setColumns(10);
         tempintfiel.addActionListener(new ActionListener() {
-            @Override
+            // where we put inter, the print value
             public void actionPerformed(ActionEvent e) {
                 String input4= tempintfiel.getText();
                 labeltempintfielecouteur.setText(input4);
             }
         });
 
-        labelinstruction = new JLabel("Faites suivant pour configure la luminosite");
+        labelinstruction = new JLabel("Faites suivant pour configurer la luminosite");
         labelinstruction.setFont(new Font("Tahoma", Font.PLAIN, 17));
         labelinstruction.setBounds(58, 450, 400, 29);
         p.add(labelinstruction);
@@ -132,22 +133,19 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
         }
         if(source == bv){
 
-
-            String v6 = tempextfiel.getText();
-            int v6_pars = Integer.parseInt(v6);
-            if ( v6_pars > 100){
-                JOptionPane.showMessageDialog(tempextfiel,"Attention ! La temperature exterieure doit être inferieure à 100", "Avertissement", JOptionPane.WARNING_MESSAGE);
+                String v6 = tempextfiel.getText();
+                String v7 = tempintfiel.getText();
+                int v6_pars = Integer.parseInt(v6);//transform string and interger
+                if ( v6_pars > 45){
+                JOptionPane.showMessageDialog(tempextfiel,"Attention ! La temperature exterieure doit être inferieure à 45", "Avertissement", JOptionPane.WARNING_MESSAGE);
             }
-
-            String v7 = tempintfiel.getText();
             int v7_pars = Integer.parseInt(v7);
-            if( v7_pars > 100){
-                JOptionPane.showMessageDialog(tempintfiel,"Attention ! La temperature interieure doit être inferieure à 100", "Avertissement", JOptionPane.WARNING_MESSAGE);
+            if( v7_pars > 45){
+                JOptionPane.showMessageDialog(tempintfiel,"Attention ! La temperature interieure doit être inferieure à 45", "Avertissement", JOptionPane.WARNING_MESSAGE);
             }
-
-
+//sent request to server
             RequestSocket request = new RequestSocket();
-            request.setRequest("temp");
+            request.setRequest("temperature");
             Map<String, Object> data = new HashMap<>();
             //data.put("id_measure", Measured.getid_measure());
             data.put("temp_exterieure", v6_pars);
@@ -155,7 +153,10 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
             System.out.println(data);
             request.setData(data);
 
+//receive server response
             ResponseSocket response2 = socketUtility.sendRequest(request);
+
+            JOptionPane.showMessageDialog(tempintfiel,"Pris en compte", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 
         }
     }
