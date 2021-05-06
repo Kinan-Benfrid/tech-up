@@ -992,7 +992,7 @@ public class RequestHandler {
             writer.println(responseMsg);
 
         }
-        else if (requestName.equals("tempA")) {
+        else if (requestName.equals("EtatActuel")) {
             ObjectMapper mapper = new ObjectMapper();
             String sql = "SELECT inside_temperature, outside_temperature, pstore FROM datatemp WHERE id_datatemp = 1";
             String sql2 = "select lum_exterieure,lum_interieure, pteinte from luminosite WHERE id_lum = 1";
@@ -1000,7 +1000,7 @@ public class RequestHandler {
             ResultSet rs = statement.executeQuery();
             PreparedStatement statement2 = connection.prepareStatement(sql2);
             ResultSet rs2 = statement2.executeQuery();
-
+            //While reads the elements retrieved by the server and put in the map which sent them to the client
             Map<String, Object> hm = new HashMap<>();
             while (rs.next()) {
                 hm.put("tempin", rs.getInt("inside_temperature"));
@@ -1012,33 +1012,37 @@ public class RequestHandler {
                 hm.put("lumin", rs2.getInt("lum_interieure"));
                 hm.put("pteinte", rs2.getInt("pteinte"));
             }
-
+            //sent response to the client
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             response.put("data", hm);
-
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
 
 
         }
-        else if (requestName.equals("temp")) {
+        else if (requestName.equals("temperature")) {
             ObjectMapper mapper = new ObjectMapper();
             Map<String, Object> dataloaded = (Map<String, Object>) request.getData();
+            //read the values send by client
             int tempex = (int) dataloaded.get("temp_exterieure");
             int tempin = (int) dataloaded.get("temp_interieure");
-            int pstore0 = 0;
             int a = Math.max(Math.abs(tempex),Math.abs(tempin));
             int b = Math.min(Math.abs(tempex),Math.abs(tempin));
             int d = (a-b);
-            int psore= (d*100/a);
-
-        String sql = "UPDATE datatemp SET inside_temperature = " + tempin + ", outside_temperature = " + tempex + ", pstore = " + psore + " WHERE id_datatemp = 1";
+            int psore= (d*100/a); // calculate the percent of blinds
+            String sql = "UPDATE datatemp SET inside_temperature = " + tempin + ", outside_temperature = " + tempex + ", pstore = " + psore + " WHERE id_datatemp = 1";
+            String sql2 = "INSERT INTO setting_temp (date_inser, inside_temperature, outside_temperature )  VALUES ( NOW(),?, ? );";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
+            PreparedStatement statement2 = connection.prepareStatement(sql2);
+            statement2.setInt(1, (Integer) dataloaded.get("temp_interieure"));
+            statement2.setInt(2, (Integer) dataloaded.get("temp_exterieure"));
+            statement2.executeUpdate();
+
+            //we don't send data, because client don't need to receive data
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
-
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
 
