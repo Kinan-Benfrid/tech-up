@@ -6,11 +6,13 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class Indicateur extends CommonFrame  {
+public class Indicateur extends CommonFrame implements ActionListener {
 
     private JPanel panel1, panel2,panel3,panel4;
 
-    public Indicateur() {
+    public Indicateur()
+
+    {
         super("Techup");
         super.setFont(new Font(Font.SERIF,Font.BOLD,30));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,7 +35,6 @@ public class Indicateur extends CommonFrame  {
         this.add(panel2, BorderLayout.EAST);
         this.add(panel3,BorderLayout.PAGE_END);
         this.add(panel4,BorderLayout.PAGE_START);
-
 
         JLabel label= new JLabel(" Les Indicateurs ");
         label.setFont(new Font(Font.SERIF,Font.BOLD,50));
