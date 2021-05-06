@@ -21,6 +21,7 @@ import java.lang.*;
 import java.util.Vector;
 
 public class PageOfConfigWindow extends CommonFrame implements ActionListener {
+    //initialization of variable
     private JButton bconf,betat, braf, bs, br;
     private final SocketUtility socketUtility = new SocketUtility();
     private static final long serialVersionUID = 1L;
@@ -32,25 +33,25 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         this.add(p);
         p.setLayout(null);
 
-        labeltempextfiel = new JLabel("Temperature exterieur(°)");
-        labeltempextfiel.setFont(new Font("Arial", Font.PLAIN, 18));
+        labeltempextfiel = new JLabel("Température exterieure(°)");
+        labeltempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labeltempextfiel.setBounds(58, 100, 210, 29);
         p.add(labeltempextfiel);
 
-        labeltempintfiel = new JLabel("Temperature interieure(°)");
+        labeltempintfiel = new JLabel("Température interieure(°)");
         labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labeltempintfiel.setBounds(58, 150, 210, 29);
         p.add(labeltempintfiel);
 
-        labelpStore = new JLabel("P_Store(%)");
+        labelpStore = new JLabel("Store (% Ouverture)");
         labelpStore.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelpStore.setBounds(58, 200, 210, 29);
         labelpStore.setFont(labelpStore.getFont().deriveFont(20.0f));
-        labelpStore.setForeground(new Color(255,0,0));
+        labelpStore.setForeground(new Color(155,0,0));
         p.add(labelpStore);
 
         labeltempextfiel = new JLabel("0");
-        labeltempextfiel.setFont(new Font("Arial", Font.PLAIN, 20));
+        labeltempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 20));
         labeltempextfiel.setBounds(358, 100, 210, 29);
         p.add(labeltempextfiel);
 
@@ -64,28 +65,28 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelpStore.setFont(new Font("Tahoma", Font.PLAIN, 25));
         labelpStore.setBounds(358, 200, 210, 29);
         labelpStore.setFont(labelpStore.getFont().deriveFont(22.0f));
-        labelpStore.setForeground(new Color(255,0,0));
+        labelpStore.setForeground(new Color(155,0,0));
         p.add(labelpStore);
 //lum
-        labelluminterne = new JLabel("Luminosite interne");
-        labelluminterne.setFont(new Font("Arial", Font.PLAIN, 18));
+        labelluminterne = new JLabel("Luminosité interieure(lux)");
+        labelluminterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelluminterne.setBounds(58, 250, 210, 29);
         p.add(labelluminterne);
 
-        labellumiexterne= new JLabel("Luminosite exteriure(lux)");
+        labellumiexterne= new JLabel("Luminosité exterieure(lux)");
         labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labellumiexterne.setBounds(58, 300, 210, 29);
         p.add(labellumiexterne);
 
-        labelpteinte = new JLabel("P_Teinte(%)");
+        labelpteinte = new JLabel("Vitre (% Teinte)");
         labelpteinte.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelpteinte.setBounds(58, 350, 210, 29);
         labelpteinte.setFont(labelpStore.getFont().deriveFont(20.0f));
-        labelpteinte.setForeground(new Color(255,0,0));
+        labelpteinte.setForeground(new Color(155,0,0));
         p.add(labelpteinte);
 
         labelluminterne = new JLabel("0 ");
-        labelluminterne.setFont(new Font("Arial", Font.PLAIN, 20));
+        labelluminterne.setFont(new Font("Tahoma", Font.PLAIN, 20));
         labelluminterne.setBounds(358, 250, 210, 29);
         p.add(labelluminterne);
 
@@ -98,22 +99,22 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelpteinte.setFont(new Font("Tahoma", Font.PLAIN, 25));
         labelpteinte.setBounds(358, 350, 210, 29);
         labelpteinte.setFont(labelpStore.getFont().deriveFont(20.0f));
-        labelpteinte.setForeground(new Color(255,0,0));
+        labelpteinte.setForeground(new Color(155,0,0));
         p.add(labelpteinte);
 
-        labelinstruction = new JLabel("Faites suivant pour configure la temperature");
+        labelinstruction = new JLabel("Faites suivant pour configurer la température");
         labelinstruction.setFont(new Font("Tahoma", Font.PLAIN, 17));
         labelinstruction.setBounds(58, 450, 400, 29);
         p.add(labelinstruction);
 
 //Creation of the button
         bconf = new JButton("CONFIGURATION DES FENETRES ELECTROCHROMATIQUES");
-        bconf.setBounds(250,20,500,30);
+        bconf.setBounds(250,20,650,30);
         bconf.setBackground(new Color(111,164,143));
-        bconf.setFont(bconf.getFont().deriveFont(15.0f));
+        bconf.setFont(bconf.getFont().deriveFont(19.0f));
         p.add(bconf);
 
-        betat = new JButton("Etat actuelle");
+        betat = new JButton("Etat actuel");
         betat.setBounds(450,100,150,40);
         betat.setBackground(new Color(111,255,130));
         betat.setFont(betat.getFont().deriveFont(18.0f));
@@ -155,14 +156,15 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
             tc.setVisible(true);
         }
         if(source == braf){
-            //Le click doit envoyer une requêtte à la base de donnée pour recupere les valeurs
 
+            // creation of the request
             RequestSocket request = new RequestSocket();
-            request.setRequest("tempA");
+            request.setRequest("EtatActuel");
 
+            //receive response
             ResponseSocket response = socketUtility.sendRequest(request);
             Map<String, Object>  valeurTempA = (Map<String, Object>) response.getData();
-            int tempexr = (int) valeurTempA.get("tempex");
+            int tempexr = (int) valeurTempA.get("tempex");//tempex is the value send by server
             int tempinr = (int) valeurTempA.get("tempin");
             int pstorer = (int) valeurTempA.get("pstore");
 
@@ -170,9 +172,9 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
             int luminr = (int) valeurTempA.get("lumin");
             int pteinter = (int) valeurTempA.get("pteinte");
 
-            System.out.println("voici temp_exterieure " + tempexr );
-            System.out.println("voici temp_interieure " + tempinr );
-            System.out.println("voici temp_interieure " + pstorer );
+            System.out.println("temp_exterieure " + tempexr );
+            System.out.println("temp_interieure " + tempinr );
+            System.out.println("temp_interieure " + pstorer );
 
            /* System.out.println("voici lum_exterieure " + lumexr  );
             System.out.println("voici lum_interieure " + luminr );
