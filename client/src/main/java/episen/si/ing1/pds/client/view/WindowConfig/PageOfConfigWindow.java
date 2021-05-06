@@ -171,14 +171,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
             int lumexr = (int) valeurTempA.get("lumex");
             int luminr = (int) valeurTempA.get("lumin");
             int pteinter = (int) valeurTempA.get("pteinte");
-
-            System.out.println("temp_exterieure " + tempexr );
-            System.out.println("temp_interieure " + tempinr );
-            System.out.println("temp_interieure " + pstorer );
-
-           /* System.out.println("voici lum_exterieure " + lumexr  );
-            System.out.println("voici lum_interieure " + luminr );
-            System.out.println("voici pource_interieure " + pteinter );*/
+//tranformation of integer to string
 
             Integer n = tempexr;
             String str = n.toString();
