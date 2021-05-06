@@ -28,7 +28,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
         panel.setLayout(null);
 
 // label and textfiel for outside temperature
-        labeltempextfiel = new JLabel("Temperature exterieure_entier(°)");
+        labeltempextfiel = new JLabel("Temperature exterieure(entier (°))");
         labeltempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labeltempextfiel.setBounds(58, 150, 400, 29);
         panel.add(labeltempextfiel);
@@ -50,7 +50,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
             }
         });
 // label and textfiel for outside temperature
-        labeltempintfiel = new JLabel("Temperature interieure_entier(°)");
+        labeltempintfiel = new JLabel("Temperature interieure (entier (°))");
         labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labeltempintfiel.setBounds(58, 201, 400, 29);
         panel.add(labeltempintfiel);
@@ -115,33 +115,51 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
             pc.setVisible(true);
         }
         if(source == bvalider){
+            String v7 = tempintfiel.getText();
+            String v6 = tempextfiel.getText();
 
-                String v6 = tempextfiel.getText();
-                int v6_pars = Integer.parseInt(v6);//transform string to interger
-                if ( v6_pars > 45 || v6_pars < -5){ // if outside temperature ist >45° or < -5°, application print error message
-                JOptionPane.showMessageDialog(tempextfiel,"La temperature Exterieure doit être comprise entre -10° & 45°", "ERREUR", JOptionPane.ERROR_MESSAGE);
-                }
-                String v7 = tempintfiel.getText();
-                int v7_pars = Integer.parseInt(v7);
-                if( v7_pars > 45 || v7_pars < -5){ // if inside temperature ist >45° or < -5°, application print error message
-                JOptionPane.showMessageDialog(tempintfiel,"La temperature Interieure doit être compris entre -10° & 45°", "ERREUR", JOptionPane.ERROR_MESSAGE);
-                }
-                else JOptionPane.showMessageDialog(tempintfiel,"Ok", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
-
+              if(!isInteger(v7)){
+                  JOptionPane.showMessageDialog(tempintfiel,"Saisir un entier !", "ERREUR", JOptionPane.ERROR_MESSAGE);
+              }
+              else{
+                    int v7_pars = Integer.parseInt(v7);
+                    if( v7_pars > 45 || v7_pars < -30)// if inside temperature ist >45° or < -5°, application print error message
+                    {
+                        JOptionPane.showMessageDialog(tempintfiel,"La temperature Interieure doit être compris entre -30° & 45°", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                    }
+                    int v6_pars = Integer.parseInt(v6);//transform string to interger
+                    if ( v6_pars > 45 || v6_pars < -30){ // if outside temperature ist >45° or < -5°, application print error message
+                      JOptionPane.showMessageDialog(tempextfiel,"La temperature Exterieure doit être comprise entre -30° & 45°", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                    }
 //sent request to server
-            if((v6_pars< 45 && v6_pars > -5) && (v7_pars< 45 && v7_pars > -5)){
-            RequestSocket request = new RequestSocket();
-            request.setRequest("temperature");
-            Map<String, Object> data = new HashMap<>();
-            data.put("temp_exterieure", v6_pars);
-            data.put("temp_interieure", v7_pars);
-            System.out.println(data);
-            request.setData(data);
+                    if((v6_pars< 45 && v6_pars > -30) && (v7_pars< 45 && v7_pars > -30)){
+                    RequestSocket request = new RequestSocket();
+                    request.setRequest("temperature");
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("temp_exterieure", v6_pars);
+                    data.put("temp_interieure", v7_pars);
+                    System.out.println(data);
+                    request.setData(data);
+                    JOptionPane.showMessageDialog(tempintfiel,"configuration prise en compte", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 
-//receive server response
-            ResponseSocket response2 = socketUtility.sendRequest(request);
+        //receive server response
+                    ResponseSocket response2 = socketUtility.sendRequest(request);
+        }
+
         }
         }
+    }
+
+    public static boolean isInteger(String strNum) {
+            if (strNum == null) {
+                return false;
+            }
+            try {
+                int i = Integer.parseInt(strNum);
+            } catch (NumberFormatException nfe) {
+                return false;
+            }
+            return true;
     }
 
     public static void main(String[] args) {
