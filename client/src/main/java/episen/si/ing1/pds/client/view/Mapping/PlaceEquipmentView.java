@@ -114,7 +114,7 @@ public class PlaceEquipmentView extends JFrame {
                         dispose();
                     }
                 }else{
-                    System.out.println("C4EST MORTTT");
+                    JOptionPane.showMessageDialog(getContentPane(), "Equipement deja utilise quelque part !");
                     SpaceView.isPopUpActive = false;
                     System.out.println("FILE LOCATION " + spaceView.getFileLocation());
                     SpaceView spaceView1 = new SpaceView(spaceView.getFileLocation(), spaceView.getX1(), spaceView.getX2());
