@@ -119,11 +119,26 @@ public class SpaceView extends CommonFrame {
                     jp3.add(red_icon_label).addMouseListener(new MouseListener() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
+                            Position.setPosition_id((int) m.get("position_id"));
+                            RequestSocket request = new RequestSocket();
+                            request.setRequest("equipment_is_uninstalled");
+                            Map<String, Object> hm = new HashMap<>();
+                            hm.put("position_id", Position.getPosition_id());
+                            request.setData(hm);
+                            ResponseSocket response = socketUtility.sendRequest(request);
+                            Map<String, Object> isUninstalledMap = (Map) response.getData();
+                            boolean isUninstalled = (boolean) isUninstalledMap.get("isUninstalled");
                             if (!isPopUpActive) {
-                                Position.setPosition_id((int) m.get("position_id"));
-                                isPopUpActive = true;
-                                EquipmentCheckView ec = new EquipmentCheckView(spaceView);
-                                ec.setVisible(true);
+                                if (!isUninstalled) {
+                                    isPopUpActive = true;
+                                    EquipmentCheckView ec = new EquipmentCheckView(spaceView);
+                                    ec.setVisible(true);
+                                } else {
+                                    JOptionPane.showMessageDialog(getContentPane(), "Equipement deja utilise quelque part !");
+                                    dispose();
+                                    SpaceView sp = new SpaceView(getFileLocation(),x1,x2);
+                                    sp.setVisible(true);
+                                }
                             }
                         }
 

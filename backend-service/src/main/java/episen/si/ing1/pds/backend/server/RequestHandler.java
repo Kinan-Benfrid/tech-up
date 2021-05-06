@@ -1251,15 +1251,13 @@ public class RequestHandler {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
             List<Map> floor = new ArrayList<>();
-            String sql = "select equipment_id from position_ where position_id = ?";
+            String sql = "select equipment_id from position_ where equipment_id is not null and position_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            System.out.println("EQUIPMEMENT DESISNEGTE" + dataLoaded);
-            statement.setInt(1, (Integer) dataLoaded.get("equipment_id"));
+            statement.setInt(1, (Integer) dataLoaded.get("position_id"));
             ResultSet rs = statement.executeQuery();
             boolean isUninstalled = true;
             while (rs.next()) {
                 isUninstalled = false;
-                System.out.println("Valeur equipment_id : " + rs.getInt("equipment_id"));
             }
             Map<String, Object> hm = new HashMap<>();
             hm.put("isUninstalled", isUninstalled);
