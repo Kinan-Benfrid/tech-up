@@ -40,6 +40,8 @@ public class SearchingCard extends CommonFrame implements ActionListener {
         b1.setBounds(10, 15, 100, 20);
         b2.setBounds(100, 200, 150, 20);
 
+        b1.addActionListener (this);
+
         RequestSocket request = new RequestSocket();
         request.setRequest("card_lost");
         Map<String, Object> hm = new HashMap<>();
