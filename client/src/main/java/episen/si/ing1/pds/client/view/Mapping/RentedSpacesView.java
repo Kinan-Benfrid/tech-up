@@ -160,8 +160,10 @@ public class RentedSpacesView extends CommonFrame {
                 if (e.getStateChange() == 1) {
                     Map item = (Map) e.getItem();
                     int floorId = (Integer) item.get("floor_id");
+                    int floorNb = (Integer) item.get("floor_number");
                     RequestSocket requestSocket = new RequestSocket();
                     Floor.setFloor_id(floorId);
+                    Floor.setFloor_number(floorNb);
                     requestSocket.setRequest("space_list");
                     Map<String, Object> data = new HashMap<>();
                     data.put("company_id", Company.getCompany_id());

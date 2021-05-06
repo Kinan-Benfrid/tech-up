@@ -22,7 +22,7 @@ public class SpaceView extends CommonFrame {
     private ImageIcon image;
     private JPanel jp1, jp2,jp3;
     private JLabel jl1,jl2,jl3;
-    private JButton jb1;
+    private JButton jb1, jb2;
     private GridBagLayout gbl;
     private Box box1, box2;
     private SpaceView spaceView;
@@ -38,7 +38,7 @@ public class SpaceView extends CommonFrame {
         this.x1 = x1;
         this.x2 = x2;
         jb1 = new JButton("Retour");
-
+        jb2 = new JButton("Rafraichir");
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel() {
@@ -134,7 +134,7 @@ public class SpaceView extends CommonFrame {
                                     EquipmentCheckView ec = new EquipmentCheckView(spaceView);
                                     ec.setVisible(true);
                                 } else {
-                                    JOptionPane.showMessageDialog(getContentPane(), "Equipement deja utilise quelque part !");
+                                    JOptionPane.showMessageDialog(getContentPane(), "Position deja liberee !");
                                     dispose();
                                     SpaceView sp = new SpaceView(getFileLocation(),x1,x2);
                                     sp.setVisible(true);
@@ -169,36 +169,6 @@ public class SpaceView extends CommonFrame {
         }
 
 
-
-
-        jp3.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("X position : " + getMousePosition().getX());
-                System.out.println("Y position : " + getMousePosition().getY());
-                //JOptionPane.showMessageDialog(jp3,"Voici l'exception : ","Titre : exception",JOptionPane.ERROR_MESSAGE);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
         jb1.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -228,18 +198,48 @@ public class SpaceView extends CommonFrame {
             }
         });
 
+        jb2.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                SpaceView sp = new SpaceView(getFileLocation(), x1, x2);
+                sp.setVisible(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
         box1 = Box.createHorizontalBox();
         box2 = Box.createHorizontalBox();
 
         jl1 = new JLabel("Votre espace : " + Space.getSpace_name() + " situe dans l'etage " + Floor.getFloor_number() + " du " + Building.getBuiling_name());
 
-        //jp3.add(red_icon_panel);
         jp1.setLayout(new BorderLayout());
         jp2.setPreferredSize(new Dimension(950,50));
         box1.setPreferredSize(new Dimension(950,50));
         box1.add(jb1);
         box1.add(Box.createHorizontalStrut(x1));
         box1.add(jl1);
+        box1.add(Box.createHorizontalStrut(150));
+        box1.add(jb2);
 
         //increase the argument of createHorizontalStrut to move the panel to the left or the right
         box2.add(Box.createHorizontalStrut(x2));
