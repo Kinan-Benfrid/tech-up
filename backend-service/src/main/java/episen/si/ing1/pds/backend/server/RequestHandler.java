@@ -539,7 +539,7 @@ public class RequestHandler {
 
 
             PreparedStatement statement = connection.prepareStatement(query);
-            //statement.setInt (1,nombre);
+            //statement.setInt (1,(int) dataLoaded.get("NumberP"));
 
             ResultSet rs = statement.executeQuery();
 
@@ -582,12 +582,8 @@ public class RequestHandler {
 
             Map dataloaded = (Map) request.getData();
             System.out.println("data loaded" + request.getData());
-
-            // Map dataloaded = (Map) request.getData();
-            // int person_id = (int) dataloaded.get ("person");
             String query = "select count(equipment_id) from equipment where equipmenttype_id = 2 and equipment_id NOT in (select equipment_id from attribuate)";
             PreparedStatement statement = connection.prepareStatement(query);
-            //statement.setInt (1,person_id);
             ResultSet rs = statement.executeQuery();
             List<Map> list = new ArrayList<>();
             while (rs.next()) {
