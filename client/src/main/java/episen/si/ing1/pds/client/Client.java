@@ -1,5 +1,6 @@
 package episen.si.ing1.pds.client;
 import episen.si.ing1.pds.client.config.ClientConfig;
+import episen.si.ing1.pds.client.view.HomePageView;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +33,8 @@ public class Client {
         }
         clientConfig = new ClientConfig();
         if (commandLine.hasOption("clientMode")){
-            ClientRequest cr = new ClientRequest(clientConfig);
-            cr.startConnection();
-            cr.stopConnection();
+            HomePageView hm = new HomePageView();
+            hm.setVisible(true);
         }
 
 
