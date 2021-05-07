@@ -63,7 +63,7 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
         box3.add(Box.createGlue());
         boxMenu.add(box3, b3);
 
-        b4 = new JButton("Zone d'accès");
+        b4 = new JButton("Zone d'acces");
         b4.setPreferredSize(new Dimension(170, 30));
         b4.setFont(new Font("Arial", Font.PLAIN, 12));
         b4.setBackground(new Color(111,174,143));

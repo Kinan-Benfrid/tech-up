@@ -30,7 +30,7 @@ public class CardAccessArea extends MainCardMenu {
         this.add(p1);
 
 
-        l1 = new JLabel("Bâtiment");
+        l1 = new JLabel("Batiment");
         l1.setBounds(30,20,120,90);
         l1.setFont(new Font("Arial", Font.PLAIN, 20));
 
@@ -57,7 +57,7 @@ public class CardAccessArea extends MainCardMenu {
 
         jb3 = new JComboBox(jc3Model);
         jb3.setEnabled(false);
-
+        //putting the
         jb1 = new JComboBox(new Vector (buildingAccess));
         jb1.setBounds(30,90,230,20);
 

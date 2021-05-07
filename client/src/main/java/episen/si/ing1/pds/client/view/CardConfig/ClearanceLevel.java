@@ -86,6 +86,7 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
         jr1.addMouseListener (new MouseListener () {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //adding access through clearance level
                 RequestSocket request = new RequestSocket();
                 request.setRequest("clearance_level0");
                 Map<String, Object> data = new HashMap<> ();

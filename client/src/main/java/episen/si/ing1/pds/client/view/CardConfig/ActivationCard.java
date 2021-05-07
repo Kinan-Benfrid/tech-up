@@ -17,7 +17,6 @@ import java.util.Map;
 
 public class ActivationCard extends MainCardMenu implements ActionListener {
     private JPanel p1;
-    private JCheckBox jcb;
     private JButton b1,b2;
     private JRadioButton jr1,jr2;
     private JLabel l1,l2;
@@ -29,12 +28,12 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
 
         p1.setLayout(null);
 
-        l1 = new JLabel("Activation/Désactivation du badge");
+        l1 = new JLabel("Activation/Desactivation du badge");
         l1.setFont(new Font("Arial", Font.PLAIN, 20));
         l1.setBounds(30,20,350,90);
 
         jr1 = new JRadioButton ("Activer le badge");
-        jr2 = new JRadioButton ("Désactiver le badge");
+        jr2 = new JRadioButton ("Desactiver le badge");
         jr2.setBounds (30,130,300,40);
         jr1.setBounds(30,90,300,40);
         //sending request in the listner to active and deactivate a card
@@ -47,7 +46,6 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
                 Map<String, Object> data = new HashMap<> ();
                 data.put("person_id", Person.getPerson_id());
                 data.put("card_id", AccessCard.getCard_id());
-                //data.put ("active",AccessCard.getActive ());
                 request.setData(data);
 
                 ResponseSocket response = socketUtility.sendRequest(request);
@@ -113,15 +111,15 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
         bg.add(jr1);
         bg.add(jr2);
 
-        b1 = new JButton("Valider");
-        b1.setBounds(150,200,100,20);
-
         l2 = new JLabel("Dissocier le badge");
-        l2.setFont(new Font("Arial", Font.PLAIN, 20));
-        l2.setBounds(30,240,300,90);
-
+        b1 = new JButton("Valider");
         b2 = new JButton("Dissocier");
+
+        b1.setBounds(150,200,100,20);
+        l2.setBounds(30,240,300,90);
         b2.setBounds(30,330,170,20);
+
+        l2.setFont(new Font("Arial", Font.PLAIN, 20));
 
         b1.addMouseListener (new MouseListener () {
             @Override
@@ -153,6 +151,7 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
         b2.addMouseListener (new MouseListener () {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //sending request to dissociate card from a person
                 RequestSocket request = new RequestSocket();
                 request.setRequest("dissociate");
                 Map<String, Object> data = new HashMap<> ();

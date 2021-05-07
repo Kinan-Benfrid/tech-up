@@ -26,13 +26,13 @@ public class CardSection extends MainCardMenu {
         p1= new JPanel();
         p1.setLayout (null);
 
-        j6 = new JLabel ("Nom et prénom");
-        j7 = new JLabel ("Date de naissance");
-        j8 = new JLabel ("poste");
-        j9 = new JLabel ("Niveau d'habilitation");
-        j11 = new JLabel ("Type de poste");
-        j12 = new JLabel ("Equipements");
-        j13 = new JLabel ("Zone d'accès");
+        j6 = new JLabel ("Prenom et Nom : ");
+        j7 = new JLabel ("Date de naissance : ");
+        j8 = new JLabel ("Poste : ");
+        j9 = new JLabel ("Niveau d'habilitation : ");
+        j11 = new JLabel ("Type de poste : ");
+        j12 = new JLabel ("Equipements : ");
+        j13 = new JLabel ("Zone d'acces : ");
 
         j6.setBounds (20,30,150,30);
         j7.setBounds (20,100,150,30);
@@ -41,7 +41,7 @@ public class CardSection extends MainCardMenu {
         j11.setBounds (20,220,150,30);
         j12.setBounds (100,270,150,30);
         j13.setBounds (310,270,150,30);
-        //sending a request
+        //sending a request to retrieve person data
         RequestSocket requestSocket = new RequestSocket();
         requestSocket.setRequest("name_person");
         Map<String, Object> data = new HashMap<>();
@@ -52,26 +52,25 @@ public class CardSection extends MainCardMenu {
         ResponseSocket response = socketUtility.sendRequest(requestSocket);
         List<Map> namePerson = (List<Map>) response.getData();
 
-
+        //sending a request to retrieve equipment's access
         RequestSocket requestSocket4 = new RequestSocket();
         requestSocket4.setRequest("show_equipment");
         Map<String, Object> data3 = new HashMap<>();
         data3.put ("person_id",Person.getPerson_id ());
         data3.put("card_id", AccessCard.getCard_id ());
         requestSocket4.setData(data3);
-        System.out.println (data3);
+
 
         ResponseSocket response4 = socketUtility.sendRequest(requestSocket4);
         List<Map> showEquipment = (List<Map>) response4.getData();
-        System.out.println ("data equipmenttype kinan" + showEquipment);
 
+        //sending a request to retrieve space's access
         RequestSocket requestSocket5 = new RequestSocket();
         requestSocket5.setRequest("show_space");
         Map<String, Object> data4 = new HashMap<>();
         data4.put ("person_id",Person.getPerson_id ());
         data4.put("card_id", AccessCard.getCard_id ());
         requestSocket5.setData(data4);
-        System.out.println (data4);
 
         ResponseSocket response5 = socketUtility.sendRequest(requestSocket5);
         List<Map> showSpace = (List<Map>) response5.getData();

@@ -27,17 +27,17 @@ public class CardAssociation extends CommonFrame {
         pan1.setLayout(null);
 
         j1 = new JLabel("Attribution d'un badge");
-        j2 = new JLabel("Veuillez choisir un nom et prénom");
+        j2 = new JLabel("Veuillez choisir un nom et prenom");
         b1 = new JButton("retour");
         b2 = new JButton("Associer");
         b3 = new JButton("Suivant");
 
 
-        j1.setBounds(60, 60, 400, 20);
-        j2.setBounds(60, 170, 200, 20);
+        j1.setBounds(200, 60, 400, 20);
+        j2.setBounds(200, 170, 250, 20);
         b1.setBounds(10, 15, 70, 20);
-        b2.setBounds(140, 290, 100, 20);
-        b3.setBounds(200, 340, 100, 20);
+        b2.setBounds(270, 290, 100, 20);
+        b3.setBounds(350, 340, 100, 20);
 
         b1.addMouseListener (new MouseListener () {
             @Override
@@ -70,7 +70,7 @@ public class CardAssociation extends CommonFrame {
         b2.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                    //sending request to associate a card to a person
                     RequestSocket request2 = new RequestSocket ();
                     request2.setRequest ("affected_card");
                     Map<String, Object> data = new HashMap<> ();
@@ -80,8 +80,8 @@ public class CardAssociation extends CommonFrame {
 
                     ResponseSocket response2 = socketUtility.sendRequest (request2);
 
-                JFrame frame = new JFrame("Message");
-                JOptionPane.showMessageDialog(frame, "Affectation du badge réussie !");
+                    JFrame frame = new JFrame("Message");
+                    JOptionPane.showMessageDialog(frame, "Affectation du badge réussie !");
 
             }
 
@@ -135,7 +135,7 @@ public class CardAssociation extends CommonFrame {
             }
         });
 
-
+        //sending a request to retrieve card ids
         request = new RequestSocket();
         request.setRequest("card_list");
         Map<String, Object> hm = new HashMap<>();
@@ -146,9 +146,9 @@ public class CardAssociation extends CommonFrame {
         List<Map> cardList = (List<Map>) response.getData();
 
         jcb1 = new JComboBox(new Vector(cardList));
-        jcb1.setBounds(60, 100, 200, 20);
+        jcb1.setBounds(200, 100, 250, 20);
 
-
+        //retrieving persons's names
         RequestSocket requestSocket = new RequestSocket();
         requestSocket.setRequest("name_list");
         Map<String, Object> data = new HashMap<>();
@@ -163,7 +163,7 @@ public class CardAssociation extends CommonFrame {
         System.out.println("name" + nameList);
 
         jcb2 = new JComboBox(new Vector(nameList));
-        jcb2.setBounds(270, 170, 220, 20);
+        jcb2.setBounds(200, 250, 220, 20);
 
         jcb1.setSelectedIndex(-1);
         jcb1.setRenderer(new DefaultListCellRenderer() {

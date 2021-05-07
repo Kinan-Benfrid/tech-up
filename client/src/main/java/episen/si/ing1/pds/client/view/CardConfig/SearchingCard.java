@@ -41,7 +41,7 @@ public class SearchingCard extends CommonFrame implements ActionListener {
         b2.setBounds(100, 200, 150, 20);
 
         b1.addActionListener (this);
-
+        //sending a request to retrieve the id of database
         RequestSocket request = new RequestSocket();
         request.setRequest("card_lost");
         Map<String, Object> hm = new HashMap<>();
@@ -50,9 +50,9 @@ public class SearchingCard extends CommonFrame implements ActionListener {
         ResponseSocket response = socketUtility.sendRequest(request);
         List<Map> cardLost = (List<Map>) response.getData();
 
-
+        //putting the the list of map in the jcombobox
         jcb1 = new JComboBox(new Vector(cardLost));
-        jcb1.setBounds(60, 100, 200, 30);
+        jcb1.setBounds(60, 100, 200, 20);
 
         jcb1.setRenderer(new DefaultListCellRenderer() {
             @Override
@@ -86,6 +86,7 @@ public class SearchingCard extends CommonFrame implements ActionListener {
         b2.addMouseListener (new MouseListener () {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //sending request to execute the research the card
                 RequestSocket request2 = new RequestSocket();
                 request2.setRequest("search_card");
                 Map<String, Object> data1 = new HashMap<> ();

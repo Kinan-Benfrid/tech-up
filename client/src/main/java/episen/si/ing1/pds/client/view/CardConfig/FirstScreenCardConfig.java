@@ -30,8 +30,8 @@ public class FirstScreenCardConfig extends CommonFrame implements ActionListener
     public FirstScreenCardConfig() {
         jp1 = new JPanel();
         jp1.setLayout(null);
-        j1 = new JLabel("Première configuration ?");
-        j2 = new JLabel("Mise à jour ? Veuillez entrer l'id du badge");
+        j1 = new JLabel("Premiere configuration ?");
+        j2 = new JLabel("Mise à jour ? Selectionner une personne");
         j3 = new JLabel("Rechercher un badge");
         b1 = new JButton("Cliquer ici");
         b2 = new JButton("Suivant");
@@ -41,12 +41,12 @@ public class FirstScreenCardConfig extends CommonFrame implements ActionListener
         this.add(jp1);
 
 
-        j1.setBounds(30,50,200,20);
-        j2.setBounds(30,130,300,20);
-        j3.setBounds(10,265,200,20);
-        b1.setBounds(120,80,100,20);
-        b2.setBounds(120,195,100,20);
-        b3.setBounds(160,265,100,20);
+        j1.setBounds(250,50,170,20);
+        j2.setBounds(250,130,300,20);
+        j3.setBounds(250,290,170,20);
+        b1.setBounds(400,50,170,20);
+        b2.setBounds(450,195,100,20);
+        b3.setBounds(400,290,100,20);
         b4.setBounds(10, 15, 70, 20);
 
         b1.addActionListener(this);
@@ -69,7 +69,7 @@ public class FirstScreenCardConfig extends CommonFrame implements ActionListener
         System.out.println("name" + majList);
 
         jcb1 = new JComboBox(new Vector(majList));
-        jcb1.setBounds(30,160,200,20);
+        jcb1.setBounds(250,160,300,20);
 
         jcb1.setSelectedIndex(-1);
         jcb1.setRenderer(new DefaultListCellRenderer() {

@@ -1,20 +1,6 @@
 package episen.si.ing1.pds.client.view.CardConfig;
 
-import episen.si.ing1.pds.client.model.Company;
-import episen.si.ing1.pds.client.model.Equipment;
-import episen.si.ing1.pds.client.model.EquipmentPerson;
-import episen.si.ing1.pds.client.socket.RequestSocket;
-import episen.si.ing1.pds.client.socket.ResponseSocket;
-import episen.si.ing1.pds.client.socket.SocketUtility;
-
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
 
 
 public class CardAccessEquipments extends MainCardMenu {
