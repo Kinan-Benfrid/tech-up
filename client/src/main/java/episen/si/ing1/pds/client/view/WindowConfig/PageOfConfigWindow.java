@@ -33,12 +33,12 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         this.add(p);
         p.setLayout(null);
 
-        labeltempextfiel = new JLabel("Température exterieure(°)");
+        labeltempextfiel = new JLabel("Temperature exterieure(°)");
         labeltempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labeltempextfiel.setBounds(58, 100, 210, 29);
         p.add(labeltempextfiel);
 
-        labeltempintfiel = new JLabel("Température interieure(°)");
+        labeltempintfiel = new JLabel("Temperature interieure(°)");
         labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labeltempintfiel.setBounds(58, 150, 210, 29);
         p.add(labeltempintfiel);
@@ -68,12 +68,12 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelpStore.setForeground(new Color(155,0,0));
         p.add(labelpStore);
 //lum
-        labelluminterne = new JLabel("Luminosité interieure(lux)");
+        labelluminterne = new JLabel("Luminosite interieure(lux)");
         labelluminterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelluminterne.setBounds(58, 250, 210, 29);
         p.add(labelluminterne);
 
-        labellumiexterne= new JLabel("Luminosité exterieure(lux)");
+        labellumiexterne= new JLabel("Luminosite exterieure(lux)");
         labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labellumiexterne.setBounds(58, 300, 210, 29);
         p.add(labellumiexterne);
@@ -102,12 +102,12 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelpteinte.setForeground(new Color(155,0,0));
         p.add(labelpteinte);
 
-        labelinstruction = new JLabel("Faites suivant pour configurer la température  ---->");
+        labelinstruction = new JLabel("Faites suivant pour configurer la temperature  ---->");
         labelinstruction.setFont(new Font("Tahoma", Font.PLAIN, 17));
         labelinstruction.setBounds(58, 450, 400, 29);
         p.add(labelinstruction);
 
-        labelinstructionR = new JLabel("Rafrâichissez pour voir l'état actuel des fenêtres");
+        labelinstructionR = new JLabel("Rafraichissez pour voir l'etat actuel des fenetres");
         labelinstructionR.setFont(new Font("Tahoma", Font.PLAIN, 13));
         labelinstructionR.setBounds(700, 400, 400, 29);
         p.add(labelinstructionR);
@@ -125,7 +125,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         betat.setFont(betat.getFont().deriveFont(18.0f));
         p.add(betat);
 
-        braf = new JButton("Rafraîchir");
+        braf = new JButton("Rafraichir");
         braf .setBounds(800,380,92,25);
         p.add(braf );
         braf .addActionListener(this);
