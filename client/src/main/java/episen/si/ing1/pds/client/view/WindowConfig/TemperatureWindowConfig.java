@@ -72,7 +72,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
             }
         });
 //label for said to use to continue
-        labelinstruction = new JLabel("Faites suivant pour configurer la luminosité  ---->");
+        labelinstruction = new JLabel("Faites suivant pour configurer la luminosite  ---->");
         labelinstruction.setFont(new Font("Tahoma", Font.PLAIN, 17));
         labelinstruction.setBounds(58, 450, 400, 29);
         panel.add(labelinstruction);
@@ -118,18 +118,18 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
             String v7 = tempintfiel.getText();
             String v6 = tempextfiel.getText();
 
-              if(!isInteger(v7)){
+              if(!isInteger(v7)||!isInteger(v6)){
                   JOptionPane.showMessageDialog(tempintfiel,"Saisir un entier !", "ERREUR", JOptionPane.ERROR_MESSAGE);
               }
               else{
                     int v7_pars = Integer.parseInt(v7);
                     if( v7_pars > 45 || v7_pars < -30)// if inside temperature ist >45° or < -5°, application print error message
                     {
-                        JOptionPane.showMessageDialog(tempintfiel,"La temperature Interieure doit être compris entre -30° & 45°", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(tempintfiel,"La temperature Interieure doit etre compris entre -30 et 45", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
                     int v6_pars = Integer.parseInt(v6);//transform string to interger
                     if ( v6_pars > 45 || v6_pars < -30){ // if outside temperature ist >45° or < -5°, application print error message
-                      JOptionPane.showMessageDialog(tempextfiel,"La temperature Exterieure doit être comprise entre -30° & 45°", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                      JOptionPane.showMessageDialog(tempextfiel,"La temperature Exterieure doit être comprise entre -30 et 45", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 //sent request to server
                     if((v6_pars <= 45 && v6_pars >= -30) && (v7_pars <= 45 && v7_pars >= -30)){
