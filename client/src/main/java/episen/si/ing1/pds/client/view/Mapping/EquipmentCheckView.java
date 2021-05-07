@@ -28,8 +28,6 @@ public class EquipmentCheckView extends JFrame {
         request.setData(hm);
         ResponseSocket response = socketUtility.sendRequest(request);
         List<Map> equipment_list = (List<Map>) response.getData();
-        System.out.println("EQUIPMENT " + response.getData());
-        System.out.println("Position " + Position.getPosition_id());
         String equipment_name = (String) equipment_list.get(0).get("equipment_name");
         int equipment_id = (int) equipment_list.get(0).get("equipment_id");
         boolean equipment_state = (boolean) equipment_list.get(0).get("equipment_state");
@@ -57,7 +55,6 @@ public class EquipmentCheckView extends JFrame {
                 request.setData(hm);
                 ResponseSocket response = socketUtility.sendRequest(request);
                 SpaceView.isPopUpActive = false;
-                System.out.println("FILE LOCATION " + spaceView.getFileLocation());
                 SpaceView spaceView1 = new SpaceView(spaceView.getFileLocation(),spaceView.getX1(),spaceView.getX2());
                 spaceView1.setVisible(true);
                 spaceView.dispose();
