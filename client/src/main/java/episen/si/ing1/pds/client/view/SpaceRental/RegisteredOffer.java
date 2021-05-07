@@ -4,7 +4,6 @@ import episen.si.ing1.pds.client.view.CommonFrame;
 import episen.si.ing1.pds.client.view.HomePageView;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class RegisteredOffer extends CommonFrame {
 
@@ -12,7 +11,7 @@ public class RegisteredOffer extends CommonFrame {
 
         JOptionPane d = new JOptionPane();
         int boite = JOptionPane.showConfirmDialog(this, "Votre offre a bien été enregistrée",
-                "le titre", JOptionPane.OK_CANCEL_OPTION);
+                "Offre de location", JOptionPane.OK_CANCEL_OPTION);
 
 
         if ((boite == JOptionPane.OK_OPTION)){

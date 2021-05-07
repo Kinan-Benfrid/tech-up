@@ -158,7 +158,7 @@ public class RequestHandler {
             Map dataloaded = (Map) request.getData();
 
             List<Map> name = new ArrayList<>();
-            String sql = "UPDATE access_card set active= true ,affected_card = true, person_id =? where card_id=?";
+            String sql = "UPDATE access_card set affected_card = true, person_id =? where card_id=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (Integer) dataloaded.get("person_id"));
             statement.setInt(2, (Integer) dataloaded.get("card_id"));
@@ -223,29 +223,21 @@ public class RequestHandler {
             List<Map> name = new ArrayList<>();
             String sql = "UPDATE access_card set clearance_level=0,affected_card = true,person_id =? where card_id=?";
             String sql2 ="insert into card_spacetype (card_id,spacetype_id) values (?,1)";
-            String sql3 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,3)";
-            String sql4 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,6)";
-            String sql5 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,7)";
-            String sql6 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,10)";
             PreparedStatement statement1 = connection.prepareStatement(sql);
             PreparedStatement statement2 = connection.prepareStatement(sql2);
-            PreparedStatement statement3 = connection.prepareStatement(sql3);
-            PreparedStatement statement4 = connection.prepareStatement(sql4);
-            PreparedStatement statement5 = connection.prepareStatement(sql5);
-            PreparedStatement statement6 = connection.prepareStatement(sql6);
             statement1.setInt(1, (Integer) dataloaded.get("person_id"));
             statement1.setInt(2, (Integer) dataloaded.get("card_id"));
             statement2.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement3.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement4.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement5.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement6.setInt(1, (Integer) dataloaded.get("card_id"));
             statement1.executeUpdate();
             statement2.executeUpdate ();
-            statement3.executeUpdate ();
-            statement4.executeUpdate ();
-            statement5.executeUpdate ();
-            statement6.executeUpdate ();
+            for (int i = 0; i<11; i++){
+                if ( i==3 || i==6 || i==7 || i==10){
+                    String sql3 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,"+i+")";
+                    PreparedStatement statement3 = connection.prepareStatement(sql3);
+                    statement3.setInt(1, (Integer) dataloaded.get("card_id"));
+                    statement3.executeUpdate ();
+                }
+            }
 
             Map<String, Object> response = new HashMap<>();
             name.add(new HashMap());
@@ -263,40 +255,27 @@ public class RequestHandler {
             String sql1 = "UPDATE access_card set clearance_level=1,affected_card = true, person_id =? where card_id=?";
             String sql2 ="insert into card_spacetype (card_id,spacetype_id) values (?,1)";
             String sql3 ="insert into card_spacetype (card_id,spacetype_id) values (?,2)";
-            String sql4 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,3)";
-            String sql5 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,6)";
-            String sql6 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,7)";
-            String sql7 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,10)";
-            String sql8 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,2)";
-            String sql9 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,4)";
             PreparedStatement statement1 = connection.prepareStatement(sql1);
             PreparedStatement statement2 = connection.prepareStatement(sql2);
             PreparedStatement statement3 = connection.prepareStatement(sql3);
-            PreparedStatement statement4 = connection.prepareStatement(sql4);
-            PreparedStatement statement5 = connection.prepareStatement(sql5);
-            PreparedStatement statement6 = connection.prepareStatement(sql6);
-            PreparedStatement statement7 = connection.prepareStatement(sql7);
-            PreparedStatement statement8 = connection.prepareStatement(sql8);
-            PreparedStatement statement9 = connection.prepareStatement(sql9);
             statement1.setInt(1, (Integer) dataloaded.get("person_id"));
             statement1.setInt(2, (Integer) dataloaded.get("card_id"));
             statement2.setInt(1, (Integer) dataloaded.get("card_id"));
             statement3.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement4.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement5.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement6.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement7.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement8.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement9.setInt(1, (Integer) dataloaded.get("card_id"));
             statement1.executeUpdate();
             statement2.executeUpdate ();
             statement3.executeUpdate ();
-            statement4.executeUpdate ();
-            statement5.executeUpdate ();
-            statement6.executeUpdate ();
-            statement7.executeUpdate ();
-            statement8.executeUpdate ();
-            statement9.executeUpdate ();
+
+            for (int i = 0; i<11; i++){
+                if (i==2 || i==3 || i==4 || i==6 || i==7 || i==10){
+                    String sql4 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,"+i+")";
+                    PreparedStatement statement4 = connection.prepareStatement(sql4);
+                    statement4.setInt(1, (Integer) dataloaded.get("card_id"));
+                    statement4.executeUpdate();
+
+                }
+
+            }
 
             Map<String, Object> response = new HashMap<>();
             name.add(new HashMap());
@@ -311,11 +290,29 @@ public class RequestHandler {
             Map dataloaded = (Map) request.getData();
 
             List<Map> name = new ArrayList<>();
-            String sql1 = "UPDATE access_card set clearance_level=2,affected_card = true,person_id =? where card_id=?";
+            String sql1 = "UPDATE access_card set clearance_level=2,affected_card = true, person_id =? where card_id=?";
+            String sql2 ="insert into card_spacetype (card_id,spacetype_id) values (?,1)";
+            String sql3 ="insert into card_spacetype (card_id,spacetype_id) values (?,3)";
             PreparedStatement statement1 = connection.prepareStatement(sql1);
+            PreparedStatement statement2 = connection.prepareStatement(sql2);
+            PreparedStatement statement3 = connection.prepareStatement(sql3);
             statement1.setInt(1, (Integer) dataloaded.get("person_id"));
             statement1.setInt(2, (Integer) dataloaded.get("card_id"));
+            statement2.setInt(1, (Integer) dataloaded.get("card_id"));
+            statement3.setInt(1, (Integer) dataloaded.get("card_id"));
             statement1.executeUpdate();
+            statement2.executeUpdate ();
+            statement3.executeUpdate ();
+
+            for (int i = 0; i<11; i++){
+                if (i==1 || i==2 || i==3 || i==4 || i==6 || i==7 || i==8 || i==10){
+                    String sql4 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,"+i+")";
+                    PreparedStatement statement4 = connection.prepareStatement(sql4);
+                    statement4.setInt(1, (Integer) dataloaded.get("card_id"));
+                    statement4.executeUpdate();
+
+                }
+            }
 
             Map<String, Object> response = new HashMap<>();
             name.add(new HashMap());
@@ -330,11 +327,33 @@ public class RequestHandler {
             Map dataloaded = (Map) request.getData();
 
             List<Map> name = new ArrayList<>();
-            String sql1 = "UPDATE access_card set clearance_level=3,affected_card = true,person_id =? where card_id=?";
+            String sql1 = "UPDATE access_card set clearance_level=3,affected_card = true, person_id =? where card_id=?";
+            String sql2 ="insert into card_spacetype (card_id,spacetype_id) values (?,1)";
+            String sql3 ="insert into card_spacetype (card_id,spacetype_id) values (?,3)";
+            String sql4 ="insert into card_spacetype (card_id,spacetype_id) values (?,2)";
             PreparedStatement statement1 = connection.prepareStatement(sql1);
+            PreparedStatement statement2 = connection.prepareStatement(sql2);
+            PreparedStatement statement3 = connection.prepareStatement(sql3);
+            PreparedStatement statement4 = connection.prepareStatement(sql4);
+
             statement1.setInt(1, (Integer) dataloaded.get("person_id"));
             statement1.setInt(2, (Integer) dataloaded.get("card_id"));
+            statement2.setInt(1, (Integer) dataloaded.get("card_id"));
+            statement3.setInt(1, (Integer) dataloaded.get("card_id"));
+            statement4.setInt(1, (Integer) dataloaded.get("card_id"));
             statement1.executeUpdate();
+            statement2.executeUpdate ();
+            statement3.executeUpdate ();
+            statement4.executeUpdate();
+            for (int i = 0; i<11; i++){
+                if (i==1 || i==2 || i==3 || i==4 || i==6 || i==7 || i==8 || i==10){
+                    String sql5 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,"+i+")";
+                    PreparedStatement statement5 = connection.prepareStatement(sql5);
+                    statement5.setInt(1, (Integer) dataloaded.get("card_id"));
+                    statement5.executeUpdate();
+
+                }
+            }
 
             Map<String, Object> response = new HashMap<>();
             name.add(new HashMap());

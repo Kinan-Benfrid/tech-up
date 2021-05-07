@@ -5,13 +5,10 @@ import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.CommonFrame;
-import episen.si.ing1.pds.client.view.HomePageRentView;
 import episen.si.ing1.pds.client.view.HomePageView;
-import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,7 +23,6 @@ public class FirstPageSelectionOffers extends CommonFrame implements ActionListe
     private final SocketUtility socketUtility = new SocketUtility();
 
 
-    private JPanel South;
     private final JButton retour;
     private final JButton filtre;
     private final JButton suivant;
@@ -35,7 +31,7 @@ public class FirstPageSelectionOffers extends CommonFrame implements ActionListe
     private final JButton offre3;
     private final JPanel p1;
     private final JPanel pan3;
-    private JLabel j1;
+    private final JLabel j1;
 
     public FirstPageSelectionOffers() {
 
@@ -84,6 +80,12 @@ public class FirstPageSelectionOffers extends CommonFrame implements ActionListe
         jc3.setBounds(70, 240, 450, 20);
         jc2.setBounds(70, 210, 450, 20);
         jc1.setBounds(70, 180, 450, 20);
+
+        /**Initialize JLabel**/
+        j1 = new JLabel("(En cliquand sur ce bouton, vous validerez automatiquement l'offre et celle-ci vous sera attribuée)");
+        j1.setBounds(710, 210, 550, 20);
+        j1.setForeground(new Color(149, 6, 6));
+
 
         /**addition of the listener event**/
         retour.addActionListener(this);
@@ -238,7 +240,7 @@ public class FirstPageSelectionOffers extends CommonFrame implements ActionListe
         p1.add(offre1);
         p1.add(offre2);
         p1.add(offre3);
-
+p1.add(j1);
 
     }
 
@@ -310,7 +312,7 @@ public class FirstPageSelectionOffers extends CommonFrame implements ActionListe
 
             JOptionPane d = new JOptionPane();
             int boite = JOptionPane.showConfirmDialog(this, "Votre offre a bien été enregistrée",
-                    "le titre", JOptionPane.OK_CANCEL_OPTION);
+                    "Offre de location", JOptionPane.OK_CANCEL_OPTION);
 
 
             if ((boite == JOptionPane.OK_OPTION)) {
