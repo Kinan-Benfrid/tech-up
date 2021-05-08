@@ -18,7 +18,7 @@ import java.util.Vector;
 
 public class CardAccessArea extends MainCardMenu {
     private JPanel p1;
-    private JButton b1;
+    private JButton b1,b2,b3;
     private JComboBox jb1,jb2,jb3;
     private JLabel l1,l2,l3;
     private JTable jt;
@@ -36,11 +36,11 @@ public class CardAccessArea extends MainCardMenu {
 
         //sending request
         RequestSocket request = new RequestSocket();
-        request.setRequest("building_access");
+        request.setRequest("building_list");
         Map<String, Object> hm = new HashMap<> ();
         hm.put("company_id", Company.getCompany_id());
         hm.put ("person_id", Person.getPerson_id ());
-        hm.put("card_id", AccessCard.getCard_id ());
+        //hm.put("card_id", AccessCard.getCard_id ());
         request.setData(hm);
 
         ResponseSocket response1 = socketUtility.sendRequest(request);
@@ -91,7 +91,7 @@ public class CardAccessArea extends MainCardMenu {
                     Building.setBuilding_id(buildingId);
                     Building.setBuiling_name (building_name);
                     System.out.println (buildingId);
-                    request2.setRequest("floor_access");
+                    request2.setRequest("floor_list");
                     Map<String, Object> hm2 = new HashMap<> ();
                     hm2.put("company_id", Company.getCompany_id());
                     hm2.put("building_id", Building.getBuiling_id ());
@@ -125,11 +125,11 @@ public class CardAccessArea extends MainCardMenu {
         l2.setFont(new Font("Arial", Font.PLAIN, 20));
 
         l3 = new JLabel("Espace");
-        l3.setBounds(30,305,120,90);
+        l3.setBounds(30,280,120,90);
         l3.setFont(new Font("Arial", Font.PLAIN, 20));
 
         jb2.setBounds(30,200,230,20);
-        jb3.setBounds(30,380,230,20);
+        jb3.setBounds(30,310,230,20);
 
         jb2.setSelectedIndex(-1);
         jb2.setRenderer(new DefaultListCellRenderer() {
@@ -174,7 +174,7 @@ public class CardAccessArea extends MainCardMenu {
                     int floorId = (Integer) item.get("floor_id");
                     RequestSocket requestSocket = new RequestSocket();
                     Floor.setFloor_id (floorId);
-                    requestSocket.setRequest("space_access");
+                    requestSocket.setRequest("space_list");
                     Map<String, Object> data = new HashMap<>();
                     data.put("company_id", Company.getCompany_id());
                     data.put("floor_id", floorId);
@@ -216,20 +216,101 @@ public class CardAccessArea extends MainCardMenu {
             }
         });
 
-        b1 = new JButton("Valider");
-        b1.setBounds(50,430,150,20);
+        b1 = new JButton("Valider le bâtiment");
+        b2 = new JButton("Valider l'étage");
+        b3 = new JButton("Valider l'espace");
+        b1.setBounds(300,90,200,20);
+        b2.setBounds(300,200,200,20);
+        b3.setBounds(300,310,200,20);
 
         b1.addMouseListener (new MouseListener () {
             @Override
             public void mouseClicked(MouseEvent e) {
                 RequestSocket request = new RequestSocket();
-                request.setRequest("insert_access");
+                request.setRequest("building_access");
                 Map<String, Object> hm = new HashMap<> ();
                 hm.put("company_id", Company.getCompany_id());
-                hm.put ("person_id", Person.getPerson_id ());
+                //hm.put ("person_id", Person.getPerson_id ());
                 hm.put("card_id", AccessCard.getCard_id ());
                 hm.put("building_id", Building.getBuiling_id ());
+                //hm.put("floor_id", Floor.getFloor_id ());
+                //hm.put("space_id", Space.getSpace_id ());
+                request.setData(hm);
+
+                ResponseSocket response1 = socketUtility.sendRequest(request);
+                // data is the list of map we sent in the server (look response)
+                List<Map> insertAccess = (List<Map>) response1.getData();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        b2.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RequestSocket request = new RequestSocket();
+                request.setRequest("floor_access");
+                Map<String, Object> hm = new HashMap<> ();
+                hm.put("company_id", Company.getCompany_id());
+                //hm.put ("person_id", Person.getPerson_id ());
+                hm.put("card_id", AccessCard.getCard_id ());
                 hm.put("floor_id", Floor.getFloor_id ());
+                //hm.put("building_id", Building.getBuiling_id ());
+                request.setData(hm);
+
+                ResponseSocket response1 = socketUtility.sendRequest(request);
+                // data is the list of map we sent in the server (look response)
+                List<Map> insertAccess = (List<Map>) response1.getData();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        b3.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RequestSocket request = new RequestSocket();
+                request.setRequest("space_access");
+                Map<String, Object> hm = new HashMap<> ();
+                hm.put("company_id", Company.getCompany_id());
+                //hm.put ("person_id", Person.getPerson_id ());
+                hm.put("card_id", AccessCard.getCard_id ());
                 hm.put("space_id", Space.getSpace_id ());
                 request.setData(hm);
 
@@ -267,6 +348,8 @@ public class CardAccessArea extends MainCardMenu {
         p1.add(l3);
         p1.add(jb3);
         p1.add(b1);
+        p1.add(b2);
+        p1.add(b3);
 
     }
 

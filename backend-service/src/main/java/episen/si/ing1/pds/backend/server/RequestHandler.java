@@ -900,16 +900,12 @@ public class RequestHandler {
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
             List<Map> name = new ArrayList<>();
-            String sql = "select building_id, building_name from person natural join access_card natural join card_building natural join building where card_id =?";
+            String sql = "insert into card_building (card_id,building_id) values (?,?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (Integer) dataLoaded.get("card_id"));
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                Map<String, Object> hm = new HashMap<>();
-                hm.put("building_id", rs.getInt("building_id"));
-                hm.put("building_name", rs.getString("building_name"));
-                name.add(hm);
-            }
+            statement.setInt(2, (Integer) dataLoaded.get("building_id"));
+            statement.executeUpdate();
+
             // response is a map of value that is a list of map
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
@@ -923,16 +919,12 @@ public class RequestHandler {
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
             List<Map> name = new ArrayList<>();
-            String sql = "select floor_id, floor_number from person natural join access_card natural join card_building natural join building natural join floor_ where card_id =?";
+            String sql = "insert into card_floor (card_id,floor_id) values (?,?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (Integer) dataLoaded.get("card_id"));
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                Map<String, Object> hm = new HashMap<>();
-                hm.put("floor_id", rs.getInt("floor_id"));
-                hm.put("floor_number", rs.getString("floor_number"));
-                name.add(hm);
-            }
+            statement.setInt(2, (Integer) dataLoaded.get("floor_id"));
+            statement.executeUpdate ();
+
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             response.put("data", name);
@@ -946,18 +938,11 @@ public class RequestHandler {
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
             List<Map> name = new ArrayList<>();
-            String sql = "select space_id, space_name from  building natural join floor_ natural join space natural join company where floor_id =? and building_id =? and company_id=?";
+            String sql = "insert into card_space (card_id,space_id) values (?,?)";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, (Integer) dataLoaded.get("floor_id"));
-            statement.setInt(2, (Integer) dataLoaded.get("building_id"));
-            statement.setInt(3, (Integer) dataLoaded.get("company_id"));
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                Map<String, Object> hm = new HashMap<>();
-                hm.put("space_id", rs.getInt("space_id"));
-                hm.put("space_name", rs.getString("space_name"));
-                name.add(hm);
-            }
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            statement.setInt(2, (Integer) dataLoaded.get("space_id"));
+            statement.executeUpdate ();
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             response.put("data", name);
