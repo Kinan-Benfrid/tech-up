@@ -517,7 +517,7 @@ public class RequestHandler {
             logger.info(String.valueOf(dataLoaded));
             List<Map> list = new ArrayList<>();
 
-            String query = "Select space_id,space_name,size_space, max_person_number,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where max_person_number >= ? and price between ? and ? and rental_id is NULL";
+            String query = "Select space_id,space_name,size_space, max_person_number,floor_number, building_name,price,space.floor_id from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where max_person_number >= ? and price between ? and ? and rental_id is NULL";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, (Integer) dataLoaded.get("max_person_number"));
             statement.setInt(2, (Integer) dataLoaded.get("budjetMin"));
@@ -535,6 +535,8 @@ public class RequestHandler {
                 m.put("floor_number", rs.getInt("floor_number"));
                 m.put("building_name", rs.getString("building_name"));
                 m.put("price", rs.getInt("price"));
+                m.put("floor_id", rs.getInt("floor_id"));
+
 
                 list.add(m);
             }
@@ -544,11 +546,11 @@ public class RequestHandler {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
         }
-      /*  else if (requestName.equals("Insert_Rental")) {
+       else if (requestName.equals("Insert_Rental")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
              int company_id  = (int) dataLoaded.get("company_id");
-            String query = " insert into rental (id_mda) SELECT rental.id_mda from rental INNER JOIN maintenance_department_administrators  on rental.id_mda = maintenance_department_administrators.id_mda where company_id = " + company_id + " ";
+            String query = " insert into rental (id_mda) SELECT Distinct (rental.id_mda)  from rental INNER JOIN maintenance_department_administrators  on rental.id_mda = maintenance_department_administrators.id_mda where company_id = " + company_id + " ";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.executeUpdate();
 
@@ -559,35 +561,48 @@ public class RequestHandler {
 
         }
 
-       */
-        else if (requestName.equals("Insert_Rental")) {
+
+        else if (requestName.equals("Select_rental")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
-            int company_id  = (int) dataLoaded.get("company_id");
             List<Map> list = new ArrayList<>();
-
-            String query = " insert into rental (id_mda) SELECT rental.id_mda from rental INNER JOIN maintenance_department_administrators  on rental.id_mda = maintenance_department_administrators.id_mda where company_id = " + company_id + " ";
-            //String query2 = "Select max(rental_id) as max from rental";
-
+            String query = "Select max(rental_id) as max from rental";
             PreparedStatement statement = connection.prepareStatement(query);
-           // PreparedStatement statement2 = connection.prepareStatement(query2);
-            statement.executeUpdate();
-           // ResultSet rs = statement2.executeQuery();
+            ResultSet rs =  statement.executeQuery();
 
-          /*  while (rs.next()) {
+            while (rs.next()) {
                 Map m = new HashMap();
                 m.put("rental_id", rs.getInt("max"));
                 list.add(m);
             }
 
-           */
+
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             response.put("data", list);
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
         }
+
+
+        else if (requestName.equals("Update_Rental")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            String query = "UPDATE space set rental_id = ? where rental_id is null and space_id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1,(Integer) dataLoaded.get("rental_id_space"));
+            statement.setInt(2,(Integer) dataLoaded.get("id_space"));
+
+            statement.executeUpdate();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+
 
         else if (requestName.equals("Imprimante")) {
             ObjectMapper mapper = new ObjectMapper();
