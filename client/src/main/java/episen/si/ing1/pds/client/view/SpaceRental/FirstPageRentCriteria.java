@@ -371,7 +371,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                             requestSocket.setData(data);
                             ResponseSocket responseRental = socketUtility.sendRequest(requestSocket);
 
-
+/*
                             RequestSocket requestSocket2 = new RequestSocket();
                             requestSocket.setRequest("Insert_Rental");
                             Map<String, Object> data2 = new HashMap<>();
@@ -379,14 +379,16 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                             ResponseSocket responseRental2 = socketUtility.sendRequest(requestSocket2);
 
 
+ */
 
-                            List<Map> rentalId = (List<Map>) responseRental2.getData();
-                            ArrayList<Integer> rental_id = new ArrayList<>();
 
-                            for (Map m : rentalId) {
-                                rental_id.add((Integer) m.get("rental_id"));
-                            }
-System.out.println(rental_id);
+                         //   List<Map> rentalId = (List<Map>) responseRental2.getData();
+                           // ArrayList<Integer> rental_id = new ArrayList<>();
+
+                           // for (Map m : rentalId) {
+                             //   rental_id.add((Integer) m.get("rental_id"));
+                            //}
+//System.out.println(rental_id);
                         }
 
                     }

@@ -515,10 +515,17 @@ public class RequestHandler {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
-            String query = "Select space_id,space_name,size_space, max_person_number,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where max_person_number >= 1 and rental_id is NULL";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
             List<Map> list = new ArrayList<>();
+
+            String query = "Select space_id,space_name,size_space, max_person_number,floor_number, building_name,price from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where max_person_number >= ? and price between ? and ? and rental_id is NULL";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, (Integer) dataLoaded.get("max_person_number"));
+            statement.setInt(2, (Integer) dataLoaded.get("budjetMin"));
+            statement.setInt(3, (Integer) dataLoaded.get("budjetMax"));
+
+
+
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Map m = new HashMap();
                 m.put("space_id", rs.getInt("space_id"));
@@ -537,19 +544,49 @@ public class RequestHandler {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
         }
-        else if (requestName.equals("Insert_Rental")) {
+      /*  else if (requestName.equals("Insert_Rental")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
-            logger.info(String.valueOf(dataLoaded));
              int company_id  = (int) dataLoaded.get("company_id");
             String query = " insert into rental (id_mda) SELECT rental.id_mda from rental INNER JOIN maintenance_department_administrators  on rental.id_mda = maintenance_department_administrators.id_mda where company_id = " + company_id + " ";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.executeUpdate();
+
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
 
+        }
+
+       */
+        else if (requestName.equals("Insert_Rental")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            int company_id  = (int) dataLoaded.get("company_id");
+            List<Map> list = new ArrayList<>();
+
+            String query = " insert into rental (id_mda) SELECT rental.id_mda from rental INNER JOIN maintenance_department_administrators  on rental.id_mda = maintenance_department_administrators.id_mda where company_id = " + company_id + " ";
+            //String query2 = "Select max(rental_id) as max from rental";
+
+            PreparedStatement statement = connection.prepareStatement(query);
+           // PreparedStatement statement2 = connection.prepareStatement(query2);
+            statement.executeUpdate();
+           // ResultSet rs = statement2.executeQuery();
+
+          /*  while (rs.next()) {
+                Map m = new HashMap();
+                m.put("rental_id", rs.getInt("max"));
+                list.add(m);
+            }
+
+           */
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
         }
 
         else if (requestName.equals("Imprimante")) {
