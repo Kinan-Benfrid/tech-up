@@ -454,12 +454,14 @@ public class RequestHandler {
             ObjectMapper mapper = new ObjectMapper();
             Map dataloaded = (Map) request.getData();
             logger.info(String.valueOf(dataloaded));
-            String query = "SELECT count(space_id) as countable from space where spacetype_id = 1 and rental_id is NULL";
+            String query = "SELECT spacetype_id, count(space_id)as countable from space where spacetype_id = 1 and rental_id is NULL group by spacetype_id";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
             List<Map> list = new ArrayList<>();
             while (rs.next()) {
                 Map m = new HashMap();
+              //  m.put("space_reunion", rs.getString("space_name"));
+                m.put("spacetype_id", rs.getInt("spacetype_id"));
                 m.put("countable", rs.getInt("countable"));
                 list.add(m);
             }
@@ -474,12 +476,14 @@ public class RequestHandler {
             ObjectMapper mapper = new ObjectMapper();
             Map dataloaded = (Map) request.getData();
             logger.info(String.valueOf(dataloaded));
-            String query = "SELECT count(space_id) as countable2 from space where spacetype_id = 2 and rental_id is NULL";
+            String query = "SELECT spacetype_id, count(space_id)as countable2 from space where spacetype_id = 2 and rental_id is NULL group by spacetype_id";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
             List<Map> list = new ArrayList<>();
             while (rs.next()) {
                 Map m = new HashMap();
+               // m.put("space_openSpace", rs.getString("space_name"));
+                m.put("spacetype_id", rs.getInt("spacetype_id"));
                 m.put("countable2", rs.getInt("countable2"));
                 list.add(m);
             }
@@ -495,12 +499,15 @@ public class RequestHandler {
             ObjectMapper mapper = new ObjectMapper();
             Map dataloaded = (Map) request.getData();
             logger.info(String.valueOf(dataloaded));
-            String query = "SELECT count(space_id) as countable3 from space where spacetype_id = 3 and rental_id is NULL";
+            String query = "SELECT spacetype_id, count(space_id)as countable3 from space where spacetype_id = 3 and rental_id is NULL group by spacetype_id";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
             List<Map> list = new ArrayList<>();
             while (rs.next()) {
                 Map m = new HashMap();
+               // m.put("space_office", rs.getString("space_name"));
+
+                m.put("spacetype_id", rs.getInt("spacetype_id"));
                 m.put("countable3", rs.getInt("countable3"));
                 list.add(m);
             }
@@ -517,12 +524,26 @@ public class RequestHandler {
             logger.info(String.valueOf(dataLoaded));
             List<Map> list = new ArrayList<>();
 
-            String query = "Select space_id,space_name,size_space, max_person_number,floor_number, building_name,price,space.floor_id from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where max_person_number >= ? and price between ? and ? and rental_id is NULL";
+
+
+
+            String query ="Select space.rental_id,space_id,space_name,size_space, max_person_number,floor_number, building_name,price,space.floor_id from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where rental_id is NULL and max_person_number >= ? and price between ? and ? and spacetype_id in ( select spacetype_id from space where spacetype_id = ? or spacetype_id = ? or spacetype_id = ?) limit ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, (Integer) dataLoaded.get("max_person_number"));
             statement.setInt(2, (Integer) dataLoaded.get("budjetMin"));
             statement.setInt(3, (Integer) dataLoaded.get("budjetMax"));
 
+            statement.setInt(4, (Integer) dataLoaded.get("valeur_space_id_liste_salle_reunion"));
+            statement.setInt(5, (Integer) dataLoaded.get("valeur_space_id_liste_open_space"));
+            statement.setInt(6, (Integer) dataLoaded.get("valeur_space_id_liste_bureau"));
+            statement.setInt(7, (Integer) dataLoaded.get("valeur_liste_total_pour_limit"));
+
+            /*statement.setString(8,"valeur_space_name_liste_salle_reunion");
+            statement.setString(9,"valeur_space_name_liste_open_space");
+            statement.setString(10,"valeur_space_name_liste_bureau");
+            and space_name in (select space_name from space where space_name = 'Bureau individuel 1' or space_name = 'Open Space 1' or space_name ='Salle de reunion 1')
+
+             */
 
 
             ResultSet rs = statement.executeQuery();
@@ -540,6 +561,9 @@ public class RequestHandler {
 
                 list.add(m);
             }
+
+          System.out.println(dataLoaded.get("valeur_liste_total_pour_limit"));
+
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             response.put("data", list);
