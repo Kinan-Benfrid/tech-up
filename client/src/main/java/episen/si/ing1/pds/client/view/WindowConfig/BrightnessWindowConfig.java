@@ -20,8 +20,9 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
     private final SocketUtility socketUtility = new SocketUtility();
     private static final long serialVersionUID = 1L;
     private JPanel panel;
-    private JTextField luminterne,lumiexterne;
-    private JLabel  labelluminterne,labellumiexterne,labelluminterneecoute,labellumiexterneecoute;
+    private JTextField luminterne,valeuraugmente, pourcentageteinte,valeuraugmenteteintepourcentage;
+    private JLabel  labelluminterne,labelsituationteinte,labelpourcentageteinte, labeluniteaugmenteteintepourcentage,
+            labelaugmenteteintepourcentage,labelaugmente,labelluminterneecoute,labeluniteaugmente,pourcentageteinteunite;
 
 
     public BrightnessWindowConfig() {
@@ -30,52 +31,83 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
         panel.setLayout(null);
 
 //label textfiel for insde brightness
-        labelluminterne = new JLabel("Luminosite interieure (entier(lux))");
-        labelluminterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelluminterne.setBounds(58, 150, 400, 29);
-        panel.add(labelluminterne);
 
-        labelluminterneecoute = new JLabel("");
-        labelluminterneecoute.setFont(new Font("Tahoma", Font.PLAIN, 25));
-        labelluminterneecoute.setBounds(575, 150, 210, 29);
-        panel.add(labelluminterneecoute);
+        labelsituationteinte = new JLabel("Teinte Automatique par rapport au niveau d'ensoleillement");
+        labelsituationteinte.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelsituationteinte.setBounds(258, 100, 700, 29);
+        labelsituationteinte.setFont(labelsituationteinte.getFont().deriveFont(20.0f));
+        labelsituationteinte.setForeground(new Color(155,0,0));
+        panel.add(labelsituationteinte);
+
+        labelluminterne = new JLabel("Valeur a partir de laquelle la vitre commence a se teinter (entier)");
+        labelluminterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelluminterne.setBounds(58, 150, 700, 29);
+        panel.add(labelluminterne);
 
         luminterne = new JTextField();
         luminterne.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        luminterne.setBounds(334, 150, 228, 40);
+        luminterne.setBounds(620, 150, 70, 40);
         panel.add(luminterne);
         luminterne.setColumns(10);
-        luminterne.addActionListener(new ActionListener() {//action listenin jetxfiel, if we put enter, it print the value
-            public void actionPerformed(ActionEvent e) {
-                String input2 = luminterne.getText();
-                labelluminterneecoute.setText(input2);
-            }
-        });
 
-        labellumiexterne= new JLabel("Luminosite exterieure (entier(lux))");
-        labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labellumiexterne.setBounds(58, 201, 400, 29);
-        panel.add(labellumiexterne);
+        labelluminterneecoute = new JLabel("lux");
+        labelluminterneecoute.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        labelluminterneecoute.setBounds(700, 150, 210, 29);
+        panel.add(labelluminterneecoute);
 
-        labellumiexterneecoute= new JLabel("");
-        labellumiexterneecoute.setFont(new Font("Tahoma", Font.PLAIN, 25));
-        labellumiexterneecoute.setBounds(575, 201, 210, 29);
-        panel.add(labellumiexterneecoute);
+        labelpourcentageteinte = new JLabel("A combien de pourcent elle doit se teinte (entre 0 et 100)");
+        labelpourcentageteinte.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelpourcentageteinte.setBounds(58, 200, 600, 29);
+        panel.add(labelpourcentageteinte);
 
-        lumiexterne = new JTextField();
-        lumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        lumiexterne.setBounds(334, 201, 228, 40);
-        panel.add(lumiexterne);
-        lumiexterne.setColumns(10);
-        lumiexterne.addActionListener(new ActionListener() { //action listenin jetxfiel, if we put enter, it print the value
-            public void actionPerformed(ActionEvent e) {
-            String input = lumiexterne.getText();
-                labellumiexterneecoute.setText(input);
-            }
-        });
+        pourcentageteinte= new JTextField();
+        pourcentageteinte.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        pourcentageteinte.setBounds(620, 200, 70, 40);
+        panel.add(pourcentageteinte);
+        pourcentageteinte.setColumns(10);
 
-        bconfiguration = new JButton("CONFIGURATION DE LA LUMIERE");
-        bconfiguration.setBounds(250,20,450,50);
+        pourcentageteinteunite = new JLabel("%");
+        pourcentageteinteunite.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        pourcentageteinteunite.setBounds(700, 200, 210, 29);
+        panel.add(pourcentageteinteunite);
+
+        labelaugmente= new JLabel("Lorsque cette valeur va augmenter de (positif)");
+        labelaugmente.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelaugmente.setBounds(58, 250, 600, 29);
+        panel.add(labelaugmente);
+
+        valeuraugmente = new JTextField();
+        valeuraugmente.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        valeuraugmente.setBounds(620, 250, 70, 40);
+        panel.add(valeuraugmente);
+        valeuraugmente.setColumns(10);
+
+        labeluniteaugmente= new JLabel("lux");
+        labeluniteaugmente.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        labeluniteaugmente.setBounds(700, 250, 210, 29);
+        panel.add(labeluniteaugmente);
+
+
+        labelaugmenteteintepourcentage= new JLabel("On augmente aussi le pourcentage de la teinte de (entre 0 et 100)");
+        labelaugmenteteintepourcentage.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelaugmenteteintepourcentage.setBounds(58, 300, 600, 29);
+        panel.add(labelaugmenteteintepourcentage);
+
+        valeuraugmenteteintepourcentage = new JTextField();
+        valeuraugmenteteintepourcentage.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        valeuraugmenteteintepourcentage.setBounds(620, 300, 70, 40);
+        panel.add(valeuraugmenteteintepourcentage);
+        valeuraugmenteteintepourcentage.setColumns(10);
+
+        labeluniteaugmenteteintepourcentage= new JLabel("%");
+        labeluniteaugmenteteintepourcentage.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        labeluniteaugmenteteintepourcentage.setBounds(700, 300, 210, 29);
+        panel.add( labeluniteaugmenteteintepourcentage);
+
+
+
+        bconfiguration = new JButton("CONFIGURATION DE LA TEINTE DE LA FENETRE");
+        bconfiguration.setBounds(250,20,650,50);
         bconfiguration.setBackground(new Color(223,175,44));
         bconfiguration.setFont(bconfiguration.getFont().deriveFont(15.0f));
         panel.add(bconfiguration);
@@ -111,7 +143,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
             }
             if(source == bvalider){
 
-                String vl6 = lumiexterne.getText();
+                String vl6 = valeuraugmente.getText();
                 String vl7 = luminterne.getText();
                 int v6_pars,v7_pars ;
 
@@ -122,7 +154,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                     v6_pars = Integer.parseInt(vl6);
                     if( v6_pars > 50 || v6_pars < 0)
                     {
-                        JOptionPane.showMessageDialog(lumiexterne,"La luminosite Exterieure doit etre comprise entre 0 et 50 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(valeuraugmente,"La luminosite Exterieure doit etre comprise entre 0 et 50 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
                     v7_pars = Integer.parseInt(vl7);
