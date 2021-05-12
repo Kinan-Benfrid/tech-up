@@ -1,6 +1,7 @@
 package episen.si.ing1.pds.client.view.CardConfig;
 
 import episen.si.ing1.pds.client.model.AccessCard;
+import episen.si.ing1.pds.client.model.Building;
 import episen.si.ing1.pds.client.model.Person;
 import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
@@ -46,9 +47,23 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
 
         b1 = new JButton ("Valider");
         b1.setBounds(400,300,120,30);
+
         b1.addMouseListener (new MouseListener () {
             @Override
             public void mouseClicked(MouseEvent e) {
+                RequestSocket request = new RequestSocket();
+                request.setRequest("fullaccess_building_update");
+                Map<String, Object> hm = new HashMap<> ();
+                //hm.put ("person_id", Person.getPerson_id ());
+                hm.put("card_id", AccessCard.getCard_id ());
+                hm.put("building_id", Building.getBuiling_id ());
+                //hm.put("floor_id", Floor.getFloor_id ());
+                //hm.put("space_id", Space.getSpace_id ());
+                request.setData(hm);
+
+                ResponseSocket response1 = socketUtility.sendRequest(request);
+                // data is the list of map we sent in the server (look response)
+
                 JFrame frame = new JFrame("Message");
                 JOptionPane.showMessageDialog(frame, "Mise à jour réussie !");
             }

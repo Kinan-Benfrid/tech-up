@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Vector;
 
 public class FirstScreenCardConfig extends CommonFrame implements ActionListener {
-    private JButton b1,b2,b3,b4;
+    private JButton b1,b2,b3,b4,b5;
     JLabel j1,j2,j3;
     JPanel jp1;
     private JComboBox jcb1;
@@ -37,6 +37,7 @@ public class FirstScreenCardConfig extends CommonFrame implements ActionListener
         b2 = new JButton("Suivant");
         b3 = new JButton("Cliquer ici");
         b4 = new JButton("retour");
+        b5 = new JButton("selectionner batiment");
 
         this.add(jp1);
 
