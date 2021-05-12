@@ -26,74 +26,97 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
     private final SocketUtility socketUtility = new SocketUtility();
     private static final long serialVersionUID = 1L;
     private JPanel p;
-    private JLabel labeltempextfiel,labelinstructionR,labeltempintfiel,labelpStore,labelluminterne,labellumiexterne,labelpteinte,labelinstruction;
+    private JLabel labeltempextfiel,labelunite,labelfenetre,labelinstructionR,labeltempintfiel,labelpStore,labelluminterne,labellumiexterne,labelpteinte,labelinstruction;
 
     public PageOfConfigWindow(){
         p = new JPanel();
         this.add(p);
         p.setLayout(null);
 
-        labeltempextfiel = new JLabel("Temperature exterieure(°)");
+        labelfenetre= new JLabel("Fenetre fermee");
+        labelfenetre.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelfenetre.setBounds(58, 100, 210, 29);
+        p.add(labelfenetre);
+
+        labeltempextfiel = new JLabel("Temperature exterieure");
         labeltempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labeltempextfiel.setBounds(58, 100, 210, 29);
+        labeltempextfiel.setBounds(58, 150, 210, 29);
         p.add(labeltempextfiel);
 
-        labeltempintfiel = new JLabel("Temperature interieure(°)");
+        labelunite = new JLabel("degre");
+        labelunite.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelunite.setBounds(400, 150, 210, 29);
+        p.add(labelunite);
+
+        labeltempintfiel = new JLabel("Temperature interieure");
         labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labeltempintfiel.setBounds(58, 150, 210, 29);
+        labeltempintfiel.setBounds(58, 200, 210, 29);
         p.add(labeltempintfiel);
 
-        labelpStore = new JLabel("Store (% Ouverture)");
-        labelpStore.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelpStore.setBounds(58, 200, 210, 29);
-        labelpStore.setFont(labelpStore.getFont().deriveFont(20.0f));
-        labelpStore.setForeground(new Color(155,0,0));
-        p.add(labelpStore);
-
-        labeltempextfiel = new JLabel("0");
-        labeltempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        labeltempextfiel.setBounds(358, 100, 210, 29);
-        p.add(labeltempextfiel);
-
-
-        labeltempintfiel = new JLabel("0");
-        labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        labeltempintfiel.setBounds(358, 150, 210, 29);
-        p.add(labeltempintfiel);
-
-        labelpStore = new JLabel("0");
-        labelpStore.setFont(new Font("Tahoma", Font.PLAIN, 25));
-        labelpStore.setBounds(358, 200, 210, 29);
-        labelpStore.setFont(labelpStore.getFont().deriveFont(22.0f));
-        labelpStore.setForeground(new Color(155,0,0));
-        p.add(labelpStore);
-//lum
-        labelluminterne = new JLabel("Luminosite interieure(lux)");
+        labelluminterne = new JLabel("Niveau d'ensoleillement");
         labelluminterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelluminterne.setBounds(58, 250, 210, 29);
         p.add(labelluminterne);
 
-        labellumiexterne= new JLabel("Luminosite exterieure(lux)");
+        labeltempextfiel = new JLabel("0");
+        labeltempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        labeltempextfiel.setBounds(358, 150, 210, 29);
+        p.add(labeltempextfiel);
+
+        labeltempintfiel = new JLabel("0");
+        labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        labeltempintfiel.setBounds(358, 200, 210, 29);
+        p.add(labeltempintfiel);
+
+        labelunite = new JLabel("degre");
+        labelunite.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelunite.setBounds(400, 200, 210, 29);
+        p.add(labelunite);
+
+        labelluminterne = new JLabel("100 ");
+        labelluminterne.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        labelluminterne.setBounds(358, 250, 210, 29);
+        p.add(labelluminterne);
+
+        labelunite = new JLabel("lux");
+        labelunite.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelunite.setBounds(400, 250, 210, 29);
+        p.add(labelunite);
+
+
+        labelpStore = new JLabel("Store ferme a ");
+        labelpStore.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelpStore.setBounds(58, 300, 210, 29);
+        labelpStore.setFont(labelpStore.getFont().deriveFont(20.0f));
+        labelpStore.setForeground(new Color(155,0,0));
+        p.add(labelpStore);
+
+
+        labelpStore = new JLabel("0");
+        labelpStore.setFont(new Font("Tahoma", Font.PLAIN, 25));
+        labelpStore.setBounds(358, 300, 210, 29);
+        labelpStore.setFont(labelpStore.getFont().deriveFont(22.0f));
+        labelpStore.setForeground(new Color(155,0,0));
+        p.add(labelpStore);
+
+        labelunite = new JLabel("%");
+        labelunite.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelunite.setBounds(400, 300, 210, 29);
+        p.add(labelunite);
+//lum
+
+
+        /*labellumiexterne= new JLabel("Luminosite exterieure(lux)");
         labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labellumiexterne.setBounds(58, 300, 210, 29);
-        p.add(labellumiexterne);
+        p.add(labellumiexterne);*/
 
-        labelpteinte = new JLabel("Vitre (% Teinte)");
+        labelpteinte = new JLabel("Fenetre teinte a ");
         labelpteinte.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelpteinte.setBounds(58, 350, 210, 29);
         labelpteinte.setFont(labelpStore.getFont().deriveFont(20.0f));
         labelpteinte.setForeground(new Color(155,0,0));
         p.add(labelpteinte);
-
-        labelluminterne = new JLabel("0 ");
-        labelluminterne.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        labelluminterne.setBounds(358, 250, 210, 29);
-        p.add(labelluminterne);
-
-        labellumiexterne= new JLabel("0");
-        labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        labellumiexterne.setBounds(358, 300, 210, 29);
-        p.add(labellumiexterne);
 
         labelpteinte = new JLabel("0");
         labelpteinte.setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -101,6 +124,17 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelpteinte.setFont(labelpStore.getFont().deriveFont(20.0f));
         labelpteinte.setForeground(new Color(155,0,0));
         p.add(labelpteinte);
+
+        labelunite = new JLabel("%");
+        labelunite.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelunite.setBounds(400, 350, 210, 29);
+        p.add(labelunite);
+
+
+       /* labellumiexterne= new JLabel("0");
+        labellumiexterne.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        labellumiexterne.setBounds(358, 300, 210, 29);
+        p.add(labellumiexterne);*/
 
         labelinstruction = new JLabel("Faites suivant pour configurer la temperature  ---->");
         labelinstruction.setFont(new Font("Tahoma", Font.PLAIN, 17));
