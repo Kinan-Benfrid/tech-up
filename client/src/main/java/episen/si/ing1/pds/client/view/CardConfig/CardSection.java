@@ -159,7 +159,10 @@ public class CardSection extends MainCardMenu {
 
 
         b1 = new JButton ("Liste des access");
+        b2 = new JButton ("supprimer les accès persos");
+
         b1.setBounds (280,270,150,30);
+        b2.setBounds (370,270,150,30);
 
         JFrame jf = this;
         b1.addMouseListener (new MouseListener () {
@@ -176,6 +179,7 @@ public class CardSection extends MainCardMenu {
 
                 hm.put("building_id", buildingId);
                 hm.put("card_id", AccessCard.getCard_id ());
+                hm.put ("company_id", Company.getCompany_id ());
 
                 request.setData(hm);
 
@@ -262,6 +266,42 @@ public class CardSection extends MainCardMenu {
             }
         });
 
+        b2.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RequestSocket request2 = new RequestSocket();
+                request2.setRequest("clear_allAccess");
+
+                Map hmData = new HashMap<> ();
+                hmData.put ("card_id", AccessCard.getCard_id ());
+
+                request2.setData (hmData);
+
+                socketUtility.sendRequest (request2);
+
+                //Success message
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
         //data placed in the following JLabels
         for (Map m : namePerson) {
@@ -306,6 +346,7 @@ public class CardSection extends MainCardMenu {
         //p1.add (j12);
         //p1.add (j13);
         p1.add(b1);
+        p1.add(b2);
         p1.add(jcb1);
         this.add(p1);
 

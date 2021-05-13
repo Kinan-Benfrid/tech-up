@@ -8,6 +8,7 @@ import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -39,29 +40,62 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
         jr4 = new JRadioButton("Niveau 3 : Administrateur");
         jr4.setBounds(80,310,200,40);
 
+        if(Person.getRole_id () == 1)
+            jr1.setSelected (true);
+        else if(Person.getRole_id () == 2)
+            jr2.setSelected (true);
+        else if(Person.getRole_id () == 3)
+            jr3.setSelected (true);
+        else if(Person.getRole_id () == 4)
+            jr4.setSelected (true);
+
         ButtonGroup bg = new ButtonGroup();
         bg.add(jr1);
         bg.add(jr2);
         bg.add(jr3);
         bg.add(jr4);
 
+        JPanel form = new JPanel (new FlowLayout (FlowLayout.CENTER));
+        JLabel formFor = new JLabel ("Nv Poste");
+        JTextField subtitle = new JTextField (20);
+
+        subtitle.setText (Person.getSubtitle ());
+
+        form.add(formFor);
+        form.add (subtitle);
+
+        form.setBounds (85,100,300,50);
+
         b1 = new JButton ("Valider");
         b1.setBounds(400,300,120,30);
+
 
         b1.addMouseListener (new MouseListener () {
             @Override
             public void mouseClicked(MouseEvent e) {
                 RequestSocket request = new RequestSocket();
-                request.setRequest("fullaccess_building_update");
-                Map<String, Object> hm = new HashMap<> ();
-                //hm.put ("person_id", Person.getPerson_id ());
-                hm.put("card_id", AccessCard.getCard_id ());
-                hm.put("building_id", Building.getBuiling_id ());
-                //hm.put("floor_id", Floor.getFloor_id ());
-                //hm.put("space_id", Space.getSpace_id ());
-                request.setData(hm);
+                request.setRequest("card_update_role");
+                Map<String, Object> data = new HashMap<> ();
+                data.put("person_id", Person.getPerson_id());
+                if(jr1.isSelected ())
+                    data.put("role_id", 1);
 
-                ResponseSocket response1 = socketUtility.sendRequest(request);
+                else if(jr2.isSelected ())
+                    data.put("role_id", 2);
+
+                else if(jr3.isSelected ())
+                    data.put("role_id", 3);
+
+                else if(jr4.isSelected ())
+                    data.put("role_id", 4);
+
+                data.put ("subtitle", subtitle.getText());
+                request.setData(data);
+
+                ResponseSocket response = socketUtility.sendRequest(request);
+                System.out.println (response);
+
+
                 // data is the list of map we sent in the server (look response)
 
                 JFrame frame = new JFrame("Message");
@@ -89,7 +123,7 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
             }
         });
 
-
+        p1.add(form);
         p1.add(jr1);
         p1.add(jr2);
         p1.add(jr3);
@@ -98,7 +132,7 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
         p1.add(b1);
 
 
-        jr1.addMouseListener (new MouseListener () {
+       /* jr1.addMouseListener (new MouseListener () {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //adding access through clearance level
@@ -236,7 +270,7 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
             public void mouseExited(MouseEvent e) {
 
             }
-        });
+        });*/
     }
 
 

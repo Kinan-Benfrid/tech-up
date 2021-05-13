@@ -95,6 +95,7 @@ public class FirstScreenCardConfig extends CommonFrame implements ActionListener
 
                 if (e.getStateChange() == 1) {
                     Map item = (Map) e.getItem();
+                    System.out.println ("Person is : " + item);
                     int person_id = (Integer) item.get("person_id");
                     int card_id = (Integer) item.get("card_id");
                     String person_firstname = (String) item.get("person_firstname");
@@ -104,7 +105,8 @@ public class FirstScreenCardConfig extends CommonFrame implements ActionListener
                     AccessCard.setCard_id (card_id);
                     Person.setPerson_firstname(person_firstname);
                     Person.setPerson_surname(person_surname);
-
+                    Person.setSubtitle (String.valueOf (item.get ("position_p")));
+                    Person.setRole_id ( (Integer) item.get ("role_id"));
                     System.out.println(person_firstname);
                     System.out.println(person_surname);
 

@@ -5,6 +5,8 @@ public class Person {
     private static String person_firstname = "";
     private static String person_surname = "";
     private static String number_person;
+    private static int role_id;
+    private static String subtitle;
 
     public static int getPerson_id(){
         return person_id;
@@ -38,4 +40,19 @@ public class Person {
          return Person.number_person = number_person;
     }
 
+    public static int getRole_id() {
+        return role_id;
+    }
+
+    public static void setRole_id(int role_id) {
+        Person.role_id = role_id;
+    }
+
+    public static String getSubtitle() {
+        return subtitle;
+    }
+
+    public static void setSubtitle(String subtitle) {
+        Person.subtitle = subtitle;
+    }
 }
