@@ -23,10 +23,18 @@ import java.util.List;
 public class RentedSpacesView extends CommonFrame {
 
     private final SocketUtility socketUtility = new SocketUtility();
-    private JPanel jp1;
-    private JComboBox jc1, jc2, jc3;
-    private JLabel jl1, jl2, jl3;
-    private JButton jb1, jb2, jb3, jb4, jb5;
+    private  JPanel jp1;
+    private  JComboBox jc1;
+    private  JComboBox jc2;
+    private  JComboBox jc3;
+    private  JLabel jl1;
+    private  JLabel jl2;
+    private  JLabel jl3;
+    private  JButton jb1;
+    private  JButton jb2;
+    private  JButton jb3;
+    private  JButton jb4;
+    private  JButton jb5;
     private String[] buildings, floors, spaces;
 
     public RentedSpacesView() {
@@ -131,7 +139,7 @@ public class RentedSpacesView extends CommonFrame {
                     String buildingName = (String) item.get("building_name");
                     RequestSocket requestSocket = new RequestSocket();
                     Building.setBuilding_id(buildingId);
-                    Building.setBuiling_name(buildingName);
+                  //  Building.setBuilding_name(buildingName);
                     requestSocket.setRequest("floor_list");
                     Map<String, Object> data = new HashMap<>();
                     data.put("company_id", Company.getCompany_id());
@@ -247,6 +255,13 @@ public class RentedSpacesView extends CommonFrame {
         jb3.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+
+                RequestSocket requestSocket = new RequestSocket();
+                requestSocket.setRequest("Insert_Rental");
+                Map<String, Object> data = new HashMap<>();
+                data.put("company_id", Company.getCompany_id());
+                requestSocket.setData(data);
+                ResponseSocket responseRental = socketUtility.sendRequest(requestSocket);
                 dispose();
                 FirstPageRentCriteria f = new FirstPageRentCriteria();
                 f.setVisible(true);
