@@ -572,9 +572,7 @@ public class RequestHandler {
             writer.println(responseMsg);
 
         }
-
-
-        else if (requestName.equals("Select_rental")) {
+       else if (requestName.equals("Select_rental")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
@@ -597,16 +595,36 @@ public class RequestHandler {
             writer.println(responseMsg);
         }
 
+        else if (requestName.equals("Delete_Rental")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            String query = "DELETE from rental where rental_id in (Select max(rental_id) from rental)";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.executeUpdate();
+
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+
 
         else if (requestName.equals("Update_Rental")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
             String query = "UPDATE space set rental_id = ? where rental_id is null and space_id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
+
+
+
             statement.setInt(1,(Integer) dataLoaded.get("rental_id_space"));
             statement.setInt(2,(Integer) dataLoaded.get("id_space"));
 
             statement.executeUpdate();
+
 
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
