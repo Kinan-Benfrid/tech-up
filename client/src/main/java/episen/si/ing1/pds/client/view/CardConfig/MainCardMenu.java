@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class MainCardMenu extends CommonFrame implements ActionListener {
     private Box boxMenu;
-    private JButton b0,b1, b2, b3, b4, b5, b6,b7;
+    private JButton b0,b1, b2, b3, b4, b5, b6,b7,b8;
 
     public MainCardMenu() {
 
@@ -109,6 +109,19 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
 
         this.add(boxMenu, BorderLayout.WEST);
 
+        b8 = new JButton("Ecran de test");
+        b8.setPreferredSize(new Dimension(170, 30));
+        b8.setFont(new Font("Arial", Font.PLAIN, 12));
+        b8.setBackground(new Color(111,174,143));
+        b8.addActionListener(this);
+        Box box8 = new Box(BoxLayout.X_AXIS);
+        box8.add(Box.createGlue());
+        box8.add(b8);
+        box8.add(Box.createGlue());
+        boxMenu.add(box8, b8);
+
+        this.add(boxMenu, BorderLayout.WEST);
+
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -150,6 +163,10 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
             this.dispose();
             SearchingCard sc = new SearchingCard();
             sc.setVisible(true);
+        } else if (source == b8) {
+            dispose ();
+            TestScreen ts = new TestScreen ();
+            ts.setVisible (true);
         }
     }
 

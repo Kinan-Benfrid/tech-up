@@ -162,7 +162,7 @@ public class CardSection extends MainCardMenu {
         b2 = new JButton ("supprimer les accès persos");
 
         b1.setBounds (280,270,150,30);
-        b2.setBounds (370,270,150,30);
+        b2.setBounds (450,270,210,30);
 
         JFrame jf = this;
         b1.addMouseListener (new MouseListener () {
@@ -190,7 +190,7 @@ public class CardSection extends MainCardMenu {
 
                 for (Map data: accessList) {
                     Map dataHm = new HashMap ();
-                    dataHm.put ("Batiment", data.get ("building_name"));
+                    //dataHm.put ("Batiment", data.get ("building_name"));
                     dataHm.put ("Etage", data.get ("floor_name"));
                     dataHm.put ("Type", data.get ("type"));
                     dataHm.put ("Nom", data.get ("name"));
@@ -226,7 +226,7 @@ public class CardSection extends MainCardMenu {
                 };
 
                 JDialog dialog = new JDialog(jf);
-                dialog.setSize(800, 1000);
+                dialog.setSize(800, 900);
                 dialog.setPreferredSize (dialog.getSize ());
 
                 JPanel pane = new JPanel ();

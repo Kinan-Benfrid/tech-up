@@ -139,7 +139,7 @@ public class RequestHandler {
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
             List<Map> name = new ArrayList<>();
-            String sql = "select person_id, person_firstname, person_surname from person where company_id=?";
+            String sql = "SELECT person.* FROM person LEFT JOIN access_card ac on person.person_id = ac.person_id where card_id is null AND company_id=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (Integer) dataLoaded.get("company_id"));
             ResultSet rs = statement.executeQuery();
@@ -1035,7 +1035,10 @@ public class RequestHandler {
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
             List<Map> name = new ArrayList<>();
-            String sql = "select person_firstname,person_surname,birth_date,position_p, clearance_level,position_type from person natural join access_card where card_id =?";
+            String sql = "select person_firstname,person_surname,birth_date,position_p, r.role_id - 1 as clearance_level, r.designation as position_type from person\n" +
+                    "    natural join access_card\n" +
+                    "    natural join roles r\n" +
+                    "where card_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (Integer) dataLoaded.get("card_id"));
             ResultSet rs = statement.executeQuery();
@@ -1546,6 +1549,54 @@ public class RequestHandler {
 
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
+        } else if (requestName.equals("test_access")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            if (String.valueOf (dataLoaded.get ("type")).equals ("space"))  {
+                String sql = "SELECT * FROM iscardaccessibletospace(?, ?) as access";
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+                statement.setInt(2, (Integer) dataLoaded.get("space_id"));
+
+                ResultSet rs = statement.executeQuery();
+                if (rs.next()) {
+                    Map<String, Object> hm = new HashMap<>();
+                    hm.put("access", rs.getBoolean ("access"));
+
+                    name.add(hm);
+                }
+
+                Map<String, Object> response = new HashMap<>();
+                response.put("request", requestName);
+                response.put("data", name);
+
+                String responseMsg = mapper.writeValueAsString(response);
+                writer.println(responseMsg);
+            } else if (String.valueOf (dataLoaded.get ("type")).equals ("equipment")) {
+                String sql = "SELECT * FROM iscardaccessibletoequip(?, ?) as access";
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+                statement.setInt(2, (Integer) dataLoaded.get("equip_id"));
+
+                ResultSet rs = statement.executeQuery();
+                if (rs.next()) {
+                    Map<String, Object> hm = new HashMap<>();
+                    hm.put("access", rs.getBoolean ("access"));
+
+                    name.add(hm);
+                }
+
+                Map<String, Object> response = new HashMap<>();
+                response.put("request", requestName);
+                response.put("data", name);
+
+                String responseMsg = mapper.writeValueAsString(response);
+                writer.println(responseMsg);
+            }
+
+
         }
     }
 }
