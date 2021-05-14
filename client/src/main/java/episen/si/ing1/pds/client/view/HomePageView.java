@@ -1,11 +1,12 @@
 package episen.si.ing1.pds.client.view;
 
 import episen.si.ing1.pds.client.model.Company;
-import episen.si.ing1.pds.client.model.Person;
 import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
+import episen.si.ing1.pds.client.view.SpaceRental.FirstPageRentCriteria;
+import episen.si.ing1.pds.client.view.SpaceRental.FirstPageRentCriteriaNewCompany;
 
 import javax.swing.*;
 import java.awt.*;
@@ -122,9 +123,16 @@ public class HomePageView extends CommonFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source == b1) {
+            RequestSocket requestSocket = new RequestSocket();
+            requestSocket.setRequest("Insert_Rental");
+            Map<String, Object> data = new HashMap<>();
+            data.put("company_id", Company.getCompany_id());
+            requestSocket.setData(data);
+            ResponseSocket responseRental = socketUtility.sendRequest(requestSocket);
             this.dispose();
-            HomePageRentView hp = new HomePageRentView();
-            hp.setVisible(true);
+            FirstPageRentCriteriaNewCompany fprcnc = new FirstPageRentCriteriaNewCompany();
+            fprcnc.setVisible(true);
+
         } else if (source == b2) {
             this.dispose();
             RentedSpacesView r = new RentedSpacesView();
