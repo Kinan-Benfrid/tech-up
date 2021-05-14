@@ -656,228 +656,6 @@ public class RequestHandler {
             writer.println(responseMsg);
         }
 
-        else if (requestName.equals("Imprimante")) {
-            ObjectMapper mapper = new ObjectMapper();
-
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select equipmenttype_id, count(equipment_id) from equipment where equipmenttype_id = 2 and rental_id is null group by equipmenttype_id";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("equipmenttype_id", rs.getInt("equipmenttype_id"));
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-        else if (requestName.equals("Prise connectee")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select equipmenttype_id,count(equipment_id) from equipment where equipmenttype_id = 1 and rental_id is null group by equipmenttype_id";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("equipmenttype_id", rs.getInt("equipmenttype_id"));
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
-        else if (requestName.equals("Capteur presence")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select equipmenttype_id,count(equipment_id) from equipment where equipmenttype_id = 6 and rental_id is null group by equipmenttype_id";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("equipmenttype_id", rs.getInt("equipmenttype_id"));
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
-        else if (requestName.equals("Imprimante 3D")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select equipmenttype_id,count(equipment_id) from equipment where equipmenttype_id = 9 and rental_id is null group by equipmenttype_id";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("equipmenttype_id", rs.getInt("equipmenttype_id"));
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
-        else if (requestName.equals("Capteur de ventilation")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select equipmenttype_id,count(equipment_id) from equipment where equipmenttype_id = 7 and rental_id is null group by equipmenttype_id";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("equipmenttype_id", rs.getInt("equipmenttype_id"));
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
-        else if (requestName.equals("Capteur Luminosite")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select equipmenttype_id,count(equipment_id) from equipment where equipmenttype_id = 3 and rental_id is null group by equipmenttype_id";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("equipmenttype_id", rs.getInt("equipmenttype_id"));
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
-        else if (requestName.equals("Television")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select equipmenttype_id,count(equipment_id) from equipment where equipmenttype_id = 8 and rental_id is null group by equipmenttype_id";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("equipmenttype_id", rs.getInt("equipmenttype_id"));
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
-        else if (requestName.equals("Fenetre electro-chromatique")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select equipmenttype_id,count(equipment_id) from equipment where equipmenttype_id = 5 and rental_id is null group by equipmenttype_id";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("equipmenttype_id", rs.getInt("equipmenttype_id"));
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
-        else if (requestName.equals("Capteur Fumee")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select equipmenttype_id,count(equipment_id) from equipment where equipmenttype_id = 10 and rental_id is null group by equipmenttype_id";
-            PreparedStatement statement = connection.prepareStatement(query);
-
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("equipmenttype_id", rs.getInt("equipmenttype_id"));
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-
-        }
-        else if (requestName.equals("Video projecteur")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select equipmenttype_id,count(equipment_id) from equipment where equipmenttype_id = 4 and rental_id is null group by equipmenttype_id";
-            PreparedStatement statement = connection.prepareStatement(query);
-
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("equipmenttype_id", rs.getInt("equipmenttype_id"));
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
 
         else if (requestName.equals("Select_equipment")) {
             ObjectMapper mapper = new ObjectMapper();
@@ -890,7 +668,7 @@ public class RequestHandler {
             List<Map> list = new ArrayList<>();
             while (rs.next()) {
                 Map m = new HashMap();
-                m.put("equipmenttype_id", rs.getInt("equipmenttype_id"));
+               // m.put("equipmenttype_id", rs.getInt("equipmenttype_id"));
                 m.put("designation", rs.getString("designation"));
                 list.add(m);
             }
@@ -925,13 +703,13 @@ public class RequestHandler {
         }
 
 
-       /* else if (requestName.equals("Update_equipment")) {
+        else if (requestName.equals("Update_equipment")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
-            String query = "UPDATE equipment SET rental_id = ? where equipment_id in (select equipment_id from (select equipment_id from equipment where equipmenttype_id =2 and rental_id is null limit 5)as Alias )";
+            String query = "UPDATE equipment SET rental_id = ? where equipment_id in (select equipment_id from (select equipment_id from equipment where equipmenttype_id =? and rental_id is null limit 2)as Alias )";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1,(Integer) dataLoaded.get("rental_id_space"));
-            statement.setInt(2,(Integer) dataLoaded.get("id_space"));
+            statement.setInt(2,(Integer) dataLoaded.get("equipmenttype_id"));
 
             statement.executeUpdate();
 
@@ -941,10 +719,6 @@ public class RequestHandler {
             writer.println(responseMsg);
 
         }
-
-
-
-        */
 
         else if (requestName.equals("position")) {
             ObjectMapper mapper = new ObjectMapper();
