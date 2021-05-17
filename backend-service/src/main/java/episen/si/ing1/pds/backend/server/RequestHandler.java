@@ -7,13 +7,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.lang.*;
 
 
@@ -912,7 +910,7 @@ public class RequestHandler {
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
             List<Map> name = new ArrayList<>();
-            String sql = "select person_firstname,person_surname,birth_date,position_p, r.role_id - 1 as clearance_level, r.designation as position_type from person\n" +
+            String sql = "select person_surname,person_firstname,birth_date,position_p, r.role_id - 1 as clearance_level, r.designation as position_type from person\n" +
                     "    natural join access_card\n" +
                     "    natural join roles r\n" +
                     "where card_id = ?";
@@ -1153,7 +1151,7 @@ public class RequestHandler {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
 
-        }         else if (requestName.equals("card_update_role")) {
+        } else if (requestName.equals("card_update_role")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
@@ -1451,6 +1449,8 @@ public class RequestHandler {
 
                 String responseMsg = mapper.writeValueAsString(response);
                 writer.println(responseMsg);
+
+
             } else if (String.valueOf (dataLoaded.get ("type")).equals ("equipment")) {
                 String sql = "SELECT * FROM iscardaccessibletoequip(?, ?) as access";
                 PreparedStatement statement = connection.prepareStatement(sql);
@@ -1473,6 +1473,40 @@ public class RequestHandler {
                 writer.println(responseMsg);
             }
 
+
+        }   else if (requestName.equals("date_update")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            String date = (String) dataLoaded.get("subtitle");
+            java.util.Date utilDate = Date.valueOf (date);
+            java.sql.Date sqlDate = java.sql.Date.valueOf (date);
+            System.out.println ("date " + java.sql.Date.valueOf (date));
+            System.out.println ("sql date" + sqlDate);
+            String sql = "UPDATE access_card SET start_date=? WHERE card_id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            Calendar cal = Calendar.getInstance ();
+            cal.clear (Calendar.DATE);
+            cal.clear (Calendar.ZONE_OFFSET);
+            cal.clear (Calendar.MILLISECOND);
+            cal.clear (Calendar.MINUTE);
+            cal.clear (Calendar.HOUR);
+            statement.setDate(1, sqlDate,cal);
+            statement.setInt (2, (Integer)dataLoaded.get("card_id"));
+            System.out.println ("prepare statement" + statement);
+            System.out.println ("date update");
+            System.out.println (sql);
+            statement.executeUpdate();
+            System.out.println ("date update 2");
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
 
         }
     }

@@ -130,11 +130,11 @@ public class CardSection extends MainCardMenu {
                     //dataHm.put ("Etage", data.get ("floor_name"));
                    // dataHm.put ("Nom", data.get ("name"));
                     //dataHm.put ("accessible", data.get ("accessible"));
+                    dataHm.put ("accessible", data.get ("accessible"));
                     dataHm.put ("Etage", data.get ("floor_name"));
                     //dataHm.put ("Nom", data.get ("name"));
                     dataHm.put ("Nom", data.get ("name"));
                     dataHm.put ("Type", data.get ("type"));
-                    dataHm.put ("accessible", data.get ("accessible"));
 
 
 
