@@ -28,6 +28,8 @@ public class FirstScreenCardConfig extends CommonFrame implements ActionListener
     private final SocketUtility socketUtility = new SocketUtility();
 
     public FirstScreenCardConfig() {
+
+        this.setLocationRelativeTo(null);
         jp1 = new JPanel();
         jp1.setLayout(null);
         j1 = new JLabel("Premiere configuration ?");

@@ -23,6 +23,7 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
     private SocketUtility socketUtility = new SocketUtility ();
 
     public ActivationCard() {
+        this.setLocationRelativeTo(null);
         p1 = new JPanel();
         this.add(p1);
 
@@ -126,6 +127,7 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
             public void mouseClicked(MouseEvent e) {
                 JFrame frame = new JFrame("Message");
                 JOptionPane.showMessageDialog(frame,"Le badge est maintenant à jour !");
+
             }
 
             @Override
@@ -164,6 +166,10 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
 
                 JFrame frame = new JFrame("Message");
                 JOptionPane.showMessageDialog(frame,"Badge désassocié");
+
+                dispose();
+                FirstScreenCardConfig c = new FirstScreenCardConfig();
+                c.setVisible(true);
             }
 
             @Override

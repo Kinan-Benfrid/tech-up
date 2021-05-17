@@ -23,6 +23,7 @@ public class CardAssociation extends CommonFrame {
     private final SocketUtility socketUtility = new SocketUtility();
 
     public CardAssociation() {
+        this.setLocationRelativeTo(null);
         pan1 = new JPanel();
         pan1.setLayout(null);
 

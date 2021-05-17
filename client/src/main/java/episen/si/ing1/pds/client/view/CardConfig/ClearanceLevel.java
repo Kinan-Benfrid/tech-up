@@ -19,17 +19,24 @@ import java.util.Map;
 public class ClearanceLevel extends MainCardMenu implements ActionListener{
     private JPanel p1;
     private JButton b1,b2,b3;
-    private JLabel l1;
+    private JLabel l1,l2;
     private JRadioButton jr1,jr2,jr3,jr4;
     private SocketUtility socketUtility = new SocketUtility ();
 
     public ClearanceLevel() {
+        this.setLocationRelativeTo(null);
         p1 = new JPanel();
         p1.setLayout(null);
         this.add(p1);
 
-        l1 = new JLabel("Niveaux d'habilitation");
-        l1.setBounds(85,150,170,30);
+        l1 = new JLabel("Configuration des niveaux d'habilitation");
+        l2 = new JLabel ("Attribuer un niveau d'habilitation");
+
+        l1.setBounds(20,20,500,30);
+        l2.setBounds(40,150,250,30);
+
+        l1.setFont(new Font("Arial", Font.PLAIN, 23));
+        l2.setFont(new Font("Arial", Font.PLAIN, 17));
 
         jr1 = new JRadioButton("Niveau 0 : Visiteur externe au Digital Workplace");
         jr1.setBounds(80,190,300,40);
@@ -56,7 +63,7 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
         bg.add(jr4);
 
         JPanel form = new JPanel (new FlowLayout (FlowLayout.CENTER));
-        JLabel formFor = new JLabel ("Nv Poste");
+        JLabel formFor = new JLabel ("Entrer le nouveau poste : ");
         JTextField subtitle = new JTextField (20);
 
         subtitle.setText (Person.getSubtitle ());
@@ -64,7 +71,7 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
         form.add(formFor);
         form.add (subtitle);
 
-        form.setBounds (85,100,300,50);
+        form.setBounds (20,80,400,70);
 
         b1 = new JButton ("Valider");
         b1.setBounds(400,300,120,30);
@@ -129,148 +136,9 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
         p1.add(jr3);
         p1.add(jr4);
         p1.add(l1);
+        p1.add(l2);
         p1.add(b1);
 
-
-       /* jr1.addMouseListener (new MouseListener () {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                //adding access through clearance level
-                RequestSocket request = new RequestSocket();
-                request.setRequest("clearance_level0");
-                Map<String, Object> data = new HashMap<> ();
-                data.put("person_id", Person.getPerson_id());
-                data.put("card_id", AccessCard.getCard_id());
-                request.setData(data);
-
-                ResponseSocket response = socketUtility.sendRequest(request);
-                System.out.println (response);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
-
-        jr2.addMouseListener (new MouseListener () {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                RequestSocket request = new RequestSocket();
-                request.setRequest("clearance_level1");
-                Map<String, Object> data = new HashMap<> ();
-                data.put("person_id", Person.getPerson_id());
-                data.put("card_id", AccessCard.getCard_id());
-                request.setData(data);
-
-                ResponseSocket response = socketUtility.sendRequest(request);
-                System.out.println (response);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
-
-        jr3.addMouseListener (new MouseListener () {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                RequestSocket request = new RequestSocket();
-                request.setRequest("clearance_level2");
-                Map<String, Object> data = new HashMap<> ();
-                data.put("person_id", Person.getPerson_id());
-                data.put("card_id", AccessCard.getCard_id());
-                request.setData(data);
-
-                ResponseSocket response = socketUtility.sendRequest(request);
-                System.out.println (response);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
-
-        jr4.addMouseListener (new MouseListener () {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                RequestSocket request = new RequestSocket();
-                request.setRequest("clearance_level3");
-                Map<String, Object> data = new HashMap<> ();
-                data.put("person_id", Person.getPerson_id());
-                data.put("card_id", AccessCard.getCard_id());
-                request.setData(data);
-
-                ResponseSocket response = socketUtility.sendRequest(request);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });*/
     }
 
 

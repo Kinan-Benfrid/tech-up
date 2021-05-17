@@ -22,28 +22,29 @@ public class CardAccessEquipments extends MainCardMenu {
     private JLabel j1;
     private JComboBox jb1,jb2,jb3,jc1;
     private JButton b1,b2;
-    private JLabel l1,l2,l3;
+    private JLabel l1,l2,l3,l4;
     private SocketUtility socketUtility = new SocketUtility ();
     private boolean equipThere = false;
 
     public CardAccessEquipments() {
+        this.setLocationRelativeTo(null);
         p1 = new JPanel ();
-        j1 = new JLabel ("Equipements et capteurs");
+        j1 = new JLabel ("Configruation des droits d'accès aux équipements et capteurs");
         p1.setLayout (null);
 
-        j1.setFont(new Font ("Arial", Font.PLAIN, 24));
-        j1.setBounds (30,20,270,35);
+        j1.setFont(new Font ("Arial", Font.PLAIN, 20));
+        j1.setBounds(20,10,800,60);
 
         l1 = new JLabel("Batiment");
         l1.setBounds(30,60,120,90);
-        l1.setFont(new Font ("Arial", Font.PLAIN, 20));
+        l1.setFont(new Font ("Arial", Font.PLAIN, 17));
 
 
         b1 = new JButton ("Valider l'accès");
         b2 = new JButton ("Supprimer l'accès");
 
-        b1.setBounds (300,200,170,35);
-        b2.setBounds (300,270,170,35);
+        b1.setBounds (320,450,150,25);
+        b2.setBounds (480,450,160,25);
 
         b1.setEnabled (equipThere);
         b2.setEnabled (equipThere);
@@ -73,7 +74,7 @@ public class CardAccessEquipments extends MainCardMenu {
         jb3.setEnabled(false);
         //putting the
         jb1 = new JComboBox(new Vector (buildingAccess));
-        jb1.setBounds(30,115,230,20);
+        jb1.setBounds(30,125,230,20);
 
 
         jb1.setRenderer(new DefaultListCellRenderer() {
@@ -136,11 +137,16 @@ public class CardAccessEquipments extends MainCardMenu {
 
         l2 = new JLabel("Etage");
         l2.setBounds(30,130,120,90);
-        l2.setFont(new Font("Arial", Font.PLAIN, 20));
+        l2.setFont(new Font("Arial", Font.PLAIN, 17));
 
         l3 = new JLabel("Espace");
         l3.setBounds(30,250,120,90);
-        l3.setFont(new Font("Arial", Font.PLAIN, 20));
+        l3.setFont(new Font("Arial", Font.PLAIN, 17));
+
+
+        l4 = new JLabel ("Equipements et capteurs");
+        l4.setBounds(30,340,230,90);
+        l4.setFont(new Font("Arial", Font.PLAIN, 17));
 
         jb2.setBounds(30,200,230,20);
         jb3.setBounds(30,310,230,20);
@@ -357,7 +363,7 @@ public class CardAccessEquipments extends MainCardMenu {
             }
         });
 
-        jc1.setBounds (300,30,150,20);
+        jc1.setBounds (30,410,200,20);
 
         p1.add (j1);
         p1.add (b1);
@@ -365,6 +371,7 @@ public class CardAccessEquipments extends MainCardMenu {
         p1.add(l1);
         p1.add(jb1);
         p1.add(l2);
+        p1.add(l4);
         p1.add(jb2);
         p1.add(l3);
         p1.add(jb3);

@@ -18,7 +18,7 @@ import java.util.Vector;
 
 public class TestScreen extends MainCardMenu{
 
-    private JLabel j;
+    private JLabel j0,j1,j2,j3,j4;
     private JComboBox jb1,jb2,jb3,jc1;
     private JPanel p1;
     private boolean equipThere = false;
@@ -26,9 +26,31 @@ public class TestScreen extends MainCardMenu{
     private JButton b1;
 
     public TestScreen() {
-
+        this.setLocationRelativeTo(null);
         p1 = new JPanel ();
         p1.setLayout (null);
+
+        j0 = new JLabel ("Testez les accès");
+        j0.setBounds (20,20,200,30);
+        j0.setFont(new Font("Arial", Font.PLAIN, 20));
+
+        j1 = new JLabel("Batiment");
+        j1.setBounds(30,45,120,90);
+        j1.setFont(new Font ("Arial", Font.PLAIN, 17));
+
+        j2 = new JLabel("Etage");
+        j2.setBounds(30,130,120,90);
+        j2.setFont(new Font("Arial", Font.PLAIN, 17));
+
+        j3 = new JLabel("Espace");
+        j3.setBounds(30,250,120,90);
+        j3.setFont(new Font("Arial", Font.PLAIN, 17));
+
+
+        j4 = new JLabel ("Equipements et capteurs");
+        j4.setBounds(30,340,230,90);
+        j4.setFont(new Font("Arial", Font.PLAIN, 17));
+
 
         RequestSocket request = new RequestSocket();
         request.setRequest("building_list");
@@ -40,7 +62,7 @@ public class TestScreen extends MainCardMenu{
 
         ResponseSocket response1 = socketUtility.sendRequest(request);
         // data is the list of map we sent in the server (look response)
-        java.util.List<Map> buildingAccess = (java.util.List<Map>) response1.getData();
+        List<Map> buildingAccess = (List<Map>) response1.getData();
 
         //creating jcombobox to retrieve data in
         DefaultComboBoxModel jc2Model = new DefaultComboBoxModel();
@@ -96,7 +118,7 @@ public class TestScreen extends MainCardMenu{
 
                     ResponseSocket response2 = socketUtility.sendRequest(request2);
                     // data is the list of map we sent in the server (look response)
-                    java.util.List<Map> floorAccess = (java.util.List<Map>) response2.getData();
+                    List<Map> floorAccess = (List<Map>) response2.getData();
                     System.out.println (floorAccess);
 
                     jc2Model.removeAllElements();
@@ -169,7 +191,7 @@ public class TestScreen extends MainCardMenu{
                     requestSocket.setData(data);
 
                     ResponseSocket responseSpace = socketUtility.sendRequest(requestSocket);
-                    java.util.List<Map> spaceList = (java.util.List<Map>) responseSpace.getData();
+                    List<Map> spaceList = (List<Map>) responseSpace.getData();
 
                     System.out.println(spaceList);
                     // clear the data in the drop down list
@@ -211,7 +233,7 @@ public class TestScreen extends MainCardMenu{
                     request1.setRequest(requestName);
                     request1.setData(hm1);
                     ResponseSocket response = socketUtility.sendRequest(request1);
-                    java.util.List<Map> equipment_list = (List<Map>) response.getData();
+                    List<Map> equipment_list = (List<Map>) response.getData();
 
                     equipThere = equipment_list.size () > 0;
 
@@ -262,10 +284,10 @@ public class TestScreen extends MainCardMenu{
             }
         });
 
-        jc1.setBounds (300,150,150,20);
+        jc1.setBounds (30,410,200,20);
 
         b1 = new JButton ("tester");
-        b1.setBounds (350,220,150,20);
+        b1.setBounds (350,410,150,20);
 
         b1.addMouseListener (new MouseListener () {
             @Override
@@ -345,6 +367,11 @@ public class TestScreen extends MainCardMenu{
         p1.add(jb3);
         p1.add(jc1);
         p1.add(b1);
+        p1.add(j0);
+        p1.add(j1);
+        p1.add(j2);
+        p1.add(j3);
+        p1.add(j4);
         this.add(p1);
     }
 

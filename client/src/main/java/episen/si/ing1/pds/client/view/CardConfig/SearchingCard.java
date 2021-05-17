@@ -29,6 +29,9 @@ public class SearchingCard extends CommonFrame implements ActionListener {
 
 
     public SearchingCard() {
+
+        this.setLocationRelativeTo(null);
+
         jp1 = new JPanel();
         jp1.setLayout(null);
 

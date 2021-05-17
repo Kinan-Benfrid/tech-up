@@ -21,10 +21,11 @@ public class CardSection extends MainCardMenu {
     private JPanel p1;
     private JButton b1,b2;
     private JComboBox jcb1;
-    private JLabel j1,j2,j3,j4,j5,j6,j7,j8,j9,j10,j11,j12,j13;
+    private JLabel j1,j2,j3,j4,j5,j6,j7,j8,j9,j10,j11,j12,j13,j14;
     private SocketUtility socketUtility = new SocketUtility();
 
     public CardSection() {
+        this.setLocationRelativeTo(null);
         p1= new JPanel();
         p1.setLayout (null);
 
@@ -33,16 +34,22 @@ public class CardSection extends MainCardMenu {
         j8 = new JLabel ("Poste : ");
         j9 = new JLabel ("Niveau d'habilitation : ");
         j11 = new JLabel ("Type de poste : ");
-        //j12 = new JLabel ("Equipements : ");
-        //j13 = new JLabel ("Zone d'acces : ");
+        j12 = new JLabel ("Liste des accès ");
+        j13 = new JLabel ("Supprimer les accès ajoutés ");
+        j14 = new JLabel ("Badge ");
 
-        j6.setBounds (20,30,150,30);
+        j6.setBounds (20,55,150,30);
         j7.setBounds (20,100,150,30);
         j8.setBounds (20,150,150,30);
         j9.setBounds (20,180,150,30);
         j11.setBounds (20,220,150,30);
-        //j12.setBounds (100,270,150,30);
-        //j13.setBounds (310,270,150,30);
+        j12.setBounds (20,288,150,30);
+        j13.setBounds (380,270,200,30);
+        j14.setBounds (20,20,180,30);
+
+        j14.setFont(new Font("Arial", Font.PLAIN, 23));
+
+
         //sending a request to retrieve person data
         RequestSocket requestSocket = new RequestSocket();
         requestSocket.setRequest("name_person");
@@ -54,77 +61,6 @@ public class CardSection extends MainCardMenu {
         ResponseSocket response = socketUtility.sendRequest(requestSocket);
         List<Map> namePerson = (List<Map>) response.getData();
 
-       /* //sending a request to retrieve equipment's access
-        RequestSocket requestSocket4 = new RequestSocket();
-        requestSocket4.setRequest("show_equipment");
-        Map<String, Object> data3 = new HashMap<>();
-        data3.put ("person_id",Person.getPerson_id ());
-        data3.put("card_id", AccessCard.getCard_id ());
-        requestSocket4.setData(data3);
-
-
-        ResponseSocket response4 = socketUtility.sendRequest(requestSocket4);
-        List<Map> showEquipment = (List<Map>) response4.getData();
-
-        //sending a request to retrieve space's access
-        RequestSocket requestSocket5 = new RequestSocket();
-        requestSocket5.setRequest("show_space");
-        Map<String, Object> data4 = new HashMap<>();
-        data4.put ("person_id",Person.getPerson_id ());
-        data4.put("card_id", AccessCard.getCard_id ());
-        requestSocket5.setData(data4);
-
-        ResponseSocket response5 = socketUtility.sendRequest(requestSocket5);
-        List<Map> showSpace = (List<Map>) response5.getData();
-        System.out.println ("data equipmenttype kinan" + showEquipment);
-
-        //table in which data is retrieved
-        String columns[] = {"designation"};
-        String dataEq[][] = new String[showEquipment.size ()][1];
-
-        ArrayList<String> equipmenType = new ArrayList<> ();
-
-        for(Map m : showEquipment) {
-            equipmenType.add((String) m.get ("designation"));
-        }
-
-        for (int i=0; i < equipmenType.size (); i++) {
-            dataEq[i][0] = equipmenType.get (i);
-        }
-
-        System.out.println ("liste eq" + equipmenType);
-
-        DefaultTableModel model = new DefaultTableModel (dataEq, columns);
-        JTable table = new JTable(model);
-        table.setShowGrid(true);
-        table.setShowVerticalLines(true);
-
-
-        String columnss[] = {"designation"};
-        String dataSp[][] = new String[showSpace.size ()][1];
-
-        ArrayList<String> spaceType = new ArrayList<> ();
-
-        for(Map m : showSpace) {
-            spaceType.add((String) m.get ("designation"));
-        }
-
-        for (int i=0; i < spaceType.size (); i++) {
-            dataSp[i][0] = spaceType.get (i);
-        }
-
-        System.out.println ("liste space" + spaceType);
-
-        DefaultTableModel model2 = new DefaultTableModel (dataSp, columnss);
-        JTable table2 = new JTable(model2);
-        table2.setShowGrid(true);
-        table2.setShowVerticalLines(true);
-
-
-        table.setBounds (100,310,200,200);
-        table2.setBounds (310,310,200,200);
-        p1.add (table);
-        p1.add (table2); */
         RequestSocket request = new RequestSocket();
         request.setRequest("building_list");
         Map<String, Object> hm = new HashMap<>();
@@ -135,7 +71,7 @@ public class CardSection extends MainCardMenu {
         // data is the list of map we sent in the server (look response)
         List<Map> buildingList = (List<Map>) response1.getData();
         jcb1 = new JComboBox(new Vector (buildingList));
-        jcb1.setBounds(100,270,200,30);
+        jcb1.setBounds(20,330,220,20);
 
         jcb1.setRenderer (new DefaultListCellRenderer () {
             @Override
@@ -158,11 +94,11 @@ public class CardSection extends MainCardMenu {
 
 
 
-        b1 = new JButton ("Liste des access");
-        b2 = new JButton ("supprimer les accès persos");
+        b1 = new JButton ("Voir");
+        b2 = new JButton ("Supprimer");
 
-        b1.setBounds (280,270,150,30);
-        b2.setBounds (450,270,210,30);
+        b1.setBounds (250,330,150,20);
+        b2.setBounds (450,330,150,20);
 
         JFrame jf = this;
         b1.addMouseListener (new MouseListener () {
@@ -191,10 +127,16 @@ public class CardSection extends MainCardMenu {
                 for (Map data: accessList) {
                     Map dataHm = new HashMap ();
                     //dataHm.put ("Batiment", data.get ("building_name"));
+                    //dataHm.put ("Etage", data.get ("floor_name"));
+                   // dataHm.put ("Nom", data.get ("name"));
+                    //dataHm.put ("accessible", data.get ("accessible"));
                     dataHm.put ("Etage", data.get ("floor_name"));
-                    dataHm.put ("Type", data.get ("type"));
+                    //dataHm.put ("Nom", data.get ("name"));
                     dataHm.put ("Nom", data.get ("name"));
+                    dataHm.put ("Type", data.get ("type"));
                     dataHm.put ("accessible", data.get ("accessible"));
+
+
 
                     sortedList.add(dataHm);
                 }
@@ -303,6 +245,7 @@ public class CardSection extends MainCardMenu {
             }
         });
 
+
         //data placed in the following JLabels
         for (Map m : namePerson) {
             j1 = new JLabel ();
@@ -317,8 +260,8 @@ public class CardSection extends MainCardMenu {
             j4.setText ((String)m.get("position_p"));
             j5.setText (String.valueOf ((Integer)m.get("clearance_level")));
             j10.setText ((String)m.get("position_type"));
-            j1.setBounds (275,30,300,30);
-            j2.setBounds (210,30,230,30);
+            j1.setBounds (275,55,300,30);
+            j2.setBounds (210,55,230,30);
             j3.setBounds (190,100,300,30);
             j4.setBounds (190,150,300,30);
             j5.setBounds (190,180,300,30);
@@ -332,7 +275,11 @@ public class CardSection extends MainCardMenu {
 
         }
 
-        p1.add (j1);
+
+        p1.add(b1);
+        p1.add(b2);
+        p1.add(jcb1);
+        p1.add(j1);
         p1.add (j2);
         p1.add (j3);
         p1.add (j4);
@@ -343,11 +290,9 @@ public class CardSection extends MainCardMenu {
         p1.add (j9);
         p1.add (j10);
         p1.add (j11);
-        //p1.add (j12);
-        //p1.add (j13);
-        p1.add(b1);
-        p1.add(b2);
-        p1.add(jcb1);
+        p1.add (j12);
+        p1.add (j13);
+        p1.add (j14);
         this.add(p1);
 
 
