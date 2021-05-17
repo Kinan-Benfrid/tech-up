@@ -20,6 +20,7 @@ import episen.si.ing1.pds.client.model.*;
 import episen.si.ing1.pds.client.view.HomePageView;
 import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
 
+import static java.awt.Font.*;
 import static java.lang.Integer.parseInt;
 
 
@@ -27,18 +28,17 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
 
     public SocketUtility socketUtility = new SocketUtility();
     List<Map> meeting_list, OpenSpace_list, Office_list;
-    private final JPanel pan1;
-    private final JPanel panOffre;
-    private final JPanel panPrincipal;
-    private final JPanel panCriteria;
-    private JPanel panCriteria2;
-    private final JButton retour;
-    private final JButton rechercher;
-    private final JFormattedTextField jtAdulte,jtBudgetMin,jtBudgetMax;
-    private final JLabel Adulte;
-    private final JLabel Budget;
-    private final JLabel BudgetMax;
-    private final JLabel Description;
+    private  JPanel pan1;
+    private  JPanel panOffre;
+    private  JPanel panPrincipal;
+    private  JPanel panCriteria;
+    private  JButton retour;
+    private  JButton rechercher;
+    private  JFormattedTextField jtAdulte,jtBudgetMin,jtBudgetMax;
+    private  JLabel Adulte;
+    private  JLabel Budget;
+    private  JLabel BudgetMax;
+    private  JLabel Description;
     private JLabel[] labelArray, labelArray2;
     private int nbr_jlabel;
     private int boucle;
@@ -54,16 +54,14 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
    private int valeur_liste_salle_reunion,valeur_liste_open_space,valeur_liste_bureau, valeur_liste_total_pour_limit,valeur_liste_nbr_equipement;
 private String valeur_space_name_liste_salle_reunion,valeur_space_name_liste_open_space,valeur_space_name_liste_bureau;
 
-List<Map> list_equipment_dispo,list_name_equipment,list_equipment,projecteur_list, imprimante_list, prise_list, presence_list, imprimante3D_list, ventilation_list, luminosite_list, television_list, fenetre_list, fumee_list;
-
-   private int equipmenttype_id_impr; // lorsque tu selectionne un truc dans ta liste deroulante d'équipements tu garde en mémoire le equipmenttype_id associée
-private int equipmenttype_id;
-   private String nom_de_lequipement; // lorsque tu selectionne un truc dans ta liste deroulante d'équipements tu garde en mémoire le nom de l'equipement d'une part, pour pouvoir après grace a une requete recuperer l'equipment type id
+private List<Map> list_equipment_dispo,list_name_equipment,list_equipment;
+private JCheckBox want_equipment;
+private String nom_de_lequipement; // lorsque tu selectionne un truc dans ta liste deroulante d'équipements tu garde en mémoire le nom de l'equipement d'une part, pour pouvoir après grace a une requete recuperer l'equipment type id
 
 private int s,countable_nmbr_equipement_dispo;
     private int x,y,z;
 
-   private JComboBox jcb_nmbr_equipement_dispo;
+   private JComboBox jcb_equipment,jcb_nmbr_equipement_dispo;
 
 
 
@@ -129,6 +127,7 @@ private int s,countable_nmbr_equipement_dispo;
         Description.setBounds(190, 10, 200, 20);
 
 
+
         /**initialize JTextfield*/
         NumberFormat f = NumberFormat.getNumberInstance();
         NumberFormat f2 = NumberFormat.getIntegerInstance();
@@ -143,16 +142,17 @@ private int s,countable_nmbr_equipement_dispo;
         jtBudgetMax =  new JFormattedTextField(f);
         jtBudgetMax.setBounds(30, 130, 100, 20);
 
+        /**initialize Checkbox*/
+
+        want_equipment = new JCheckBox (" Je ne souhaite pas d'equipement");
+        want_equipment.setBounds(35, 280, 300, 20);
 
 
 
         /** Add components to Panels*/
-        // pan1.add(j0);
-        //pan1.setBounds(600, 10, 500, 20);
-        //pan2.add(pan1);
+
         panPrincipal.add(retour);
         panPrincipal.add(rechercher);
-        //panCriteria.add(Description);
         panCriteria.add(Adulte);
         panCriteria.add(Budget);
         panCriteria.add(jtAdulte);
@@ -161,6 +161,7 @@ private int s,countable_nmbr_equipement_dispo;
         panCriteria.add(jtBudgetMax);
         panCriteria.add(Description);
         panPrincipal.add(suivant);
+        panCriteria.add(want_equipment);
 
 
         /**Request to send to Server and initialize the Jcombobox which retrieves the values of the request*/
@@ -414,7 +415,7 @@ private int s,countable_nmbr_equipement_dispo;
         panCriteria.add(jcb2);
         panCriteria.add(jcb3);
 
-        JComboBox jcb_equipment = new JComboBox();
+         jcb_equipment = new JComboBox();
 
         RequestSocket rs_equipment = new RequestSocket();
         rs_equipment.setRequest("Select_equipment");
@@ -644,7 +645,7 @@ private int s,countable_nmbr_equipement_dispo;
         reserver.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
-                         boite = JOptionPane.showConfirmDialog(null, "Etes-vous sur de vouloir reserver cette espace ?", "Message", JOptionPane.OK_CANCEL_OPTION);
+                        boite = JOptionPane.showConfirmDialog(null, "Etes-vous sur de vouloir reserver cette espace ?", "Message", JOptionPane.OK_CANCEL_OPTION);
                         if ((boite == JOptionPane.OK_OPTION)) {
                             /** Mise à jour + insertion à ajouter dans la base*/
 
@@ -658,10 +659,6 @@ private int s,countable_nmbr_equipement_dispo;
                             somme_prix_totaux = somme_des_prix + somme_prix_totaux;
 
 
-
-
-
-
                             RequestSocket requestSocket2 = new RequestSocket();
                             requestSocket2.setRequest("Select_rental");
                             Map<String, Object> data2 = new HashMap<>();
@@ -669,15 +666,14 @@ private int s,countable_nmbr_equipement_dispo;
                             ResponseSocket responseRental2 = socketUtility.sendRequest(requestSocket2);
 
 
-                           List<Map> rentalId = (List<Map>) responseRental2.getData();
+                            List<Map> rentalId = (List<Map>) responseRental2.getData();
                             ArrayList<Integer> rental_id = new ArrayList<>();
 
                             for (Map m : rentalId) {
-                                   rental_id.add((Integer) m.get("rental_id"));
+                                rental_id.add((Integer) m.get("rental_id"));
                             }
 
-                            for(int i = 0; i<rental_id.size(); i++)
-                            {
+                            for (int i = 0; i < rental_id.size(); i++) {
                                 nmbr_rental_id = rental_id.get(i);
                             }
 
@@ -685,48 +681,34 @@ private int s,countable_nmbr_equipement_dispo;
                             requestSocket3.setRequest("Update_Rental");
                             Map<String, Object> data3 = new HashMap<>();
                             data3.put("rental_id_space", nmbr_rental_id);
-                            data3.put("id_space",numero_espace);
+                            data3.put("id_space", numero_espace);
                             requestSocket3.setData(data3);
                             ResponseSocket responseRental3 = socketUtility.sendRequest(requestSocket3);
 
-
-
-
-                            RequestSocket requestSocket4 = new RequestSocket();
-                            requestSocket4.setRequest("Update_equipment");
-                            Map<String, Object> data4 = new HashMap<>();
-                            data4.put("rental_id_space", nmbr_rental_id);
-                            data4.put("nmbr_equipment_dispo",s);
-                            data4.put("valeur_liste_du_nbr_dequipement",jcb_nmbr_equipement_dispo.getSelectedItem());
-                            requestSocket4.setData(data4);
-                            ResponseSocket responseRental4 = socketUtility.sendRequest(requestSocket4);
-
-
-
-
-                           /* jcb.addItemListener(new ItemListener() {
-                                                              @Override
-                                                              public void itemStateChanged(ItemEvent e) {
-
-                                                                  if (e.getStateChange() == 1) {
-                                                                  }
-
-                                                              }
-                                                          });
-
-                            */
-
-
-
-
+                                    // Obtenir l'état du checkbox
+                                    if (want_equipment.isSelected()) {
+                                        RequestSocket requestSocket4 = new RequestSocket();
+                                        requestSocket4.setRequest("Update_equipment");
+                                        Map<String, Object> data4 = new HashMap<>();
+                                        data4.put("rental_id_space", nmbr_rental_id);
+                                        data4.put("nmbr_equipment_dispo", 0);
+                                        data4.put("valeur_liste_du_nbr_dequipement", jcb_nmbr_equipement_dispo.getSelectedItem());
+                                        requestSocket4.setData(data4);
+                                        ResponseSocket responseRental4 = socketUtility.sendRequest(requestSocket4);
+                                    }
+                                    else {
+                                        RequestSocket requestSocket4 = new RequestSocket();
+                                        requestSocket4.setRequest("Update_equipment");
+                                        Map<String, Object> data4 = new HashMap<>();
+                                        data4.put("rental_id_space", nmbr_rental_id);
+                                        data4.put("nmbr_equipment_dispo", s);
+                                        data4.put("valeur_liste_du_nbr_dequipement", jcb_nmbr_equipement_dispo.getSelectedItem());
+                                        requestSocket4.setData(data4);
+                                        ResponseSocket responseRental4 = socketUtility.sendRequest(requestSocket4);
+                                    }
                         }
                     }
                 });
-
-       // if (valeur_liste_total_pour_limit > 0){
-         //   valeur_liste_total_pour_limit =0;
-   //     }
-        //valeur_liste_total_pour_limit = 0;
 
 
        valeur_liste_open_space=0;
@@ -809,26 +791,14 @@ private int s,countable_nmbr_equipement_dispo;
             panOffre.revalidate();
             panOffre.repaint();
             ajouterJLabel();
-
-                //this.dispose();
-                //FirstPageSelectionOffers fpso = new FirstPageSelectionOffers();
-                //fpso.setVisible(true);
-                // int boucle = Number.size();
-              //  JComboBox jc1 = new JComboBox(new Vector(Number));
-               // jc1.setBounds(30, 50, 450, 20);
-               // panOffre.add(jc1);
-                /*for(int i=0; i< boucle;i++){
-                    JLabel affichage_offre = new JLabel("affichage_offre");
-                    affichage_offre.setBounds(30, 30*2, 450, 20);
-                    panOffre.add(affichage_offre);
-                    panOffre.revalidate();
-                }
-                 */
-
-            //}
         }
         else if (source == suivant){
             boite2 = JOptionPane.showConfirmDialog(null, "Merci pour votre réservation, \n Montant total : " + somme_prix_totaux +"€", "Message", JOptionPane.OK_CANCEL_OPTION);
+            if ((boite2 == JOptionPane.OK_OPTION)) {
+                this.dispose();
+                RentedSpacesView r = new RentedSpacesView();
+                r.setVisible(true);
+            }
         }
     }
 }
