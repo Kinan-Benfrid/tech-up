@@ -520,7 +520,7 @@ public class RequestHandler {
             logger.info(String.valueOf(dataLoaded));
             List<Map> list = new ArrayList<>();
 
-            String query ="Select space.rental_id,space_id,space_name,size_space, max_person_number,floor_number, building_name,price,space.floor_id from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where rental_id is NULL and max_person_number >= ? and price between ? and ? and spacetype_id in ( select spacetype_id from space where spacetype_id = ? or spacetype_id = ? or spacetype_id = ?) order by floor_number asc limit ?";
+            String query ="Select space.rental_id,space_id,space_name,size_space, max_person_number,floor_number, building_name,price,space.floor_id from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where rental_id is NULL and max_person_number >= ? and price between ? and ? and spacetype_id in ( select spacetype_id from space where spacetype_id = ? or spacetype_id = ? or spacetype_id = ?) order by price asc limit ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, (Integer) dataLoaded.get("max_person_number"));
             statement.setInt(2, (Integer) dataLoaded.get("budjetMin"));
