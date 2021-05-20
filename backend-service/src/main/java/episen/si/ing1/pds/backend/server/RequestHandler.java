@@ -719,6 +719,31 @@ public class RequestHandler {
 
         }
 
+        else if (requestName.equals("Select_count_number_equipment")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            String query = "SELECT count(rental_id) from equipment where rental_id = ? and equipmenttype_id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1,(int) dataLoaded.get("rental_id_space"));
+            statement.setInt(2,(int) dataLoaded.get("nmbr_equipment_dispo"));
+
+
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("count", rs.getInt("count"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+
         else if (requestName.equals("position")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
