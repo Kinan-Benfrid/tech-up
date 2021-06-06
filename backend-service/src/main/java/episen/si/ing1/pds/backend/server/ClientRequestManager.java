@@ -59,6 +59,7 @@ public class ClientRequestManager implements Runnable {
         }
         catch (Exception e) {
             logger.error("client has been disconnected");
+            logger.error (e.getLocalizedMessage (), e);
         }
         finally {
             /**

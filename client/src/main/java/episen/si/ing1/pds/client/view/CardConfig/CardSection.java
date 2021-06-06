@@ -122,19 +122,21 @@ public class CardSection extends MainCardMenu {
                 ResponseSocket response = socketUtility.sendRequest(request);
                 // data is the list of map we sent in the server (look response)
                 List<Map> accessList = (List<Map>) response.getData();
-                List<Map> sortedList = new ArrayList<> ();
+                List<LinkedHashMap> sortedList = new LinkedList<> ();
 
                 for (Map data: accessList) {
-                    Map dataHm = new HashMap ();
-                    //dataHm.put ("Batiment", data.get ("building_name"));
-                    //dataHm.put ("Etage", data.get ("floor_name"));
-                   // dataHm.put ("Nom", data.get ("name"));
-                    //dataHm.put ("accessible", data.get ("accessible"));
-                    dataHm.put ("accessible", data.get ("accessible"));
+                    LinkedHashMap dataHm = new LinkedHashMap ();
+                    dataHm.put ("Batiment", data.get ("building_name"));
                     dataHm.put ("Etage", data.get ("floor_name"));
-                    //dataHm.put ("Nom", data.get ("name"));
                     dataHm.put ("Nom", data.get ("name"));
-                    dataHm.put ("Type", data.get ("type"));
+                    dataHm.put ("accessible", data.get ("accessible"));
+                    dataHm.put ("id", data.get ("id"));
+
+//                    dataHm.put ("accessible", data.get ("accessible"));
+//                    dataHm.put ("Etage", data.get ("floor_name"));
+//                    //dataHm.put ("Nom", data.get ("name"));
+//                    dataHm.put ("Nom", data.get ("name"));
+//                    dataHm.put ("Type", data.get ("type"));
 
 
 
