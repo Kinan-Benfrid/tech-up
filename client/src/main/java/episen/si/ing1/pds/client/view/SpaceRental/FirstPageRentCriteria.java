@@ -34,7 +34,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
     private  JPanel panCriteria;
     private  JButton retour;
     private  JButton rechercher;
-    private  JFormattedTextField jtAdulte,jtBudgetMin,jtBudgetMax;
+    private  JTextField jtAdulte,jtBudgetMin,jtBudgetMax;
     private  JLabel Adulte;
     private  JLabel Budget;
     private  JLabel BudgetMax;
@@ -42,8 +42,8 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
     private JLabel[] labelArray, labelArray2;
     private int nbr_jlabel;
     private int boucle;
-    private JButton reserver,suivant;
-    private int boite,boite2;
+    private JButton ajouter_equipement,reserver,suivant;
+    private int boite,boite2,boite3;
     private int erreur_jtbudgetmin,erreur_jtbudgetmax,erreur_jtadulte;
     private  JComboBox jcb1;
     private  JComboBox jcb2;
@@ -51,17 +51,19 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
     private int nmbr_rental_id;
     private int somme_des_prix,somme_prix_totaux;
    private int valeur_space_id_liste_salle_reunion,valeur_space_id_liste_open_space,valeur_space_id_liste_bureau;
-   private int valeur_liste_salle_reunion,valeur_liste_open_space,valeur_liste_bureau, valeur_liste_total_pour_limit,valeur_liste_nbr_equipement;
+   private int valeur_liste_salle_reunion,valeur_liste_open_space,valeur_liste_bureau, valeur_liste_total_salle_reunion,valeur_liste_total_open_space,valeur_liste_total_bureau,valeur_liste_total_pour_limit,valeur_liste_nbr_equipement;
 private String valeur_space_name_liste_salle_reunion,valeur_space_name_liste_open_space,valeur_space_name_liste_bureau;
 
 private List<Map> list_equipment_dispo,list_name_equipment,list_equipment;
 private JCheckBox want_equipment;
 private String nom_de_lequipement; // lorsque tu selectionne un truc dans ta liste deroulante d'équipements tu garde en mémoire le nom de l'equipement d'une part, pour pouvoir après grace a une requete recuperer l'equipment type id
-
+private int compteur_capacite_nbr_equipment,compteur_capacite_nbr_equipment2;
 private int s,countable_nmbr_equipement_dispo;
-    private int x,y,z;
+
+
 
    private JComboBox jcb_equipment,jcb_nmbr_equipement_dispo;
+   private   DefaultComboBoxModel jcbModel;
 
 
 
@@ -117,7 +119,7 @@ private int s,countable_nmbr_equipement_dispo;
 
         /**initialize JLabel*/
 
-        Adulte = new JLabel("Adulte");
+        Adulte = new JLabel("Adulteeeeeeeee");
         Adulte.setBounds(30, 30, 100, 20);
         Budget = new JLabel("Budget Min");
         Budget.setBounds(30, 70, 100, 20);
@@ -129,18 +131,108 @@ private int s,countable_nmbr_equipement_dispo;
 
 
         /**initialize JTextfield*/
-        NumberFormat f = NumberFormat.getNumberInstance();
-        NumberFormat f2 = NumberFormat.getIntegerInstance();
+       // NumberFormat f = NumberFormat.getNumberInstance();
+       // NumberFormat f2 = NumberFormat.getIntegerInstance();
 
-
-        jtAdulte = new JFormattedTextField(f2);
+        jtAdulte = new JTextField();
         jtAdulte.setBounds(30, 50, 100, 20);
+        jtAdulte.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
 
-        jtBudgetMin = new JFormattedTextField(f);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+
+
+                try {
+                    if (Integer.parseInt(jtAdulte.getText()) < 1) {
+                        JOptionPane.showMessageDialog(null, "Merci de saisir au moins un adulte");
+                        jtAdulte.setText("");
+                    }
+
+                    else{
+                        erreur_jtadulte = Integer.parseInt(jtAdulte.getText());
+
+                    }
+
+                } catch(NumberFormatException numberFormatException){
+                    jtAdulte.setText("");
+                }
+
+            }
+        });
+
+
+
+
+
+
+        jtBudgetMin = new JTextField();
         jtBudgetMin.setBounds(30, 90, 100, 20);
 
-        jtBudgetMax =  new JFormattedTextField(f);
+
+        jtBudgetMin.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+
+
+                try {
+                    if (Integer.parseInt(jtBudgetMin.getText()) < 0) {
+                        JOptionPane.showMessageDialog(null, "Merci de saisir un budget positif");
+                        jtBudgetMin.setText("");
+                    }
+                    else{
+                        erreur_jtbudgetmin = Integer.parseInt(jtBudgetMin.getText());
+                    }
+
+                } catch(NumberFormatException numberFormatException){
+                    jtBudgetMin.setText("");
+                }
+
+            }
+        });
+
+        jtBudgetMax =  new JTextField();
         jtBudgetMax.setBounds(30, 130, 100, 20);
+
+
+        jtBudgetMax.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+
+
+                try {
+                    if (Integer.parseInt(jtBudgetMax.getText()) <= 0) {
+                        JOptionPane.showMessageDialog(null, "Merci de saisir un budget strictement positif");
+                        jtBudgetMax.setText("");
+                    }
+                    else{
+                        erreur_jtbudgetmax = Integer.parseInt(jtBudgetMax.getText());
+
+                    }
+
+                } catch(NumberFormatException numberFormatException){
+                    jtBudgetMax.setText("");
+                }
+
+            }
+        });
+
+
+
+
 
         /**initialize Checkbox*/
 
@@ -213,39 +305,32 @@ private int s,countable_nmbr_equipement_dispo;
                 if (e.getStateChange() == 1) {
 
                     valeur_liste_salle_reunion = (int) jcb1.getSelectedItem();
-                    System.out.println("AAAAAAAAAAAAAAAAAA " + valeur_liste_salle_reunion);
+
 
 
 
                     if (valeur_liste_salle_reunion ==0) {
                         //valeur_liste_total_pour_limit =0;
-
+                        valeur_liste_total_salle_reunion =0;
                         valeur_space_id_liste_salle_reunion = 0;
-                        x = 0;
-                        valeur_liste_total_pour_limit = valeur_liste_total_pour_limit + x;
+                        //x = 0;
+                        //valeur_liste_total_pour_limit = valeur_liste_total_pour_limit + x;
 
 
                     }
                     else if(valeur_liste_salle_reunion != 0) {
-                       // valeur_liste_total_pour_limit =0;
+                        valeur_liste_total_salle_reunion =0;
                         valeur_space_id_liste_salle_reunion = (int) meeting_list.get(0).get("spacetype_id");
-                        int a = valeur_liste_salle_reunion;
-                         x = 0 + a;
-                        valeur_liste_total_pour_limit = valeur_liste_total_pour_limit + x;
-
-                        System.out.println(x);
                     }
+                    valeur_liste_total_salle_reunion= valeur_liste_total_salle_reunion + valeur_liste_salle_reunion;
 
-
-
-
-
-
+                    System.out.println("valeur_liste_total_apres_salle_reunion " + valeur_liste_total_salle_reunion);
 
                     // jcb3.setSelectedIndex(-1);
                 }
             }
         });
+
 
 
 
@@ -303,27 +388,36 @@ private int s,countable_nmbr_equipement_dispo;
                     System.out.println("AAAAAAAAAAAAAAAAAA" + valeur_liste_open_space);
 
                    if (valeur_liste_open_space ==0) {
-                        valeur_space_id_liste_open_space = 0;
-                        y = 0;
+                       valeur_liste_total_open_space =0;
+                       valeur_space_id_liste_open_space = 0;
                     }
                     else if(valeur_liste_open_space != 0) {
-                      // valeur_liste_total_pour_limit =0;
+                       valeur_liste_total_open_space =0;
                        valeur_space_id_liste_open_space = (int) OpenSpace_list.get(0).get("spacetype_id");
-                       int b = valeur_liste_open_space;
-                       y = b;
-                    }
 
-                    valeur_liste_total_pour_limit = valeur_liste_total_pour_limit + y;
+                    }
+                    valeur_liste_total_open_space = valeur_liste_total_open_space + valeur_liste_open_space;
+
+                    System.out.println("valeur_liste_total_pour_limit_apres_open_space " + valeur_liste_total_open_space);
+
+
+                    System.out.println("valeur_liste_total_apres_salle_reunion " + valeur_liste_total_salle_reunion);
+
+
+
+                    //  valeur_liste_total_pour_limit = valeur_liste_total_pour_limit + y;
 
                     //valeur_liste_total_pour_limit = valeur_liste_total_pour_limit + valeur_liste_open_space;
 
                     // jcb3.setSelectedIndex(-1);
                 }
+               // valeur_liste_total_open_space = valeur_liste_total_open_space + valeur_liste_open_space;
+                //System.out.println("valeur_liste_total_pour_limit_apres_open_space " + valeur_liste_total_open_space);
+
             }
         });
 
 
-        System.out.println("POURQUOIIIIII " + valeur_liste_total_pour_limit);
 
 //---------------------------------
 
@@ -341,8 +435,9 @@ private int s,countable_nmbr_equipement_dispo;
 
         valeur_space_name_liste_open_space = (String) Office_list.get(0).get("space_office");
 
+        DefaultComboBoxModel jcb3Model = new DefaultComboBoxModel();
+        jcb3 = new JComboBox(jcb3Model);
 
-        jcb3 = new JComboBox();
         int countable3 = (int) Office_list.get(0).get("countable3");
         for (int i = 0; i <= countable3; i++) {
             jcb3.addItem((i));
@@ -386,26 +481,36 @@ private int s,countable_nmbr_equipement_dispo;
 
                  System.out.println("EEEEEEEEEEEEEEEEEEEEEZZZZZ" + valeur_liste_bureau);
 
-                    System.out.println("miaouuuuuuuuuuuuuuu" + valeur_space_id_liste_bureau);
-
 
                    if (valeur_liste_bureau ==0) {
-                        valeur_space_id_liste_bureau = 0;
+                       valeur_liste_total_bureau =0;
+                       valeur_space_id_liste_bureau = 0;
                     }
                         else if(valeur_liste_bureau != 0) {
-                       valeur_liste_total_pour_limit =0;
+
+                       valeur_liste_total_bureau =0;
                        valeur_space_id_liste_bureau = (int) Office_list.get(0).get("spacetype_id");
                         }
 
 
                     System.out.println("MIAAAAAAAAAAM" + valeur_space_id_liste_bureau);
 
-                    valeur_liste_total_pour_limit = valeur_liste_total_pour_limit + valeur_liste_bureau;
+                        valeur_liste_total_bureau = valeur_liste_total_bureau + valeur_liste_bureau;
+                    System.out.println("valeur_liste_total_pour_limit_apres_bureau " + valeur_liste_total_bureau);
 
-                    // jcb3.setSelectedIndex(-1);
+
+                    jcb3.setEnabled(false);
+                    jcb3.setEnabled(true);
+                    jcb3.revalidate();
+                    jcb3.repaint();
+
                 }
+
             }
+
         });
+
+        System.out.println("voici la valeur valeur_liste_total_pour_limit " + valeur_liste_total_pour_limit);
 
 
         jcb1.setBounds(190, 50, 150, 20);
@@ -546,17 +651,11 @@ private int s,countable_nmbr_equipement_dispo;
     /**------------------------------------Methode de la fenetre*/
 
     public void ajouterJLabel() {
+        valeur_liste_total_pour_limit = valeur_liste_total_salle_reunion + valeur_liste_total_open_space + valeur_liste_total_bureau;
 
 
+        System.out.println("MIAAAAAAAAAAM" + valeur_liste_total_salle_reunion);
 
-        System.out.println("MIAAAAAAAAAAM" + valeur_space_id_liste_bureau);
-
-
-        System.out.println("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK " + valeur_liste_total_pour_limit);
-
-        erreur_jtbudgetmin = ErrorJtexfield(jtBudgetMin,0,0);
-        erreur_jtbudgetmax = ErrorJtexfield(jtBudgetMax,0,200000);
-        erreur_jtadulte = ErrorJtexfield(jtAdulte,0,0);
 
 
         // Person.setNumber_person(jtAdulte.getText());
@@ -595,7 +694,7 @@ private int s,countable_nmbr_equipement_dispo;
         List<Map> Number = (List<Map>) response.getData();
 
         //table in which data is retrieved
-        String[] entetes = {"Id Espace","Espace", "Superficie", "Nombre de personnes max", "Nom du batiment", "Numero etage", "Prix", ""};
+        String[] entetes = {"Id Espace","Espace", "Superficie", "Nombre de personnes max", "Nom du batiment", "Numero etage", "Prix", "equipement"," "};
         String[][] datas = new String[Number.size()][8];
 
         ArrayList<String> espace = new ArrayList<>();
@@ -631,33 +730,116 @@ private int s,countable_nmbr_equipement_dispo;
 
         DefaultTableModel model = new DefaultTableModel(datas, entetes);
         JTable table = new JTable(model);
-        table.getColumn("").setCellRenderer(new ButtonRenderer());
-        table.getColumn("").setCellEditor(new ButtonEditor(new JCheckBox()));
+
+        table.getColumn("equipement").setCellRenderer(new ButtonAjouter());
+        table.getColumn("equipement").setCellEditor(new ButtonEditor2(new JCheckBox()));
+        table.setShowGrid(true);
+
+        table.getColumn(" ").setCellRenderer(new ButtonRenderer());
+        table.getColumn(" ").setCellEditor(new ButtonEditor(new JCheckBox()));
         table.setShowGrid(true);
         //table.setShowVerticalLines(true);
 
         panOffre.add(table.getTableHeader());
         panOffre.add(table);
-        table.getTableHeader().setBounds(50, 30, 700, 20);
-        table.setBounds(50, 50, 700, 300);
+        table.getTableHeader().setBounds(50, 30, 800, 20);
+        table.setBounds(50, 50, 800, 300);
+
+
 
         reserver = new JButton();
         reserver.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
-                        boite = JOptionPane.showConfirmDialog(null, "Etes-vous sur de vouloir reserver cette espace ?", "Message", JOptionPane.OK_CANCEL_OPTION);
-                        if ((boite == JOptionPane.OK_OPTION)) {
-                            /** Mise à jour + insertion à ajouter dans la base*/
 
-                            int column_space_id = 0;
-                            int column_price = 6;
-                            int row = table.getSelectedRow();
-                            String value_space_id = table.getModel().getValueAt(row, column_space_id).toString();
-                            int numero_espace = parseInt(value_space_id);
-                            String value_price = table.getModel().getValueAt(row, column_price).toString();
-                            somme_des_prix = parseInt(value_price);
-                            somme_prix_totaux = somme_des_prix + somme_prix_totaux;
 
+
+                            boite = JOptionPane.showConfirmDialog(null, "Etes-vous sur de vouloir reserver cette espace ?", "Message", JOptionPane.OK_CANCEL_OPTION);
+
+
+                            if ((boite == JOptionPane.OK_OPTION)) {
+                                /** Mise à jour + insertion à ajouter dans la base*/
+
+                                int column_space_id = 0;
+                                int column_price = 6;
+                                int row = table.getSelectedRow();
+                                String value_space_id = table.getModel().getValueAt(row, column_space_id).toString();
+                                int numero_espace = parseInt(value_space_id);
+                                String value_price = table.getModel().getValueAt(row, column_price).toString();
+                                somme_des_prix = parseInt(value_price);
+                                somme_prix_totaux = somme_des_prix + somme_prix_totaux;
+
+
+                                RequestSocket requestSocket2 = new RequestSocket();
+                                requestSocket2.setRequest("Select_rental");
+                                Map<String, Object> data2 = new HashMap<>();
+                                requestSocket2.setData(data2);
+                                ResponseSocket responseRental2 = socketUtility.sendRequest(requestSocket2);
+
+
+                                List<Map> rentalId = (List<Map>) responseRental2.getData();
+                                ArrayList<Integer> rental_id = new ArrayList<>();
+
+                                for (Map m : rentalId) {
+                                    rental_id.add((Integer) m.get("rental_id"));
+                                }
+
+                                for (int i = 0; i < rental_id.size(); i++) {
+                                    nmbr_rental_id = rental_id.get(i);
+                                }
+                                RequestSocket requestSocket3 = new RequestSocket();
+                                requestSocket3.setRequest("Update_Rental");
+                                Map<String, Object> data3 = new HashMap<>();
+                                data3.put("rental_id_space", nmbr_rental_id);
+                                data3.put("id_space", numero_espace);
+                                requestSocket3.setData(data3);
+                                ResponseSocket responseRental3 = socketUtility.sendRequest(requestSocket3);
+
+                                // Obtenir l'état du checkbox
+
+                                if (want_equipment.isSelected()) {
+                                    RequestSocket requestSocket4 = new RequestSocket();
+                                    requestSocket4.setRequest("Update_equipment");
+                                    Map<String, Object> data4 = new HashMap<>();
+                                    data4.put("rental_id_space", nmbr_rental_id);
+                                    data4.put("nmbr_equipment_dispo", 0);
+                                    data4.put("valeur_liste_du_nbr_dequipement", jcb_nmbr_equipement_dispo.getSelectedItem());
+                                    requestSocket4.setData(data4);
+                                    ResponseSocket responseRental4 = socketUtility.sendRequest(requestSocket4);
+                                }
+                            }
+                        }
+
+                });
+
+
+        ajouter_equipement = new JButton();
+        ajouter_equipement.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                int column_superficie = 2;
+                int row2 = table.getSelectedRow();
+                int superficie = Integer.parseInt(table.getModel().getValueAt(row2, column_superficie).toString());
+
+
+
+                compteur_capacite_nbr_equipment = 0 + (int) jcb_nmbr_equipement_dispo.getSelectedItem();
+
+
+
+                if (compteur_capacite_nbr_equipment > superficie * 0.5) {
+                    JOptionPane.showMessageDialog(null, "Impossible de placer plus de " + superficie * 0.5 + " equipements dans cet espace ");
+                    compteur_capacite_nbr_equipment = 0;
+                } else {
+                    if (compteur_capacite_nbr_equipment + compteur_capacite_nbr_equipment2> superficie * 0.5) {
+                        compteur_capacite_nbr_equipment = 0;
+                        JOptionPane.showMessageDialog(null, "Nombre d'equipements restant à installer : " + ((superficie * 0.5) - (compteur_capacite_nbr_equipment + compteur_capacite_nbr_equipment2)) + "");
+                    } else {
+                        boite3 = JOptionPane.showConfirmDialog(null, "Etes-vous sur de vouloir ajouter x" + jcb_nmbr_equipement_dispo.getSelectedItem() + " " + jcb_equipment.getSelectedItem() + "(s) ?", "Message", JOptionPane.OK_CANCEL_OPTION);
+
+                        if (boite3 == JOptionPane.OK_OPTION) {
 
                             RequestSocket requestSocket2 = new RequestSocket();
                             requestSocket2.setRequest("Select_rental");
@@ -677,38 +859,39 @@ private int s,countable_nmbr_equipement_dispo;
                                 nmbr_rental_id = rental_id.get(i);
                             }
 
-                            RequestSocket requestSocket3 = new RequestSocket();
-                            requestSocket3.setRequest("Update_Rental");
-                            Map<String, Object> data3 = new HashMap<>();
-                            data3.put("rental_id_space", nmbr_rental_id);
-                            data3.put("id_space", numero_espace);
-                            requestSocket3.setData(data3);
-                            ResponseSocket responseRental3 = socketUtility.sendRequest(requestSocket3);
 
-                                    // Obtenir l'état du checkbox
-                                    if (want_equipment.isSelected()) {
-                                        RequestSocket requestSocket4 = new RequestSocket();
-                                        requestSocket4.setRequest("Update_equipment");
-                                        Map<String, Object> data4 = new HashMap<>();
-                                        data4.put("rental_id_space", nmbr_rental_id);
-                                        data4.put("nmbr_equipment_dispo", 0);
-                                        data4.put("valeur_liste_du_nbr_dequipement", jcb_nmbr_equipement_dispo.getSelectedItem());
-                                        requestSocket4.setData(data4);
-                                        ResponseSocket responseRental4 = socketUtility.sendRequest(requestSocket4);
-                                    }
-                                    else {
-                                        RequestSocket requestSocket4 = new RequestSocket();
-                                        requestSocket4.setRequest("Update_equipment");
-                                        Map<String, Object> data4 = new HashMap<>();
-                                        data4.put("rental_id_space", nmbr_rental_id);
-                                        data4.put("nmbr_equipment_dispo", s);
-                                        data4.put("valeur_liste_du_nbr_dequipement", jcb_nmbr_equipement_dispo.getSelectedItem());
-                                        requestSocket4.setData(data4);
-                                        ResponseSocket responseRental4 = socketUtility.sendRequest(requestSocket4);
-                                    }
+                            RequestSocket requestSocket4 = new RequestSocket();
+                            requestSocket4.setRequest("Update_equipment");
+                            Map<String, Object> data4 = new HashMap<>();
+                            data4.put("rental_id_space", nmbr_rental_id);
+                            data4.put("nmbr_equipment_dispo", s);
+                            data4.put("valeur_liste_du_nbr_dequipement", jcb_nmbr_equipement_dispo.getSelectedItem());
+                            requestSocket4.setData(data4);
+                            ResponseSocket responseRental4 = socketUtility.sendRequest(requestSocket4);
+
+                            RequestSocket requestSocket5 = new RequestSocket();
+                            requestSocket5.setRequest("Select_count_number_equipment");
+                            Map<String, Object> data5 = new HashMap<>();
+                            data5.put("rental_id_space", nmbr_rental_id);
+                            data5.put("nmbr_equipment_dispo", s);
+                            requestSocket5.setData(data5);
+                            ResponseSocket responseRental5 = socketUtility.sendRequest(requestSocket5);
+
+                            List<Map> list_nbr_equipment = (java.util.List<Map>) responseRental5.getData();
+                            compteur_capacite_nbr_equipment2 = (int) list_nbr_equipment.get(0).get("count");
+
+                            System.out.println("GAGNERRRRR" + compteur_capacite_nbr_equipment2);
+                          //  compteur_capacite_nbr_equipment2 = (int) responseRental4.getData(0).
+                           // compteur_capacite_nbr_equipment2 = 0;
+                            //compteur_capacite_nbr_equipment2 = (int)jcb_nmbr_equipement_dispo.getSelectedItem();
+
+                        } else if (boite3 == JOptionPane.CANCEL_OPTION) {
+                            compteur_capacite_nbr_equipment = 0;
                         }
                     }
-                });
+                }
+            }
+        });
 
 
        valeur_liste_open_space=0;
@@ -747,19 +930,59 @@ private int s,countable_nmbr_equipement_dispo;
             return label;
         }
     }
-    /**-----------------------------------------------------*/
 
-    public static int ErrorJtexfield(JTextField f, int defaultVal, int failureVal) {
-        if (f == null) {
-            return defaultVal;
-        } else {
-            try {
-                return Integer.parseInt(f.getText());
-            } catch (NumberFormatException e) {
-                return failureVal;
-            }
+
+
+    class ButtonAjouter extends JButton implements TableCellRenderer
+    {
+        public ButtonAjouter() {
+            setOpaque(true);
+        }
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText((value == null) ? "Ajouter" : value.toString());
+            return this;
         }
     }
+    class ButtonEditor2 extends DefaultCellEditor
+    {
+        private String label_ajouter_des_equipements;
+
+        public ButtonEditor2(JCheckBox checkBox)
+        {
+            super(checkBox);
+        }
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                                                     boolean isSelected, int row, int column)
+        {
+            label_ajouter_des_equipements = (value == null) ? "Ajouter" : value.toString();
+            ajouter_equipement.setText(label_ajouter_des_equipements);
+            return ajouter_equipement;
+        }
+        public Object getCellEditorValue()
+        {
+            return label_ajouter_des_equipements;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**-----------------------------------------------------*/
 
 
     public void actionPerformed(ActionEvent e) {
@@ -791,8 +1014,10 @@ private int s,countable_nmbr_equipement_dispo;
             panOffre.revalidate();
             panOffre.repaint();
             ajouterJLabel();
+            //somme_prix_totaux = 0;
         }
         else if (source == suivant){
+
             boite2 = JOptionPane.showConfirmDialog(null, "Merci pour votre réservation, \n Montant total : " + somme_prix_totaux +"€", "Message", JOptionPane.OK_CANCEL_OPTION);
             if ((boite2 == JOptionPane.OK_OPTION)) {
                 this.dispose();
