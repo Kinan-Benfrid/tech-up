@@ -81,7 +81,6 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
                 Map<String, Object> data = new HashMap<> ();
                 data.put("person_id", Person.getPerson_id());
                 data.put("card_id", AccessCard.getCard_id());
-                //data.put ("active",AccessCard.getActive ());
                 request2.setData(data);
 
                 ResponseSocket response2 = socketUtility.sendRequest(request2);
@@ -115,10 +114,6 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
 
         System.out.println (AccessCard.getActive ());
 
-        if(AccessCard.getActive ())
-            jr1.setSelected (true);
-        else
-            jr2.setSelected (true);
 
 
         l2 = new JLabel("Dissocier le badge");
