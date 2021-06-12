@@ -449,6 +449,53 @@ public class RequestHandler {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
         }
+        else if (requestName.equals("Insert_New_Company")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            String query = " insert into company (company_name) values (?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, (String) dataLoaded.get("jT1"));
+
+            statement.executeUpdate();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+        else if (requestName.equals("Insert_New_MDA")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            String query = " insert into maintenance_department_administrators (company_id) Select max(company_id) as max from company";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.executeUpdate();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+        else if (requestName.equals("Insert_New_Rental")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            String query ="Insert into rental (id_mda) Select max(id_mda) as max from maintenance_department_administrators";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.executeUpdate();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+
 
         else if (requestName.equals("meeting_list")) {
             ObjectMapper mapper = new ObjectMapper();

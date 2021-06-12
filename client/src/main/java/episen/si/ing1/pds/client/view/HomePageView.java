@@ -10,10 +10,7 @@ import episen.si.ing1.pds.client.view.SpaceRental.FirstPageRentCriteriaNewCompan
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +22,9 @@ public class HomePageView extends CommonFrame implements ActionListener {
     private JButton b1,b2,b3;
     private JComboBox jcb1;
     private SocketUtility socketUtility = new SocketUtility ();
-
+    private JTextField jT1;
+   private String  retrieve_jText;
+    private List<Map> list_new_company_id;
     public HomePageView(){
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -103,6 +102,27 @@ public class HomePageView extends CommonFrame implements ActionListener {
         b1.addActionListener(this);
         panel.add(b1);
 
+        jT1 = new JTextField("Indiquer le nom de l'entreprise");
+        jT1.setBounds(440,280,170,20);
+        panel.add(jT1);
+        //retrieve_jText = String.valueOf(jT1.getText());
+
+
+       jT1.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {
+                jT1.setText("");
+            }
+
+            public void focusLost(FocusEvent e) {
+                if(jT1.getText().equals("")){
+                    jT1.setText("Indiquer le nom de l'entreprise");
+                }
+                 retrieve_jText = jT1.getText();
+            }
+        });
+
+
+
         j4 = new JLabel("Je visualise mes espaces");
         j4.setBounds(410,330,200,20);
         j4.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -119,19 +139,38 @@ public class HomePageView extends CommonFrame implements ActionListener {
 
     }
 
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source == b1) {
             RequestSocket requestSocket = new RequestSocket();
-            requestSocket.setRequest("Insert_Rental");
+            requestSocket.setRequest("Insert_New_Company");
             Map<String, Object> data = new HashMap<>();
-            data.put("company_id", Company.getCompany_id());
+            data.put("jT1", jT1.getText());
             requestSocket.setData(data);
+            System.out.println("ALELOUUUUYAAA");
             ResponseSocket responseRental = socketUtility.sendRequest(requestSocket);
-            this.dispose();
-            FirstPageRentCriteriaNewCompany fprcnc = new FirstPageRentCriteriaNewCompany();
-            fprcnc.setVisible(true);
+
+
+            RequestSocket requestSocket3 = new RequestSocket();
+            requestSocket3.setRequest("Insert_New_MDA");
+            Map<String, Object> data3 = new HashMap<>();
+            requestSocket3.setData(data3);
+            System.out.println("ALELOUUUUYAAA");
+            ResponseSocket responseRental3 = socketUtility.sendRequest(requestSocket3);
+
+            RequestSocket requestSocket2 = new RequestSocket();
+            requestSocket2.setRequest("Insert_New_Rental");
+            Map<String, Object> data2 = new HashMap<>();
+            requestSocket2.setData(data2);
+            ResponseSocket responseRental2 = socketUtility.sendRequest(requestSocket2);
+
+            dispose();
+                    FirstPageRentCriteriaNewCompany fprcnc = new FirstPageRentCriteriaNewCompany();
+                    fprcnc.setVisible(true);
+
 
         } else if (source == b2) {
             this.dispose();
