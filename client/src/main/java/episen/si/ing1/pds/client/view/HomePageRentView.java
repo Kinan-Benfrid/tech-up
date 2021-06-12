@@ -16,8 +16,8 @@ private JLabel j1;
 
 
     public HomePageRentView() {
-
         super();
+        this.setLocationRelativeTo(null);
         JPanel panel = new JPanel();
         panel.setLayout(null);
         JLabel label1 = new JLabel("Bienvenue dans votre espace de réservation !");

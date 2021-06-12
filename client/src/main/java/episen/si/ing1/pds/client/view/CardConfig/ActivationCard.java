@@ -112,6 +112,15 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
         bg.add(jr1);
         bg.add(jr2);
 
+
+        System.out.println (AccessCard.getActive ());
+
+        if(AccessCard.getActive ())
+            jr1.setSelected (true);
+        else
+            jr2.setSelected (true);
+
+
         l2 = new JLabel("Dissocier le badge");
         b1 = new JButton("Valider");
         b2 = new JButton("Dissocier");

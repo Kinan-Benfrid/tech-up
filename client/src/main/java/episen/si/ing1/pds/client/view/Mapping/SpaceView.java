@@ -118,12 +118,20 @@ public class SpaceView extends CommonFrame {
                     ResponseSocket response2 = socketUtility.sendRequest(request2);
                     List<Map> equipment_list = (List<Map>) response2.getData();
                     String file_img ="";
-                    if ((boolean) equipment_list.get(0).get("equipment_state")){
-                        file_img = "red_icon_activated.png";
-                    }
-                    else{
+                    System.out.println (equipment_list);
+                    if (equipment_list.size ()!=0)
+                    {
+                        if ((boolean) equipment_list.get(0).get("equipment_state")){
+                            file_img = "red_icon_activated.png";
+                        }
+
+                        else{
+                            file_img = "red_icon_desactivated.png";
+                        }
+                    } else if (file_img.equals ("")) {
                         file_img = "red_icon_desactivated.png";
                     }
+
                     Icon red_icon = new ImageIcon(ImageIO.read(new File(System.getenv("IMG")+"\\"+file_img)));
                     JLabel red_icon_label = new JLabel();
                     red_icon_label.setIcon(red_icon);

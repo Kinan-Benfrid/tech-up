@@ -7,10 +7,7 @@ import episen.si.ing1.pds.client.socket.SocketUtility;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,8 +43,8 @@ public class CardAccessEquipments extends MainCardMenu {
         b1.setBounds (320,450,150,25);
         b2.setBounds (480,450,160,25);
 
-        b1.setEnabled (equipThere);
-        b2.setEnabled (equipThere);
+        b1.setEnabled (false);
+        b2.setEnabled (false);
 
         //sending request
         RequestSocket request = new RequestSocket();
@@ -124,7 +121,7 @@ public class CardAccessEquipments extends MainCardMenu {
                         jc2Model.addElement(floorElement);
                     }
                     jb2.setEnabled(true);
-
+                    jc1.setEnabled (false);
                     jb2.revalidate();
                     jb2.repaint();
 
@@ -211,7 +208,7 @@ public class CardAccessEquipments extends MainCardMenu {
                         jc3Model.addElement(spaceElement);
                     }
                     jb3.setEnabled(true);
-
+                    jc1.setEnabled (false);
                     jb3.revalidate();
                     jb3.repaint();
 
@@ -224,7 +221,6 @@ public class CardAccessEquipments extends MainCardMenu {
         DefaultComboBoxModel mjc1 = new DefaultComboBoxModel ();
         jc1 = new JComboBox(mjc1);
 
-        jc1.setEnabled (equipThere);
         jb3.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -284,10 +280,17 @@ public class CardAccessEquipments extends MainCardMenu {
         jc1.setSelectedIndex(-1);
 
 
-        jc1.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == 1) {
-                    Map item = (Map) e.getItem();
+        jc1.addActionListener (new ActionListener () {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedItem = jc1.getSelectedIndex ();
+                Object object = jc1.getSelectedItem ();
+                if(object instanceof Map) {
+                    Map item = (Map) object;
+                    if(selectedItem != -1) {
+                        b1.setEnabled (true);
+                        b2.setEnabled (true);
+                    }
                     int equipment_id = (Integer) item.get("position_id");
                     Equipment.setEquipment_id(equipment_id);
                     System.out.println ("Items of equis: " + item);
@@ -295,10 +298,12 @@ public class CardAccessEquipments extends MainCardMenu {
             }
         });
 
+
+
+
         b1.addMouseListener (new MouseListener () {
             @Override
             public void mouseClicked(MouseEvent e) {
-                b1.setEnabled (equipThere);
                 RequestSocket accessReq = new RequestSocket ();
                 accessReq.setRequest ("access_equip_update");
                 Map dataEqui = new HashMap ();
