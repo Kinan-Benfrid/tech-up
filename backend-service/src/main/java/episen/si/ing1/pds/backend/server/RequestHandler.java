@@ -178,7 +178,7 @@ public class RequestHandler {
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
             List<Map> name = new ArrayList<>();
-            String sql = "select card_id, access_card.person_id,position_p, role_id, person_firstname,person_surname from person inner join access_card on person.person_id = access_card.person_id where affected_card=true and company_id=?";
+            String sql = "select active, card_id, access_card.person_id,position_p, role_id, person_firstname,person_surname from person inner join access_card on person.person_id = access_card.person_id where affected_card=true and company_id=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (Integer) dataLoaded.get("company_id"));
             ResultSet rs = statement.executeQuery();
@@ -190,6 +190,7 @@ public class RequestHandler {
                 hm.put("person_surname", rs.getString("person_surname"));
                 hm.put("role_id", rs.getInt("role_id"));
                 hm.put("position_p", rs.getString("position_p"));
+                hm.put("active", rs.getBoolean("active"));
 
                 name.add(hm);
             }

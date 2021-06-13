@@ -105,10 +105,12 @@ public class FirstScreenCardConfig extends CommonFrame implements ActionListener
                     Person.setPerson_id(person_id);
                     System.out.println("person_id" + person_id);
                     AccessCard.setCard_id (card_id);
+                    System.out.println (item);
                     Person.setPerson_firstname(person_firstname);
                     Person.setPerson_surname(person_surname);
                     Person.setSubtitle (String.valueOf (item.get ("position_p")));
                     Person.setRole_id ( (Integer) item.get ("role_id"));
+                    AccessCard.setActive ((Boolean) item.get ("active"));
                     System.out.println(person_firstname);
                     System.out.println(person_surname);
 

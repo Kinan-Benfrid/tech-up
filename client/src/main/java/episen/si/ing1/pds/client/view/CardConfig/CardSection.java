@@ -44,7 +44,7 @@ public class CardSection extends MainCardMenu {
         j9.setBounds (20,180,150,30);
         j11.setBounds (20,220,150,30);
         j12.setBounds (20,288,150,30);
-        j13.setBounds (380,270,200,30);
+        j13.setBounds (430,270,200,30);
         j14.setBounds (20,20,180,30);
 
         j14.setFont(new Font("Arial", Font.PLAIN, 23));
@@ -129,15 +129,9 @@ public class CardSection extends MainCardMenu {
                     dataHm.put ("Batiment", data.get ("building_name"));
                     dataHm.put ("Etage", data.get ("floor_name"));
                     dataHm.put ("Nom", data.get ("name"));
+                    dataHm.put ("Type", data.get ("type"));
                     dataHm.put ("accessible", data.get ("accessible"));
-                    dataHm.put ("id", data.get ("id"));
-
-//                    dataHm.put ("accessible", data.get ("accessible"));
-//                    dataHm.put ("Etage", data.get ("floor_name"));
-//                    //dataHm.put ("Nom", data.get ("name"));
-//                    dataHm.put ("Nom", data.get ("name"));
-//                    dataHm.put ("Type", data.get ("type"));
-
+                    //dataHm.put ("id", data.get ("id"));
 
 
                     sortedList.add(dataHm);
@@ -165,7 +159,15 @@ public class CardSection extends MainCardMenu {
 
                     @Override
                     public Object getValueAt(int rowIndex, int columnIndex) {
-                        return accessList.get (rowIndex).get (getColumnName (columnIndex));
+                        Object data = accessList.get (rowIndex).get (getColumnName (columnIndex));
+                        if(data instanceof Boolean) {
+                            Boolean isAccess = (Boolean) data;
+                            if(isAccess)
+                                return "Accès";
+                            else
+                                return "Non accès";
+                        } else
+                            return data;
                     }
                 };
 
