@@ -55,7 +55,7 @@ public class FirstPageRentCriteriaNewCompany extends CommonFrame implements Acti
     private String valeur_space_name_liste_salle_reunion,valeur_space_name_liste_open_space,valeur_space_name_liste_bureau;
 
     private List<Map> list_equipment_dispo,list_name_equipment,list_equipment;
-    private JCheckBox want_equipment;
+
     private String nom_de_lequipement; // lorsque tu selectionne un truc dans ta liste deroulante d'équipements tu garde en mémoire le nom de l'equipement d'une part, pour pouvoir après grace a une requete recuperer l'equipment type id
     private int compteur_capacite_nbr_equipment,compteur_capacite_nbr_equipment2;
     private int s,countable_nmbr_equipement_dispo;
@@ -231,16 +231,6 @@ public class FirstPageRentCriteriaNewCompany extends CommonFrame implements Acti
         });
 
 
-
-
-
-        /**initialize Checkbox*/
-
-        want_equipment = new JCheckBox (" Je ne souhaite pas d'equipement");
-        want_equipment.setBounds(35, 280, 300, 20);
-
-
-
         /** Add components to Panels*/
 
         panPrincipal.add(retour);
@@ -253,8 +243,6 @@ public class FirstPageRentCriteriaNewCompany extends CommonFrame implements Acti
         panCriteria.add(jtBudgetMax);
         panCriteria.add(Description);
         panPrincipal.add(suivant);
-        panCriteria.add(want_equipment);
-
 
         /**Request to send to Server and initialize the Jcombobox which retrieves the values of the request*/
 
@@ -797,16 +785,7 @@ public class FirstPageRentCriteriaNewCompany extends CommonFrame implements Acti
 
                             // Obtenir l'état du checkbox
 
-                            if (want_equipment.isSelected()) {
-                                RequestSocket requestSocket4 = new RequestSocket();
-                                requestSocket4.setRequest("Update_equipment");
-                                Map<String, Object> data4 = new HashMap<>();
-                                data4.put("rental_id_space", nmbr_rental_id);
-                                data4.put("nmbr_equipment_dispo", 0);
-                                data4.put("valeur_liste_du_nbr_dequipement", jcb_nmbr_equipement_dispo.getSelectedItem());
-                                requestSocket4.setData(data4);
-                                ResponseSocket responseRental4 = socketUtility.sendRequest(requestSocket4);
-                            }
+
                         }
                     }
 

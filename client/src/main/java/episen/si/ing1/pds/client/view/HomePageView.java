@@ -130,8 +130,6 @@ public class HomePageView extends CommonFrame implements ActionListener {
             dispose();
             FirstPageRentCriteria f = new FirstPageRentCriteria();
             f.setVisible(true);
-                    //FirstPageRentCriteriaNewCompany fprcnc = new FirstPageRentCriteriaNewCompany();
-                    //fprcnc.setVisible(true);
 
 
         } else if (source == b2) {
