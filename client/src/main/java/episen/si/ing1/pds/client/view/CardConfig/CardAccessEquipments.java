@@ -311,6 +311,9 @@ public class CardAccessEquipments extends MainCardMenu {
                 dataEqui.put ("equi_id", Equipment.getEquipment_id ());
                 accessReq.setData(dataEqui);
                 socketUtility.sendRequest(accessReq);
+
+                JFrame frame = new JFrame("Message");
+                JOptionPane.showMessageDialog(frame, "Accès ajouté !");
             }
 
             @Override
@@ -345,6 +348,9 @@ public class CardAccessEquipments extends MainCardMenu {
                 dataEqui.put ("equi_id", Equipment.getEquipment_id ());
                 accessReq.setData(dataEqui);
                 socketUtility.sendRequest(accessReq);
+
+                JFrame frame = new JFrame("Message");
+                JOptionPane.showMessageDialog(frame, "Accès supprimé !");
             }
 
             @Override
