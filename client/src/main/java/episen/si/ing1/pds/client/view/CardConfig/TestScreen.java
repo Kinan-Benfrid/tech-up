@@ -286,7 +286,7 @@ public class TestScreen extends MainCardMenu{
 
         jc1.setBounds (30,410,200,20);
 
-        b1 = new JButton ("tester");
+        b1 = new JButton ("Tester les droits");
         b1.setBounds (350,410,150,20);
 
         b1.addMouseListener (new MouseListener () {

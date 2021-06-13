@@ -86,6 +86,9 @@ public class CardDate extends MainCardMenu {
                     JOptionPane.showMessageDialog(frame, "Erreur de saisie, veuillez rentrer une date valide");
                 }
 
+                JFrame frame = new JFrame("Message");
+                JOptionPane.showMessageDialog(frame, "Mise à jour du badge réussie !");
+
             }
 
             @Override

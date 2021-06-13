@@ -225,6 +225,9 @@ public class CardSection extends MainCardMenu {
 
                 socketUtility.sendRequest (request2);
 
+                JFrame frame = new JFrame("Message");
+                JOptionPane.showMessageDialog(frame, "Les accès ajoutés ont été supprimés !");
+
                 //Success message
             }
 

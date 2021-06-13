@@ -47,6 +47,7 @@ public class ClearanceLevel extends MainCardMenu implements ActionListener{
         jr4 = new JRadioButton("Niveau 3 : Administrateur");
         jr4.setBounds(80,310,200,40);
 
+
         if(Person.getRole_id () == 1)
             jr1.setSelected (true);
         else if(Person.getRole_id () == 2)

@@ -225,6 +225,8 @@ public class CardAssociation extends CommonFrame {
                     Person.setPerson_id(person_id);
                     Person.setPerson_firstname(person_firstname);
                     Person.setPerson_surname(person_surname);
+                    Person.setSubtitle (String.valueOf (item.getOrDefault ("position_p", "Inconnu")));
+                    System.out.println ("person selected " + item);
                     System.out.println("person_id" + person_id);
                     System.out.println(person_firstname);
                     System.out.println(person_surname);

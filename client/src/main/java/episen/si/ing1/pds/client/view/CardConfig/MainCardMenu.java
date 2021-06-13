@@ -1,5 +1,7 @@
 package episen.si.ing1.pds.client.view.CardConfig;
 
+import episen.si.ing1.pds.client.model.AccessCard;
+import episen.si.ing1.pds.client.model.Person;
 import episen.si.ing1.pds.client.view.CommonFrame;
 import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
 
@@ -10,7 +12,7 @@ import java.awt.event.ActionListener;
 
 public class MainCardMenu extends CommonFrame implements ActionListener {
     private Box boxMenu;
-    private JButton b0,b1, b2, b3, b4, b5, b6,b7,b8;
+    private JButton b0,b1, b2, b3, b4, b5, b6,b8;
 
     public MainCardMenu() {
 
@@ -96,17 +98,6 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
         box6.add(Box.createGlue());
         boxMenu.add(box6, b6);
 
-        b7 = new JButton("Rechercher");
-        b7.setPreferredSize(new Dimension(170, 30));
-        b7.setFont(new Font("Arial", Font.PLAIN, 12));
-        b7.setBackground(new Color(111,174,143));
-        b7.addActionListener(this);
-        Box box7 = new Box(BoxLayout.X_AXIS);
-        box7.add(Box.createGlue());
-        box7.add(b7);
-        box7.add(Box.createGlue());
-        boxMenu.add(box7, b7);
-
         this.add(boxMenu, BorderLayout.WEST);
 
         b8 = new JButton("Ecran de test");
@@ -127,6 +118,8 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if(source == b0) {
+            Person.clearAll ();
+            AccessCard.clearAll ();
             this.dispose();
             RentedSpacesView r = new RentedSpacesView();
             r.setVisible(true);
@@ -159,10 +152,6 @@ public class MainCardMenu extends CommonFrame implements ActionListener {
             this.dispose();
             ActivationCard ac = new ActivationCard();
             ac.setVisible(true);
-        } else if(source == b7) {
-            this.dispose();
-            SearchingCard sc = new SearchingCard();
-            sc.setVisible(true);
         } else if (source == b8) {
             dispose ();
             TestScreen ts = new TestScreen ();

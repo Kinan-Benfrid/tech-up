@@ -30,4 +30,10 @@ public class AccessCard {
     public static void setSubtitle(String subtitle) {
         AccessCard.subtitle = subtitle;
     }
+
+    public static void clearAll() {
+        AccessCard.setActive (Boolean.parseBoolean (null));
+        AccessCard.setCard_id (0);
+        AccessCard.setSubtitle ("");
+    }
 }

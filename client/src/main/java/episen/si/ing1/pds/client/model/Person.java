@@ -55,4 +55,14 @@ public class Person {
     public static void setSubtitle(String subtitle) {
         Person.subtitle = subtitle;
     }
+
+    public static void clearAll() {
+        Person.setSubtitle (null);
+        Person.setPerson_id (0);
+        Person.setPerson_surname ("");
+        Person.setPerson_firstname ("");
+        Person.setNumber_person ("");
+        Person.setRole_id (0);
+
+    }
 }
