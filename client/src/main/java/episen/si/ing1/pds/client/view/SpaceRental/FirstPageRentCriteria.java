@@ -492,11 +492,7 @@ private int s,countable_nmbr_equipement_dispo;
                        valeur_space_id_liste_bureau = (int) Office_list.get(0).get("spacetype_id");
                         }
 
-
-                    System.out.println("MIAAAAAAAAAAM" + valeur_space_id_liste_bureau);
-
                         valeur_liste_total_bureau = valeur_liste_total_bureau + valeur_liste_bureau;
-                    System.out.println("valeur_liste_total_pour_limit_apres_bureau " + valeur_liste_total_bureau);
 
 
                     jcb3.setEnabled(false);

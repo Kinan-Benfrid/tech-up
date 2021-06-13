@@ -120,9 +120,18 @@ public class HomePageView extends CommonFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source == b1) {
+
+            RequestSocket requestSocket = new RequestSocket();
+            requestSocket.setRequest("Insert_Rental");
+            Map<String, Object> data = new HashMap<>();
+            data.put("company_id", Company.getCompany_id());
+            requestSocket.setData(data);
+            ResponseSocket responseRental = socketUtility.sendRequest(requestSocket);
             dispose();
-                    FirstPageRentCriteriaNewCompany fprcnc = new FirstPageRentCriteriaNewCompany();
-                    fprcnc.setVisible(true);
+            FirstPageRentCriteria f = new FirstPageRentCriteria();
+            f.setVisible(true);
+                    //FirstPageRentCriteriaNewCompany fprcnc = new FirstPageRentCriteriaNewCompany();
+                    //fprcnc.setVisible(true);
 
 
         } else if (source == b2) {
