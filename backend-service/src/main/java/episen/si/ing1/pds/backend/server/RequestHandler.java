@@ -450,8 +450,6 @@ public class RequestHandler {
                 list.add(m);
             }
 
-          System.out.println(dataLoaded.get("valeur_liste_total_pour_limit"));
-
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             response.put("data", list);

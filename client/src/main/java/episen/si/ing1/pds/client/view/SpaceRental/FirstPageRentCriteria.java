@@ -96,7 +96,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
 
         /**initialize JLabel*/
 
-        Adulte = new JLabel("Adulteeeeeeeee");
+        Adulte = new JLabel("Adulte");
         Adulte.setBounds(30, 30, 100, 20);
         Budget = new JLabel("Budget Min");
         Budget.setBounds(30, 70, 100, 20);
@@ -336,7 +336,6 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
 
                     valeur_liste_open_space = (int) jcb2.getSelectedItem();
 
-                    System.out.println("AAAAAAAAAAAAAAAAAA" + valeur_liste_open_space);
 
                     if (valeur_liste_open_space == 0) {
                         valeur_liste_total_open_space = 0;
@@ -351,17 +350,14 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                     System.out.println("valeur_liste_total_pour_limit_apres_open_space " + valeur_liste_total_open_space);
 
 
-                    System.out.println("valeur_liste_total_apres_salle_reunion " + valeur_liste_total_salle_reunion);
-
-
                     //  valeur_liste_total_pour_limit = valeur_liste_total_pour_limit + y;
 
-                    //valeur_liste_total_pour_limit = valeur_liste_total_pour_limit + valeur_liste_open_space;
+                    // valeur_liste_total_pour_limit = valeur_liste_total_pour_limit + valeur_liste_open_space;
 
                     // jcb3.setSelectedIndex(-1);
                 }
                 // valeur_liste_total_open_space = valeur_liste_total_open_space + valeur_liste_open_space;
-                //System.out.println("valeur_liste_total_pour_limit_apres_open_space " + valeur_liste_total_open_space);
+                // System.out.println("valeur_liste_total_pour_limit_apres_open_space " + valeur_liste_total_open_space);
 
             }
         });
@@ -612,15 +608,13 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
 
 
         /** envoyer le nom des espaces pour pouvoir faire le tri d'affichage des offres dans le tableau*/
-        /*
-        data.put("valeur_space_name_liste_salle_reunion", valeur_space_name_liste_salle_reunion);
+
+      /*  data.put("valeur_space_name_liste_salle_reunion", valeur_space_name_liste_salle_reunion);
         data.put("valeur_space_name_liste_open_space", valeur_space_name_liste_open_space);
         data.put("valeur_space_name_liste_bureau", valeur_space_name_liste_bureau);
 
 
-         */
-
-
+       */
         System.out.println(data);
         request.setData(data);
 
