@@ -422,7 +422,6 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
 
                     valeur_liste_bureau = (int) jcb3.getSelectedItem();
 
-                    System.out.println("EEEEEEEEEEEEEEEEEEEEEZZZZZ" + valeur_liste_bureau);
 
 
                     if (valeur_liste_bureau == 0) {
@@ -589,7 +588,6 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         valeur_liste_total_pour_limit = valeur_liste_total_salle_reunion + valeur_liste_total_open_space + valeur_liste_total_bureau;
 
 
-        System.out.println("MIAAAAAAAAAAM" + valeur_liste_total_salle_reunion);
 
 
         // Person.setNumber_person(jtAdulte.getText());
@@ -794,7 +792,6 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                             List<Map> list_nbr_equipment = (java.util.List<Map>) responseRental5.getData();
                             compteur_capacite_nbr_equipment2 = (int) list_nbr_equipment.get(0).get("count");
 
-                            System.out.println("GAGNERRRRR" + compteur_capacite_nbr_equipment2);
                             //  compteur_capacite_nbr_equipment2 = (int) responseRental4.getData(0).
                             // compteur_capacite_nbr_equipment2 = 0;
                             //compteur_capacite_nbr_equipment2 = (int)jcb_nmbr_equipement_dispo.getSelectedItem();
