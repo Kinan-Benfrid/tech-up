@@ -7,46 +7,51 @@ import episen.si.ing1.pds.client.socket.SocketUtility;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+public class TestScreen extends MainCardMenu{
 
-public class CardAccessEquipments extends MainCardMenu {
-    private JPanel p1;
-    private JLabel j1;
+    private JLabel j0,j1,j2,j3,j4;
     private JComboBox jb1,jb2,jb3,jc1;
-    private JButton b1,b2;
-    private JLabel l1,l2,l3,l4;
-    private SocketUtility socketUtility = new SocketUtility ();
+    private JPanel p1;
     private boolean equipThere = false;
+    private SocketUtility socketUtility = new SocketUtility ();
+    private JButton b1;
 
-    public CardAccessEquipments() {
+    public TestScreen() {
         this.setLocationRelativeTo(null);
         p1 = new JPanel ();
-        j1 = new JLabel ("Configruation des droits d'accès aux équipements et capteurs");
         p1.setLayout (null);
 
-        j1.setFont(new Font ("Arial", Font.PLAIN, 20));
-        j1.setBounds(20,10,800,60);
+        j0 = new JLabel ("Testez les accès");
+        j0.setBounds (20,20,200,30);
+        j0.setFont(new Font("Arial", Font.PLAIN, 20));
 
-        l1 = new JLabel("Batiment");
-        l1.setBounds(30,60,120,90);
-        l1.setFont(new Font ("Arial", Font.PLAIN, 17));
+        j1 = new JLabel("Batiment");
+        j1.setBounds(30,45,120,90);
+        j1.setFont(new Font ("Arial", Font.PLAIN, 17));
+
+        j2 = new JLabel("Etage");
+        j2.setBounds(30,130,120,90);
+        j2.setFont(new Font("Arial", Font.PLAIN, 17));
+
+        j3 = new JLabel("Espace");
+        j3.setBounds(30,250,120,90);
+        j3.setFont(new Font("Arial", Font.PLAIN, 17));
 
 
-        b1 = new JButton ("Valider l'accès");
-        b2 = new JButton ("Supprimer l'accès");
+        j4 = new JLabel ("Equipements et capteurs");
+        j4.setBounds(30,340,230,90);
+        j4.setFont(new Font("Arial", Font.PLAIN, 17));
 
-        b1.setBounds (320,450,150,25);
-        b2.setBounds (480,450,160,25);
 
-        b1.setEnabled (false);
-        b2.setEnabled (false);
-
-        //sending request
         RequestSocket request = new RequestSocket();
         request.setRequest("building_list");
         Map<String, Object> hm = new HashMap<> ();
@@ -57,7 +62,7 @@ public class CardAccessEquipments extends MainCardMenu {
 
         ResponseSocket response1 = socketUtility.sendRequest(request);
         // data is the list of map we sent in the server (look response)
-        java.util.List<Map> buildingAccess = (java.util.List<Map>) response1.getData();
+        List<Map> buildingAccess = (List<Map>) response1.getData();
 
         //creating jcombobox to retrieve data in
         DefaultComboBoxModel jc2Model = new DefaultComboBoxModel();
@@ -71,7 +76,7 @@ public class CardAccessEquipments extends MainCardMenu {
         jb3.setEnabled(false);
         //putting the
         jb1 = new JComboBox(new Vector (buildingAccess));
-        jb1.setBounds(30,125,230,20);
+        jb1.setBounds(30,115,230,20);
 
 
         jb1.setRenderer(new DefaultListCellRenderer() {
@@ -113,7 +118,7 @@ public class CardAccessEquipments extends MainCardMenu {
 
                     ResponseSocket response2 = socketUtility.sendRequest(request2);
                     // data is the list of map we sent in the server (look response)
-                    java.util.List<Map> floorAccess = (java.util.List<Map>) response2.getData();
+                    List<Map> floorAccess = (List<Map>) response2.getData();
                     System.out.println (floorAccess);
 
                     jc2Model.removeAllElements();
@@ -121,7 +126,7 @@ public class CardAccessEquipments extends MainCardMenu {
                         jc2Model.addElement(floorElement);
                     }
                     jb2.setEnabled(true);
-                    jc1.setEnabled (false);
+
                     jb2.revalidate();
                     jb2.repaint();
 
@@ -131,19 +136,6 @@ public class CardAccessEquipments extends MainCardMenu {
             }
         });
 
-
-        l2 = new JLabel("Etage");
-        l2.setBounds(30,130,120,90);
-        l2.setFont(new Font("Arial", Font.PLAIN, 17));
-
-        l3 = new JLabel("Espace");
-        l3.setBounds(30,250,120,90);
-        l3.setFont(new Font("Arial", Font.PLAIN, 17));
-
-
-        l4 = new JLabel ("Equipements et capteurs");
-        l4.setBounds(30,340,230,90);
-        l4.setFont(new Font("Arial", Font.PLAIN, 17));
 
         jb2.setBounds(30,200,230,20);
         jb3.setBounds(30,310,230,20);
@@ -199,7 +191,7 @@ public class CardAccessEquipments extends MainCardMenu {
                     requestSocket.setData(data);
 
                     ResponseSocket responseSpace = socketUtility.sendRequest(requestSocket);
-                    java.util.List<Map> spaceList = (List<Map>) responseSpace.getData();
+                    List<Map> spaceList = (List<Map>) responseSpace.getData();
 
                     System.out.println(spaceList);
                     // clear the data in the drop down list
@@ -208,7 +200,7 @@ public class CardAccessEquipments extends MainCardMenu {
                         jc3Model.addElement(spaceElement);
                     }
                     jb3.setEnabled(true);
-                    jc1.setEnabled (false);
+
                     jb3.revalidate();
                     jb3.repaint();
 
@@ -221,6 +213,7 @@ public class CardAccessEquipments extends MainCardMenu {
         DefaultComboBoxModel mjc1 = new DefaultComboBoxModel ();
         jc1 = new JComboBox(mjc1);
 
+        jc1.setEnabled (equipThere);
         jb3.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -280,17 +273,10 @@ public class CardAccessEquipments extends MainCardMenu {
         jc1.setSelectedIndex(-1);
 
 
-        jc1.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedItem = jc1.getSelectedIndex ();
-                Object object = jc1.getSelectedItem ();
-                if(object instanceof Map) {
-                    Map item = (Map) object;
-                    if(selectedItem != -1) {
-                        b1.setEnabled (true);
-                        b2.setEnabled (true);
-                    }
+        jc1.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == 1) {
+                    Map item = (Map) e.getItem();
                     int equipment_id = (Integer) item.get("position_id");
                     Equipment.setEquipment_id(equipment_id);
                     System.out.println ("Items of equis: " + item);
@@ -298,22 +284,61 @@ public class CardAccessEquipments extends MainCardMenu {
             }
         });
 
+        jc1.setBounds (30,410,200,20);
 
-
+        b1 = new JButton ("Tester les droits");
+        b1.setBounds (350,410,150,20);
 
         b1.addMouseListener (new MouseListener () {
             @Override
             public void mouseClicked(MouseEvent e) {
-                RequestSocket accessReq = new RequestSocket ();
-                accessReq.setRequest ("access_equip_update");
-                Map dataEqui = new HashMap ();
-                dataEqui.put ("card_id", AccessCard.getCard_id ());
-                dataEqui.put ("equi_id", Equipment.getEquipment_id ());
-                accessReq.setData(dataEqui);
-                socketUtility.sendRequest(accessReq);
+                Map selectedEquipment= (Map) jc1.getSelectedItem ();
+                if (selectedEquipment == null) {
+                    System.out.println ("test space");
+                    RequestSocket testSpaceRequest = new RequestSocket ();
+                    testSpaceRequest.setRequest ("test_access");
+                    Map<String,Object> data = new HashMap<> ();
+                    data.put ("card_id", AccessCard.getCard_id ());
+                    data.put ("space_id", Space.getSpace_id ());
+                    data.put ("type", "space");
 
-                JFrame frame = new JFrame("Message");
-                JOptionPane.showMessageDialog(frame, "Accès ajouté !");
+                    testSpaceRequest.setData (data);
+
+                    List<Map> testSpace = (List<Map>) socketUtility.sendRequest (testSpaceRequest).getData ();
+
+                    boolean hasAccess = (boolean) testSpace.get (0).get("access");
+
+                    if (hasAccess) {
+                        JFrame frame = new JFrame("Message");
+                        JOptionPane.showMessageDialog(frame, "Accès autorisé");
+                    } else {
+                        JFrame frame = new JFrame("Message");
+                        JOptionPane.showMessageDialog(frame, "accès refusé");
+                    }
+
+                } else {
+                    System.out.println ("testing equipment");
+                    RequestSocket testSpaceRequest = new RequestSocket ();
+                    testSpaceRequest.setRequest ("test_access");
+                    Map<String,Object> data = new HashMap<> ();
+                    data.put ("card_id", AccessCard.getCard_id ());
+                    data.put ("equip_id", Equipment.getEquipment_id ());
+                    data.put ("type", "equipment");
+
+                    testSpaceRequest.setData (data);
+
+                    List<Map> testSpace = (List<Map>) socketUtility.sendRequest (testSpaceRequest).getData ();
+
+                    boolean hasAccess = (boolean) testSpace.get (0).get("access");
+
+                    if (hasAccess) {
+                        JFrame frame = new JFrame("Message");
+                        JOptionPane.showMessageDialog(frame, "Accès autorisé");
+                    } else {
+                        JFrame frame = new JFrame("Message");
+                        JOptionPane.showMessageDialog(frame, "accès refusé");
+                    }
+                }
             }
 
             @Override
@@ -337,65 +362,21 @@ public class CardAccessEquipments extends MainCardMenu {
             }
         });
 
-        b2.addMouseListener (new MouseListener () {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                b2.setEnabled (equipThere);
-                RequestSocket accessReq = new RequestSocket ();
-                accessReq.setRequest ("blockaccess_equip_update");
-                Map dataEqui = new HashMap ();
-                dataEqui.put ("card_id", AccessCard.getCard_id ());
-                dataEqui.put ("equi_id", Equipment.getEquipment_id ());
-                accessReq.setData(dataEqui);
-                socketUtility.sendRequest(accessReq);
-
-                JFrame frame = new JFrame("Message");
-                JOptionPane.showMessageDialog(frame, "Accès supprimé !");
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
-
-        jc1.setBounds (30,410,200,20);
-
-        p1.add (j1);
-        p1.add (b1);
-        p1.add (b2);
-        p1.add(l1);
         p1.add(jb1);
-        p1.add(l2);
-        p1.add(l4);
         p1.add(jb2);
-        p1.add(l3);
         p1.add(jb3);
         p1.add(jc1);
+        p1.add(b1);
+        p1.add(j0);
+        p1.add(j1);
+        p1.add(j2);
+        p1.add(j3);
+        p1.add(j4);
         this.add(p1);
-
-
-
-
     }
 
     public static void main(String[] args) {
-        CardAccessEquipments ce = new CardAccessEquipments ();
-        ce.setVisible (true);
+        TestScreen ts = new TestScreen ();
+        ts.setVisible (true);
     }
 }

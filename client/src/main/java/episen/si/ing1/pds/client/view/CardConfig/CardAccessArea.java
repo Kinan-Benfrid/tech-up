@@ -18,20 +18,21 @@ import java.util.Vector;
 
 public class CardAccessArea extends MainCardMenu {
     private JPanel p1;
-    private JButton b1,b2,b3;
+    private JButton b1,b2,b3,b4,b5,b6;
     private JComboBox jb1,jb2,jb3;
-    private JLabel l1,l2,l3;
+    private JLabel l1,l2,l3,l4;
     private JTable jt;
     private SocketUtility socketUtility = new SocketUtility ();
 
     public CardAccessArea() {
+        this.setLocationRelativeTo(null);
         p1 = new JPanel();
         p1.setLayout(null);
         this.add(p1);
 
 
-        l1 = new JLabel("Batiment");
-        l1.setBounds(30,20,120,90);
+        l1 = new JLabel("Bâtiment");
+        l1.setBounds(30,60,120,90);
         l1.setFont(new Font("Arial", Font.PLAIN, 20));
 
         //sending request
@@ -59,7 +60,7 @@ public class CardAccessArea extends MainCardMenu {
         jb3.setEnabled(false);
         //putting the
         jb1 = new JComboBox(new Vector (buildingAccess));
-        jb1.setBounds(30,90,230,20);
+        jb1.setBounds(30,130,230,20);
 
 
         jb1.setRenderer(new DefaultListCellRenderer() {
@@ -121,14 +122,17 @@ public class CardAccessArea extends MainCardMenu {
 
 
         l2 = new JLabel("Etage");
-        l2.setBounds(30,130,120,90);
-        l2.setFont(new Font("Arial", Font.PLAIN, 20));
-
         l3 = new JLabel("Espace");
-        l3.setBounds(30,280,120,90);
-        l3.setFont(new Font("Arial", Font.PLAIN, 20));
+        l4 = new JLabel("Configuration des droits d'accès aux espaces");
 
-        jb2.setBounds(30,200,230,20);
+        l2.setBounds(30,155,120,90);
+        l3.setBounds(30,245,120,90);
+        l4.setBounds(20,10,500,60);
+
+        l2.setFont(new Font("Arial", Font.PLAIN, 20));
+        l3.setFont(new Font("Arial", Font.PLAIN, 20));
+        l4.setFont(new Font("Arial", Font.PLAIN, 24));
+        jb2.setBounds(30,230,230,20);
         jb3.setBounds(30,310,230,20);
 
         jb2.setSelectedIndex(-1);
@@ -216,12 +220,20 @@ public class CardAccessArea extends MainCardMenu {
             }
         });
 
-        b1 = new JButton("Valider le bâtiment");
-        b2 = new JButton("Valider l'étage");
-        b3 = new JButton("Valider l'espace");
+        b1 = new JButton("Valider");
+        b2 = new JButton("Valider");
+        b3 = new JButton("Valider");
+        b4 = new JButton("Supprimer");
+        b5 = new JButton("Supprimer");
+        b6 = new JButton("Supprimer");
+
         b1.setBounds(300,90,200,20);
         b2.setBounds(300,200,200,20);
         b3.setBounds(300,310,200,20);
+        b4.setBounds(300,130,200,20);
+        b5.setBounds(300,240,200,20);
+        b6.setBounds(300,350,200,20);
+
 
         b1.addMouseListener (new MouseListener () {
             @Override
@@ -239,7 +251,12 @@ public class CardAccessArea extends MainCardMenu {
 
                 ResponseSocket response1 = socketUtility.sendRequest(request);
                 // data is the list of map we sent in the server (look response)
-                List<Map> insertAccess = (List<Map>) response1.getData();
+
+                // sucessfull message
+
+
+                JFrame frame = new JFrame("Message");
+                JOptionPane.showMessageDialog(frame, "Zone ajoutée !");
             }
 
             @Override
@@ -279,6 +296,9 @@ public class CardAccessArea extends MainCardMenu {
                 ResponseSocket response1 = socketUtility.sendRequest(request);
                 // data is the list of map we sent in the server (look response)
                 List<Map> insertAccess = (List<Map>) response1.getData();
+
+                JFrame frame = new JFrame("Message");
+                JOptionPane.showMessageDialog(frame, "Zone ajoutée !");
             }
 
             @Override
@@ -306,9 +326,9 @@ public class CardAccessArea extends MainCardMenu {
             @Override
             public void mouseClicked(MouseEvent e) {
                 RequestSocket request = new RequestSocket();
-                request.setRequest("space_access");
+                request.setRequest("access_space_update");
                 Map<String, Object> hm = new HashMap<> ();
-                hm.put("company_id", Company.getCompany_id());
+                //hm.put("company_id", Company.getCompany_id());
                 //hm.put ("person_id", Person.getPerson_id ());
                 hm.put("card_id", AccessCard.getCard_id ());
                 hm.put("space_id", Space.getSpace_id ());
@@ -316,7 +336,10 @@ public class CardAccessArea extends MainCardMenu {
 
                 ResponseSocket response1 = socketUtility.sendRequest(request);
                 // data is the list of map we sent in the server (look response)
-                List<Map> insertAccess = (List<Map>) response1.getData();
+               // List<Map> insertAccess = (List<Map>) response1.getData();
+
+                JFrame frame = new JFrame("Message");
+                JOptionPane.showMessageDialog(frame, "Zone ajoutée !");
             }
 
             @Override
@@ -340,16 +363,150 @@ public class CardAccessArea extends MainCardMenu {
             }
         });
 
+        b4.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RequestSocket request = new RequestSocket();
+                request.setRequest("blockaccess_building_update");
+                Map<String, Object> hm = new HashMap<> ();
+                //hm.put("company_id", Company.getCompany_id());
+                //hm.put ("person_id", Person.getPerson_id ());
+                hm.put("card_id", AccessCard.getCard_id ());
+                hm.put("building_id", Building.getBuiling_id ());
+                //hm.put("floor_id", Floor.getFloor_id ());
+                //hm.put("space_id", Space.getSpace_id ());
+                request.setData(hm);
+
+                ResponseSocket response1 = socketUtility.sendRequest(request);
+                // data is the list of map we sent in the server (look response)
+                List<Map> insertAccess = (List<Map>) response1.getData();
+
+                JFrame frame = new JFrame("Message");
+                JOptionPane.showMessageDialog(frame, "Zone supprimée!");
+
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        b5.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RequestSocket request = new RequestSocket();
+                request.setRequest("blockaccess_floor_update");
+                Map<String, Object> hm = new HashMap<> ();
+                //hm.put("company_id", Company.getCompany_id());
+                //hm.put ("person_id", Person.getPerson_id ());
+                hm.put("card_id", AccessCard.getCard_id ());
+                //hm.put("building_id", Building.getBuiling_id ());
+                hm.put("floor_id", Floor.getFloor_id ());
+                //hm.put("space_id", Space.getSpace_id ());
+                request.setData(hm);
+
+                ResponseSocket response1 = socketUtility.sendRequest(request);
+                // data is the list of map we sent in the server (look response)
+                List<Map> insertAccess = (List<Map>) response1.getData();
+
+                JFrame frame = new JFrame("Message");
+                JOptionPane.showMessageDialog(frame, "Zone supprimée!");
+
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        b6.addMouseListener (new MouseListener () {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RequestSocket request = new RequestSocket();
+                request.setRequest("blockaccess_space_update");
+                Map<String, Object> hm = new HashMap<> ();
+                hm.put("card_id", AccessCard.getCard_id ());
+                hm.put("space_id", Space.getSpace_id ());
+                request.setData(hm);
+
+                ResponseSocket response1 = socketUtility.sendRequest(request);
+                // data is the list of map we sent in the server (look response)
+                List<Map> insertAccess = (List<Map>) response1.getData();
+
+                JFrame frame = new JFrame("Message");
+                JOptionPane.showMessageDialog(frame, "Zone supprimée!");
+
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
         p1.add(l1);
         p1.add(jb1);
         p1.add(l2);
         p1.add(jb2);
         p1.add(l3);
+        p1.add(l4);
         p1.add(jb3);
         p1.add(b1);
         p1.add(b2);
         p1.add(b3);
+        p1.add(b4);
+        p1.add(b5);
+        p1.add(b6);
 
     }
 

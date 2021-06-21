@@ -7,13 +7,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.lang.*;
 
 
@@ -119,7 +117,7 @@ public class RequestHandler {
         } else if (requestName.equals("card_lost")) {
             ObjectMapper mapper = new ObjectMapper();
             List<Map> card = new ArrayList<>();
-            String sql = "select card_id from access_card ORDER BY card_id ASC";
+            String sql = "select card_id from access_card WHERE person_id is not null ORDER BY card_id ASC";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -139,7 +137,7 @@ public class RequestHandler {
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
             List<Map> name = new ArrayList<>();
-            String sql = "select person_id, person_firstname, person_surname from person where company_id=?";
+            String sql = "SELECT person.* FROM person LEFT JOIN access_card ac on person.person_id = ac.person_id where card_id is null AND company_id=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (Integer) dataLoaded.get("company_id"));
             ResultSet rs = statement.executeQuery();
@@ -148,6 +146,7 @@ public class RequestHandler {
                 hm.put("person_id", rs.getInt("person_id"));
                 hm.put("person_firstname", rs.getString("person_firstname"));
                 hm.put("person_surname", rs.getString("person_surname"));
+                hm.put("position_p", rs.getString ("position_p"));
                 name.add(hm);
             }
             Map<String, Object> response = new HashMap<>();
@@ -180,7 +179,7 @@ public class RequestHandler {
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
             List<Map> name = new ArrayList<>();
-            String sql = "select card_id, access_card.person_id,person_firstname,person_surname from person inner join access_card on person.person_id = access_card.person_id where affected_card=true and company_id=?";
+            String sql = "select active, card_id, access_card.person_id,position_p, role_id, person_firstname,person_surname from person inner join access_card on person.person_id = access_card.person_id where affected_card=true and company_id=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (Integer) dataLoaded.get("company_id"));
             ResultSet rs = statement.executeQuery();
@@ -190,6 +189,10 @@ public class RequestHandler {
                 hm.put("card_id", rs.getInt("card_id"));
                 hm.put("person_firstname", rs.getString("person_firstname"));
                 hm.put("person_surname", rs.getString("person_surname"));
+                hm.put("role_id", rs.getInt("role_id"));
+                hm.put("position_p", rs.getString("position_p"));
+                hm.put("active", rs.getBoolean("active"));
+
                 name.add(hm);
             }
 
@@ -216,153 +219,6 @@ public class RequestHandler {
             }
 
             Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", name);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-
-        } else if (requestName.equals("clearance_level0")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            List<Map> name = new ArrayList<>();
-            String sql = "UPDATE access_card set clearance_level=0,affected_card = true,person_id =? where card_id=?";
-            String sql2 ="insert into card_spacetype (card_id,spacetype_id) values (?,1)";
-            PreparedStatement statement1 = connection.prepareStatement(sql);
-            PreparedStatement statement2 = connection.prepareStatement(sql2);
-            statement1.setInt(1, (Integer) dataloaded.get("person_id"));
-            statement1.setInt(2, (Integer) dataloaded.get("card_id"));
-            statement2.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement1.executeUpdate();
-            statement2.executeUpdate ();
-            for (int i = 0; i<11; i++){
-                if ( i==3 || i==6 || i==7 || i==10){
-                    String sql3 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,"+i+")";
-                    PreparedStatement statement3 = connection.prepareStatement(sql3);
-                    statement3.setInt(1, (Integer) dataloaded.get("card_id"));
-                    statement3.executeUpdate ();
-                }
-            }
-
-            Map<String, Object> response = new HashMap<>();
-            name.add(new HashMap());
-            response.put("request", requestName);
-            response.put("data", name);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-
-        } else if (requestName.equals("clearance_level1")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            List<Map> name = new ArrayList<>();
-            String sql1 = "UPDATE access_card set clearance_level=1,affected_card = true, person_id =? where card_id=?";
-            String sql2 ="insert into card_spacetype (card_id,spacetype_id) values (?,1)";
-            String sql3 ="insert into card_spacetype (card_id,spacetype_id) values (?,2)";
-            PreparedStatement statement1 = connection.prepareStatement(sql1);
-            PreparedStatement statement2 = connection.prepareStatement(sql2);
-            PreparedStatement statement3 = connection.prepareStatement(sql3);
-            statement1.setInt(1, (Integer) dataloaded.get("person_id"));
-            statement1.setInt(2, (Integer) dataloaded.get("card_id"));
-            statement2.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement3.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement1.executeUpdate();
-            statement2.executeUpdate ();
-            statement3.executeUpdate ();
-
-            for (int i = 0; i<11; i++){
-                if (i==2 || i==3 || i==4 || i==6 || i==7 || i==10){
-                    String sql4 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,"+i+")";
-                    PreparedStatement statement4 = connection.prepareStatement(sql4);
-                    statement4.setInt(1, (Integer) dataloaded.get("card_id"));
-                    statement4.executeUpdate();
-
-                }
-
-            }
-
-            Map<String, Object> response = new HashMap<>();
-            name.add(new HashMap());
-            response.put("request", requestName);
-            response.put("data", name);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-
-        } else if (requestName.equals("clearance_level2")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            List<Map> name = new ArrayList<>();
-            String sql1 = "UPDATE access_card set clearance_level=2,affected_card = true, person_id =? where card_id=?";
-            String sql2 ="insert into card_spacetype (card_id,spacetype_id) values (?,1)";
-            String sql3 ="insert into card_spacetype (card_id,spacetype_id) values (?,3)";
-            PreparedStatement statement1 = connection.prepareStatement(sql1);
-            PreparedStatement statement2 = connection.prepareStatement(sql2);
-            PreparedStatement statement3 = connection.prepareStatement(sql3);
-            statement1.setInt(1, (Integer) dataloaded.get("person_id"));
-            statement1.setInt(2, (Integer) dataloaded.get("card_id"));
-            statement2.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement3.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement1.executeUpdate();
-            statement2.executeUpdate ();
-            statement3.executeUpdate ();
-
-            for (int i = 0; i<11; i++){
-                if (i==1 || i==2 || i==3 || i==4 || i==6 || i==7 || i==8 || i==10){
-                    String sql4 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,"+i+")";
-                    PreparedStatement statement4 = connection.prepareStatement(sql4);
-                    statement4.setInt(1, (Integer) dataloaded.get("card_id"));
-                    statement4.executeUpdate();
-
-                }
-            }
-
-            Map<String, Object> response = new HashMap<>();
-            name.add(new HashMap());
-            response.put("request", requestName);
-            response.put("data", name);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-
-        } else if (requestName.equals("clearance_level3")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            List<Map> name = new ArrayList<>();
-            String sql1 = "UPDATE access_card set clearance_level=3,affected_card = true, person_id =? where card_id=?";
-            String sql2 ="insert into card_spacetype (card_id,spacetype_id) values (?,1)";
-            String sql3 ="insert into card_spacetype (card_id,spacetype_id) values (?,3)";
-            String sql4 ="insert into card_spacetype (card_id,spacetype_id) values (?,2)";
-            PreparedStatement statement1 = connection.prepareStatement(sql1);
-            PreparedStatement statement2 = connection.prepareStatement(sql2);
-            PreparedStatement statement3 = connection.prepareStatement(sql3);
-            PreparedStatement statement4 = connection.prepareStatement(sql4);
-
-            statement1.setInt(1, (Integer) dataloaded.get("person_id"));
-            statement1.setInt(2, (Integer) dataloaded.get("card_id"));
-            statement2.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement3.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement4.setInt(1, (Integer) dataloaded.get("card_id"));
-            statement1.executeUpdate();
-            statement2.executeUpdate ();
-            statement3.executeUpdate ();
-            statement4.executeUpdate();
-            for (int i = 0; i<11; i++){
-                if (i==1 || i==2 || i==3 || i==4 || i==6 || i==7 || i==8 || i==10){
-                    String sql5 = "insert into card_equipmenttype(card_id,equipmenttype_id) values (?,"+i+")";
-                    PreparedStatement statement5 = connection.prepareStatement(sql5);
-                    statement5.setInt(1, (Integer) dataloaded.get("card_id"));
-                    statement5.executeUpdate();
-
-                }
-            }
-
-            Map<String, Object> response = new HashMap<>();
-            name.add(new HashMap());
             response.put("request", requestName);
             response.put("data", name);
 
@@ -410,7 +266,7 @@ public class RequestHandler {
             Map dataloaded = (Map) request.getData();
             logger.info(String.valueOf(dataloaded));
             List<Map> name = new ArrayList<>();
-            String sql = "UPDATE access_card set active = false, affected_card = false,clearance_level=null, person_id =null where card_id=?";
+            String sql = "UPDATE access_card set active = false, affected_card = false, person_id =null where card_id=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (Integer) dataloaded.get("card_id"));
             statement.executeUpdate();
@@ -439,7 +295,6 @@ public class RequestHandler {
                 m.put("floor_number", rs.getInt("floor_number"));
                 m.put("building_name", rs.getString("building_name"));
                 m.put("price", rs.getInt("price"));
-
                 list.add(m);
             }
             Map<String, Object> response = new HashMap<>();
@@ -449,6 +304,53 @@ public class RequestHandler {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
         }
+        else if (requestName.equals("Insert_New_Company")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            String query = " insert into company (company_name) values (?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, (String) dataLoaded.get("jT1"));
+
+            statement.executeUpdate();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+        else if (requestName.equals("Insert_New_MDA")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            String query = " insert into maintenance_department_administrators (company_id) Select max(company_id) as max from company";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.executeUpdate();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+        else if (requestName.equals("Insert_New_Rental")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            String query ="Insert into rental (id_mda) Select max(id_mda) as max from maintenance_department_administrators";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.executeUpdate();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+
 
         else if (requestName.equals("meeting_list")) {
             ObjectMapper mapper = new ObjectMapper();
@@ -460,7 +362,6 @@ public class RequestHandler {
             List<Map> list = new ArrayList<>();
             while (rs.next()) {
                 Map m = new HashMap();
-              //  m.put("space_reunion", rs.getString("space_name"));
                 m.put("spacetype_id", rs.getInt("spacetype_id"));
                 m.put("countable", rs.getInt("countable"));
                 list.add(m);
@@ -482,7 +383,6 @@ public class RequestHandler {
             List<Map> list = new ArrayList<>();
             while (rs.next()) {
                 Map m = new HashMap();
-               // m.put("space_openSpace", rs.getString("space_name"));
                 m.put("spacetype_id", rs.getInt("spacetype_id"));
                 m.put("countable2", rs.getInt("countable2"));
                 list.add(m);
@@ -505,8 +405,6 @@ public class RequestHandler {
             List<Map> list = new ArrayList<>();
             while (rs.next()) {
                 Map m = new HashMap();
-               // m.put("space_office", rs.getString("space_name"));
-
                 m.put("spacetype_id", rs.getInt("spacetype_id"));
                 m.put("countable3", rs.getInt("countable3"));
                 list.add(m);
@@ -524,10 +422,7 @@ public class RequestHandler {
             logger.info(String.valueOf(dataLoaded));
             List<Map> list = new ArrayList<>();
 
-
-
-
-            String query ="Select space.rental_id,space_id,space_name,size_space, max_person_number,floor_number, building_name,price,space.floor_id from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where rental_id is NULL and max_person_number >= ? and price between ? and ? and spacetype_id in ( select spacetype_id from space where spacetype_id = ? or spacetype_id = ? or spacetype_id = ?) limit ?";
+            String query ="Select space.rental_id,space_id,space_name,size_space, max_person_number,floor_number, building_name,price,space.floor_id from space INNER JOIN floor_ ON space.floor_id = floor_.floor_id INNER JOIN building ON floor_.building_id = building.building_id Where rental_id is NULL and max_person_number >= ? and price between ? and ? and spacetype_id in ( select spacetype_id from space where spacetype_id = ? or spacetype_id = ? or spacetype_id = ?) order by price asc limit ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, (Integer) dataLoaded.get("max_person_number"));
             statement.setInt(2, (Integer) dataLoaded.get("budjetMin"));
@@ -537,13 +432,6 @@ public class RequestHandler {
             statement.setInt(5, (Integer) dataLoaded.get("valeur_space_id_liste_open_space"));
             statement.setInt(6, (Integer) dataLoaded.get("valeur_space_id_liste_bureau"));
             statement.setInt(7, (Integer) dataLoaded.get("valeur_liste_total_pour_limit"));
-
-            /*statement.setString(8,"valeur_space_name_liste_salle_reunion");
-            statement.setString(9,"valeur_space_name_liste_open_space");
-            statement.setString(10,"valeur_space_name_liste_bureau");
-            and space_name in (select space_name from space where space_name = 'Bureau individuel 1' or space_name = 'Open Space 1' or space_name ='Salle de reunion 1')
-
-             */
 
 
             ResultSet rs = statement.executeQuery();
@@ -561,8 +449,6 @@ public class RequestHandler {
 
                 list.add(m);
             }
-
-          System.out.println(dataLoaded.get("valeur_liste_total_pour_limit"));
 
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
@@ -584,9 +470,7 @@ public class RequestHandler {
             writer.println(responseMsg);
 
         }
-
-
-        else if (requestName.equals("Select_rental")) {
+       else if (requestName.equals("Select_rental")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
@@ -609,15 +493,123 @@ public class RequestHandler {
             writer.println(responseMsg);
         }
 
+        else if (requestName.equals("Delete_Rental")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            String query = "DELETE from rental where rental_id in (Select max(rental_id) from rental)";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.executeUpdate();
+
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+
 
         else if (requestName.equals("Update_Rental")) {
             ObjectMapper mapper = new ObjectMapper();
             Map dataLoaded = (Map) request.getData();
             String query = "UPDATE space set rental_id = ? where rental_id is null and space_id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
+
+
+
             statement.setInt(1,(Integer) dataLoaded.get("rental_id_space"));
             statement.setInt(2,(Integer) dataLoaded.get("id_space"));
 
+            statement.executeUpdate();
+
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+        else if (requestName.equals("Select_nbr_equipement_dispo")) {
+            ObjectMapper mapper = new ObjectMapper();
+
+            Map dataloaded = (Map) request.getData();
+            logger.info(String.valueOf(dataloaded));
+            String query = "select equipmenttype_id, count(equipment_id) from equipment where equipmenttype_id = ? and rental_id is null group by equipmenttype_id";
+
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1,(Integer) dataloaded.get("nmbr_equipment_dispo"));
+
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("equipmenttype_id", rs.getInt("equipmenttype_id"));
+                m.put("count", rs.getInt("count"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+
+
+        else if (requestName.equals("Select_equipment")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataloaded = (Map) request.getData();
+            logger.info(String.valueOf(dataloaded));
+            String query = "select Distinct(designation),equipmenttype_id from equipment_type";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("designation", rs.getString("designation"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+        else if (requestName.equals("Select_name_equipment")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            String query = "select equipmenttype_id from equipment_type where designation = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1,(String) dataLoaded.get("nom_de_lequipement"));
+
+            ResultSet rs = statement.executeQuery();
+            List<Map> list = new ArrayList<>();
+            while (rs.next()) {
+                Map m = new HashMap();
+                m.put("equipmenttype_id", rs.getInt("equipmenttype_id"));
+                list.add(m);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", list);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+
+
+        else if (requestName.equals("Update_equipment")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            String query = "UPDATE equipment SET rental_id = ? where equipment_id in (select equipment_id from (select equipment_id from equipment where equipmenttype_id =? and rental_id is null limit ?)as Alias )";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1,(Integer) dataLoaded.get("rental_id_space"));
+            statement.setInt(2,(Integer) dataLoaded.get("nmbr_equipment_dispo"));
+            statement.setInt(3,(Integer) dataLoaded.get("valeur_liste_du_nbr_dequipement"));
             statement.executeUpdate();
 
             Map<String, Object> response = new HashMap<>();
@@ -627,203 +619,15 @@ public class RequestHandler {
 
         }
 
-
-        else if (requestName.equals("Imprimante")) {
+        else if (requestName.equals("Select_count_number_equipment")) {
             ObjectMapper mapper = new ObjectMapper();
-
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select count(equipment_id) from equipment where equipmenttype_id = 2 and equipment_id NOT in (select equipment_id from attribuate)";
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            String query = "SELECT count(rental_id) from equipment where rental_id = ? and equipmenttype_id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
+            statement.setInt(1,(int) dataLoaded.get("rental_id_space"));
+            statement.setInt(2,(int) dataLoaded.get("nmbr_equipment_dispo"));
 
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-        else if (requestName.equals("Prise connectee")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select count(equipment_id) from equipment where equipmenttype_id = 1 and equipment_id NOT in (select equipment_id from attribuate)";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
-        else if (requestName.equals("Capteur presence")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select count(equipment_id) from equipment where equipmenttype_id = 6 and equipment_id NOT in (select equipment_id from attribuate)";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
-        else if (requestName.equals("Imprimante 3D")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select count(equipment_id) from equipment where equipmenttype_id = 9 and equipment_id NOT in (select equipment_id from attribuate)";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
-        else if (requestName.equals("Capteur de ventilation")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select count(equipment_id) from equipment where equipmenttype_id = 7 and equipment_id NOT in (select equipment_id from attribuate)";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
-        else if (requestName.equals("Capteur Luminosite")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select count(equipment_id) from equipment where equipmenttype_id = 3 and equipment_id NOT in (select equipment_id from attribuate)";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
-        else if (requestName.equals("Television")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select count(equipment_id) from equipment where equipmenttype_id = 8 and equipment_id NOT in (select equipment_id from attribuate)";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
-        else if (requestName.equals("Fenetre electro-chromatique")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select count(equipment_id) from equipment where equipmenttype_id = 5 and equipment_id NOT in (select equipment_id from attribuate)";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-        }
-
-        else if (requestName.equals("Capteur Fumee")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select count(equipment_id) from equipment where equipmenttype_id = 10 and equipment_id NOT in (select equipment_id from attribuate)";
-            PreparedStatement statement = connection.prepareStatement(query);
-
-            ResultSet rs = statement.executeQuery();
-            List<Map> list = new ArrayList<>();
-            while (rs.next()) {
-                Map m = new HashMap();
-                m.put("count", rs.getInt("count"));
-                list.add(m);
-            }
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", list);
-
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
-
-        }
-        else if (requestName.equals("Video projecteur")) {
-            ObjectMapper mapper = new ObjectMapper();
-            Map dataloaded = (Map) request.getData();
-            logger.info(String.valueOf(dataloaded));
-            String query = "select count(equipment_id) from equipment where equipmenttype_id = 4 and equipment_id NOT in (select equipment_id from attribuate)";
-            PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
             List<Map> list = new ArrayList<>();
@@ -839,7 +643,6 @@ public class RequestHandler {
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
         }
-
 
         else if (requestName.equals("position")) {
             ObjectMapper mapper = new ObjectMapper();
@@ -1032,7 +835,10 @@ public class RequestHandler {
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
             List<Map> name = new ArrayList<>();
-            String sql = "select person_firstname,person_surname,birth_date,position_p, clearance_level,position_type from person natural join access_card where card_id =?";
+            String sql = "select person_surname,person_firstname,birth_date,position_p, r.role_id - 1 as clearance_level, r.designation as position_type from person\n" +
+                    "    natural join access_card\n" +
+                    "    natural join roles r\n" +
+                    "where card_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (Integer) dataLoaded.get("card_id"));
             ResultSet rs = statement.executeQuery();
@@ -1081,7 +887,7 @@ public class RequestHandler {
             Map dataLoaded = (Map) request.getData();
             logger.info(String.valueOf(dataLoaded));
             List<Map> name = new ArrayList<>();
-            String sql = "select person_firstname,person_surname,birth_date,position_p, clearance_level from person natural join access_card where card_id =?";
+            String sql = "select person_firstname,person_surname,birth_date,position_p from person natural join access_card where card_id =?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (Integer) dataLoaded.get("card_id"));
             ResultSet rs = statement.executeQuery();
@@ -1091,7 +897,6 @@ public class RequestHandler {
                 hm.put("person_firstname", rs.getString("person_firstname"));
                 hm.put("birth_date", rs.getString("birth_date"));
                 hm.put("position_p", rs.getString("position_p"));
-                hm.put("clearance_level", rs.getInt("clearance_level"));
                 name.add(hm);
             }
 
@@ -1266,6 +1071,363 @@ public class RequestHandler {
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             response.put("data", hm);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        } else if (requestName.equals("card_update_role")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            String sql = "UPDATE person SET role_id = ?, position_p = ? WHERE person_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("role_id"));
+            statement.setString (2, (String) dataLoaded.get("subtitle"));
+            statement.setInt(3, (Integer) dataLoaded.get("person_id"));
+            statement.executeUpdate();
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+        else if (requestName.equals("access_list")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            String sql = "SELECT * FROM getCardSpaceAccessibilitiyList(?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            statement.setInt(2, (Integer) dataLoaded.get("building_id"));
+            statement.setInt(3, (Integer) dataLoaded.get("company_id"));
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                Map<String, Object> hm = new HashMap<> ();
+                hm.put ("id", rs.getInt ("id"));
+                hm.put("name", rs.getString ("name"));
+                hm.put("building_name", rs.getString ("building_name"));
+                hm.put("floor_name", rs.getString ("floor_name"));
+                hm.put("type", rs.getString ("type"));
+                hm.put("accessible", rs.getBoolean("accessible"));
+
+                name.add(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+        else if (requestName.equals("fullaccess_building_update")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            String sql = "SELECT updateAccessToSpace(?, s.space_id, true) FROM building b join floor_ f on b.building_id = f.building_id join space s on f.floor_id = s.floor_id where b.building_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            statement.setInt(2, (Integer) dataLoaded.get("building_id"));
+            ResultSet rs = statement.executeQuery ();
+            while(rs.next ()) {
+
+            }
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+        else if (requestName.equals("blockaccess_building_update")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            String sql = "SELECT updateAccessToSpace(?, s.space_id, false) FROM building b join floor_ f on b.building_id = f.building_id join space s on f.floor_id = s.floor_id where b.building_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            statement.setInt(2, (Integer) dataLoaded.get("building_id"));
+            ResultSet rs = statement.executeQuery ();
+            while(rs.next ()) {
+
+            }
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+        else if (requestName.equals("fullaccess_floor_update")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            String sql = "SELECT updateAccessToSpace(?, s.space_id, true) FROM floor_ f join space s on f.floor_id = s.floor_id where f.floor_id = ?;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            statement.setInt(2, (Integer) dataLoaded.get("floor_id"));
+            ResultSet rs = statement.executeQuery ();
+            while(rs.next ()) {
+
+            }
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+        else if (requestName.equals("blockaccess_floor_update")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            String sql = "SELECT updateAccessToSpace(?, s.space_id, false) FROM floor_ f join space s on f.floor_id = s.floor_id where f.floor_id = ?;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            statement.setInt(2, (Integer) dataLoaded.get("floor_id"));
+            ResultSet rs = statement.executeQuery ();
+            while(rs.next ()) {
+
+            }
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+        else if (requestName.equals("access_space_update")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            String sql = "SELECT * FROM updateAccessToSpace(?, ?, true)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            statement.setInt(2, (Integer) dataLoaded.get("space_id"));
+            ResultSet rs = statement.executeQuery ();
+            while(rs.next ()) {
+
+            }
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+        else if (requestName.equals("blockaccess_space_update")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            String sql = "SELECT * FROM updateAccessToSpace(?, ?, false)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            statement.setInt(2, (Integer) dataLoaded.get("space_id"));
+            ResultSet rs = statement.executeQuery ();
+            while(rs.next ()) {
+
+            }
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+        else if (requestName.equals("blockaccess_equip_update")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            String sql = "SELECT * FROM updateAccessToEquip(?, ?, false)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            statement.setInt(2, (Integer) dataLoaded.get("equi_id"));
+            ResultSet rs = statement.executeQuery ();
+            while(rs.next ()) {
+
+            }
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+        else if (requestName.equals("access_equip_update")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            String sql = "SELECT * FROM updateAccessToEquip(?, ?, true)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            statement.setInt(2, (Integer) dataLoaded.get("equi_id"));
+            ResultSet rs = statement.executeQuery ();
+            while(rs.next ()) {
+
+            }
+            logger.info ("Access to {} has been granted to {}",dataLoaded.get("card_id"), dataLoaded.get("equi_id") );
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+        else if (requestName.equals("position_list")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            String sql = "SELECT e.equipment_name, p.position_id FROM position_ p join equipment e on p.equipment_id = e.equipment_id WHERE p.space_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("space_id"));
+            ResultSet rs = statement.executeQuery ();
+            while(rs.next ()) {
+                Map<String, Object> hm = new HashMap<> ();
+                hm.put ("equipment_name", rs.getString("equipment_name"));
+                hm.put ("position_id", rs.getInt("position_id"));
+                name.add(hm);
+            }
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        }
+        else if (requestName.equals("clear_allAccess")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            String sql = "WITH deleteAccessSpace as ( DELETE FROM card_space WHERE card_id = ? ) DELETE FROM card_position WHERE card_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+            statement.setInt(2, (Integer) dataLoaded.get("card_id"));
+            statement.executeUpdate ();
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+        } else if (requestName.equals("test_access")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            if (String.valueOf (dataLoaded.get ("type")).equals ("space"))  {
+                String sql = "SELECT * FROM iscardaccessibletospace(?, ?) as access";
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+                statement.setInt(2, (Integer) dataLoaded.get("space_id"));
+
+                ResultSet rs = statement.executeQuery();
+                if (rs.next()) {
+                    Map<String, Object> hm = new HashMap<>();
+                    hm.put("access", rs.getBoolean ("access"));
+
+                    name.add(hm);
+                }
+
+                Map<String, Object> response = new HashMap<>();
+                response.put("request", requestName);
+                response.put("data", name);
+
+                String responseMsg = mapper.writeValueAsString(response);
+                writer.println(responseMsg);
+
+
+            } else if (String.valueOf (dataLoaded.get ("type")).equals ("equipment")) {
+                String sql = "SELECT * FROM iscardaccessibletoequip(?, ?) as access";
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setInt(1, (Integer) dataLoaded.get("card_id"));
+                statement.setInt(2, (Integer) dataLoaded.get("equip_id"));
+
+                ResultSet rs = statement.executeQuery();
+                if (rs.next()) {
+                    Map<String, Object> hm = new HashMap<>();
+                    hm.put("access", rs.getBoolean ("access"));
+
+                    name.add(hm);
+                }
+
+                Map<String, Object> response = new HashMap<>();
+                response.put("request", requestName);
+                response.put("data", name);
+
+                String responseMsg = mapper.writeValueAsString(response);
+                writer.println(responseMsg);
+            }
+
+
+        }   else if (requestName.equals("date_update")) {
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            List<Map> name = new ArrayList<>();
+            String date = (String) dataLoaded.get("subtitle");
+            java.util.Date utilDate = Date.valueOf (date);
+            java.sql.Date sqlDate = java.sql.Date.valueOf (date);
+            System.out.println ("date " + java.sql.Date.valueOf (date));
+            System.out.println ("sql date" + sqlDate);
+            String sql = "UPDATE access_card SET start_date=? WHERE card_id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            Calendar cal = Calendar.getInstance ();
+            cal.clear (Calendar.DATE);
+            cal.clear (Calendar.ZONE_OFFSET);
+            cal.clear (Calendar.MILLISECOND);
+            cal.clear (Calendar.MINUTE);
+            cal.clear (Calendar.HOUR);
+            statement.setDate(1, sqlDate,cal);
+            statement.setInt (2, (Integer)dataLoaded.get("card_id"));
+            System.out.println ("prepare statement" + statement);
+            System.out.println ("date update");
+            System.out.println (sql);
+            statement.executeUpdate();
+            System.out.println ("date update 2");
+
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", name);
 
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);

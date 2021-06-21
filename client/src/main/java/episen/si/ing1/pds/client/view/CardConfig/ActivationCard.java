@@ -23,6 +23,7 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
     private SocketUtility socketUtility = new SocketUtility ();
 
     public ActivationCard() {
+        this.setLocationRelativeTo(null);
         p1 = new JPanel();
         this.add(p1);
 
@@ -80,7 +81,6 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
                 Map<String, Object> data = new HashMap<> ();
                 data.put("person_id", Person.getPerson_id());
                 data.put("card_id", AccessCard.getCard_id());
-                //data.put ("active",AccessCard.getActive ());
                 request2.setData(data);
 
                 ResponseSocket response2 = socketUtility.sendRequest(request2);
@@ -111,6 +111,11 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
         bg.add(jr1);
         bg.add(jr2);
 
+
+        System.out.println (AccessCard.getActive ());
+
+
+
         l2 = new JLabel("Dissocier le badge");
         b1 = new JButton("Valider");
         b2 = new JButton("Dissocier");
@@ -126,6 +131,7 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
             public void mouseClicked(MouseEvent e) {
                 JFrame frame = new JFrame("Message");
                 JOptionPane.showMessageDialog(frame,"Le badge est maintenant à jour !");
+
             }
 
             @Override
@@ -164,6 +170,10 @@ public class ActivationCard extends MainCardMenu implements ActionListener {
 
                 JFrame frame = new JFrame("Message");
                 JOptionPane.showMessageDialog(frame,"Badge désassocié");
+
+                dispose();
+                FirstScreenCardConfig c = new FirstScreenCardConfig();
+                c.setVisible(true);
             }
 
             @Override

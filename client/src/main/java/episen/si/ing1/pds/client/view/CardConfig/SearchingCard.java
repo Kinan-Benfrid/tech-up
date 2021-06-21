@@ -29,6 +29,9 @@ public class SearchingCard extends CommonFrame implements ActionListener {
 
 
     public SearchingCard() {
+
+        this.setLocationRelativeTo(null);
+
         jp1 = new JPanel();
         jp1.setLayout(null);
 
@@ -96,6 +99,7 @@ public class SearchingCard extends CommonFrame implements ActionListener {
                 ResponseSocket response2 = socketUtility.sendRequest (request2);
                 List<Map> searchCard = (List<Map>) response2.getData ();
 
+                System.out.println ("s");
                 dispose ();
                 CardSection cs = new CardSection ();
                 cs.setVisible (true);

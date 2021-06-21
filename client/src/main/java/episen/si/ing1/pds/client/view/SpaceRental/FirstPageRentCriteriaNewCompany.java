@@ -24,33 +24,56 @@ import static java.awt.Font.*;
 import static java.lang.Integer.parseInt;
 
 
-public class FirstPageRentCriteria extends CommonFrame implements ActionListener {
+public class FirstPageRentCriteriaNewCompany extends CommonFrame implements ActionListener {
 
     public SocketUtility socketUtility = new SocketUtility();
     List<Map> meeting_list, OpenSpace_list, Office_list;
-    private JPanel pan1, panOffre, panPrincipal, panCriteria;
-    private JButton retour, rechercher, ajouter_equipement, reserver, suivant;
-    private JTextField jtAdulte, jtBudgetMin, jtBudgetMax;
-    private JLabel Adulte, Budget, BudgetMax, Description;
-    private int boite, boite2, boite3;
-    private int erreur_jtbudgetmin, erreur_jtbudgetmax, erreur_jtadulte;
-    private JComboBox jcb1, jcb2, jcb3, jcb_equipment, jcb_nmbr_equipement_dispo;
+    private  JPanel pan1;
+    private  JPanel panOffre;
+    private  JPanel panPrincipal;
+    private  JPanel panCriteria;
+    private  JButton retour;
+    private  JButton rechercher;
+    private  JTextField jtAdulte,jtBudgetMin,jtBudgetMax;
+    private  JLabel Adulte;
+    private  JLabel Budget;
+    private  JLabel BudgetMax;
+    private  JLabel Description;
+    private JLabel[] labelArray, labelArray2;
+    private int nbr_jlabel;
+    private int boucle;
+    private JButton ajouter_equipement,reserver,suivant;
+    private int boite,boite2,boite3;
+    private int erreur_jtbudgetmin,erreur_jtbudgetmax,erreur_jtadulte;
+    private  JComboBox jcb1;
+    private  JComboBox jcb2;
+    private  JComboBox jcb3;
     private int nmbr_rental_id;
-    private int somme_des_prix, somme_prix_totaux;
-    private int valeur_space_id_liste_salle_reunion, valeur_space_id_liste_open_space, valeur_space_id_liste_bureau;
-    private int valeur_liste_salle_reunion, valeur_liste_open_space, valeur_liste_bureau, valeur_liste_total_salle_reunion, valeur_liste_total_open_space, valeur_liste_total_bureau, valeur_liste_total_pour_limit, valeur_liste_nbr_equipement;
-    private String valeur_space_name_liste_salle_reunion, valeur_space_name_liste_open_space, valeur_space_name_liste_bureau;
+    private int somme_des_prix,somme_prix_totaux;
+    private int valeur_space_id_liste_salle_reunion,valeur_space_id_liste_open_space,valeur_space_id_liste_bureau;
+    private int valeur_liste_salle_reunion,valeur_liste_open_space,valeur_liste_bureau, valeur_liste_total_salle_reunion,valeur_liste_total_open_space,valeur_liste_total_bureau,valeur_liste_total_pour_limit,valeur_liste_nbr_equipement;
+    private String valeur_space_name_liste_salle_reunion,valeur_space_name_liste_open_space,valeur_space_name_liste_bureau;
 
-    private List<Map> list_equipment_dispo, list_name_equipment, list_equipment;
-    private String nom_de_lequipement; // when you select something in your scrolling list of equipment, you keep in memory the name of the equipment on the one hand, in order to be able afterwards thanks to a request to retrieve the equipment type id
-    private int compteur_capacite_nbr_equipment, compteur_capacite_nbr_equipment2;
-    private int s;
-    private DefaultComboBoxModel jcbModel;
+    private List<Map> list_equipment_dispo,list_name_equipment,list_equipment;
+
+    private String nom_de_lequipement; // lorsque tu selectionne un truc dans ta liste deroulante d'équipements tu garde en mémoire le nom de l'equipement d'une part, pour pouvoir après grace a une requete recuperer l'equipment type id
+    private int compteur_capacite_nbr_equipment,compteur_capacite_nbr_equipment2;
+    private int s,countable_nmbr_equipement_dispo;
 
 
-    public FirstPageRentCriteria() {
+
+    private JComboBox jcb_equipment,jcb_nmbr_equipement_dispo;
+    private   DefaultComboBoxModel jcbModel;
+
+
+
+
+
+
+    public FirstPageRentCriteriaNewCompany() {
 
         setTitle("Louer mes espaces");
+
         this.setSize(1400, 700);
         this.setResizable(false);
 
@@ -96,7 +119,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
 
         /**initialize JLabel*/
 
-        Adulte = new JLabel("Adulte");
+        Adulte = new JLabel("Adulteeeeeeeee");
         Adulte.setBounds(30, 30, 100, 20);
         Budget = new JLabel("Budget Min");
         Budget.setBounds(30, 70, 100, 20);
@@ -106,8 +129,10 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         Description.setBounds(190, 10, 200, 20);
 
 
-        /**initialize JTextfield*/
 
+        /**initialize JTextfield*/
+        // NumberFormat f = NumberFormat.getNumberInstance();
+        // NumberFormat f2 = NumberFormat.getIntegerInstance();
 
         jtAdulte = new JTextField();
         jtAdulte.setBounds(30, 50, 100, 20);
@@ -125,17 +150,23 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                     if (Integer.parseInt(jtAdulte.getText()) < 1) {
                         JOptionPane.showMessageDialog(null, "Merci de saisir au moins un adulte");
                         jtAdulte.setText("");
-                    } else {
+                    }
+
+                    else{
                         erreur_jtadulte = Integer.parseInt(jtAdulte.getText());
 
                     }
 
-                } catch (NumberFormatException numberFormatException) {
+                } catch(NumberFormatException numberFormatException){
                     jtAdulte.setText("");
                 }
 
             }
         });
+
+
+
+
 
 
         jtBudgetMin = new JTextField();
@@ -156,18 +187,19 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                     if (Integer.parseInt(jtBudgetMin.getText()) < 0) {
                         JOptionPane.showMessageDialog(null, "Merci de saisir un budget positif");
                         jtBudgetMin.setText("");
-                    } else {
+                    }
+                    else{
                         erreur_jtbudgetmin = Integer.parseInt(jtBudgetMin.getText());
                     }
 
-                } catch (NumberFormatException numberFormatException) {
+                } catch(NumberFormatException numberFormatException){
                     jtBudgetMin.setText("");
                 }
 
             }
         });
 
-        jtBudgetMax = new JTextField();
+        jtBudgetMax =  new JTextField();
         jtBudgetMax.setBounds(30, 130, 100, 20);
 
 
@@ -185,12 +217,13 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                     if (Integer.parseInt(jtBudgetMax.getText()) <= 0) {
                         JOptionPane.showMessageDialog(null, "Merci de saisir un budget strictement positif");
                         jtBudgetMax.setText("");
-                    } else {
+                    }
+                    else{
                         erreur_jtbudgetmax = Integer.parseInt(jtBudgetMax.getText());
 
                     }
 
-                } catch (NumberFormatException numberFormatException) {
+                } catch(NumberFormatException numberFormatException){
                     jtBudgetMax.setText("");
                 }
 
@@ -210,7 +243,6 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         panCriteria.add(jtBudgetMax);
         panCriteria.add(Description);
         panPrincipal.add(suivant);
-
 
         /**Request to send to Server and initialize the Jcombobox which retrieves the values of the request*/
 
@@ -236,8 +268,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         jcb1 = new JComboBox();
         int countable = (int) meeting_list.get(0).get("countable");
         for (int i = 0; i <= countable; i++) {
-            jcb1.addItem((i));
-        }
+            jcb1.addItem((i)); }
 
 
         jcb1.setSelectedIndex(-1);
@@ -264,19 +295,22 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                     valeur_liste_salle_reunion = (int) jcb1.getSelectedItem();
 
 
-                    if (valeur_liste_salle_reunion == 0) {
+
+
+                    if (valeur_liste_salle_reunion ==0) {
                         //valeur_liste_total_pour_limit =0;
-                        valeur_liste_total_salle_reunion = 0;
+                        valeur_liste_total_salle_reunion =0;
                         valeur_space_id_liste_salle_reunion = 0;
                         //x = 0;
                         //valeur_liste_total_pour_limit = valeur_liste_total_pour_limit + x;
 
 
-                    } else if (valeur_liste_salle_reunion != 0) {
-                        valeur_liste_total_salle_reunion = 0;
+                    }
+                    else if(valeur_liste_salle_reunion != 0) {
+                        valeur_liste_total_salle_reunion =0;
                         valeur_space_id_liste_salle_reunion = (int) meeting_list.get(0).get("spacetype_id");
                     }
-                    valeur_liste_total_salle_reunion = valeur_liste_total_salle_reunion + valeur_liste_salle_reunion;
+                    valeur_liste_total_salle_reunion= valeur_liste_total_salle_reunion + valeur_liste_salle_reunion;
 
                     System.out.println("valeur_liste_total_apres_salle_reunion " + valeur_liste_total_salle_reunion);
 
@@ -284,6 +318,8 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                 }
             }
         });
+
+
 
 
 //---------------------------------
@@ -303,6 +339,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
 
         valeur_space_name_liste_open_space = (String) OpenSpace_list.get(0).get("space_openSpace");
         System.out.println(valeur_liste_open_space);
+
 
 
         jcb2 = new JComboBox();
@@ -336,12 +373,14 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
 
                     valeur_liste_open_space = (int) jcb2.getSelectedItem();
 
+                    System.out.println("AAAAAAAAAAAAAAAAAA" + valeur_liste_open_space);
 
-                    if (valeur_liste_open_space == 0) {
-                        valeur_liste_total_open_space = 0;
+                    if (valeur_liste_open_space ==0) {
+                        valeur_liste_total_open_space =0;
                         valeur_space_id_liste_open_space = 0;
-                    } else if (valeur_liste_open_space != 0) {
-                        valeur_liste_total_open_space = 0;
+                    }
+                    else if(valeur_liste_open_space != 0) {
+                        valeur_liste_total_open_space =0;
                         valeur_space_id_liste_open_space = (int) OpenSpace_list.get(0).get("spacetype_id");
 
                     }
@@ -350,17 +389,22 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                     System.out.println("valeur_liste_total_pour_limit_apres_open_space " + valeur_liste_total_open_space);
 
 
+                    System.out.println("valeur_liste_total_apres_salle_reunion " + valeur_liste_total_salle_reunion);
+
+
+
                     //  valeur_liste_total_pour_limit = valeur_liste_total_pour_limit + y;
 
-                    // valeur_liste_total_pour_limit = valeur_liste_total_pour_limit + valeur_liste_open_space;
+                    //valeur_liste_total_pour_limit = valeur_liste_total_pour_limit + valeur_liste_open_space;
 
                     // jcb3.setSelectedIndex(-1);
                 }
                 // valeur_liste_total_open_space = valeur_liste_total_open_space + valeur_liste_open_space;
-                // System.out.println("valeur_liste_total_pour_limit_apres_open_space " + valeur_liste_total_open_space);
+                //System.out.println("valeur_liste_total_pour_limit_apres_open_space " + valeur_liste_total_open_space);
 
             }
         });
+
 
 
 //---------------------------------
@@ -416,24 +460,31 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         });
 
 
+
         jcb3.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == 1) {
 
                     valeur_liste_bureau = (int) jcb3.getSelectedItem();
 
+                    System.out.println("EEEEEEEEEEEEEEEEEEEEEZZZZZ" + valeur_liste_bureau);
 
 
-                    if (valeur_liste_bureau == 0) {
-                        valeur_liste_total_bureau = 0;
+                    if (valeur_liste_bureau ==0) {
+                        valeur_liste_total_bureau =0;
                         valeur_space_id_liste_bureau = 0;
-                    } else if (valeur_liste_bureau != 0) {
+                    }
+                    else if(valeur_liste_bureau != 0) {
 
-                        valeur_liste_total_bureau = 0;
+                        valeur_liste_total_bureau =0;
                         valeur_space_id_liste_bureau = (int) Office_list.get(0).get("spacetype_id");
                     }
 
+
+                    System.out.println("MIAAAAAAAAAAM" + valeur_space_id_liste_bureau);
+
                     valeur_liste_total_bureau = valeur_liste_total_bureau + valeur_liste_bureau;
+                    System.out.println("valeur_liste_total_pour_limit_apres_bureau " + valeur_liste_total_bureau);
 
 
                     jcb3.setEnabled(false);
@@ -470,7 +521,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         list_equipment = (java.util.List<Map>) response_equipment.getData();
         System.out.println(list_equipment);
 
-        for (int i = 0; i < list_equipment.size(); i++) {
+        for(int i =0;i<list_equipment.size();i++) {
 
             jcb_equipment.addItem(list_equipment.get(i).get("designation"));
         }
@@ -510,7 +561,8 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
             }
         });
 
-        /** allows you to retrieve the name of the equipment from the list and send it to the request to retrieve the equipmenttype_id**/
+        /** permet de recuperer le nom des equipements de la liste et l'evnoyer à la requete pour recuperer l'equipmenttype_id**/
+
 
 
         jcb_equipment.addItemListener(new ItemListener() {
@@ -530,6 +582,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                     rs_name_equipment.setData(name_equipment);
                     System.out.println("-------");
                     ResponseSocket response_name_equipment = socketUtility.sendRequest(rs_name_equipment);
+
 
 
                     list_name_equipment = (java.util.List<Map>) response_name_equipment.getData();
@@ -576,17 +629,20 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
     }
 
 
+
     public static void main(String[] args) {
-        FirstPageRentCriteria fprc = new FirstPageRentCriteria();
+        FirstPageRentCriteriaNewCompany fprc = new FirstPageRentCriteriaNewCompany();
         fprc.setVisible(true);
     }
 
 
-    /**Window Method */
+    /**------------------------------------Methode de la fenetre*/
 
     public void ajouterJLabel() {
         valeur_liste_total_pour_limit = valeur_liste_total_salle_reunion + valeur_liste_total_open_space + valeur_liste_total_bureau;
 
+
+        System.out.println("MIAAAAAAAAAAM" + valeur_liste_total_salle_reunion);
 
 
 
@@ -595,7 +651,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         request.setRequest("Number_person");
         Map<String, Object> data = new HashMap<>();
         data.put("max_person_number", erreur_jtadulte);
-        data.put("budjetMin", erreur_jtbudgetmin);
+        data.put("budjetMin",    erreur_jtbudgetmin);
         data.put("budjetMax", erreur_jtbudgetmax);
 
         data.put("valeur_space_id_liste_salle_reunion", valeur_space_id_liste_salle_reunion);
@@ -605,14 +661,19 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         data.put("valeur_liste_total_pour_limit", valeur_liste_total_pour_limit);
 
 
-        /** envoyer le nom des espaces pour pouvoir faire le tri d'affichage des offres dans le tableau*/
 
-      /*  data.put("valeur_space_name_liste_salle_reunion", valeur_space_name_liste_salle_reunion);
+        /** envoyer le nom des espaces pour pouvoir faire le tri d'affichage des offres dans le tableau*/
+        /*
+        data.put("valeur_space_name_liste_salle_reunion", valeur_space_name_liste_salle_reunion);
         data.put("valeur_space_name_liste_open_space", valeur_space_name_liste_open_space);
         data.put("valeur_space_name_liste_bureau", valeur_space_name_liste_bureau);
 
 
-       */
+         */
+
+
+
+
         System.out.println(data);
         request.setData(data);
 
@@ -621,7 +682,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         List<Map> Number = (List<Map>) response.getData();
 
         //table in which data is retrieved
-        String[] entetes = {"Id Espace", "Espace", "Superficie", "Nombre de personnes max", "Nom du batiment", "Numero etage", "Prix", "equipement", " "};
+        String[] entetes = {"Id Espace","Espace", "Superficie", "Nombre de personnes max", "Nom du batiment", "Numero etage", "Prix", "equipement"," "};
         String[][] datas = new String[Number.size()][8];
 
         ArrayList<String> espace = new ArrayList<>();
@@ -673,17 +734,19 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         table.setBounds(50, 50, 800, 300);
 
 
+
         reserver = new JButton();
         reserver.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
 
 
+
                         boite = JOptionPane.showConfirmDialog(null, "Etes-vous sur de vouloir reserver cette espace ?", "Message", JOptionPane.OK_CANCEL_OPTION);
 
 
                         if ((boite == JOptionPane.OK_OPTION)) {
-                            /** Update + insertion to add to the database*/
+                            /** Mise à jour + insertion à ajouter dans la base*/
 
                             int column_space_id = 0;
                             int column_price = 6;
@@ -720,6 +783,8 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                             requestSocket3.setData(data3);
                             ResponseSocket responseRental3 = socketUtility.sendRequest(requestSocket3);
 
+                            // Obtenir l'état du checkbox
+
 
                         }
                     }
@@ -738,14 +803,16 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                 int superficie = Integer.parseInt(table.getModel().getValueAt(row2, column_superficie).toString());
 
 
+
                 compteur_capacite_nbr_equipment = 0 + (int) jcb_nmbr_equipement_dispo.getSelectedItem();
+
 
 
                 if (compteur_capacite_nbr_equipment > superficie * 0.5) {
                     JOptionPane.showMessageDialog(null, "Impossible de placer plus de " + superficie * 0.5 + " equipements dans cet espace ");
                     compteur_capacite_nbr_equipment = 0;
                 } else {
-                    if (compteur_capacite_nbr_equipment + compteur_capacite_nbr_equipment2 > superficie * 0.5) {
+                    if (compteur_capacite_nbr_equipment + compteur_capacite_nbr_equipment2> superficie * 0.5) {
                         compteur_capacite_nbr_equipment = 0;
                         JOptionPane.showMessageDialog(null, "Nombre d'equipements restant à installer : " + ((superficie * 0.5) - (compteur_capacite_nbr_equipment + compteur_capacite_nbr_equipment2)) + "");
                     } else {
@@ -792,6 +859,7 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
                             List<Map> list_nbr_equipment = (java.util.List<Map>) responseRental5.getData();
                             compteur_capacite_nbr_equipment2 = (int) list_nbr_equipment.get(0).get("count");
 
+                            System.out.println("GAGNERRRRR" + compteur_capacite_nbr_equipment2);
                             //  compteur_capacite_nbr_equipment2 = (int) responseRental4.getData(0).
                             // compteur_capacite_nbr_equipment2 = 0;
                             //compteur_capacite_nbr_equipment2 = (int)jcb_nmbr_equipement_dispo.getSelectedItem();
@@ -805,13 +873,95 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
         });
 
 
-        valeur_liste_open_space = 0;
-        valeur_liste_bureau = 0;
+        valeur_liste_open_space=0;
+        valeur_liste_bureau=0;
     }
 
-    /**
-     * -----------------------------------------------------
-     */
+    /**------------------------------------------------*/
+
+    class ButtonRenderer extends JButton implements TableCellRenderer
+    {
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText((value == null) ? "Reserver" : value.toString());
+            return this;
+        }
+    }
+    class ButtonEditor extends DefaultCellEditor
+    {
+        private String label;
+
+        public ButtonEditor(JCheckBox checkBox)
+        {
+            super(checkBox);
+        }
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                                                     boolean isSelected, int row, int column)
+        {
+            label = (value == null) ? "Reserver" : value.toString();
+            reserver.setText(label);
+            return reserver;
+        }
+        public Object getCellEditorValue()
+        {
+            return label;
+        }
+    }
+
+
+
+    class ButtonAjouter extends JButton implements TableCellRenderer
+    {
+        public ButtonAjouter() {
+            setOpaque(true);
+        }
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText((value == null) ? "Ajouter" : value.toString());
+            return this;
+        }
+    }
+    class ButtonEditor2 extends DefaultCellEditor
+    {
+        private String label_ajouter_des_equipements;
+
+        public ButtonEditor2(JCheckBox checkBox)
+        {
+            super(checkBox);
+        }
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                                                     boolean isSelected, int row, int column)
+        {
+            label_ajouter_des_equipements = (value == null) ? "Ajouter" : value.toString();
+            ajouter_equipement.setText(label_ajouter_des_equipements);
+            return ajouter_equipement;
+        }
+        public Object getCellEditorValue()
+        {
+            return label_ajouter_des_equipements;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**-----------------------------------------------------*/
 
 
     public void actionPerformed(ActionEvent e) {
@@ -844,9 +994,10 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
             panOffre.repaint();
             ajouterJLabel();
             //somme_prix_totaux = 0;
-        } else if (source == suivant) {
+        }
+        else if (source == suivant){
 
-            boite2 = JOptionPane.showConfirmDialog(null, "Merci pour votre réservation, \n Montant total : " + somme_prix_totaux + "€", "Message", JOptionPane.OK_CANCEL_OPTION);
+            boite2 = JOptionPane.showConfirmDialog(null, "Merci pour votre réservation, \n Montant total : " + somme_prix_totaux +"€", "Message", JOptionPane.OK_CANCEL_OPTION);
             if ((boite2 == JOptionPane.OK_OPTION)) {
                 this.dispose();
                 RentedSpacesView r = new RentedSpacesView();
@@ -854,68 +1005,81 @@ public class FirstPageRentCriteria extends CommonFrame implements ActionListener
             }
         }
     }
-
-    /**
-     * ------------------------------------------------
-     */
-
-    class ButtonRenderer extends JButton implements TableCellRenderer {
-        public ButtonRenderer() {
-            setOpaque(true);
-        }
-
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            setText((value == null) ? "Reserver" : value.toString());
-            return this;
-        }
-    }
-
-    class ButtonEditor extends DefaultCellEditor {
-        private String label;
-
-        public ButtonEditor(JCheckBox checkBox) {
-            super(checkBox);
-        }
-
-        public Component getTableCellEditorComponent(JTable table, Object value,
-                                                     boolean isSelected, int row, int column) {
-            label = (value == null) ? "Reserver" : value.toString();
-            reserver.setText(label);
-            return reserver;
-        }
-
-        public Object getCellEditorValue() {
-            return label;
-        }
-    }
-
-    class ButtonAjouter extends JButton implements TableCellRenderer {
-        public ButtonAjouter() {
-            setOpaque(true);
-        }
-
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            setText((value == null) ? "Ajouter" : value.toString());
-            return this;
-        }
-    }
-
-    class ButtonEditor2 extends DefaultCellEditor {
-        private String label_ajouter_des_equipements;
-
-        public ButtonEditor2(JCheckBox checkBox) {
-            super(checkBox);
-        }
-
-        public Component getTableCellEditorComponent(JTable table, Object value,
-                                                     boolean isSelected, int row, int column) {
-            label_ajouter_des_equipements = (value == null) ? "Ajouter" : value.toString();
-            ajouter_equipement.setText(label_ajouter_des_equipements);
-            return ajouter_equipement;
-        }
-
-        public Object getCellEditorValue() {
-            return label_ajouter_des_equipements;
-        }
-    }
 }
+
+
+
+
+
+        /*
+         Number.get(Integer.parseInt("space_id"));
+
+
+        nbr_jlabel = 0;
+        // int boucle = 0;
+        boucle = Number.size();
+        labelArray = new JLabel[boucle];
+        JLabel label = null;
+        //for(Map m : Number){}
+        Random r = new Random();
+        int n = r.nextInt(5);
+
+        // if (nbr_jlabel < boucle ) {
+
+        if (nbr_jlabel < boucle) {
+            for (int i = 0; i < boucle; i++) {
+                label = new JLabel(n + String.valueOf(Number.get(i)));
+                labelArray[i] = label;
+                nbr_jlabel++;
+                label.setBounds(10, y, 1000, 300);
+                reserver = new JButton("reserver");
+                reserver.setBounds(50,y , 100, 100);
+                y += 20;
+
+                panOffre.add(labelArray[i]);
+               panOffre.add((reserver));
+                panOffre.repaint();
+            }
+            y =0;
+                System.out.println(boucle);
+                System.out.println(nbr_jlabel);
+        }
+
+        /*else if (nbr_jlabel > boucle) {
+
+                    panOffre.removeAll();
+                      panOffre.revalidate();
+                  panOffre.repaint();
+                nbr_jlabel =0;
+                boucle = 0;
+
+            }
+
+         */
+
+           /* for (int i = 0; i < boucle; i++) {
+
+                // panOffre.revalidate();
+                // panOffre.repaint();
+
+                label = new JLabel(n + String.valueOf(Number.get(i)));
+                labelArray[i] = label;
+                nbr_jlabel++;
+                label.setBounds(10, y, 600, 300);
+                y += 20;
+                pan1.add(labelArray[i]);
+                pan1.repaint();
+                y = 20;
+
+            }
+            panOffre.add(pan1);
+
+        }
+
+         */
+
+
+
+
+
+

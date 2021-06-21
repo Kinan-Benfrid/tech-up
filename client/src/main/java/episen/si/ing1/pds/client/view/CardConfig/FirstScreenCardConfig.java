@@ -21,13 +21,15 @@ import java.util.Map;
 import java.util.Vector;
 
 public class FirstScreenCardConfig extends CommonFrame implements ActionListener {
-    private JButton b1,b2,b3,b4;
+    private JButton b1,b2,b3,b4,b5;
     JLabel j1,j2,j3;
     JPanel jp1;
     private JComboBox jcb1;
     private final SocketUtility socketUtility = new SocketUtility();
 
     public FirstScreenCardConfig() {
+
+        this.setLocationRelativeTo(null);
         jp1 = new JPanel();
         jp1.setLayout(null);
         j1 = new JLabel("Premiere configuration ?");
@@ -37,6 +39,7 @@ public class FirstScreenCardConfig extends CommonFrame implements ActionListener
         b2 = new JButton("Suivant");
         b3 = new JButton("Cliquer ici");
         b4 = new JButton("retour");
+        b5 = new JButton("selectionner batiment");
 
         this.add(jp1);
 
@@ -94,6 +97,7 @@ public class FirstScreenCardConfig extends CommonFrame implements ActionListener
 
                 if (e.getStateChange() == 1) {
                     Map item = (Map) e.getItem();
+                    System.out.println ("Person is : " + item);
                     int person_id = (Integer) item.get("person_id");
                     int card_id = (Integer) item.get("card_id");
                     String person_firstname = (String) item.get("person_firstname");
@@ -101,9 +105,12 @@ public class FirstScreenCardConfig extends CommonFrame implements ActionListener
                     Person.setPerson_id(person_id);
                     System.out.println("person_id" + person_id);
                     AccessCard.setCard_id (card_id);
+                    System.out.println (item);
                     Person.setPerson_firstname(person_firstname);
                     Person.setPerson_surname(person_surname);
-
+                    Person.setSubtitle (String.valueOf (item.get ("position_p")));
+                    Person.setRole_id ( (Integer) item.get ("role_id"));
+                    AccessCard.setActive ((Boolean) item.get ("active"));
                     System.out.println(person_firstname);
                     System.out.println(person_surname);
 

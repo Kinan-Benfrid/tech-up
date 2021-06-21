@@ -1,18 +1,16 @@
 package episen.si.ing1.pds.client.view;
 
 import episen.si.ing1.pds.client.model.Company;
-import episen.si.ing1.pds.client.model.Person;
 import episen.si.ing1.pds.client.socket.RequestSocket;
 import episen.si.ing1.pds.client.socket.ResponseSocket;
 import episen.si.ing1.pds.client.socket.SocketUtility;
 import episen.si.ing1.pds.client.view.Mapping.RentedSpacesView;
+import episen.si.ing1.pds.client.view.SpaceRental.FirstPageRentCriteria;
+import episen.si.ing1.pds.client.view.SpaceRental.FirstPageRentCriteriaNewCompany;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +22,6 @@ public class HomePageView extends CommonFrame implements ActionListener {
     private JButton b1,b2,b3;
     private JComboBox jcb1;
     private SocketUtility socketUtility = new SocketUtility ();
-
     public HomePageView(){
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,6 +99,7 @@ public class HomePageView extends CommonFrame implements ActionListener {
         b1.addActionListener(this);
         panel.add(b1);
 
+
         j4 = new JLabel("Je visualise mes espaces");
         j4.setBounds(410,330,200,20);
         j4.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -122,9 +120,18 @@ public class HomePageView extends CommonFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source == b1) {
-            this.dispose();
-            HomePageRentView hp = new HomePageRentView();
-            hp.setVisible(true);
+
+            RequestSocket requestSocket = new RequestSocket();
+            requestSocket.setRequest("Insert_Rental");
+            Map<String, Object> data = new HashMap<>();
+            data.put("company_id", Company.getCompany_id());
+            requestSocket.setData(data);
+            ResponseSocket responseRental = socketUtility.sendRequest(requestSocket);
+            dispose();
+            FirstPageRentCriteria f = new FirstPageRentCriteria();
+            f.setVisible(true);
+
+
         } else if (source == b2) {
             this.dispose();
             RentedSpacesView r = new RentedSpacesView();
