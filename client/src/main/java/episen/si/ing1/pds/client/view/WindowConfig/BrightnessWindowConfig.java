@@ -16,7 +16,7 @@ import java.util.Vector;
 
 public class BrightnessWindowConfig extends CommonFrame implements ActionListener {
 //declaration of variable
-    private JButton bconfiguration, bvalider, bsortir, bretour;
+    private JButton bconfiguration, bvalider, bsuivant, bretour;
     private final SocketUtility socketUtility = new SocketUtility();
     private static final long serialVersionUID = 1L;
     private JPanel panel;
@@ -118,10 +118,10 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
         panel.add(bvalider);
         bvalider.addActionListener(this);
 
-        bsortir = new JButton("Sortir");
-        bsortir.setBounds(800,450,92,25);
-        panel.add(bsortir);
-        bsortir.addActionListener(this);
+        bsuivant = new JButton("Suivant");
+        bsuivant.setBounds(800,450,92,25);
+        panel.add(bsuivant);
+        bsuivant.addActionListener(this);
 
         bretour = new JButton("Retour");
         bretour.setBounds(10,20,110,25);
@@ -131,44 +131,62 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
     }
         public void actionPerformed(ActionEvent eb) {
             Object source = eb.getSource();
-            if(source == bsortir){
+            if(source == bsuivant){
                 this.dispose();
-                PageOfConfigWindow bw = new PageOfConfigWindow();
-                bw.setVisible(true);
+                TemperatureWindowConfig tc = new TemperatureWindowConfig();
+                tc.setVisible(true);
             }
             if(source == bretour){
                 this.dispose();
-                TemperatureWindowConfig bw = new TemperatureWindowConfig();
-                bw.setVisible(true);
+                blindConfig bc = new blindConfig();
+                bc.setVisible(true);
             }
             if(source == bvalider){
 
-                String vl6 = valeuraugmente.getText();
-                String vl7 = luminterne.getText();
-                int v6_pars,v7_pars ;
+                String vd = luminterne.getText();
+                String pd = pourcentageteinte.getText();
 
-                if(!isInteger(vl7) ||!isInteger(vl6) ){
+                String va = valeuraugmente.getText();
+                String pa = valeuraugmenteteintepourcentage.getText();
+
+                int vd_pars,pd_pars,va_pars,pa_pars ;
+
+                if(!isInteger(vd) ||!isInteger(pd)||!isInteger(va) ||!isInteger(pa) ){
                     JOptionPane.showMessageDialog(luminterne,"Saisir un entier !", "ERREUR", JOptionPane.ERROR_MESSAGE);
                 }
                 else {
-                    v6_pars = Integer.parseInt(vl6);
-                    if( v6_pars > 50 || v6_pars < 0)
+                    vd_pars = Integer.parseInt(vd);
+                    if( vd_pars > 3000|| vd_pars < 0)
                     {
-                        JOptionPane.showMessageDialog(valeuraugmente,"La luminosite Exterieure doit etre comprise entre 0 et 50 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(valeuraugmente,"La Valeur de debut doit etre comprise entre 0 et 3000 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
-                    v7_pars = Integer.parseInt(vl7);
-                    if( v7_pars > 15 || v7_pars < 0)
+                    pd_pars = Integer.parseInt(pd);
+                    if( pd_pars> 100 || pd_pars < 0)
                     {
-                        JOptionPane.showMessageDialog(luminterne,"La luminosite Interieure doit etre comprise entre 0 et 15 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(luminterne,"La pourcentage de debut doit etre comprise entre 0 et 100 %", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
-                    if(( v7_pars <= 15 && v7_pars >= 0) &&( v6_pars <= 50 && v6_pars >= 0)){
+                    va_pars = Integer.parseInt(va);
+                    if( va_pars > 30|| va_pars < 0)
+                    {
+                        JOptionPane.showMessageDialog(valeuraugmente,"L'augmentation de la valeur doit etre comprise entre 0 et 30 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    pa_pars = Integer.parseInt(pa);
+                    if( pa_pars> 15 || pa_pars < 0)
+                    {
+                        JOptionPane.showMessageDialog(luminterne,"L'augmentation du pourcentage doit etre comprise entre 0 et 15 %", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    if(( vd_pars <=3000  && vd_pars >= 0) &&( pd_pars <= 100 && pd_pars >= 0) && ( va_pars <=30  && vd_pars >= 0) &&( pa_pars <= 15 && pd_pars >= 0)){
                     RequestSocket request = new RequestSocket();
                     request.setRequest("lum");
                     Map<String, Object> data = new HashMap<>();
-                    data.put("lumminosite_exterieure", v6_pars);
-                    data.put("luminosite_interieure", v7_pars);
+                    data.put("valeur_debut", vd_pars);
+                    data.put("pourcentage_debut", pd_pars);
+                    data.put("valeur_avance", va_pars);
+                    data.put("pourcentage_avance", pa_pars);
                     System.out.println(data);
                     request.setData(data);
                     System.out.println(data);

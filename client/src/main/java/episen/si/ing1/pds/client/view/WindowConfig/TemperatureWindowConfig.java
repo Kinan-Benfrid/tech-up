@@ -13,13 +13,14 @@ import java.util.Map;
 
 public class TemperatureWindowConfig extends CommonFrame implements ActionListener{
     //declaration of variable
-    private JButton bconfiguration, bvalider, bsuivant, bretour;
+    private JButton bconfiguration, bvalider, bsortie, bretour;
     private final SocketUtility socketUtility = new SocketUtility();
     private static final long serialVersionUID = 1L;
-    private JPanel panel;
+    private JPanel panel,panelslide;
+    private JSlider slide;
     private JTextField tempextfiel,tempintfiel;
     private JLabel labeltempextfiel,labelinstructionR ,labeltempintfiel,labeltempextfielecoute, labeltempintfielecouteur,labelinstruction;
-
+    //private JSlider slide;
 
     public TemperatureWindowConfig (){
 
@@ -84,35 +85,53 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
         bconfiguration.setFont(bconfiguration.getFont().deriveFont(15.0f));
         panel.add(bconfiguration);
 
+        //
+        slide = new JSlider();
+        slide.setMaximum(28);
+        slide.setMinimum(22);
+        slide.setValue(25);
+        slide.setPaintTicks(true);
+        slide.setPaintLabels(true);
+        slide.setMinorTickSpacing(1);
+        slide.setMajorTickSpacing(1);
 
+        panelslide = new JPanel();
+        panelslide.setBounds(300,300,300,70);
+        //panelslide.setBackground(Color.red);
+        panelslide.add(slide);
+        panel.add(panelslide);
+
+        //
         bvalider = new JButton("Valider");
         bvalider.setBounds(800,380,92,25);
         panel.add(bvalider);
         bvalider.addActionListener(this);
 
-        bsuivant = new JButton("Suivant");
-        bsuivant.setBounds(800,450,92,25);
-        panel.add(bsuivant);
-        bsuivant.addActionListener(this);
+        bsortie = new JButton("Sortie");
+        bsortie.setBounds(800,450,92,25);
+        panel.add(bsortie);
+        bsortie.addActionListener(this);
 
         bretour = new JButton("Retour");
         bretour.setBounds(10,20,110,25);
         panel.add(bretour);
         bretour.addActionListener(this);
 
+
+
     }
 
     public void actionPerformed(ActionEvent eb) {
         Object source = eb.getSource();
-        if(source == bsuivant){
+        if(source == bsortie){
             this.dispose();
-            BrightnessWindowConfig bw = new BrightnessWindowConfig();
-            bw.setVisible(true);
+            PageOfConfigWindow pc = new PageOfConfigWindow();
+            pc.setVisible(true);
         }
         if(source == bretour){
             this.dispose();
-            PageOfConfigWindow pc = new PageOfConfigWindow ();
-            pc.setVisible(true);
+            BrightnessWindowConfig bc = new BrightnessWindowConfig();
+            bc.setVisible(true);
         }
         if(source == bvalider){
             String v7 = tempintfiel.getText();
@@ -165,6 +184,7 @@ public class TemperatureWindowConfig extends CommonFrame implements ActionListen
     public static void main(String[] args) {
         TemperatureWindowConfig c = new TemperatureWindowConfig();
         c.setVisible(true);
+
     }
 }
 

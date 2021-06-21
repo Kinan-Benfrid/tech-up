@@ -58,12 +58,12 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelluminterne.setBounds(58, 250, 210, 29);
         p.add(labelluminterne);
 
-        labeltempextfiel = new JLabel("0");
+        labeltempextfiel = new JLabel("25");
         labeltempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 20));
         labeltempextfiel.setBounds(358, 150, 210, 29);
         p.add(labeltempextfiel);
 
-        labeltempintfiel = new JLabel("0");
+        labeltempintfiel = new JLabel("25");
         labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 20));
         labeltempintfiel.setBounds(358, 200, 210, 29);
         p.add(labeltempintfiel);
@@ -88,7 +88,6 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelpStore.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelpStore.setBounds(58, 300, 210, 29);
         labelpStore.setFont(labelpStore.getFont().deriveFont(20.0f));
-        labelpStore.setForeground(new Color(155,0,0));
         p.add(labelpStore);
 
 
@@ -96,7 +95,6 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelpStore.setFont(new Font("Tahoma", Font.PLAIN, 25));
         labelpStore.setBounds(358, 300, 210, 29);
         labelpStore.setFont(labelpStore.getFont().deriveFont(22.0f));
-        labelpStore.setForeground(new Color(155,0,0));
         p.add(labelpStore);
 
         labelunite = new JLabel("%");
@@ -115,14 +113,12 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelpteinte.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelpteinte.setBounds(58, 350, 210, 29);
         labelpteinte.setFont(labelpStore.getFont().deriveFont(20.0f));
-        labelpteinte.setForeground(new Color(155,0,0));
         p.add(labelpteinte);
 
         labelpteinte = new JLabel("0");
         labelpteinte.setFont(new Font("Tahoma", Font.PLAIN, 25));
         labelpteinte.setBounds(358, 350, 210, 29);
         labelpteinte.setFont(labelpStore.getFont().deriveFont(20.0f));
-        labelpteinte.setForeground(new Color(155,0,0));
         p.add(labelpteinte);
 
         labelunite = new JLabel("%");
@@ -141,13 +137,13 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelinstruction.setBounds(58, 450, 400, 29);
         p.add(labelinstruction);
 
-        labelinstructionR = new JLabel("Rafraichissez pour voir l'etat actuel des fenetres");
+        /*labelinstructionR = new JLabel("Rafraichissez pour voir l'etat actuel des fenetres");
         labelinstructionR.setFont(new Font("Tahoma", Font.PLAIN, 13));
         labelinstructionR.setBounds(700, 400, 400, 29);
-        p.add(labelinstructionR);
+        p.add(labelinstructionR);*/
 
 //Creation of the button
-        bconf = new JButton("CONFIGURATION DES FENETRES ELECTROCHROMATIQUES");
+        bconf = new JButton("CONFIGURATION DE LA FENETRE");
         bconf.setBounds(250,20,650,30);
         bconf.setBackground(new Color(111,164,143));
         bconf.setFont(bconf.getFont().deriveFont(19.0f));
@@ -185,8 +181,8 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         Object source = e.getSource();
         if(source == bs){
             this.dispose();
-            TemperatureWindowConfig rs = new TemperatureWindowConfig();
-            rs.setVisible(true);
+            blindConfig bc = new blindConfig();
+            bc.setVisible(true);
         }
         if(source == br){
 
