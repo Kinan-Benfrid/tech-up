@@ -133,12 +133,12 @@ public class blindConfig extends CommonFrame implements ActionListener {
         Object source = eb.getSource();
         if(source == bsuivant ){
             this.dispose();
-            TemperatureWindowConfig tc = new TemperatureWindowConfig();
+            BrightnessWindowConfig tc = new BrightnessWindowConfig();
             tc.setVisible(true);
         }
         if(source == bretour){
             this.dispose();
-            TemperatureWindowConfig bw = new TemperatureWindowConfig();
+            PageOfConfigWindow bw = new PageOfConfigWindow();
             bw.setVisible(true);
         }
         if(source == bvalider){
