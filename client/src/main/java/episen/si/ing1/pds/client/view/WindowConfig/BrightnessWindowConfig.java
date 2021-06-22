@@ -31,7 +31,9 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
         panel.setLayout(null);
 
 //label textfiel for insde brightness
-
+       /* JRadioButton r1 = new JRadioButton("maintenir le volet fermer à un certain pourcentage", true);
+        r1.setActionCommand("choix1");
+        panel.add(r1);*/
         labelsituationteinte = new JLabel("Teinte Automatique par rapport au niveau d'ensoleillement");
         labelsituationteinte.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelsituationteinte.setBounds(258, 100, 700, 29);
@@ -156,9 +158,9 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                 }
                 else {
                     vd_pars = Integer.parseInt(vd);
-                    if( vd_pars > 3000|| vd_pars < 0)
+                    if( vd_pars > 20|| vd_pars < 0)
                     {
-                        JOptionPane.showMessageDialog(valeuraugmente,"La Valeur de debut doit etre comprise entre 0 et 3000 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(valeuraugmente,"La Valeur de debut doit etre comprise entre 0 et 20 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
                     pd_pars = Integer.parseInt(pd);
@@ -168,9 +170,9 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                     }
 
                     va_pars = Integer.parseInt(va);
-                    if( va_pars > 30|| va_pars < 0)
+                    if( va_pars > 5|| va_pars < 0)
                     {
-                        JOptionPane.showMessageDialog(valeuraugmente,"L'augmentation de la valeur doit etre comprise entre 0 et 30 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(valeuraugmente,"L'augmentation de la valeur doit etre comprise entre 0 et 5 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
                     pa_pars = Integer.parseInt(pa);
@@ -179,7 +181,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                         JOptionPane.showMessageDialog(luminterne,"L'augmentation du pourcentage doit etre comprise entre 0 et 15 %", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
-                    if(( vd_pars <=3000  && vd_pars >= 0) &&( pd_pars <= 100 && pd_pars >= 0) && ( va_pars <=30  && vd_pars >= 0) &&( pa_pars <= 15 && pd_pars >= 0)){
+                    if(( vd_pars <=20  && vd_pars >= 0) &&( pd_pars <= 100 && pd_pars >= 0) && ( va_pars <=5  && vd_pars >= 0) &&( pa_pars <= 15 && pd_pars >= 0)){
                     RequestSocket request = new RequestSocket();
                     request.setRequest("lum");
                     Map<String, Object> data = new HashMap<>();
@@ -187,6 +189,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                     data.put("pourcentage_debut", pd_pars);
                     data.put("valeur_avance", va_pars);
                     data.put("pourcentage_avance", pa_pars);
+
                     System.out.println(data);
                     request.setData(data);
                     System.out.println(data);
