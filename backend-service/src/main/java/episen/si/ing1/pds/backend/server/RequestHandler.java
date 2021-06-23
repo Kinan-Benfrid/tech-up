@@ -910,24 +910,27 @@ public class RequestHandler {
         }
         else if (requestName.equals("EtatActuel")) {
             ObjectMapper mapper = new ObjectMapper();
-            String sql = "SELECT inside_temperature, outside_temperature, pstore FROM datatemp WHERE id_datatemp = 1";
-            String sql2 = "select lum_exterieure,lum_interieure, pteinte from luminosite WHERE id_lum = 1";
+           // String sql = "SELECT inside_temperature, outside_temperature, pstore FROM datatemp WHERE id_datatemp = 1";
+            String sql = "SELECT teinte, pourcen, temmp, pourcentemp, tempin FROM windo";
+            //String sql2 = "select lum_exterieure,lum_interieure, pteinte from luminosite WHERE id_lum = 1";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
-            PreparedStatement statement2 = connection.prepareStatement(sql2);
-            ResultSet rs2 = statement2.executeQuery();
+            /*PreparedStatement statement2 = connection.prepareStatement(sql2);
+            ResultSet rs2 = statement2.executeQuery();*/
 
             Map<String, Object> hm = new HashMap<>();
             while (rs.next()) {
-                hm.put("tempin", rs.getInt("inside_temperature"));
-                hm.put("tempex", rs.getInt("outside_temperature"));
-                hm.put("pstore", rs.getInt("pstore"));
+                hm.put("teinte", rs.getInt("teinte"));
+                hm.put("pourcenteinte", rs.getInt("pourcen"));
+                hm.put("tempext", rs.getInt("temmp"));
+                hm.put("pourcentemp", rs.getInt("pourcentemp"));
+                hm.put("tempint", rs.getInt("tempin"));
             }
-            while (rs2.next()) {
+           /* while (rs2.next()) {
                 hm.put("lumex", rs2.getInt("lum_exterieure"));
                 hm.put("lumin", rs2.getInt("lum_interieure"));
                 hm.put("pteinte", rs2.getInt("pteinte"));
-            }
+            }*/
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             response.put("data", hm);
@@ -962,9 +965,11 @@ public class RequestHandler {
         else if (requestName.equals("lum")) {
             ObjectMapper mapper = new ObjectMapper();
             Map<String, Object> dataloaded1 = (Map<String, Object>) request.getData();
-            int lumex = (int) dataloaded1 .get("lumminosite_exterieure");
-            int limin = (int) dataloaded1 .get("luminosite_interieure");
-            int a = Math.abs(lumex);
+            int valeur_debut = (int) dataloaded1 .get("valeur_debut");
+            int pourcentage_debut = (int) dataloaded1 .get("pourcentage_debut");
+            int valeur_augment = (int) dataloaded1 .get("valeur_avance");
+            int pourcentage_augmente = (int) dataloaded1 .get("pourcentage_avance");
+           /* int a = Math.abs(lumex);
             int b = Math.abs(limin);
             int d = (Math.max(a,b)-Math.min(a,b));
             int e = (100*d);
@@ -973,15 +978,20 @@ public class RequestHandler {
             if(lumex < 15 && (0 < limin && limin < 15)){
             }
             if(lumex > 15 && (0 < limin && limin < 15)) {
-            }
-            String sql = "UPDATE luminosite SET lum_exterieure = " + lumex + ", lum_interieure = " + limin + ", pteinte = " + pteinte + " WHERE id_lum = 1";
-            String sql2 = "INSERT INTO setting_bright (date_insert, inside_brigh, outside_brigh )  VALUES ( NOW(),?, ? )";
+            }*/
+           // String sql = "UPDATE luminosite SET lum_exterieure = " + lumex + ", lum_interieure = " + limin + ", pteinte = " + pteinte + " WHERE id_lum = 1";
+            String sql = "UPDATE setting_brigh SET valdebut = " + valeur_debut + ", pdebut = " + pourcentage_debut + ", valaugmente = " + valeur_augment + ", paugmente = " + pourcentage_augmente + " WHERE id_set = 1";
+
+            //String sql2 = "INSERT INTO setting_bright (date_insert, inside_brigh, outside_brigh )  VALUES ( NOW(),?, ? )";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
-            PreparedStatement statement2 = connection.prepareStatement(sql2);
+            /*PreparedStatement statement2 = connection.prepareStatement(sql2);
             statement2.setInt(1, (Integer) dataloaded1.get("luminosite_interieure"));
             statement2.setInt(2, (Integer) dataloaded1.get("lumminosite_exterieure"));
-            statement2.executeUpdate();
+            statement2.executeUpdate();*/
+            if(valeur_debut<=20 && valeur_debut>=0){
+
+            }
 
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
