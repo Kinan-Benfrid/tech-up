@@ -199,40 +199,40 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
             //receive response
             ResponseSocket response = socketUtility.sendRequest(request);
             Map<String, Object>  valeurTempA = (Map<String, Object>) response.getData();
-            int tempexr = (int) valeurTempA.get("tempex");//tempex is the value send by server
-            int tempinr = (int) valeurTempA.get("tempin");
-            int pstorer = (int) valeurTempA.get("pstore");
+            int teinte = (int) valeurTempA.get("teinte");//tempex is the value send by server
+            int pourcentageteinte = (int) valeurTempA.get("pourcenteinte");
+            int temperatureexterieure = (int) valeurTempA.get("tempext");
 
-            int lumexr = (int) valeurTempA.get("lumex");
-            int luminr = (int) valeurTempA.get("lumin");
-            int pteinter = (int) valeurTempA.get("pteinte");
+            int pourcentagetemp = (int) valeurTempA.get("pourcentemp");
+            int tempint = (int) valeurTempA.get("tempint");
+            //int pteinter = (int) valeurTempA.get("pteinte");
 //tranformation of integer to string
 
-            Integer n = tempexr;
+            Integer n = teinte;
             String str = n.toString();
-            labeltempextfiel.setText(str);
+            labelluminterne.setText(str);/*change jtxfiel*/
 
-            Integer n2 = tempinr;
+            Integer n2 = pourcentageteinte;
             String str2 = n2.toString();
-            labeltempintfiel.setText(str2);
+            labelpteinte.setText(str2);
 
-            Integer n3 = pstorer;
+            Integer n3 = temperatureexterieure;
             String str3 = n3.toString();
-            labelpStore.setText(str3);
+            labeltempextfiel.setText(str3);
 
 
-            Integer n4 = luminr;
+            Integer n4 = tempint;
             String str4 = n4.toString();
-            labelluminterne.setText(str4);
+            labeltempintfiel.setText(str4);
 
-            Integer n5 = lumexr;
+            Integer n5 = pourcentagetemp;
             String str5 = n5.toString();
-            labellumiexterne.setText(str5);
+            labelpStore.setText(str5);
 
-            Integer n6 = pteinter;
+            /*Integer n6 = pteinter;
             String str6 = n6.toString();
             labelpteinte.setText(str6);
-
+*/
         }
     }
 }
