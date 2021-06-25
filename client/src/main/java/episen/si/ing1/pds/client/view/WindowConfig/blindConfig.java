@@ -39,23 +39,23 @@ public class blindConfig extends CommonFrame implements ActionListener {
         labelsituationstore.setForeground(new Color(155,0,0));
         panel.add(labelsituationstore);
 
-        labeldebutstore = new JLabel("Valeur a partir de laquelle les stores commencent a se fermee (entier)");
+        labeldebutstore = new JLabel("Valeur de la temperature exterieure a partir de laquelle le store commence a se fermer (entier)");
         labeldebutstore.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labeldebutstore.setBounds(58, 150, 700, 29);
+        labeldebutstore.setBounds(58, 150, 770, 29);
         panel.add(labeldebutstore);
 
         debutstore = new JTextField();
         debutstore.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        debutstore.setBounds(620, 150, 70, 40);
+        debutstore.setBounds(800, 150, 70, 40);
         panel.add(debutstore);
         debutstore.setColumns(10);
 
-        labeldebutstoreecoute = new JLabel("");
+        labeldebutstoreecoute = new JLabel("degre");
         labeldebutstoreecoute.setFont(new Font("Tahoma", Font.PLAIN, 17));
-        labeldebutstoreecoute.setBounds(700, 150, 210, 29);
+        labeldebutstoreecoute.setBounds(880, 150, 210, 29);
         panel.add(labeldebutstoreecoute);
 
-        labelpourcentagestore = new JLabel("A combien de pourcent elle doit se store (entre 0 et 100)");
+        labelpourcentagestore = new JLabel("A combien de pourcent le store doit se fermer (entre 0 et 100)");
         labelpourcentagestore.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelpourcentagestore.setBounds(58, 200, 600, 29);
         panel.add(labelpourcentagestore);
@@ -71,7 +71,7 @@ public class blindConfig extends CommonFrame implements ActionListener {
         pourcentagestoreunite.setBounds(700, 200, 210, 29);
         panel.add(pourcentagestoreunite);
 
-        labelaugmente= new JLabel("Lorsque cette valeur va augmenter de (positif)");
+        labelaugmente= new JLabel("Si la valeur de cette temperature augmenter de... (positif)");
         labelaugmente.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelaugmente.setBounds(58, 250, 600, 29);
         panel.add(labelaugmente);
@@ -82,26 +82,26 @@ public class blindConfig extends CommonFrame implements ActionListener {
         panel.add(valeuraugmente);
         valeuraugmente.setColumns(10);
 
-        labeluniteaugmente= new JLabel("");
+        labeluniteaugmente= new JLabel("degre");
         labeluniteaugmente.setFont(new Font("Tahoma", Font.PLAIN, 17));
         labeluniteaugmente.setBounds(700, 250, 210, 29);
         panel.add(labeluniteaugmente);
 
 
-        labelaugmentestorepourcentage= new JLabel("On augmente aussi le pourcentage de la store de (entre 0 et 100)");
+        labelaugmentestorepourcentage= new JLabel("Le pourcentage de la store doit aussi augmenter de combien  (entre 0 et 100)");
         labelaugmentestorepourcentage.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelaugmentestorepourcentage.setBounds(58, 300, 600, 29);
+        labelaugmentestorepourcentage.setBounds(58, 300, 700, 29);
         panel.add(labelaugmentestorepourcentage);
 
         valeuraugmentestorepourcentage = new JTextField();
         valeuraugmentestorepourcentage.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        valeuraugmentestorepourcentage.setBounds(620, 300, 70, 40);
+        valeuraugmentestorepourcentage.setBounds(700, 300, 70, 40);
         panel.add(valeuraugmentestorepourcentage);
         valeuraugmentestorepourcentage.setColumns(10);
 
         labeluniteaugmentestorepourcentage= new JLabel("%");
         labeluniteaugmentestorepourcentage.setFont(new Font("Tahoma", Font.PLAIN, 17));
-        labeluniteaugmentestorepourcentage.setBounds(700, 300, 210, 29);
+        labeluniteaugmentestorepourcentage.setBounds(770, 300, 210, 29);
         panel.add( labeluniteaugmentestorepourcentage);
 
 
@@ -138,8 +138,8 @@ public class blindConfig extends CommonFrame implements ActionListener {
         }
         if(source == bretour){
             this.dispose();
-            PageOfConfigWindow bw = new PageOfConfigWindow();
-            bw.setVisible(true);
+            ListOfWindow lw = new ListOfWindow();
+            lw.setVisible(true);
         }
         if(source == bvalider){
 
