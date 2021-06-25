@@ -911,26 +911,70 @@ public class RequestHandler {
         else if (requestName.equals("EtatActuel")) {
             ObjectMapper mapper = new ObjectMapper();
            // String sql = "SELECT inside_temperature, outside_temperature, pstore FROM datatemp WHERE id_datatemp = 1";
-            String sql = "SELECT teinte, pourcen, temmp, pourcentemp, tempin FROM windo";
-            //String sql2 = "select lum_exterieure,lum_interieure, pteinte from luminosite WHERE id_lum = 1";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet rs = statement.executeQuery();
-            /*PreparedStatement statement2 = connection.prepareStatement(sql2);
+            //String sql = "SELECT teinte, pourcen, temmp, pourcentemp, tempin FROM windo";
+           /* String sql2 = "select intensitelumineuse from sensor where id_sensor = 2";
+            PreparedStatement statement2 = connection.prepareStatement(sql2);
             ResultSet rs2 = statement2.executeQuery();*/
+            /*int bright = rs2.getInt("intensitelumineuse");
+            System.out.println(bright);*/
 
-            Map<String, Object> hm = new HashMap<>();
+            /*int valeurdebut = rs.getInt("valdebut");
+            int pourcdebut = rs.getInt("pdebut");
+            int valeuraugmente = rs.getInt("valaugmente");
+            int pouraugmente = rs.getInt("paugmente");
+            System.out.println(valeurdebut);
+            System.out.println(pourcdebut);
+            System.out.println(valeuraugmente);
+            System.out.println(pouraugmente);*/
+
+/*
+            if((valeurdebut<=25) && (valeurdebut>=15) ){
+                System.out.println(pourcdebut);
+                if((valeurdebut == valeurdebut + valeuraugmente)){
+                    pourcdebut = pourcdebut+pouraugmente;
+                    System.out.println(pourcdebut);
+
+                    Map<String, Object> hm = new HashMap<>();
+                    while (rs.next()) {
+                        hm.put("pourcdebut", rs.getInt("pourcdebut"));
+                    }
+
+                    Map<String, Object> response = new HashMap<>();
+                    response.put("request", requestName);
+                    response.put("data", hm);
+                    String responseMsg = mapper.writeValueAsString(response);
+                    writer.println(responseMsg);
+                }
+            }
+*/
+          /*  Map<String, Object> hm = new HashMap<>();
             while (rs.next()) {
                 hm.put("teinte", rs.getInt("teinte"));
                 hm.put("pourcenteinte", rs.getInt("pourcen"));
                 hm.put("tempext", rs.getInt("temmp"));
                 hm.put("pourcentemp", rs.getInt("pourcentemp"));
                 hm.put("tempint", rs.getInt("tempin"));
-            }
+            }*/
            /* while (rs2.next()) {
                 hm.put("lumex", rs2.getInt("lum_exterieure"));
                 hm.put("lumin", rs2.getInt("lum_interieure"));
                 hm.put("pteinte", rs2.getInt("pteinte"));
             }*/
+
+            String sql = "select valdebut,pdebut,valaugmente,paugmente FROM setting_brigh";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+
+            Map<String, Object> hm = new HashMap<>();
+            while (rs.next()) {
+                hm.put("valdebut", rs.getInt("valdebut"));
+                hm.put("pdebut", rs.getInt("pdebut"));
+                hm.put("valaugmente", rs.getInt("valaugmente"));
+                hm.put("paugmente", rs.getInt("paugmente"));
+
+                System.out.println(hm);
+            }
+
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             response.put("data", hm);
