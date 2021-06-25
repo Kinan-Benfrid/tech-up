@@ -135,8 +135,8 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
             Object source = eb.getSource();
             if(source == bsuivant){
                 this.dispose();
-                TemperatureWindowConfig tc = new TemperatureWindowConfig();
-                tc.setVisible(true);
+                PageOfConfigWindow pc = new PageOfConfigWindow();
+                pc.setVisible(true);
             }
             if(source == bretour){
                 this.dispose();
@@ -158,9 +158,9 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                 }
                 else {
                     vd_pars = Integer.parseInt(vd);
-                    if( vd_pars > 20|| vd_pars < 0)
+                    if( vd_pars > 30|| vd_pars < 10)
                     {
-                        JOptionPane.showMessageDialog(valeuraugmente,"La Valeur de debut doit etre comprise entre 0 et 20 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(valeuraugmente,"La Valeur de debut doit etre comprise entre 10 et 30 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
                     pd_pars = Integer.parseInt(pd);
@@ -170,9 +170,9 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                     }
 
                     va_pars = Integer.parseInt(va);
-                    if( va_pars > 5|| va_pars < 0)
+                    if( va_pars > 10|| va_pars < 0)
                     {
-                        JOptionPane.showMessageDialog(valeuraugmente,"L'augmentation de la valeur doit etre comprise entre 0 et 5 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(valeuraugmente,"L'augmentation de la valeur doit etre comprise entre 0 et 10 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
                     pa_pars = Integer.parseInt(pa);
@@ -181,7 +181,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                         JOptionPane.showMessageDialog(luminterne,"L'augmentation du pourcentage doit etre comprise entre 0 et 15 %", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
-                    if(( vd_pars <=20  && vd_pars >= 0) &&( pd_pars <= 100 && pd_pars >= 0) && ( va_pars <=5  && vd_pars >= 0) &&( pa_pars <= 15 && pd_pars >= 0)){
+                    if(( vd_pars <=30  && vd_pars >= 10) &&( pd_pars <= 100 && pd_pars >= 0) && ( va_pars <=10  && vd_pars >= 0) &&( pa_pars <= 15 && pd_pars >= 0)){
                     RequestSocket request = new RequestSocket();
                     request.setRequest("lum");
                     Map<String, Object> data = new HashMap<>();
