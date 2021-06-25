@@ -40,18 +40,18 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
 
         labeltempextfiel = new JLabel("Temperature exterieure");
         labeltempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labeltempextfiel.setBounds(58, 150, 210, 29);
+        labeltempextfiel.setBounds(58, 200, 210, 29);
         p.add(labeltempextfiel);
 
         labelunite = new JLabel("degre");
         labelunite.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelunite.setBounds(400, 150, 210, 29);
+        labelunite.setBounds(400, 200, 210, 29);
         p.add(labelunite);
 
-        labeltempintfiel = new JLabel("Temperature interieure");
+        /*labeltempintfiel = new JLabel("Temperature interieure");
         labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labeltempintfiel.setBounds(58, 200, 210, 29);
-        p.add(labeltempintfiel);
+        p.add(labeltempintfiel);*/
 
         labelluminterne = new JLabel("Niveau d'ensoleillement");
         labelluminterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -60,20 +60,20 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
 
         labeltempextfiel = new JLabel("25");
         labeltempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        labeltempextfiel.setBounds(358, 150, 210, 29);
+        labeltempextfiel.setBounds(358, 200, 210, 29);
         p.add(labeltempextfiel);
 
-        labeltempintfiel = new JLabel("25");
+        /*labeltempintfiel = new JLabel("25");
         labeltempintfiel.setFont(new Font("Tahoma", Font.PLAIN, 20));
         labeltempintfiel.setBounds(358, 200, 210, 29);
-        p.add(labeltempintfiel);
+        p.add(labeltempintfiel);*/
 
-        labelunite = new JLabel("degre");
+       /* labelunite = new JLabel("degre");
         labelunite.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelunite.setBounds(400, 200, 210, 29);
-        p.add(labelunite);
+        p.add(labelunite);*/
 
-        labelluminterne = new JLabel("100 ");
+        labelluminterne = new JLabel("0");
         labelluminterne.setFont(new Font("Tahoma", Font.PLAIN, 20));
         labelluminterne.setBounds(358, 250, 210, 29);
         p.add(labelluminterne);
@@ -132,11 +132,6 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labellumiexterne.setBounds(358, 300, 210, 29);
         p.add(labellumiexterne);*/
 
-        labelinstruction = new JLabel("Faites suivant pour configurer la temperature  ---->");
-        labelinstruction.setFont(new Font("Tahoma", Font.PLAIN, 17));
-        labelinstruction.setBounds(58, 450, 400, 29);
-        p.add(labelinstruction);
-
         /*labelinstructionR = new JLabel("Rafraichissez pour voir l'etat actuel des fenetres");
         labelinstructionR.setFont(new Font("Tahoma", Font.PLAIN, 13));
         labelinstructionR.setBounds(700, 400, 400, 29);
@@ -160,7 +155,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         p.add(braf );
         braf .addActionListener(this);
 
-        bs = new JButton("Suivant");
+        bs = new JButton("Sortir");
         bs.setBounds(800,450,92,25);
         p.add(bs);
         bs.addActionListener(this);
@@ -181,12 +176,12 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         Object source = e.getSource();
         if(source == bs){
             this.dispose();
-            blindConfig bc = new blindConfig();
+            ListOfWindow bc = new ListOfWindow();
             bc.setVisible(true);
         }
         if(source == br){
 
-            RentedSpacesView tc = new RentedSpacesView ();
+            BrightnessWindowConfig tc = new BrightnessWindowConfig ();
             this.dispose();
             tc.setVisible(true);
         }
@@ -197,11 +192,12 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
             request.setRequest("EtatActuel");
 
             //receive response
-            ResponseSocket response = socketUtility.sendRequest(request);
-            Map<String, Object>  valeurTempA = (Map<String, Object>) response.getData();
-            int teinte = (int) valeurTempA.get("teinte");//tempex is the value send by server
-            int pourcentageteinte = (int) valeurTempA.get("pourcenteinte");
-            int temperatureexterieure = (int) valeurTempA.get("tempext");
+                  ///ResponseSocket response = socketUtility.sendRequest(request);
+                    //Map<String, Object>  valeurTempA = (Map<String, Object>) response.getData();
+           // int teinte = (int) valeurTempA.get("pourcdebut");//tempex is the value send by server
+                    //int pourcentageteinte = (int) valeurTempA.get("pourcdebut");
+                        //  System.out.println(pourcentageteinte);
+            /*int temperatureexterieure = (int) valeurTempA.get("tempext");
 
             int pourcentagetemp = (int) valeurTempA.get("pourcentemp");
             int tempint = (int) valeurTempA.get("tempint");
@@ -212,11 +208,11 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
             String str = n.toString();
             labelluminterne.setText(str);/*change jtxfiel*/
 
-            Integer n2 = pourcentageteinte;
-            String str2 = n2.toString();
-            labelpteinte.setText(str2);
+                            /*Integer n2 = pourcentageteinte;
+                                String str2 = n2.toString();
+                                 labelpteinte.setText(str2);*/
 
-            Integer n3 = temperatureexterieure;
+          /*  Integer n3 = temperatureexterieure;
             String str3 = n3.toString();
             labeltempextfiel.setText(str3);
 
@@ -227,7 +223,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
 
             Integer n5 = pourcentagetemp;
             String str5 = n5.toString();
-            labelpStore.setText(str5);
+            labelpStore.setText(str5);*/
 
             /*Integer n6 = pteinter;
             String str6 = n6.toString();
