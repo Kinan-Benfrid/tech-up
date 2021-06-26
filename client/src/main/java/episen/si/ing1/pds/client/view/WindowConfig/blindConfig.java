@@ -88,7 +88,7 @@ public class blindConfig extends CommonFrame implements ActionListener {
         panel.add(labeluniteaugmente);
 
 
-        labelaugmentestorepourcentage= new JLabel("Le pourcentage de la store doit aussi augmenter de combien  (entre 0 et 100)");
+        labelaugmentestorepourcentage= new JLabel("Le pourcentage de la store doit aussi augmenter de combien  (entre 0 et 20)");
         labelaugmentestorepourcentage.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelaugmentestorepourcentage.setBounds(58, 300, 700, 29);
         panel.add(labelaugmentestorepourcentage);
@@ -143,43 +143,59 @@ public class blindConfig extends CommonFrame implements ActionListener {
         }
         if(source == bvalider){
 
-            String vl6 = valeuraugmente.getText();
-            String vl7 = debutstore.getText();
-            int v6_pars,v7_pars ;
+            String vd = debutstore.getText();
+            String pd = pourcentagestore.getText();
 
-            if(!isInteger(vl7) ||!isInteger(vl6) ){
+            String va = valeuraugmente.getText();
+            String pa = valeuraugmentestorepourcentage.getText();
+
+            int vd_pars,pd_pars,va_pars,pa_pars ;
+
+            if(!isInteger(vd) ||!isInteger(pd)||!isInteger(va) ||!isInteger(pa) ){
                 JOptionPane.showMessageDialog(debutstore,"Saisir un entier !", "ERREUR", JOptionPane.ERROR_MESSAGE);
-            }
+
+                            }
             else {
-                v6_pars = Integer.parseInt(vl6);
-                if( v6_pars > 50 || v6_pars < 0)
-                {
-                    JOptionPane.showMessageDialog(valeuraugmente,"La luminosite Exterieure doit etre comprise entre 0 et 50 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                vd_pars = Integer.parseInt(vd);
+                if (vd_pars > 40 || vd_pars < -20) {
+                    JOptionPane.showMessageDialog(debutstore, "La Valeur de debut de la temperature doit etre comprise entre -20 et 40 degre", "ERREUR", JOptionPane.ERROR_MESSAGE);
                 }
 
-                v7_pars = Integer.parseInt(vl7);
-                if( v7_pars > 15 || v7_pars < 0)
-                {
-                    JOptionPane.showMessageDialog(debutstore,"La luminosite Interieure doit etre comprise entre 0 et 15 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                pd_pars = Integer.parseInt(pd);
+                if (pd_pars > 100 || pd_pars < 0) {
+                    JOptionPane.showMessageDialog(pourcentagestore, "La pourcentage de debut doit etre comprise entre 0 et 100 %", "ERREUR", JOptionPane.ERROR_MESSAGE);
                 }
 
-                if(( v7_pars <= 15 && v7_pars >= 0) &&( v6_pars <= 50 && v6_pars >= 0)){
+                va_pars = Integer.parseInt(va);
+                if (va_pars > 10 || va_pars < 0) {
+                    JOptionPane.showMessageDialog(valeuraugmente, "L'augmentation de la valeur doit etre comprise entre 0 et 15 degre", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                }
+
+                pa_pars = Integer.parseInt(pa);
+                if (pa_pars > 15 || pa_pars < 0) {
+                    JOptionPane.showMessageDialog(valeuraugmentestorepourcentage, "L'augmentation du pourcentage doit etre comprise entre 0 et 20 %", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                }
+
+                if ((vd_pars <= 40 && vd_pars >= -20) && (pd_pars <= 100 && pd_pars >= 0) && (va_pars <= 15 && vd_pars >= 0) && (pa_pars <= 20 && pd_pars >= 0)) {
                     RequestSocket request = new RequestSocket();
-                    request.setRequest("lum");
+                    request.setRequest("temperature");
                     Map<String, Object> data = new HashMap<>();
-                    data.put("lumminosite_exterieure", v6_pars);
-                    data.put("luminosite_interieure", v7_pars);
+                    data.put("valeurtemp_debut", vd_pars);
+                    data.put("pourcentagetemp_debut", pd_pars);
+                    data.put("valeurtemp_avance", va_pars);
+                    data.put("pourcentagetemp_avance", pa_pars);
+
                     System.out.println(data);
                     request.setData(data);
                     System.out.println(data);
 
-                    JOptionPane.showMessageDialog(debutstore,"configuration prise en compte", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(debutstore, "configuration prise en compte", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 
 
                     ResponseSocket response2 = socketUtility.sendRequest(request);
                 }
             }
-        }
+            }
     }
 
     public static boolean isInteger(String strNum) {
