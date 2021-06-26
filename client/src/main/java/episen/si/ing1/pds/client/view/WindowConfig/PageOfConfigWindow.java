@@ -58,7 +58,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelluminterne.setBounds(58, 250, 210, 29);
         p.add(labelluminterne);
 
-        labeltempextfiel = new JLabel("25");
+        labeltempextfiel = new JLabel("0");
         labeltempextfiel.setFont(new Font("Tahoma", Font.PLAIN, 20));
         labeltempextfiel.setBounds(358, 200, 210, 29);
         p.add(labeltempextfiel);
@@ -91,7 +91,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         p.add(labelpStore);
 
 
-        labelpStore = new JLabel("0");
+        labelpStore = new JLabel("storeOuvert");
         labelpStore.setFont(new Font("Tahoma", Font.PLAIN, 25));
         labelpStore.setBounds(358, 300, 210, 29);
         labelpStore.setFont(labelpStore.getFont().deriveFont(22.0f));
@@ -115,7 +115,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labelpteinte.setFont(labelpStore.getFont().deriveFont(20.0f));
         p.add(labelpteinte);
 
-        labelpteinte = new JLabel("0");
+        labelpteinte = new JLabel("pas_teinter");
         labelpteinte.setFont(new Font("Tahoma", Font.PLAIN, 25));
         labelpteinte.setBounds(358, 350, 210, 29);
         labelpteinte.setFont(labelpStore.getFont().deriveFont(20.0f));
@@ -192,43 +192,30 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
             request.setRequest("EtatActuel");
 
             //receive response
-                  ///ResponseSocket response = socketUtility.sendRequest(request);
-                    //Map<String, Object>  valeurTempA = (Map<String, Object>) response.getData();
-           // int teinte = (int) valeurTempA.get("pourcdebut");//tempex is the value send by server
-                    //int pourcentageteinte = (int) valeurTempA.get("pourcdebut");
-                        //  System.out.println(pourcentageteinte);
-            /*int temperatureexterieure = (int) valeurTempA.get("tempext");
+                  ResponseSocket response = socketUtility.sendRequest(request);
+                    Map<String, Object>  valeurActu = (Map<String, Object>) response.getData();
 
-            int pourcentagetemp = (int) valeurTempA.get("pourcentemp");
-            int tempint = (int) valeurTempA.get("tempint");
-            //int pteinter = (int) valeurTempA.get("pteinte");
-//tranformation of integer to string
+                    //int temperatureexterieure = (int) valeurActu.get("pdebutlum");
+                    int teinte = (int) valeurActu.get("valdebutLum");
+                    int pourcentageteinte = (int) valeurActu.get("poucentagedebut");
+                    //int pourcentagetemp = (int) valeurActu.get("paugmentelum");
+                    System.out.println(teinte);
+                    System.out.println(pourcentageteinte);
+            /*Integer n3 = temperatureexterieure;
+            String str3 = n3.toString();
+            labeltempextfiel.setText(str3);*/
 
             Integer n = teinte;
             String str = n.toString();
-            labelluminterne.setText(str);/*change jtxfiel*/
+            labelluminterne.setText(str);
 
-                            /*Integer n2 = pourcentageteinte;
-                                String str2 = n2.toString();
-                                 labelpteinte.setText(str2);*/
+            Integer n2 = pourcentageteinte;
+            String str2 = n2.toString();
+            labelpteinte.setText(str2);
 
-          /*  Integer n3 = temperatureexterieure;
-            String str3 = n3.toString();
-            labeltempextfiel.setText(str3);
-
-
-            Integer n4 = tempint;
-            String str4 = n4.toString();
-            labeltempintfiel.setText(str4);
-
-            Integer n5 = pourcentagetemp;
+            /*Integer n5 = pourcentagetemp;
             String str5 = n5.toString();
             labelpStore.setText(str5);*/
-
-            /*Integer n6 = pteinter;
-            String str6 = n6.toString();
-            labelpteinte.setText(str6);
-*/
         }
     }
 }
