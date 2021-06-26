@@ -910,43 +910,78 @@ public class RequestHandler {
         }
         else if (requestName.equals("EtatActuel")) {
             ObjectMapper mapper = new ObjectMapper();
-           // String sql = "SELECT inside_temperature, outside_temperature, pstore FROM datatemp WHERE id_datatemp = 1";
-            //String sql = "SELECT teinte, pourcen, temmp, pourcentemp, tempin FROM windo";
-           /* String sql2 = "select intensitelumineuse from sensor where id_sensor = 2";
-            PreparedStatement statement2 = connection.prepareStatement(sql2);
-            ResultSet rs2 = statement2.executeQuery();*/
-            /*int bright = rs2.getInt("intensitelumineuse");
-            System.out.println(bright);*/
 
-            /*int valeurdebut = rs.getInt("valdebut");
-            int pourcdebut = rs.getInt("pdebut");
-            int valeuraugmente = rs.getInt("valaugmente");
-            int pouraugmente = rs.getInt("paugmente");
-            System.out.println(valeurdebut);
-            System.out.println(pourcdebut);
-            System.out.println(valeuraugmente);
-            System.out.println(pouraugmente);*/
+            String sql = "select valdebut,pdebut,valaugmente,paugmente FROM setting_brigh";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            Map<String, Object> hm = new HashMap<>();
+            while (rs.next()) {
+                Map<String, Object> hm2 = new HashMap<>();
 
-/*
-            if((valeurdebut<=25) && (valeurdebut>=15) ){
+                int valeurdebut = rs.getInt("valdebut");
+                int pourcdebut = rs.getInt("pdebut");
+                int valeuraugmente = rs.getInt("valaugmente");
+                int pouraugmente = rs.getInt("paugmente");
+
+                hm.put("valdebutLum",valeurdebut);
+                hm.put("pdebutlum", pourcdebut );
+                hm.put("valaugmentelum", valeuraugmente);
+                hm.put("paugmentelum",pouraugmente );
+
+                String sql2 = "SELECT intensitelumineuse FROM sensor ORDER BY RANDOM() LIMIT 1";
+                //String sql2 = "select intensitelumineuse from sensor Where id_sensor = 6";
+
+                PreparedStatement statement2 = connection.prepareStatement(sql2);
+                ResultSet rs2 = statement2.executeQuery();
+                while (rs2.next()) {
+                    int luminositeCapteur = rs2.getInt("intensitelumineuse");
+                    int Veleurluminosite2 = valeurdebut + valeuraugmente;
+                    int  pourcdebut2 = pourcdebut + pouraugmente;
+                    int a = 0 ;
+
+                    if(valeurdebut == luminositeCapteur)
+                    {
+                        hm2.put("valdebutLum",luminositeCapteur);
+                        hm2.put("poucentagedebut",pourcdebut);
+                    }
+                    else if(luminositeCapteur == Veleurluminosite2)
+                    {
+                        hm2.put("valdebutLum",luminositeCapteur);
+                        hm2.put("poucentagedebut",pourcdebut2);
+                    }
+                    else
+                    {
+                        hm2.put("valdebutLum",luminositeCapteur);
+                        hm2.put("poucentagedebut",a);
+                    }
+
+                    System.out.println(valeurdebut);
+                    System.out.println(luminositeCapteur);
+                    System.out.println(Veleurluminosite2);
+                    System.out.println(hm2);
+                }
+                Map<String, Object> response = new HashMap<>();
+                response.put("request", requestName);
+                response.put("data", hm2);
+                String responseMsg = mapper.writeValueAsString(response);
+                writer.println(responseMsg);
+
+
+            }
+            System.out.println(hm);
+
+
+
+            ;
+
+            /*if((valeurdebut<=25) && (valeurdebut>=15) ){
                 System.out.println(pourcdebut);
                 if((valeurdebut == valeurdebut + valeuraugmente)){
                     pourcdebut = pourcdebut+pouraugmente;
                     System.out.println(pourcdebut);
-
-                    Map<String, Object> hm = new HashMap<>();
-                    while (rs.next()) {
-                        hm.put("pourcdebut", rs.getInt("pourcdebut"));
-                    }
-
-                    Map<String, Object> response = new HashMap<>();
-                    response.put("request", requestName);
-                    response.put("data", hm);
-                    String responseMsg = mapper.writeValueAsString(response);
-                    writer.println(responseMsg);
                 }
-            }
-*/
+            }*/
+
           /*  Map<String, Object> hm = new HashMap<>();
             while (rs.next()) {
                 hm.put("teinte", rs.getInt("teinte"));
@@ -961,44 +996,30 @@ public class RequestHandler {
                 hm.put("pteinte", rs2.getInt("pteinte"));
             }*/
 
-            String sql = "select valdebut,pdebut,valaugmente,paugmente FROM setting_brigh";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet rs = statement.executeQuery();
 
-            Map<String, Object> hm = new HashMap<>();
-            while (rs.next()) {
-                hm.put("valdebut", rs.getInt("valdebut"));
-                hm.put("pdebut", rs.getInt("pdebut"));
-                hm.put("valaugmente", rs.getInt("valaugmente"));
-                hm.put("paugmente", rs.getInt("paugmente"));
-
-                System.out.println(hm);
-            }
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("request", requestName);
-            response.put("data", hm);
-            String responseMsg = mapper.writeValueAsString(response);
-            writer.println(responseMsg);
 
         }
         else if (requestName.equals("temperature")) {
             ObjectMapper mapper = new ObjectMapper();
             Map<String, Object> dataloaded = (Map<String, Object>) request.getData();
-            int tempex = (int) dataloaded.get("temp_exterieure");
-            int tempin = (int) dataloaded.get("temp_interieure");
-            int a = Math.max(Math.abs(tempex),Math.abs(tempin));
+            int vtemp_debut = (int) dataloaded.get("valeurtemp_debut");
+            int ptemp = (int) dataloaded.get("pourcentagetemp_debut");
+            int vtemp_augment = (int) dataloaded.get("valeurtemp_avance");
+            int ptemp_augmente = (int) dataloaded.get("pourcentagetemp_avance");
+
+            /*int a = Math.max(Math.abs(tempex),Math.abs(tempin));
             int b = Math.min(Math.abs(tempex),Math.abs(tempin));
             int d = (a-b);
-            int psore= (d*100/a); // calculate the percent of blinds
-            String sql = "UPDATE datatemp SET inside_temperature = " + tempin + ", outside_temperature = " + tempex + ", pstore = " + psore + " WHERE id_datatemp = 1";
-            String sql2 = "INSERT INTO setting_temp (date_inser, inside_temperature, outside_temperature )  VALUES ( NOW(),?, ? )";
+            int psore= (d*100/a);*/ // calculate the percent of blinds
+            //String sql = "UPDATE datatemp SET inside_temperature = " + tempin + ", outside_temperature = " + tempex + ", pstore = " + psore + " WHERE id_datatemp = 1";
+            String sql = "UPDATE setting_temp SET valtempdebut = " + vtemp_debut + ", pourtemp = " + ptemp + ", valtempaugmente = " + vtemp_augment + ", ptempaugmente = " + ptemp_augmente;
+           // String sql2 = "INSERT INTO setting_temp (date_inser, inside_temperature, outside_temperature )  VALUES ( NOW(),?, ? )";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
-            PreparedStatement statement2 = connection.prepareStatement(sql2);
+            /*PreparedStatement statement2 = connection.prepareStatement(sql2);
             statement2.setInt(1, (Integer) dataloaded.get("temp_interieure"));
             statement2.setInt(2, (Integer) dataloaded.get("temp_exterieure"));
-            statement2.executeUpdate();
+            statement2.executeUpdate();*/
 
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
