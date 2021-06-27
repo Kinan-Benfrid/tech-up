@@ -938,17 +938,18 @@ public class RequestHandler {
                     int Veleurluminosite2 = valeurdebut + valeuraugmente;
                     int  pourcdebut2 = pourcdebut + pouraugmente;
                     int a = 0 ;
-
                     if(valeurdebut == luminositeCapteur)
                     {
                         hm2.put("valdebutLum",luminositeCapteur);
                         hm2.put("poucentagedebut",pourcdebut);
-                    }
-                    else if(luminositeCapteur == Veleurluminosite2)
-                    {
+
+                        if(luminositeCapteur == Veleurluminosite2)
+                            {
                         hm2.put("valdebutLum",luminositeCapteur);
                         hm2.put("poucentagedebut",pourcdebut2);
+                            }
                     }
+
                     else
                     {
                         hm2.put("valdebutLum",luminositeCapteur);
