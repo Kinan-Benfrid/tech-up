@@ -32,7 +32,7 @@ public class ListOfWindow extends CommonFrame implements ActionListener {
 
 //label textfiel for insde brightness
 
-        labelsituationstore = new JLabel("Shema qui mene à la fenêtre");
+        labelsituationstore = new JLabel("");
         labelsituationstore.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelsituationstore.setBounds(258, 100, 700, 29);
         labelsituationstore.setFont(labelsituationstore.getFont().deriveFont(20.0f));
