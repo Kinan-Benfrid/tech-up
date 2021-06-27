@@ -109,7 +109,7 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
         labellumiexterne.setBounds(58, 300, 210, 29);
         p.add(labellumiexterne);*/
 
-        labelpteinte = new JLabel("Fenetre teinte a ");
+        labelpteinte = new JLabel("Vitre teinte a ");
         labelpteinte.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelpteinte.setBounds(58, 350, 210, 29);
         labelpteinte.setFont(labelpStore.getFont().deriveFont(20.0f));
