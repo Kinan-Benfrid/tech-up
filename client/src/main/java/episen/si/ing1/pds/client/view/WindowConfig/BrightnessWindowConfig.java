@@ -41,20 +41,20 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
         labelsituationteinte.setForeground(new Color(155,0,0));
         panel.add(labelsituationteinte);
 
-        labelluminterne = new JLabel("Valeur a partir de laquelle la vitre commence a se teinter (entier)");
+        labelluminterne = new JLabel("Valeur a partir de laquelle la vitre commence a se teinter (entier entre 10 et 30)");
         labelluminterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelluminterne.setBounds(58, 150, 700, 29);
         panel.add(labelluminterne);
 
         luminterne = new JTextField();
         luminterne.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        luminterne.setBounds(620, 150, 70, 40);
+        luminterne.setBounds(720, 150, 70, 40);
         panel.add(luminterne);
         luminterne.setColumns(10);
 
         labelluminterneecoute = new JLabel("lux");
         labelluminterneecoute.setFont(new Font("Tahoma", Font.PLAIN, 17));
-        labelluminterneecoute.setBounds(700, 150, 210, 29);
+        labelluminterneecoute.setBounds(800, 150, 210, 29);
         panel.add(labelluminterneecoute);
 
         labelpourcentageteinte = new JLabel("A combien de pourcent elle doit se teinte (entre 0 et 100)");
@@ -73,7 +73,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
         pourcentageteinteunite.setBounds(700, 200, 210, 29);
         panel.add(pourcentageteinteunite);
 
-        labelaugmente= new JLabel("Lorsque cette valeur va augmenter de (positif)");
+        labelaugmente= new JLabel("Lorsque cette valeur va augmenter de (entre 0 et 10)");
         labelaugmente.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelaugmente.setBounds(58, 250, 600, 29);
         panel.add(labelaugmente);
@@ -90,7 +90,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
         panel.add(labeluniteaugmente);
 
 
-        labelaugmenteteintepourcentage= new JLabel("On augmente aussi le pourcentage de la teinte de (entre 0 et 100)");
+        labelaugmenteteintepourcentage= new JLabel("On augmente aussi le pourcentage de la teinte de (entre 0 et 15)");
         labelaugmenteteintepourcentage.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelaugmenteteintepourcentage.setBounds(58, 300, 600, 29);
         panel.add(labelaugmenteteintepourcentage);
