@@ -32,7 +32,7 @@ public class blindConfig extends CommonFrame implements ActionListener {
 
 //label textfiel for insde brightness
 
-        labelsituationstore = new JLabel("Fermeture des volets");
+        labelsituationstore = new JLabel("Fermeture des volets (Fenetre fermee)");
         labelsituationstore.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelsituationstore.setBounds(258, 100, 700, 29);
         labelsituationstore.setFont(labelsituationstore.getFont().deriveFont(20.0f));
