@@ -44,7 +44,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>episen.si.ing1.pds.client.Client</mainClass>
+                            <mainClass>episen.si.ing1.pds.client.view.HomePageView</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
