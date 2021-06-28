@@ -908,6 +908,41 @@ public class RequestHandler {
             writer.println(responseMsg);
 
         }
+        else if(requestName.equals("mapwindow")){
+
+            ObjectMapper mapper = new ObjectMapper();
+            Map dataLoaded = (Map) request.getData();
+            logger.info(String.valueOf(dataLoaded));
+            String sql = "select count (*) from equipment inner join position_ ON equipment.equipment_id = position_.equipment_id\n" +
+                    "INNER JOIN space sp\n" +
+                    "ON sp.space_id = position_.space_id\n" +
+                    "INNER JOIn floor_ f \n" +
+                    "ON f.floor_id = sp.floor_id\n" +
+                    "INNER JOIN building \n" +
+                    "ON building.building_id = f.building_id \n" +
+                    "WHERE building.building_name = 'Batiment Condorcet' AND f.floor_number = '3' AND sp.space_name = 'Open Space 1' AND equipment.equipment_name = 'Fenetre electro-chromatique'";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            ResultSet rs = statement.executeQuery();
+            Map<String, Object> hm = new HashMap<>();
+            while (rs.next()) {
+                hm.put("building_name", rs.getString("building_name"));
+                hm.put("floor_number", rs.getInt("floor_number"));
+                hm.put("space_name", rs.getString("space_name"));
+                hm.put("equipment_name", rs.getString("equipment_name"));
+
+                System.out.println(hm);
+            }
+            // response is a map of value that is a list of map
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", hm);
+
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
+
+        }
+
         else if (requestName.equals("EtatActuel")) {
             ObjectMapper mapper = new ObjectMapper();
 
@@ -937,7 +972,16 @@ public class RequestHandler {
                     int luminositeCapteur = rs2.getInt("intensitelumineuse");
                     int Veleurluminosite2 = valeurdebut + valeuraugmente;
                     int  pourcdebut2 = pourcdebut + pouraugmente;
-                    int a = 0 ;
+                    int a = 0;
+                    boolean bool = false;
+                    /*while(countPercentage<100 || !bool) {
+                        if(level_sunlight>=countSunlight && level_sunlight<countSunlight+opacity_level_add) {
+                            bool = true;
+                            this.opacityW = ""+countPercentage;
+                        }
+                        countPercentage += opacity_percentage_add;
+                        countSunlight += opacity_level_add;
+                    }*/
                     if(valeurdebut == luminositeCapteur)
                     {
                         hm2.put("valdebutLum",luminositeCapteur);
