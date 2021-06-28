@@ -11,6 +11,8 @@ import episen.si.ing1.pds.client.view.CardConfig.FirstScreenCardConfig;
 import episen.si.ing1.pds.client.view.CommonFrame;
 import episen.si.ing1.pds.client.view.HomePageView;
 import episen.si.ing1.pds.client.view.SpaceRental.FirstPageRentCriteria;
+import episen.si.ing1.pds.client.view.WindowConfig.ListOfWindow;
+import episen.si.ing1.pds.client.view.WindowConfig.MapWindow;
 import episen.si.ing1.pds.client.view.WindowConfig.PageOfConfigWindow;
 
 import javax.swing.*;
@@ -290,9 +292,18 @@ public class RentedSpacesView extends CommonFrame {
         jb4.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                dispose();
-                PageOfConfigWindow p = new PageOfConfigWindow();
-                p.setVisible(true);
+
+        System.out.println(Company.getCompany_name());
+
+                if(Company.getCompany_name().equals("")){
+                    dispose();
+                    HomePageView lw = new HomePageView();
+                    lw.setVisible(true);
+                }else {
+                    dispose();
+                    MapWindow lw = new MapWindow();
+                    lw.setVisible(true);
+                }
             }
 
             @Override
