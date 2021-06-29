@@ -1004,7 +1004,7 @@ public class RequestHandler {
             int vtemp_augment = (int) dataloaded.get("valeurtemp_avance");
             int ptemp_augmente = (int) dataloaded.get("pourcentagetemp_avance");
 
-            String sql = "UPDATE configuration SET blind_level_start = " + vtemp_debut+ ", blind_percentage_start = "+ ptemp + ", blind_level_add = " + vtemp_augment + ", blind_percentage_add = " + ptemp_augmente + " WHERE id_set = 1";
+            String sql = "UPDATE configuration SET blind_level_start = " + vtemp_debut+ ", blind_percentage_start = "+ ptemp + ", blind_level_add = " + vtemp_augment + ", blind_percentage_add = " + ptemp_augmente + " WHERE id = 1";
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
@@ -1023,9 +1023,17 @@ public class RequestHandler {
             int valeur_augment = (int) dataloaded1 .get("valeur_avance");
             int pourcentage_augmente = (int) dataloaded1 .get("pourcentage_avance");
 
-            String sql = "UPDATE configuration SET opacty_level_start = " + valeur_debut+ ", opacity_percentage_start = "+ pourcentage_debut + ", opacity_level_add = " + valeur_augment + ", opacity_percentage_add = " + pourcentage_augmente + " WHERE id_set = 1";
+            System.out.println(valeur_debut);
+            System.out.println(pourcentage_debut);
+            System.out.println(valeur_augment);
+            System.out.println(pourcentage_augmente );
+
+            String sql = "UPDATE configuration SET opacity_level_start = " + valeur_debut+ ", opacity_percentage_start = "+ pourcentage_debut + ", opacity_level_add = " + valeur_augment + ", opacity_percentage_add = " + pourcentage_augmente + " WHERE id = 1";
+
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
+
+
 
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
