@@ -134,9 +134,14 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
         public void actionPerformed(ActionEvent eb) {
             Object source = eb.getSource();
             if(source == bsuivant){
+
+              //  AlgoWindow algo = new AlgoWindow(clientCore, h);
+
+
                 this.dispose();
                 PageOfConfigWindow pc = new PageOfConfigWindow();
                 pc.setVisible(true);
+
             }
             if(source == bretour){
                 this.dispose();
