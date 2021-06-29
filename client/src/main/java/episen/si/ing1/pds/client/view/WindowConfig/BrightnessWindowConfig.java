@@ -202,7 +202,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                     JOptionPane.showMessageDialog(luminterne,"configuration prise en compte", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 
 
-                    ResponseSocket response2 = socketUtility.sendRequest(request);
+                    //ResponseSocket response2 = socketUtility.sendRequest(request);
             }
         }
             }
