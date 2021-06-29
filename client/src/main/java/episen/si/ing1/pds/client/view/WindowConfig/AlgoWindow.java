@@ -9,8 +9,6 @@ import java.util.Map;
 public class AlgoWindow {
 
 
-    String window_id;
-
     int blind_level_start;
     int blind_percentage_start;
     int blind_level_add;
@@ -23,10 +21,10 @@ public class AlgoWindow {
 
 
     //data_sensor
-    int outside_temperature, level_sunlight, room_temperature;
+    int outside_temperature, level_sunlight;
 
     //window state to send
-    private String window, blind, opacityW, tempI;
+    private String blind, opacityW;
 
     public AlgoWindow(Map<String, Integer> h) {
 
@@ -43,15 +41,16 @@ public class AlgoWindow {
         opacity_level_add = (hm.get("opacity_level_add"));
         opacity_percentage_add = (hm.get("opacity_percentage_add"));
 
+        outside_temperature = (hm.get("outside_temperature"));
         level_sunlight = (hm.get("level_sunlight"));
     }
 
-    public List algoWindow() {
+    public ArrayList<String> algoWindow() {
         // String window
-        List list = new List();
+        ArrayList<String> list = new ArrayList();
         list.add(String.valueOf(level_sunlight));
 
-        if (level_sunlight < blind_level_start) {
+        if (outside_temperature < blind_level_start) {
             this.blind = "0";
         } else {
             this.blind = "100";
@@ -59,7 +58,7 @@ public class AlgoWindow {
             int countSunlight = blind_level_start;
             boolean bool = false;
             while (countPercentage < 100 || !bool) {
-                if (level_sunlight >= countSunlight && level_sunlight < countSunlight + blind_level_add) {
+                if (outside_temperature >= countSunlight && outside_temperature < countSunlight + blind_level_add) {
                     bool = true;
                     this.blind = "" + countPercentage;
                 }
@@ -88,9 +87,6 @@ public class AlgoWindow {
         }
         list.add(this.opacityW);//pour recupere les valeurs
 
-
-       /*String requestU = "update windows set window_state="+this.window+",percentage_blind="+this.blind+",percentage_opacity="+this.opacityW+", room_temperature="+this.tempI+" where id="+window_id;
-        cc.sendRequest(requestU);*/
 
         return list;
     }
