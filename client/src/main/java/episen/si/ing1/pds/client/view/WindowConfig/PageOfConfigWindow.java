@@ -14,11 +14,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.lang.*;
-import java.util.Vector;
+import java.util.List;
 
 public class PageOfConfigWindow extends CommonFrame implements ActionListener {
     //initialization of variable
@@ -195,12 +193,12 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
                     Map<String, Integer>  valeurActu = (Map<String,Integer>) response.getData();
 
             AlgoWindow algo = new AlgoWindow(valeurActu);
-            List listActu = (List) algo.algoWindow();
+           ArrayList<String> listActu = algo.algoWindow();
 
-            int level_sunlight = (int) listActu.get(0);
-            int blind= (int) listActu.get(1);
-            int bright = (int) listActu.get(2);
-            int outside = (int) valeurActu.get("outside_temperature");
+            Integer level_sunlight = Integer.parseInt(listActu.get(0));
+            Integer blind= Integer.parseInt(listActu.get(1));
+            Integer bright = Integer.parseInt(listActu.get(2));
+            Integer outside = valeurActu.get("outside_temperature");
 
             Integer n = level_sunlight;
             String str = n.toString();
