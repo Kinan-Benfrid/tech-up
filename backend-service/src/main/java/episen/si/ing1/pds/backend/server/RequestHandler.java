@@ -946,105 +946,57 @@ public class RequestHandler {
         else if (requestName.equals("EtatActuel")) {
             ObjectMapper mapper = new ObjectMapper();
 
-            String sql = "select valdebut,pdebut,valaugmente,paugmente FROM setting_brigh";
+            String sql = "SELECT blind_level_start,blind_percentage_start,blind_level_add, blind_percentage_add, opacity_level_start, opacity_percentage_start,opacity_level_add,opacity_percentage_add FRom CONFIGURATION";
+            String sql2 = "Select level_sunlight,outside_temperature from sensor";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
+
+            PreparedStatement statement2 = connection.prepareStatement(sql2);
+            ResultSet rs2 = statement2.executeQuery();
+
             Map<String, Object> hm = new HashMap<>();
             while (rs.next()) {
-                Map<String, Object> hm2 = new HashMap<>();
+                int blind_level_start = rs.getInt("blind_level_start");
+                int blind_percentage_start = rs.getInt("blind_percentage_start");
+                int blind_level_add = rs.getInt("blind_level_add");
+                int blind_percentage_add= rs.getInt("blind_percentage_add");
 
-                int valeurdebut = rs.getInt("valdebut");
-                int pourcdebut = rs.getInt("pdebut");
-                int valeuraugmente = rs.getInt("valaugmente");
-                int pouraugmente = rs.getInt("paugmente");
+                int opacity_level_start= rs.getInt("opacity_level_start");
+                int opacity_percentage_start = rs.getInt("opacity_percentage_start");
+                int opacity_level_add = rs.getInt("opacity_level_add");
+                int opacity_percentage_add = rs.getInt("opacity_percentage_add");
 
-                hm.put("valdebutLum",valeurdebut);
-                hm.put("pdebutlum", pourcdebut );
-                hm.put("valaugmentelum", valeuraugmente);
-                hm.put("paugmentelum",pouraugmente );
 
-                String sql2 = "SELECT intensitelumineuse FROM sensor ORDER BY RANDOM() LIMIT 1";
-                //String sql2 = "select intensitelumineuse from sensor Where id_sensor = 6";
 
-                PreparedStatement statement2 = connection.prepareStatement(sql2);
-                ResultSet rs2 = statement2.executeQuery();
-                while (rs2.next()) {
-                    int luminositeCapteur = rs2.getInt("intensitelumineuse");
-                    int Veleurluminosite2 = valeurdebut + valeuraugmente;
-                    int  pourcdebut2 = pourcdebut + pouraugmente;
-                    int a = 0;
-                    boolean bool = false;
-                    /*while(countPercentage<100 || !bool) {
-                        if(level_sunlight>=countSunlight && level_sunlight<countSunlight+opacity_level_add) {
-                            bool = true;
-                            this.opacityW = ""+countPercentage;
-                        }
-                        countPercentage += opacity_percentage_add;
-                        countSunlight += opacity_level_add;
-                    }*/
-                    if(valeurdebut == luminositeCapteur)
-                    {
-                        hm2.put("valdebutLum",luminositeCapteur);
-                        hm2.put("poucentagedebut",pourcdebut);
+                hm.put("blind_level_start",blind_level_start);
+                hm.put("blind_percentage_start", blind_percentage_start);
+                hm.put("blind_level_add", blind_level_add);
+                hm.put("blind_percentage_add",blind_percentage_add );
+                hm.put("opacity_level_start",opacity_level_start);
+                hm.put("opacity_percentage_start", opacity_percentage_start );
+                hm.put("opacity_level_add",opacity_level_add);
+                hm.put("opacity_percentage_add",opacity_percentage_add );
 
-                        if(luminositeCapteur == Veleurluminosite2)
-                            {
-                        hm2.put("valdebutLum",luminositeCapteur);
-                        hm2.put("poucentagedebut",pourcdebut2);
-                            }
-                    }
-
-                    else
-                    {
-                        hm2.put("valdebutLum",luminositeCapteur);
-                        hm2.put("poucentagedebut",a);
-                    }
-
-                    System.out.println(valeurdebut);
-                    System.out.println(luminositeCapteur);
-                    System.out.println(Veleurluminosite2);
-                    System.out.println(hm2);
-                }
-                Map<String, Object> response = new HashMap<>();
-                response.put("request", requestName);
-                response.put("data", hm2);
-                String responseMsg = mapper.writeValueAsString(response);
-                writer.println(responseMsg);
 
 
             }
-            System.out.println(hm);
+            while (rs2.next()) {
+                int level_sunlight = rs2.getInt("level_sunlight");
+                hm.put("level_sunlight",level_sunlight);
 
+                int outside_temperature = rs2.getInt("outside_temperature");
+                hm.put("outside_temperature",outside_temperature);
+            }
 
-
-            ;
-
-            /*if((valeurdebut<=25) && (valeurdebut>=15) ){
-                System.out.println(pourcdebut);
-                if((valeurdebut == valeurdebut + valeuraugmente)){
-                    pourcdebut = pourcdebut+pouraugmente;
-                    System.out.println(pourcdebut);
-                }
-            }*/
-
-          /*  Map<String, Object> hm = new HashMap<>();
-            while (rs.next()) {
-                hm.put("teinte", rs.getInt("teinte"));
-                hm.put("pourcenteinte", rs.getInt("pourcen"));
-                hm.put("tempext", rs.getInt("temmp"));
-                hm.put("pourcentemp", rs.getInt("pourcentemp"));
-                hm.put("tempint", rs.getInt("tempin"));
-            }*/
-           /* while (rs2.next()) {
-                hm.put("lumex", rs2.getInt("lum_exterieure"));
-                hm.put("lumin", rs2.getInt("lum_interieure"));
-                hm.put("pteinte", rs2.getInt("pteinte"));
-            }*/
-
+            Map<String, Object> response = new HashMap<>();
+            response.put("request", requestName);
+            response.put("data", hm);
+            String responseMsg = mapper.writeValueAsString(response);
+            writer.println(responseMsg);
 
 
         }
-        else if (requestName.equals("temperature")) {
+        else if (requestName.equals("store")) {
             ObjectMapper mapper = new ObjectMapper();
             Map<String, Object> dataloaded = (Map<String, Object>) request.getData();
             int vtemp_debut = (int) dataloaded.get("valeurtemp_debut");
@@ -1052,19 +1004,10 @@ public class RequestHandler {
             int vtemp_augment = (int) dataloaded.get("valeurtemp_avance");
             int ptemp_augmente = (int) dataloaded.get("pourcentagetemp_avance");
 
-            /*int a = Math.max(Math.abs(tempex),Math.abs(tempin));
-            int b = Math.min(Math.abs(tempex),Math.abs(tempin));
-            int d = (a-b);
-            int psore= (d*100/a);*/ // calculate the percent of blinds
-            //String sql = "UPDATE datatemp SET inside_temperature = " + tempin + ", outside_temperature = " + tempex + ", pstore = " + psore + " WHERE id_datatemp = 1";
-            String sql = "UPDATE setting_temp SET valtempdebut = " + vtemp_debut + ", pourtemp = " + ptemp + ", valtempaugmente = " + vtemp_augment + ", ptempaugmente = " + ptemp_augmente;
-           // String sql2 = "INSERT INTO setting_temp (date_inser, inside_temperature, outside_temperature )  VALUES ( NOW(),?, ? )";
+            String sql = "UPDATE configuration SET blind_level_start = " + vtemp_debut+ ", blind_percentage_start = "+ ptemp + ", blind_level_add = " + vtemp_augment + ", blind_percentage_add = " + ptemp_augmente + " WHERE id_set = 1";
+
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
-            /*PreparedStatement statement2 = connection.prepareStatement(sql2);
-            statement2.setInt(1, (Integer) dataloaded.get("temp_interieure"));
-            statement2.setInt(2, (Integer) dataloaded.get("temp_exterieure"));
-            statement2.executeUpdate();*/
 
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
@@ -1079,34 +1022,16 @@ public class RequestHandler {
             int pourcentage_debut = (int) dataloaded1 .get("pourcentage_debut");
             int valeur_augment = (int) dataloaded1 .get("valeur_avance");
             int pourcentage_augmente = (int) dataloaded1 .get("pourcentage_avance");
-           /* int a = Math.abs(lumex);
-            int b = Math.abs(limin);
-            int d = (Math.max(a,b)-Math.min(a,b));
-            int e = (100*d);
-            int f = (e/Math.max(a,b));
-            int pteinte =(f);
-            if(lumex < 15 && (0 < limin && limin < 15)){
-            }
-            if(lumex > 15 && (0 < limin && limin < 15)) {
-            }*/
-           // String sql = "UPDATE luminosite SET lum_exterieure = " + lumex + ", lum_interieure = " + limin + ", pteinte = " + pteinte + " WHERE id_lum = 1";
-            String sql = "UPDATE setting_brigh SET valdebut = " + valeur_debut + ", pdebut = " + pourcentage_debut + ", valaugmente = " + valeur_augment + ", paugmente = " + pourcentage_augmente + " WHERE id_set = 1";
 
-            //String sql2 = "INSERT INTO setting_bright (date_insert, inside_brigh, outside_brigh )  VALUES ( NOW(),?, ? )";
+            String sql = "UPDATE configuration SET opacty_level_start = " + valeur_debut+ ", opacity_percentage_start = "+ pourcentage_debut + ", opacity_level_add = " + valeur_augment + ", opacity_percentage_add = " + pourcentage_augmente + " WHERE id_set = 1";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
-            /*PreparedStatement statement2 = connection.prepareStatement(sql2);
-            statement2.setInt(1, (Integer) dataloaded1.get("luminosite_interieure"));
-            statement2.setInt(2, (Integer) dataloaded1.get("lumminosite_exterieure"));
-            statement2.executeUpdate();*/
-            if(valeur_debut<=20 && valeur_debut>=0){
-
-            }
 
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             String responseMsg = mapper.writeValueAsString(response);
             writer.println(responseMsg);
+
 
         } else if (requestName.equals("equipment_is_used")) {
             ObjectMapper mapper = new ObjectMapper();
