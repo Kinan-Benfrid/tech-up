@@ -178,7 +178,7 @@ public class blindConfig extends CommonFrame implements ActionListener {
 
                 if ((vd_pars <= 40 && vd_pars >= -20) && (pd_pars <= 100 && pd_pars >= 0) && (va_pars <= 15 && vd_pars >= 0) && (pa_pars <= 20 && pd_pars >= 0)) {
                     RequestSocket request = new RequestSocket();
-                    request.setRequest("temperature");
+                    request.setRequest("store");
                     Map<String, Object> data = new HashMap<>();
                     data.put("valeurtemp_debut", vd_pars);
                     data.put("pourcentagetemp_debut", pd_pars);
