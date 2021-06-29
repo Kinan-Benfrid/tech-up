@@ -186,36 +186,38 @@ public class PageOfConfigWindow extends CommonFrame implements ActionListener {
             tc.setVisible(true);
         }
         if(source == braf){
-
             // creation of the request
             RequestSocket request = new RequestSocket();
             request.setRequest("EtatActuel");
 
             //receive response
-                  ResponseSocket response = socketUtility.sendRequest(request);
-                    Map<String, Object>  valeurActu = (Map<String, Object>) response.getData();
+                 ResponseSocket response = socketUtility.sendRequest(request);
+                    Map<String, Integer>  valeurActu = (Map<String,Integer>) response.getData();
 
-                    //int temperatureexterieure = (int) valeurActu.get("pdebutlum");
-                    int teinte = (int) valeurActu.get("valdebutLum");
-                    int pourcentageteinte = (int) valeurActu.get("poucentagedebut");
-                    //int pourcentagetemp = (int) valeurActu.get("paugmentelum");
-                    System.out.println(teinte);
-                    System.out.println(pourcentageteinte);
-            /*Integer n3 = temperatureexterieure;
-            String str3 = n3.toString();
-            labeltempextfiel.setText(str3);*/
+            AlgoWindow algo = new AlgoWindow(valeurActu);
+            List listActu = (List) algo.algoWindow();
 
-            Integer n = teinte;
+            int level_sunlight = (int) listActu.get(0);
+            int blind= (int) listActu.get(1);
+            int bright = (int) listActu.get(2);
+            int outside = (int) valeurActu.get("outside_temperature");
+
+            Integer n = level_sunlight;
             String str = n.toString();
             labelluminterne.setText(str);
 
-            Integer n2 = pourcentageteinte;
+            Integer n2 = bright;
             String str2 = n2.toString();
             labelpteinte.setText(str2);
 
-            /*Integer n5 = pourcentagetemp;
+            Integer n5 = outside;
             String str5 = n5.toString();
-            labelpStore.setText(str5);*/
+            labeltempextfiel.setText(str5);
+
+            Integer n6 = blind;
+            String str6 = n6.toString();
+            labelpStore.setText(str6);
+
         }
     }
 }
