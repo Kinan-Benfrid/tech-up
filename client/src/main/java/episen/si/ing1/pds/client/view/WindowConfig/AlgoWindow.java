@@ -65,7 +65,12 @@ public class AlgoWindow {
                 countPercentage += blind_percentage_add;
                 countSunlight += blind_level_add;
             }
+
         }
+        if (100 < Integer.parseInt(this.blind)){
+            this.blind ="" + 100;
+        }
+
         list.add(this.blind);
 
         //String opacityW
@@ -85,6 +90,10 @@ public class AlgoWindow {
                 countSunlight += opacity_level_add;
             }
         }
+        if (100 < Integer.parseInt(this.opacityW)){
+            this.opacityW ="" + 100;
+        }
+
         list.add(this.opacityW);//pour recupere les valeurs
 
 
