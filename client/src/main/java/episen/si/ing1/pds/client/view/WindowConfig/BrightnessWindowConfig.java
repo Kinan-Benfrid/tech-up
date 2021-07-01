@@ -41,7 +41,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
         labelsituationteinte.setForeground(new Color(155,0,0));
         panel.add(labelsituationteinte);
 
-        labelluminterne = new JLabel("Valeur a partir de laquelle la vitre commence a se teinter (entier entre 10 et 30)");
+        labelluminterne = new JLabel("Valeur a partir de laquelle la vitre commence a se teinter (entier entre 0 et 50)");
         labelluminterne.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelluminterne.setBounds(58, 150, 700, 29);
         panel.add(labelluminterne);
@@ -73,7 +73,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
         pourcentageteinteunite.setBounds(700, 200, 210, 29);
         panel.add(pourcentageteinteunite);
 
-        labelaugmente= new JLabel("Lorsque cette valeur va augmenter de (entre 0 et 10)");
+        labelaugmente= new JLabel("Lorsque cette valeur va augmenter ou diminue de (entre 0 et 20)");
         labelaugmente.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelaugmente.setBounds(58, 250, 600, 29);
         panel.add(labelaugmente);
@@ -90,20 +90,20 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
         panel.add(labeluniteaugmente);
 
 
-        labelaugmenteteintepourcentage= new JLabel("On augmente aussi le pourcentage de la teinte de (entre 0 et 15)");
+        labelaugmenteteintepourcentage= new JLabel("On augmente ou diminue aussi le pourcentage de la teinte de (entre 0 et 20)");
         labelaugmenteteintepourcentage.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelaugmenteteintepourcentage.setBounds(58, 300, 600, 29);
+        labelaugmenteteintepourcentage.setBounds(58, 300, 650, 29);
         panel.add(labelaugmenteteintepourcentage);
 
         valeuraugmenteteintepourcentage = new JTextField();
         valeuraugmenteteintepourcentage.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        valeuraugmenteteintepourcentage.setBounds(620, 300, 70, 40);
+        valeuraugmenteteintepourcentage.setBounds(700, 300, 70, 40);
         panel.add(valeuraugmenteteintepourcentage);
         valeuraugmenteteintepourcentage.setColumns(10);
 
         labeluniteaugmenteteintepourcentage= new JLabel("%");
         labeluniteaugmenteteintepourcentage.setFont(new Font("Tahoma", Font.PLAIN, 17));
-        labeluniteaugmenteteintepourcentage.setBounds(700, 300, 210, 29);
+        labeluniteaugmenteteintepourcentage.setBounds(800, 300, 210, 29);
         panel.add( labeluniteaugmenteteintepourcentage);
 
 
@@ -163,50 +163,51 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                 }
                 else {
                     vd_pars = Integer.parseInt(vd);
-                    if( vd_pars > 30|| vd_pars < 10)
+                    if( vd_pars > 50|| vd_pars < 0)
                     {
-                        JOptionPane.showMessageDialog(valeuraugmente,"La Valeur de debut doit etre comprise entre 10 et 30 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(luminterne,"La Valeur de debut doit etre comprise entre 0 et 50 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
                     pd_pars = Integer.parseInt(pd);
                     if( pd_pars> 100 || pd_pars < 0)
                     {
-                        JOptionPane.showMessageDialog(luminterne,"La pourcentage de debut doit etre comprise entre 0 et 100 %", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(pourcentageteinte,"La pourcentage de debut doit etre comprise entre 0 et 100 %", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
                     va_pars = Integer.parseInt(va);
-                    if( va_pars > 10|| va_pars < 0)
+                    if( va_pars > 20|| va_pars < 0)
                     {
-                        JOptionPane.showMessageDialog(valeuraugmente,"L'augmentation de la valeur doit etre comprise entre 0 et 10 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(valeuraugmente,"L'augmentation de la valeur doit etre comprise entre 0 et 20 lux", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
                     pa_pars = Integer.parseInt(pa);
-                    if( pa_pars> 15 || pa_pars < 0)
+                    if( pa_pars> 20 || pa_pars < 0)
                     {
-                        JOptionPane.showMessageDialog(luminterne,"L'augmentation du pourcentage doit etre comprise entre 0 et 15 %", "ERREUR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(valeuraugmenteteintepourcentage,"L'augmentation du pourcentage doit etre comprise entre 0 et 30 %", "ERREUR", JOptionPane.ERROR_MESSAGE);
                     }
 
-                    if(( vd_pars <=30  && vd_pars >= 10) &&( pd_pars <= 100 && pd_pars >= 0) && ( va_pars <=10  && vd_pars >= 0) &&( pa_pars <= 15 && pd_pars >= 0)){
-                    RequestSocket request = new RequestSocket();
-                    request.setRequest("lum");
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("valeur_debut", vd_pars);
-                    data.put("pourcentage_debut", pd_pars);
-                    data.put("valeur_avance", va_pars);
-                    data.put("pourcentage_avance", pa_pars);
+                    if(( vd_pars <=50  && vd_pars >= 0) &&( pd_pars <= 100 && pd_pars >= 0) && ( va_pars <=20  && va_pars >= 0) &&( pa_pars <= 20 && pa_pars >= 0)) {
+                        RequestSocket request = new RequestSocket();
+                        request.setRequest("lum");
+                        Map<String, Object> data = new HashMap<>();
+                        data.put("valeur_debut", vd_pars);
+                        data.put("pourcentage_debut", pd_pars);
+                        data.put("valeur_avance", va_pars);
+                        data.put("pourcentage_avance", pa_pars);
 
-                    System.out.println(data);
-                    request.setData(data);
-                    System.out.println(data);
+                        System.out.println(data);
+                        request.setData(data);
+                        System.out.println(data);
 
-                    JOptionPane.showMessageDialog(luminterne,"configuration prise en compte", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(luminterne, "configuration prise en compte", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 
 
-                    //ResponseSocket response2 = socketUtility.sendRequest(request);
+                        ResponseSocket response2 = socketUtility.sendRequest(request);
+                    }
             }
         }
             }
-        }
+
 
     public static boolean isInteger(String strNum) {
         if (strNum == null) {
