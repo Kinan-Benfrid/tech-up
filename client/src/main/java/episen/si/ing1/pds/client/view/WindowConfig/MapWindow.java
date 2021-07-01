@@ -216,27 +216,26 @@ public class MapWindow extends CommonFrame {
         jb2.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                /*
+
                 RequestSocket request = new RequestSocket();
                 request.setRequest("mapwindow");
+               Map<String, String> data = new HashMap<>();
+                data.put("building",jc1.getSelectedItem().toString());
+                data.put("floor", jc2.getSelectedItem().toString());
+                data.put("space", jc3.getSelectedItem().toString());
+                System.out.println(data);
+                request.setData(data);
+                System.out.println(data);
 
-                ResponseSocket response = socketUtility.sendRequest(request);
-                Map<String, Object>  mapwindowResponse = (Map<String, Object>) response.getData();
+              ResponseSocket response = socketUtility.sendRequest(request);
+              Map<String, Object>  mapwindowResponse = (Map<String, Object>) response.getData();
 
-                //int temperatureexterieure = (int) valeurActu.get("pdebutlum");
-                String building_name = (String) mapwindowResponse.get("building_name");
-                int floor_number = (int) mapwindowResponse.get("floor_number");
-                String space_name = (String) mapwindowResponse.get("space_name");
-                String equipement_name = (String) mapwindowResponse.get("equipment_name");
-
-                System.out.println(building_name);
-                System.out.println(floor_number);
-                System.out.println(space_name);
-                System.out.println(equipement_name);*/
-
+                String equipment_name = (String) mapwindowResponse.get("equipment_name");
+               // Integer secondwindow = (Integer) mapwindowResponse.get("secondwindow");
+                System.out.println(equipment_name);
+                //System.out.println(firstwindow);
 
             if ((Space.getSpace_type() == 1) || (Space.getSpace_type() == 3) || (Space.getSpace_type() == 2)) {
-
                     dispose();
                     ListOfWindow lw = new ListOfWindow();
                     lw.setVisible(true);
