@@ -71,14 +71,14 @@ public class blindConfig extends CommonFrame implements ActionListener {
         pourcentagestoreunite.setBounds(700, 200, 210, 29);
         panel.add(pourcentagestoreunite);
 
-        labelaugmente= new JLabel("Si la valeur de cette temperature augmenter de... (positif)");
+        labelaugmente= new JLabel("Si la valeur de cette temperature exterieure augmenter ou baisse de... (positif)");
         labelaugmente.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelaugmente.setBounds(58, 250, 600, 29);
         panel.add(labelaugmente);
 
         valeuraugmente = new JTextField();
         valeuraugmente.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        valeuraugmente.setBounds(620, 250, 70, 40);
+        valeuraugmente.setBounds(720, 250, 70, 40);
         panel.add(valeuraugmente);
         valeuraugmente.setColumns(10);
 
@@ -167,16 +167,17 @@ public class blindConfig extends CommonFrame implements ActionListener {
                 }
 
                 va_pars = Integer.parseInt(va);
-                if (va_pars > 10 || va_pars < 0) {
+                if (va_pars > 15 || va_pars < 0) {
                     JOptionPane.showMessageDialog(valeuraugmente, "L'augmentation de la valeur doit etre comprise entre 0 et 15 degre", "ERREUR", JOptionPane.ERROR_MESSAGE);
                 }
 
                 pa_pars = Integer.parseInt(pa);
-                if (pa_pars > 15 || pa_pars < 0) {
+                if (pa_pars > 20 || pa_pars < 0) {
                     JOptionPane.showMessageDialog(valeuraugmentestorepourcentage, "L'augmentation du pourcentage doit etre comprise entre 0 et 20 %", "ERREUR", JOptionPane.ERROR_MESSAGE);
                 }
 
                 if ((vd_pars <= 40 && vd_pars >= -20) && (pd_pars <= 100 && pd_pars >= 0) && (va_pars <= 15 && vd_pars >= 0) && (pa_pars <= 20 && pd_pars >= 0)) {
+
                     RequestSocket request = new RequestSocket();
                     request.setRequest("store");
                     Map<String, Object> data = new HashMap<>();
