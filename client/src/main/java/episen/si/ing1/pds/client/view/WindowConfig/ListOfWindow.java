@@ -32,11 +32,9 @@ public class ListOfWindow extends CommonFrame implements ActionListener {
 
 //label textfiel for insde brightness
 
-        labelsituationstore = new JLabel("");
-        labelsituationstore.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelsituationstore.setBounds(258, 100, 700, 29);
-        labelsituationstore.setFont(labelsituationstore.getFont().deriveFont(20.0f));
-        labelsituationstore.setForeground(new Color(155,0,0));
+        labelsituationstore = new JLabel("vous configurez : Open Space 1, Etage3, Batiment Condorcet  ");
+        labelsituationstore.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        labelsituationstore.setBounds(158, 100, 500, 29);
         panel.add(labelsituationstore);
 
         bretour = new JButton("Retour");
@@ -45,10 +43,8 @@ public class ListOfWindow extends CommonFrame implements ActionListener {
         bretour.addActionListener(this);
 
 
-        bconfiguration = new JButton("Fentre2");
-        bconfiguration.setBounds(250,150,200,50);
-        bconfiguration.setBackground(new Color(111,173,143));
-        bconfiguration.setFont(bconfiguration.getFont().deriveFont(15.0f));
+        bconfiguration = new JButton("Fenetre electro-chromatique 1");
+        bconfiguration.setBounds(250,150,250,50);
         panel.add(bconfiguration);
         bconfiguration.addMouseListener(new MouseListener() {
             @Override
@@ -78,10 +74,9 @@ public class ListOfWindow extends CommonFrame implements ActionListener {
             }
         });
 
-        bconfiguration4 = new JButton("Fentre4");
-        bconfiguration4.setBounds(250,200,200,50);
-        bconfiguration4.setBackground(new Color(111,173,143));
-        bconfiguration4.setFont(bconfiguration4.getFont().deriveFont(15.0f));
+        bconfiguration4 = new JButton("Fenetre electro-chromatique 2");
+        bconfiguration4.setBounds(250,250,250,50);
+
         panel.add(bconfiguration4);
 
 //declaration of button
