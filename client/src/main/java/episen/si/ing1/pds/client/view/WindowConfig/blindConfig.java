@@ -39,23 +39,23 @@ public class blindConfig extends CommonFrame implements ActionListener {
         labelsituationstore.setForeground(new Color(155,0,0));
         panel.add(labelsituationstore);
 
-        labeldebutstore = new JLabel("Valeur de la temperature exterieure a partir de laquelle le store commence a se fermer (entier)");
+        labeldebutstore = new JLabel("Valeur de la temperature exterieure a partir de laquelle le store commence a se fermer_entier(entre -20 et 40)");
         labeldebutstore.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labeldebutstore.setBounds(58, 150, 770, 29);
+        labeldebutstore.setBounds(28, 150, 870, 29);
         panel.add(labeldebutstore);
 
         debutstore = new JTextField();
         debutstore.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        debutstore.setBounds(800, 150, 70, 40);
+        debutstore.setBounds(900, 150, 40, 40);
         panel.add(debutstore);
         debutstore.setColumns(10);
 
         labeldebutstoreecoute = new JLabel("degre");
         labeldebutstoreecoute.setFont(new Font("Tahoma", Font.PLAIN, 17));
-        labeldebutstoreecoute.setBounds(880, 150, 210, 29);
+        labeldebutstoreecoute.setBounds(940, 150, 210, 29);
         panel.add(labeldebutstoreecoute);
 
-        labelpourcentagestore = new JLabel("A combien de pourcent le store doit se fermer (entre 0 et 100)");
+        labelpourcentagestore = new JLabel("A combien de pourcent le store doit se fermer_entier(entre 0 et 100)");
         labelpourcentagestore.setFont(new Font("Tahoma", Font.PLAIN, 18));
         labelpourcentagestore.setBounds(58, 200, 600, 29);
         panel.add(labelpourcentagestore);
@@ -71,43 +71,43 @@ public class blindConfig extends CommonFrame implements ActionListener {
         pourcentagestoreunite.setBounds(700, 200, 210, 29);
         panel.add(pourcentagestoreunite);
 
-        labelaugmente= new JLabel("Si la valeur de cette temperature exterieure augmenter ou baisse de... (positif)");
+        labelaugmente= new JLabel("Si la valeur de cette temperature exterieure augmenter ou baisse de...entier(entre 0 et 15)");
         labelaugmente.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelaugmente.setBounds(58, 250, 600, 29);
+        labelaugmente.setBounds(28, 250, 750, 29);
         panel.add(labelaugmente);
 
         valeuraugmente = new JTextField();
         valeuraugmente.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        valeuraugmente.setBounds(720, 250, 70, 40);
+        valeuraugmente.setBounds(750, 250, 70, 40);
         panel.add(valeuraugmente);
         valeuraugmente.setColumns(10);
 
         labeluniteaugmente= new JLabel("degre");
         labeluniteaugmente.setFont(new Font("Tahoma", Font.PLAIN, 17));
-        labeluniteaugmente.setBounds(700, 250, 210, 29);
+        labeluniteaugmente.setBounds(840, 250, 210, 29);
         panel.add(labeluniteaugmente);
 
 
-        labelaugmentestorepourcentage= new JLabel("Le pourcentage de la store doit aussi augmenter de combien  (entre 0 et 20)");
+        labelaugmentestorepourcentage= new JLabel("Le pourcentage de la fermeture de store doit aussi augmenter de combien_entier(entre 0 et 20)");
         labelaugmentestorepourcentage.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        labelaugmentestorepourcentage.setBounds(58, 300, 700, 29);
+        labelaugmentestorepourcentage.setBounds(58, 300, 850, 29);
         panel.add(labelaugmentestorepourcentage);
 
         valeuraugmentestorepourcentage = new JTextField();
         valeuraugmentestorepourcentage.setFont(new Font("Tahoma", Font.PLAIN, 32));
-        valeuraugmentestorepourcentage.setBounds(700, 300, 70, 40);
+        valeuraugmentestorepourcentage.setBounds(830, 300, 70, 40);
         panel.add(valeuraugmentestorepourcentage);
         valeuraugmentestorepourcentage.setColumns(10);
 
         labeluniteaugmentestorepourcentage= new JLabel("%");
         labeluniteaugmentestorepourcentage.setFont(new Font("Tahoma", Font.PLAIN, 17));
-        labeluniteaugmentestorepourcentage.setBounds(770, 300, 210, 29);
+        labeluniteaugmentestorepourcentage.setBounds(905, 300, 210, 29);
         panel.add( labeluniteaugmentestorepourcentage);
 
 
 
-        bconfiguration = new JButton("CONFIGURATION DES STORES");
-        bconfiguration.setBounds(250,20,650,50);
+        bconfiguration = new JButton("CONFIGURATION DES STORES EN FONCTION DE LA TEMPERATURE EXTERIEURE");
+        bconfiguration.setBounds(150,20,750,50);
         bconfiguration.setBackground(new Color(111,173,143));
         bconfiguration.setFont(bconfiguration.getFont().deriveFont(15.0f));
         panel.add(bconfiguration);
