@@ -1059,8 +1059,6 @@ public class RequestHandler {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
 
-
-
             Map<String, Object> response = new HashMap<>();
             response.put("request", requestName);
             String responseMsg = mapper.writeValueAsString(response);
