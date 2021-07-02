@@ -184,6 +184,7 @@ public class BrightnessWindowConfig extends CommonFrame implements ActionListene
                     if( pa_pars> 20 || pa_pars < 0)
                     {
                         JOptionPane.showMessageDialog(valeuraugmenteteintepourcentage,"L'augmentation du pourcentage doit etre comprise entre 0 et 30 %", "ERREUR", JOptionPane.ERROR_MESSAGE);
+
                     }
 
                     if(( vd_pars <=50  && vd_pars >= 0) &&( pd_pars <= 100 && pd_pars >= 0) && ( va_pars <=20  && va_pars >= 0) &&( pa_pars <= 20 && pa_pars >= 0)) {
